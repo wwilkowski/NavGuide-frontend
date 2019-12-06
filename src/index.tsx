@@ -6,10 +6,14 @@ import * as serviceWorker from './serviceWorker';
 import './locales/i18n';
 import { configureStore } from './store';
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
+
 const store = configureStore();
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Router>
+      <App />
+    </Router>
   </Provider>,
   document.getElementById('root')
 );
