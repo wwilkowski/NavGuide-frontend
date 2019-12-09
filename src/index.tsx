@@ -6,12 +6,13 @@ import * as serviceWorker from './serviceWorker';
 import './locales/i18n';
 import { configureStore } from './store';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { Router } from 'react-router-dom';
+import history from './history';
 
 const store = configureStore();
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
+    <Router history={history}>
       <App />
     </Router>
   </Provider>,
