@@ -3,11 +3,20 @@ import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { render, fireEvent } from '@testing-library/react';
 import App from './App';
+import i18n from './locales/i18n';
+import { Provider } from 'react-redux';
+import { configureStore } from './store';
+
+const store = configureStore();
 
 function renderWithRouter(ui, { route = '/', history = createMemoryHistory({ initialEntries: [route] }) } = {}) {
   return {
-    ...render(<Router history={history}>{ui}</Router>),
-    history
+    ...render(
+      <Provider store={store}>
+        <Router history={history}>{ui}</Router>)
+      </Provider>,
+      history
+    )
   };
 }
 
@@ -44,11 +53,7 @@ it('Przenosi na ścieżkę "/" po kliknięciu w link Home', () => {
 // czy po kliknięciu w link Register przenosi na /register
 it('Przenosi na ścieżkę "/register" po kliknięciu w link Register', () => {
   const history = createMemoryHistory();
-  const { getByTestId } = render(
-    <Router history={history}>
-      <App />
-    </Router>
-  );
+  const { getByTestId } = renderWithRouter(<App />);
   fireEvent.click(getByTestId('registerLink'));
   expect(getByTestId('content').textContent).toBe('RegisterPage');
 });
