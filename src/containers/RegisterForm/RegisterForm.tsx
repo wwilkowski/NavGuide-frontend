@@ -4,6 +4,7 @@ import GoogleLoginButton from '../../components/GoogleLoginButton/GoogleLoginBut
 import EditRegistrationForm from '../../components/EditRegistrationForm/EditRegistrationForm';
 import { useDispatch } from 'react-redux';
 import { signUpUserRequest } from './actions';
+import PrivateRoute from '../../shared/PrivateRoute/PrivateRoute';
 
 const RegisterForm: React.FC = () => {
   const dispatcher = useDispatch();
@@ -17,9 +18,7 @@ const RegisterForm: React.FC = () => {
           <h1 data-testid='content'>RegisterPage</h1>
           <GoogleLoginButton signUpUserWithCode={signUpUserWithCode} />
         </Route>
-        <Route path={`/register/edit`}>
-          <EditRegistrationForm />
-        </Route>
+        <PrivateRoute path={`/register/edit`} component={EditRegistrationForm} />
         <Route>
           <p data-testid='content'>NotFoundPage</p>
         </Route>
