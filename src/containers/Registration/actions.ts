@@ -1,12 +1,12 @@
 import { SIGN_UP_USER_REQUESTED, SIGN_UP_USER_FAILED, SIGN_UP_USER_SUCCESSED } from './constants';
-import { UserInfoType } from './types';
+import { UserDataType } from './types';
 
 export const signUpUserRequest = (code: string) => ({
   type: SIGN_UP_USER_REQUESTED,
   code
 });
 
-export const signUpUserSuccessed = (user: UserInfoType) => ({
+export const signUpUserSuccessed = (user: UserDataType) => ({
   type: SIGN_UP_USER_SUCCESSED,
   user
 });

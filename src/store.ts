@@ -1,14 +1,13 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
-import user from './containers/RegisterForm/reducer';
-import Saga1 from './containers/Example1/sagas';
-import Saga2 from './containers/Example2/sagas';
-import SignUpUserSaga from './containers/RegisterForm/sagas';
+import user from './containers/Registration/reducer';
+
+import SignUpUserSaga from './containers/Registration/sagas';
 import { all } from 'redux-saga/effects';
 
 function* rootSaga() {
-  yield all([Saga1(), Saga2(), SignUpUserSaga()]);
+  yield all([SignUpUserSaga()]);
 }
 
 export const configureStore = () => {

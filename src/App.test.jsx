@@ -37,23 +37,3 @@ it('wyświetla NotFound na ścieżce nieznanej', () => {
   const { getByTestId } = renderWithRouter(<App />, { route: '/something' });
   expect(getByTestId('content').textContent).toBe('NotFoundPage');
 });
-
-// czy po kliknięciu w link Home przenosi na /
-it('Przenosi na ścieżkę "/" po kliknięciu w link Home', () => {
-  const history = createMemoryHistory();
-  const { getByTestId } = render(
-    <Router history={history}>
-      <App />
-    </Router>
-  );
-  fireEvent.click(getByTestId('homeLink'));
-  expect(getByTestId('content').textContent).toBe('HomePage');
-});
-
-// czy po kliknięciu w link Register przenosi na /register
-it('Przenosi na ścieżkę "/register" po kliknięciu w link Register', () => {
-  const history = createMemoryHistory();
-  const { getByTestId } = renderWithRouter(<App />);
-  fireEvent.click(getByTestId('registerLink'));
-  expect(getByTestId('content').textContent).toBe('RegisterPage');
-});

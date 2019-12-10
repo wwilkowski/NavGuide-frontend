@@ -9,7 +9,7 @@ const forwardTo = (location: string) => {
 function* signUpUser() {
   try {
     const userData = yield call(fetch, 'https://jsonplaceholder.typicode.com/todos');
-    const json = yield userData.json();
+    yield userData.json();
     yield put({
       type: SIGN_UP_USER_SUCCESSED,
       user: {
