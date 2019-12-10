@@ -1,4 +1,4 @@
-import { SIGN_UP_USER_SUCCESSED } from './constants';
+import { SIGN_UP_GOOGLE_USER_SUCCESSED } from './constants';
 import { UserDataType, SignUpUserSuccessedAction } from './types';
 
 const initialState: UserDataType = {
@@ -14,7 +14,7 @@ const initialState: UserDataType = {
 
 const UserInfoReducer = (state = initialState, action: SignUpUserSuccessedAction) => {
   switch (action.type) {
-    case SIGN_UP_USER_SUCCESSED:
+    case SIGN_UP_GOOGLE_USER_SUCCESSED:
       return {
         ...action.user,
         registrationInProgress: true

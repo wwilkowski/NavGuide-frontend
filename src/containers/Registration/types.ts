@@ -1,4 +1,4 @@
-import { SIGN_UP_USER_SUCCESSED } from './constants';
+import { SIGN_UP_GOOGLE_USER_SUCCESSED } from './constants';
 
 export interface UserDataType {
   firstName: string;
@@ -12,6 +12,6 @@ export interface UserDataType {
 }
 
 export interface SignUpUserSuccessedAction {
-  type: typeof SIGN_UP_USER_SUCCESSED;
+  type: typeof SIGN_UP_GOOGLE_USER_SUCCESSED;
   user: UserDataType;
 }

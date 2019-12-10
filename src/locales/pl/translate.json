@@ -1,6 +1,13 @@
 {
   "translation": {
     "Hello, world!": "Witaj świecie!",
-    "Sign up with Google": "Zarejestruj się z Google"
+    "Sign up with Google": "Zarejestruj się z Google",
+    "Register Form": "Formularz rejestracji",
+    "First name": "Imię",
+    "Last name": "Nazwisko",
+    "Country": "Kraj",
+    "Gender": "Płeć",
+    "Experience": "Doświadczenie",
+    "Submit": "Wyślij"
   }
 }

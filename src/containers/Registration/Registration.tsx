@@ -1,12 +1,21 @@
 import React from 'react';
+import RegisterForm, { FormValues } from '../../components/RegisterForm/RegisterForm';
 import { Switch, Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { StoreType } from '../../store';
 
-const RegisterForm: React.FC = () => {
+const Registration: React.FC = () => {
+  const user = useSelector((state: StoreType) => state.user);
+
+  const onRegisterFormSubmit = (user: FormValues) => {
+    console.log(user);
+  };
+
   return (
     <div>
       <Switch>
         <Route exact path={'/register'}>
-          <h1 data-testid='content'>RegisterPage</h1>
+          <RegisterForm message='XD' onSubmit={onRegisterFormSubmit} user={user} />
         </Route>
         <Route>
           <p data-testid='content'>NotFoundPage</p>
@@ -16,4 +25,4 @@ const RegisterForm: React.FC = () => {
   );
 };
 
-export default RegisterForm;
+export default Registration;
