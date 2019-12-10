@@ -4,35 +4,32 @@ import GoogleLoginButton from "../../components/GoogleLoginButton/GoogleLoginBut
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../Registration/actions";
 import SwitchLanguageButton from "../../components/SwitchLanguageButton";
-import { UserDataType } from "../Registration/types";
 import { StoreType } from "../../store";
+import { useTranslation } from "react-i18next";
 
 const Header: React.FC = () => {
-  let registrationInProgress = useSelector(
+  const { t } = useTranslation();
+
+  const registrationInProgress = useSelector(
     (state: StoreType) => state.user.registrationInProgress
   );
-  
-  //Tutaj symulowanie stanu zalogowania
-  registrationInProgress = false;
 
   const dispatcher = useDispatch();
   const signUpWithUserCode = (code: string) => {
     dispatcher(actions.signUpUserRequest("test"));
   };
 
-  const content = registrationInProgress ? (
-    <h1>Header</h1>
-  ) : (
+  return (
     <div>
-      <h1>Header</h1>
-      <Link to="/">Home</Link>
-      <GoogleLoginButton signUpUserWithCode={signUpWithUserCode} />
+      <h1>{t("Header")}</h1>
+      <Link to="/">{t("Home")}</Link>
+      {!registrationInProgress && (
+        <GoogleLoginButton signUpUserWithCode={signUpWithUserCode} />
+      )}
       <SwitchLanguageButton code="pl" />
       <SwitchLanguageButton code="en" />
     </div>
   );
-
-  return <>{content}</>;
 };
 
 export default Header;
