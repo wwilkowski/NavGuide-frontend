@@ -14,7 +14,7 @@ const Header: React.FC = () => {
 
   const dispatcher = useDispatch();
   const signUpWithUserCode = (code: string) => {
-    dispatcher(actions.signUpUserRequest);
+    dispatcher(actions.signUpUserRequest('test'));
   };
 
   const content = accountInfo.registrationInProgress ? (
