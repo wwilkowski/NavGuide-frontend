@@ -1,6 +1,8 @@
 {
   "translation": {
-    "Hello, world!": "Witaj świecie!",
+    "Home": "Strona główna",
+    "Header": "Nagłówek",
+    
     "Sign up with Google": "Zarejestruj się z Google"
   }
 }
