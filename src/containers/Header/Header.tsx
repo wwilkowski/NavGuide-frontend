@@ -5,19 +5,22 @@ import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../Registration/actions";
 import SwitchLanguageButton from "../../components/SwitchLanguageButton";
 import { UserDataType } from "../Registration/types";
+import { StoreType } from "../../store";
 
 const Header: React.FC = () => {
-  const accountInfo = useSelector((state: UserDataType) => state);
-
+  let registrationInProgress = useSelector(
+    (state: StoreType) => state.user.registrationInProgress
+  );
+  
   //Tutaj symulowanie stanu zalogowania
-  accountInfo.registrationInProgress = false;
+  registrationInProgress = false;
 
   const dispatcher = useDispatch();
   const signUpWithUserCode = (code: string) => {
-    dispatcher(actions.signUpUserRequest('test'));
+    dispatcher(actions.signUpUserRequest("test"));
   };
 
-  const content = accountInfo.registrationInProgress ? (
+  const content = registrationInProgress ? (
     <h1>Header</h1>
   ) : (
     <div>

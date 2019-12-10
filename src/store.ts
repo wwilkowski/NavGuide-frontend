@@ -5,6 +5,11 @@ import user from './containers/Registration/reducer';
 
 import SignUpUserSaga from './containers/Registration/sagas';
 import { all } from 'redux-saga/effects';
+import { UserDataType } from './containers/Registration/types';
+
+export interface StoreType {
+  user: UserDataType
+}
 
 function* rootSaga() {
   yield all([SignUpUserSaga()]);
