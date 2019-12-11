@@ -1,4 +1,4 @@
-import { SIGN_UP_GOOGLE_USER_SUCCESSED } from './constants';
+import { SIGN_UP_GOOGLE_USER_SUCCESSED, SIGN_UP_REQUESTED, SIGN_UP_SUCCESSED } from './constants';
 
 export interface UserDataType {
   firstName: string;
@@ -8,10 +8,32 @@ export interface UserDataType {
   tel: string;
   gender: string;
   experience: number;
+}
+
+export interface RegistrationDataType {
+  user: UserDataType;
   registrationInProgress: boolean;
 }
 
 export interface SignUpUserSuccessedAction {
   type: typeof SIGN_UP_GOOGLE_USER_SUCCESSED;
   user: UserDataType;
+}
+
+export interface SignUpSuccessedAction {
+  type: typeof SIGN_UP_SUCCESSED;
+  user: UserDataType;
+  token: string;
+}
+
+export type SignUpActionType = SignUpUserSuccessedAction | SignUpSuccessedAction;
+
+export interface SignUpRequest {
+  type: typeof SIGN_UP_REQUESTED;
+  user: UserDataType;
+}
+
+export interface SignUpResponse {
+  user: UserDataType;
+  token: string;
 }

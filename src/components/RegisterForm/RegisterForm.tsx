@@ -14,10 +14,6 @@ export interface FormValues {
   experience: number;
 }
 
-interface OtherProps {
-  onSubmit: (user: FormValues) => void;
-}
-
 const SignupSchema = Yup.object().shape({
   firstName: Yup.string()
     .min(5, 'Too short!')
@@ -37,14 +33,10 @@ const SignupSchema = Yup.object().shape({
   tel: Yup.string()
     .min(5, 'Too short!')
     .max(45, 'Too long!')
-    .required('Required!'),
-  gender: Yup.string()
-    .min(5, 'Too short!')
-    .max(45, 'Too long!')
     .required('Required!')
 });
 
-const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
+const InnerForm = (props: FormikProps<FormValues>) => {
   const { t } = useTranslation();
   const { touched, errors, isSubmitting } = props;
   return (
@@ -71,8 +63,10 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
       {touched.tel && errors.tel && <div>{errors.tel}</div>}
 
       <label htmlFor='gender'>{t('Gender')}</label>
-      <Field id='gender' type='text' name='gender' />
-      {touched.gender && errors.gender && <div>{errors.gender}</div>}
+      <Field as='select' id='gender' name='gender'>
+        <option value='male'>{t('Male')}</option>
+        <option value='female'>{t('Female')}</option>
+      </Field>
 
       <label htmlFor='experience'>{t('Experience')}</label>
       <Field as='select' id='experience' name='experience'>
@@ -92,7 +86,6 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
 
 interface MyFormProps {
   user: UserDataType;
-  message: string;
   onSubmit: (user: FormValues) => void;
 }
 

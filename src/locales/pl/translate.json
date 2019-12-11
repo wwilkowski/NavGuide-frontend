@@ -8,6 +8,8 @@
     "Country": "Kraj",
     "Gender": "Płeć",
     "Experience": "Doświadczenie",
-    "Submit": "Wyślij"
+    "Submit": "Wyślij",
+    "Male": "Mężczyzna",
+    "Female": "Kobieta"
   }
 }
