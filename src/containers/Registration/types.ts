@@ -13,11 +13,13 @@ export interface UserDataType {
 export interface RegistrationDataType {
   user: UserDataType;
   registrationInProgress: boolean;
+  registrationToken: string;
 }
 
 export interface SignUpUserSuccessedAction {
   type: typeof SIGN_UP_GOOGLE_USER_SUCCESSED;
   user: UserDataType;
+  registerToken: string;
 }
 
 export interface SignUpSuccessedAction {

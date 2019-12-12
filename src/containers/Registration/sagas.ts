@@ -35,7 +35,12 @@ function* signUpGoogleUser(action: SignUpGoogleRequest) {
       gender: 'Male',
       experience: 1
     };
-    yield put(actions.signUpGoogleUserSuccessed(templateUser));
+    yield put(
+      actions.signUpGoogleUserSuccessed({
+        user: templateUser,
+        registerToken: json.authorizationToken
+      })
+    );
     yield call(forwardTo, '/register');
     yield NotificationManager.success(i18n.t('Uzupełnij swój profil, aby zakończyć rejestrację'), i18n.t('Verification successed'));
   } catch {

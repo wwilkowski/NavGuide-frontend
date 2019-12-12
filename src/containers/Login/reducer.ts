@@ -1,5 +1,5 @@
 import { LOG_IN_GOOGLE_SUCCESSED } from './constants';
-import { LogInSuccessedAction, UserDataType } from './types';
+import { LogInSuccessedAction } from './types';
 
 const initialState = {
   user: {},

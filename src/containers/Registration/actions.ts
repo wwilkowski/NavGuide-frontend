@@ -6,9 +6,15 @@ export const signUpGoogleUserRequest = (code: string) => ({
   code
 });
 
-export const signUpGoogleUserSuccessed = (user: UserDataType) => ({
+interface signUpGoogleResponse {
+  user: UserDataType;
+  registerToken: string;
+}
+
+export const signUpGoogleUserSuccessed = (response: signUpGoogleResponse) => ({
   type: constants.SIGN_UP_GOOGLE_USER_SUCCESSED,
-  user
+  user: response.user,
+  registerToken: response.registerToken
 });
 
 export const signUpGoogleUserFailed = () => ({
