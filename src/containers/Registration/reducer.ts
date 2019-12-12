@@ -1,22 +1,24 @@
-import { SIGN_UP_USER_SUCCESSED } from './constants';
-import { UserDataType, SignUpUserSuccessedAction } from './types';
+import { SIGN_UP_GOOGLE_USER_SUCCESSED } from './constants';
+import { SignUpUserSuccessedAction, RegistrationDataType } from './types';
 
-const initialState: UserDataType = {
-  firstName: '',
-  lastName: '',
-  country: '',
-  email: '',
-  tel: '',
-  gender: '',
-  experience: 1,
-  registrationInProgress: false
+const initialState: RegistrationDataType = {
+  user: {
+    firstName: '',
+    lastName: '',
+    country: '',
+    email: '',
+    tel: '',
+    gender: '',
+    experience: 1
+  },
+  registrationInProgress: true
 };
 
-const UserInfoReducer = (state = initialState, action: SignUpUserSuccessedAction) => {
+const RegistrationReducer = (state = initialState, action: SignUpUserSuccessedAction) => {
   switch (action.type) {
-    case SIGN_UP_USER_SUCCESSED:
+    case SIGN_UP_GOOGLE_USER_SUCCESSED:
       return {
-        ...action.user,
+        user: action.user,
         registrationInProgress: true
       };
     default:
@@ -24,4 +26,4 @@ const UserInfoReducer = (state = initialState, action: SignUpUserSuccessedAction
   }
 };
 
-export default UserInfoReducer;
+export default RegistrationReducer;
