@@ -8,7 +8,6 @@ const NotFound = () => <p data-testid='content'>NotFoundPage</p>;
 const App: React.FC = () => {
   return (
     <>
-      {/* Header HERE */}
       <Switch>
         <Route exact path='/' component={Home} />
         <Route path='/register' component={Registration} />
