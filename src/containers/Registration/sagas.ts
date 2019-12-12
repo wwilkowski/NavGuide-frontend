@@ -1,45 +1,63 @@
-import { call, put, takeLatest } from "redux-saga/effects";
-import {
-  SIGN_UP_USER_FAILED,
-  SIGN_UP_USER_REQUESTED,
-  SIGN_UP_USER_SUCCESSED
-} from "./constants";
-import history from "../../history";
+import { call, put, takeLatest } from 'redux-saga/effects';
+import { SIGN_UP_GOOGLE_USER_REQUESTED, SIGN_UP_REQUESTED } from './constants';
+
+import history from '../../history';
+import * as actions from './actions';
+import { SignUpRequest } from './types';
 
 const forwardTo = (location: string) => {
   history.push(location);
 };
 
-function* signUpUser() {
+function* signUpGoogleUser() {
   try {
     const userData = yield call(
       fetch,
       "https://jsonplaceholder.typicode.com/todos"
     );
     yield userData.json();
-    yield put({
-      type: SIGN_UP_USER_SUCCESSED,
-      user: {
-        firstName: "Janusz",
-        lastName: "Tracz",
-        country: "Polska",
-        email: "abc@gmail.com",
-        tel: "123456789",
-        gender: "male",
-        experience: 1
-      }
-    });
-    yield call(forwardTo, "/register/edit");
+    const templateUser = {
+      firstName: 'Wojciech',
+      lastName: 'Glugla',
+      country: 'Poland',
+      email: 'gluglawojciech@gmail.com',
+      tel: '123456789',
+      gender: 'Male',
+      experience: 5
+    };
+    yield put(actions.signUpGoogleUserSuccessed(templateUser));
+    yield call(forwardTo, '/register');
   } catch {
-    yield put({
-      type: SIGN_UP_USER_FAILED,
-      message: "Something goes wrong in signing up"
-    });
+    yield put(actions.signUpGoogleUserFailed());
+  }
+}
+
+function* signUpUser(action: SignUpRequest) {
+  try {
+    const signUpResponse = yield call(fetch, 'https://jsonplaceholder.typicode.com/todos');
+    yield signUpResponse.json();
+    const templateResponse = {
+      user: {
+        firstName: 'Wojciech',
+        lastName: 'Glugla',
+        country: 'Poland',
+        email: 'gluglawojciech@gmail.com',
+        tel: '123456789',
+        gender: 'Male',
+        experience: 5
+      },
+      token: 'template_token123'
+    };
+    yield put(actions.signUpSuccessed(templateResponse));
+    yield call(forwardTo, '/register');
+  } catch {
+    yield put(actions.signUpFailed());
   }
 }
 
 function* mainSaga() {
-  yield takeLatest(SIGN_UP_USER_REQUESTED, signUpUser);
+  yield takeLatest(SIGN_UP_REQUESTED, signUpUser);
+  yield takeLatest(SIGN_UP_GOOGLE_USER_REQUESTED, signUpGoogleUser);
 }
 
 export default mainSaga;

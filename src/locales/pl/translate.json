@@ -1,8 +1,15 @@
 {
   "translation": {
-    "Home": "Strona główna",
-    "Header": "Nagłówek",
-    
-    "Sign up with Google": "Zarejestruj się z Google"
+    "Hello, world!": "Witaj świecie!",
+    "Sign up with Google": "Zarejestruj się z Google",
+    "Register Form": "Formularz rejestracji",
+    "First name": "Imię",
+    "Last name": "Nazwisko",
+    "Country": "Kraj",
+    "Gender": "Płeć",
+    "Experience": "Doświadczenie",
+    "Submit": "Wyślij",
+    "Male": "Mężczyzna",
+    "Female": "Kobieta"
   }
 }
