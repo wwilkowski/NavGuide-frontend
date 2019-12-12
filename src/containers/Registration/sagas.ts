@@ -11,7 +11,10 @@ const forwardTo = (location: string) => {
 
 function* signUpGoogleUser() {
   try {
-    const userData = yield call(fetch, 'https://jsonplaceholder.typicode.com/todos');
+    const userData = yield call(
+      fetch,
+      "https://jsonplaceholder.typicode.com/todos"
+    );
     yield userData.json();
     const templateUser = {
       firstName: 'Wojciech',
