@@ -3,6 +3,8 @@
     "Hello, world!": "Witaj świecie!",
     "Sign up with Google": "Zarejestruj się z Google",
     "Register Form": "Formularz rejestracji",
+    "Header": "Nagłówek",
+    "HomePage": "Strona główna",
     "First name": "Imię",
     "Last name": "Nazwisko",
     "Country": "Kraj",
@@ -10,6 +12,7 @@
     "Experience": "Doświadczenie",
     "Submit": "Wyślij",
     "Male": "Mężczyzna",
-    "Female": "Kobieta"
+    "Female": "Kobieta",
+    "Verification successed": "Weryfikacja powiodła się"
   }
 }

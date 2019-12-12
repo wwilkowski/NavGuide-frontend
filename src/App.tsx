@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Registration from './containers/Registration/Registration';
 import Header from './containers/Header/Header';
+import { NotificationContainer } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const Home = () => <p data-testid='content'>HomePage</p>;
 const NotFound = () => <p data-testid='content'>NotFoundPage</p>;
@@ -15,6 +17,7 @@ const App: React.FC = () => {
         <Route path='/register' component={Registration} />
         <Route component={NotFound} />
       </Switch>
+      <NotificationContainer />
     </>
   );
 };

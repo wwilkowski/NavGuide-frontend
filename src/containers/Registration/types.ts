@@ -1,4 +1,4 @@
-import { SIGN_UP_GOOGLE_USER_SUCCESSED, SIGN_UP_REQUESTED, SIGN_UP_SUCCESSED } from './constants';
+import { SIGN_UP_GOOGLE_USER_REQUESTED, SIGN_UP_GOOGLE_USER_SUCCESSED, SIGN_UP_REQUESTED, SIGN_UP_SUCCESSED } from './constants';
 
 export interface UserDataType {
   firstName: string;
@@ -31,6 +31,11 @@ export type SignUpActionType = SignUpUserSuccessedAction | SignUpSuccessedAction
 export interface SignUpRequest {
   type: typeof SIGN_UP_REQUESTED;
   user: UserDataType;
+}
+
+export interface SignUpGoogleRequest {
+  type: typeof SIGN_UP_GOOGLE_USER_REQUESTED;
+  code: string;
 }
 
 export interface SignUpResponse {

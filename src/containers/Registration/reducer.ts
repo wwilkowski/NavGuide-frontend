@@ -11,7 +11,7 @@ const initialState: RegistrationDataType = {
     gender: '',
     experience: 1
   },
-  registrationInProgress: true
+  registrationInProgress: false
 };
 
 const RegistrationReducer = (state = initialState, action: SignUpUserSuccessedAction) => {
