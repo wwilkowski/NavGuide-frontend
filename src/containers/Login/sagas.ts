@@ -4,7 +4,6 @@ import history from '../../history';
 import * as actions from './actions';
 import * as constants from './constants';
 import * as types from './types';
-import i18n from '../../locales/i18n';
 import { NotificationManager } from 'react-notifications';
 
 const forwardTo = (location: string) => {

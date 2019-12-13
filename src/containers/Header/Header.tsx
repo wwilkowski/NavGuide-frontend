@@ -1,7 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import GoogleSignUpButton from '../../components/GoogleSignUpButton/GoogleSignUpButton';
-import GoogleLoginButton from '../../components/GoogleLoginButton/GoogleLoginButton';
 import GoogleButton from '../../components/GoogleButton/GoogleButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { signUpGoogleRequest } from '../Registration/actions';

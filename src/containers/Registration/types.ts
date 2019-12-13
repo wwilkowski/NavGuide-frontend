@@ -40,6 +40,7 @@ export interface IConfirmSignUpSuccessedAction {
 export interface IConfirmSignUpRequest {
   type: string;
   user: IUserData;
+  token: string;
 }
 
 export interface IConfirmSignUpResponse {

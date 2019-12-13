@@ -9,14 +9,18 @@ const Registration: React.FC = () => {
   const registrationData = useSelector((state: StoreType) => state.registration);
 
   const onRegisterFormSubmit = (user: FormValues) => {
-    dispatcher(confirmSignUpRequest(user));
+    dispatcher(confirmSignUpRequest(user, registrationData.registrationToken));
   };
 
   return (
     <div>
       <Switch>
         <Route exact path={'/register'}>
-          {registrationData.registrationInProgress ? <RegisterForm onSubmit={onRegisterFormSubmit} user={registrationData.user} /> : <Redirect to='/' />}
+          {registrationData.registrationInProgress ? (
+            <RegisterForm onSubmit={onRegisterFormSubmit} user={registrationData.user} />
+          ) : (
+            <Redirect to='/' />
+          )}
         </Route>
         <Route>
           <p data-testid='content'>NotFoundPage</p>

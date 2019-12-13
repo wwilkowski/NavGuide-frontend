@@ -21,14 +21,14 @@ export const signUpGoogleFailed = () => ({
   type: constants.SIGN_UP_GOOGLE_FAILED
 });
 
-export const confirmSignUpRequest = (user: IUserData) => ({
+export const confirmSignUpRequest = (user: IUserData, token: string) => ({
   type: constants.CONFIRM_SIGN_UP_REQUESTED,
-  user
+  user,
+  token
 });
 
 export const confirmSignUpSuccessed = (response: IConfirmSignUpResponse) => ({
   type: constants.CONFIRM_SIGN_UP_SUCCESSED,
-  user: response.user,
   token: response.token
 });
 export const confirmSignUpFailed = () => ({
