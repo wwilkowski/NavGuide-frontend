@@ -10,10 +10,20 @@ const forwardTo = (location: string) => {
   history.push(location);
 };
 
+const logInGoogleEndpoint = 'http://tarajki.tk:8123/auth/google/login';
+
 function* logInGoogle(action: types.ILogInGoogleRequest) {
   try {
-    const loginData = yield call(fetch, 'https://jsonplaceholder.typicode.com/todos');
-    yield loginData.json();
+    const response = yield call(fetch, logInGoogleEndpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        code: action.code
+      })
+    });
+    const json = yield response.json();
     const templateUser = {
       firstName: 'Wojciech',
       lastName: 'Glugla',
@@ -23,9 +33,10 @@ function* logInGoogle(action: types.ILogInGoogleRequest) {
       gender: 'Male',
       experience: 5
     };
-    const templateToken = 'token123';
+    const token = json.token;
     yield put(actions.logInGoogleSuccessed(templateUser));
-    yield initTokenCookie(templateToken);
+    console.log(json);
+    yield initTokenCookie(token);
     NotificationManager.success('Zalogowano pomyślnie!');
     yield call(forwardTo, '/profile');
   } catch {
