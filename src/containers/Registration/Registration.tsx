@@ -3,13 +3,13 @@ import RegisterForm, { FormValues } from '../../components/RegisterForm/Register
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { StoreType } from '../../store';
-import { signUpRequest } from './actions';
+import { confirmSignUpRequest } from './actions';
 const Registration: React.FC = () => {
   const dispatcher = useDispatch();
   const registrationData = useSelector((state: StoreType) => state.registration);
 
   const onRegisterFormSubmit = (user: FormValues) => {
-    dispatcher(signUpRequest(user));
+    dispatcher(confirmSignUpRequest(user));
   };
 
   return (

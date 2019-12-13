@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Yup from 'yup';
 import { withFormik, FormikProps, Form, Field } from 'formik';
-import { UserDataType } from '../../containers/Registration/types';
+import { IUserData } from '../../containers/Registration/types';
 import { useTranslation } from 'react-i18next';
 
 export interface FormValues {
@@ -85,7 +85,7 @@ const InnerForm = (props: FormikProps<FormValues>) => {
 };
 
 interface MyFormProps {
-  user: UserDataType;
+  user: IUserData;
   onSubmit: (user: FormValues) => void;
 }
 

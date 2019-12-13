@@ -1,7 +1,7 @@
-import { SIGN_UP_GOOGLE_USER_SUCCESSED } from './constants';
-import { SignUpUserSuccessedAction, RegistrationDataType } from './types';
+import { SIGN_UP_GOOGLE_SUCCESSED } from './constants';
+import { ISignUpGoogleSuccessedAction, IRegisterStore } from './types';
 
-const initialState: RegistrationDataType = {
+const initialState: IRegisterStore = {
   user: {
     firstName: '',
     lastName: '',
@@ -15,9 +15,9 @@ const initialState: RegistrationDataType = {
   registrationToken: ''
 };
 
-const RegistrationReducer = (state = initialState, action: SignUpUserSuccessedAction) => {
+const RegistrationReducer = (state = initialState, action: ISignUpGoogleSuccessedAction) => {
   switch (action.type) {
-    case SIGN_UP_GOOGLE_USER_SUCCESSED:
+    case SIGN_UP_GOOGLE_SUCCESSED:
       return {
         user: action.user,
         registrationInProgress: true,

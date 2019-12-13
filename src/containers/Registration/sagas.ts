@@ -1,9 +1,9 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { SIGN_UP_GOOGLE_USER_REQUESTED, SIGN_UP_REQUESTED } from './constants';
+import { SIGN_UP_GOOGLE_REQUESTED, CONFIRM_SIGN_UP_REQUESTED } from './constants';
 
 import history from '../../history';
 import * as actions from './actions';
-import { SignUpRequest, SignUpGoogleRequest } from './types';
+import { IConfirmSignUpRequest, ISignUpGoogleRequest } from './types';
 import { NotificationManager } from 'react-notifications';
 import i18n from '../../locales/i18n';
 
@@ -13,7 +13,7 @@ const forwardTo = (location: string) => {
 
 const signUpGoogleEndpoint = `http://tarajki.tk:8123/auth/google/register`;
 
-function* signUpGoogleUser(action: SignUpGoogleRequest) {
+function* signUpGoogleUser(action: ISignUpGoogleRequest) {
   try {
     const userData = yield call(fetch, signUpGoogleEndpoint, {
       method: 'POST',
@@ -36,7 +36,7 @@ function* signUpGoogleUser(action: SignUpGoogleRequest) {
       experience: 1
     };
     yield put(
-      actions.signUpGoogleUserSuccessed({
+      actions.signUpGoogleSuccessed({
         user: templateUser,
         registerToken: json.authorizationToken
       })
@@ -44,15 +44,15 @@ function* signUpGoogleUser(action: SignUpGoogleRequest) {
     yield call(forwardTo, '/register');
     yield NotificationManager.success(i18n.t('Uzupełnij swój profil, aby zakończyć rejestrację'), i18n.t('Verification successed'));
   } catch {
-    yield put(actions.signUpGoogleUserFailed());
+    yield put(actions.signUpGoogleFailed());
     yield NotificationManager.error(i18n.t('Something goes wrong.! Try again later.'), i18n.t('Verification failed'));
   }
 }
 
-function* signUpUser(action: SignUpRequest) {
+function* signUpUser(action: IConfirmSignUpRequest) {
   try {
-    const signUpResponse = yield call(fetch, 'https://jsonplaceholder.typicode.com/todos');
-    yield signUpResponse.json();
+    const IConfirmSignUpResponse = yield call(fetch, 'https://jsonplaceholder.typicode.com/todos');
+    yield IConfirmSignUpResponse.json();
     const templateResponse = {
       user: {
         firstName: 'Wojciech',
@@ -65,16 +65,16 @@ function* signUpUser(action: SignUpRequest) {
       },
       token: 'template_token123'
     };
-    yield put(actions.signUpSuccessed(templateResponse));
+    yield put(actions.confirmSignUpSuccessed(templateResponse));
     yield call(forwardTo, '/register');
   } catch {
-    yield put(actions.signUpFailed());
+    yield put(actions.confirmSignUpFailed());
   }
 }
 
 function* mainSaga() {
-  yield takeLatest(SIGN_UP_REQUESTED, signUpUser);
-  yield takeLatest(SIGN_UP_GOOGLE_USER_REQUESTED, signUpGoogleUser);
+  yield takeLatest(CONFIRM_SIGN_UP_REQUESTED, signUpUser);
+  yield takeLatest(SIGN_UP_GOOGLE_REQUESTED, signUpGoogleUser);
 }
 
 export default mainSaga;
