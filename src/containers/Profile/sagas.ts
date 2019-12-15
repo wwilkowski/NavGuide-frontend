@@ -15,6 +15,9 @@ function* tempSaga() {
         Authorization: `Bearer ${token}`
       }
     });
+    if (response.status >= 200 && response.status <= 300) {
+      throw new Error();
+    }
     const json = yield response.json();
     yield put(actions.templateSuccessed(json.firstName));
   } catch (error) {

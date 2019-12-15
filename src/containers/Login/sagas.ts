@@ -24,21 +24,25 @@ function* logInGoogle(action: types.ILogInGoogleRequest) {
         request: window.location.host
       })
     });
-    const json = yield response.json();
-    const templateUser = {
-      firstName: 'Wojciech',
-      lastName: 'Glugla',
-      country: 'Poland',
-      email: 'gluglawojciech@gmail.com',
-      tel: '123456789',
-      gender: 'Male',
-      experience: 5
-    };
-    const token = json.token;
-    yield put(actions.logInGoogleSuccessed(templateUser));
-    yield initTokenCookie(token);
-    NotificationManager.success('Zalogowano pomyślnie!');
-    yield call(forwardTo, '/profile');
+    if (response.status >= 200 && response.status <= 300) {
+      const json = yield response.json();
+      const templateUser = {
+        firstName: 'Wojciech',
+        lastName: 'Glugla',
+        country: 'Poland',
+        email: 'gluglawojciech@gmail.com',
+        tel: '123456789',
+        gender: 'Male',
+        experience: 5
+      };
+      const token = json.token;
+      yield put(actions.logInGoogleSuccessed(templateUser));
+      yield initTokenCookie(token);
+      NotificationManager.success('Zalogowano pomyślnie!');
+      yield call(forwardTo, '/profile');
+    } else {
+      throw new Error();
+    }
   } catch {
     NotificationManager.error('Spróbuj ponownie później', 'Coś poszło nie tak!');
     yield put(actions.logInGoogleFailed());
