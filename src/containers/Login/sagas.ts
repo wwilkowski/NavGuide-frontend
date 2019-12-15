@@ -10,7 +10,7 @@ const forwardTo = (location: string) => {
   history.push(location);
 };
 
-const logInGoogleEndpoint = 'http://tarajki.tk:8123/auth/google/login';
+const logInGoogleEndpoint = 'https://8.ip-164-132-53.eu/auth/google/login';
 
 function* logInGoogle(action: types.ILogInGoogleRequest) {
   try {

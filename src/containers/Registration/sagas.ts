@@ -12,18 +12,20 @@ const forwardTo = (location: string) => {
   history.push(location);
 };
 
-const signUpGoogleEndpoint = `http://tarajki.tk:8123/auth/google/register`;
-const confirmGoogleEndpoint = `http://tarajki.tk:8123/auth/google/register/confirm`;
+const signUpGoogleEndpoint = `https://8.ip-164-132-53.eu/auth/google/register`;
+const confirmGoogleEndpoint = `https://8.ip-164-132-53.eu/google/register/confirm`;
 
 function* signUpGoogleUser(action: ISignUpGoogleRequest) {
   try {
+    console.log(window.location.host);
     const response = yield call(fetch, signUpGoogleEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        code: `${action.code}`
+        code: `${action.code}`,
+        request: window.location.host
       })
     });
     const status = response.status;

@@ -3,7 +3,7 @@ import { getToken } from '../../helpers/tokenCookie';
 import * as actions from './actions';
 import * as constants from './constants';
 
-const tempEndpoint = 'http://tarajki.tk:8123/profile';
+const tempEndpoint = 'https://8.ip-164-132-53.eu/profile';
 
 function* tempSaga() {
   try {
