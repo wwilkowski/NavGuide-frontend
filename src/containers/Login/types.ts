@@ -1,11 +1,4 @@
-import { LOG_IN_GOOGLE_SUCCESSED } from './constants';
-
-export interface LogInSuccessedAction {
-  type: typeof LOG_IN_GOOGLE_SUCCESSED;
-  user: UserDataType;
-}
-
-export interface UserDataType {
+export interface IUserData {
   firstName: string;
   lastName: string;
   country: string;
@@ -14,13 +7,17 @@ export interface UserDataType {
   gender: string;
   experience: number;
 }
+export interface ILogInSuccessedAction {
+  type: string;
+  user: IUserData;
+}
 
-export interface LoginDataType {
-  user: UserDataType;
+export interface ILoginData {
+  user: IUserData;
   isLoggedIn: boolean;
 }
 
-export interface LogInGoogleRequest {
+export interface ILogInGoogleRequest {
   type: string;
   code: string;
 }

@@ -3,6 +3,8 @@
     "Hello, world!": "Witaj świecie!",
     "Sign up with Google": "Zarejestruj się z Google",
     "Register Form": "Formularz rejestracji",
+    "Header": "Nagłówek",
+    "Home Page": "Strona główna",
     "First name": "Imię",
     "Last name": "Nazwisko",
     "Country": "Kraj",
@@ -10,6 +12,18 @@
     "Experience": "Doświadczenie",
     "Submit": "Wyślij",
     "Male": "Mężczyzna",
-    "Female": "Kobieta"
+    "Female": "Kobieta",
+    "Verification successed!": "Weryfikacja powiodła się!",
+    "Warning": "Ostrzeżenie",
+    "Home": "Strona główna",
+    "Profile": "Profil",
+    "Sign in with Google": "Zaloguj się z Google",
+    "Not found": "Nie znaleziono",
+    "Log out": "Wyloguj się",
+    "Hello": "Cześć",
+    "You're logged in!": "Jesteś zalogowany!",
+    "Complete your data to finish registration process.": "Uzupełnij swój profil, aby zakończyć rejestrację.",
+    "Verification failed!": "Weryfikacja nie powiodła się!",
+    "User already exists! Try to log in.": "Użytkownik już istnieje. Spróbuj się zalogować."
   }
 }

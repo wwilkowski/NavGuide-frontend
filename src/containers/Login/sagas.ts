@@ -1,18 +1,29 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { LOG_IN_GOOGLE_REQUESTED } from './constants';
-import * as actions from './actions';
+import { initTokenCookie, setToken } from '../../helpers/tokenCookie';
 import history from '../../history';
-import { LogInGoogleRequest } from './types';
-import { initTokenCookie, getToken } from '../../helpers/tokenCookie';
+import * as actions from './actions';
+import * as constants from './constants';
+import * as types from './types';
+import { NotificationManager } from 'react-notifications';
 
 const forwardTo = (location: string) => {
   history.push(location);
 };
 
-function* logInGoogle(action: LogInGoogleRequest) {
+const logInGoogleEndpoint = 'http://tarajki.tk:8123/auth/google/login';
+
+function* logInGoogle(action: types.ILogInGoogleRequest) {
   try {
-    const loginData = yield call(fetch, 'https://jsonplaceholder.typicode.com/todos');
-    yield loginData.json();
+    const response = yield call(fetch, logInGoogleEndpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        code: action.code
+      })
+    });
+    const json = yield response.json();
     const templateUser = {
       firstName: 'Wojciech',
       lastName: 'Glugla',
@@ -22,18 +33,32 @@ function* logInGoogle(action: LogInGoogleRequest) {
       gender: 'Male',
       experience: 5
     };
-    const templateToken = 'token123';
+    const token = json.token;
     yield put(actions.logInGoogleSuccessed(templateUser));
-    yield initTokenCookie(templateToken);
-    console.log('token', getToken());
-    yield call(forwardTo, '/dashboard');
+    yield initTokenCookie(token);
+    NotificationManager.success('Zalogowano pomyślnie!');
+    yield call(forwardTo, '/profile');
   } catch {
+    NotificationManager.error('Spróbuj ponownie później', 'Coś poszło nie tak!');
     yield put(actions.logInGoogleFailed());
   }
 }
 
+function* logOutGoogle() {
+  try {
+    yield put(actions.logOutGoogleSuccessed());
+    yield setToken('');
+    NotificationManager.success('Zostaniesz przeniesiony na stronę główną', 'Wylogowanie przebiegło pomyślnie!');
+    yield call(forwardTo, '/');
+  } catch {
+    NotificationManager.error('Spróbuj ponownie później', 'Coś poszło nie tak!');
+    yield put(actions.logOutGoogleFailed());
+  }
+}
+
 function* mainSaga() {
-  yield takeLatest(LOG_IN_GOOGLE_REQUESTED, logInGoogle);
+  yield takeLatest(constants.LOG_IN_GOOGLE_REQUESTED, logInGoogle);
+  yield takeLatest(constants.LOG_OUT_GOOGLE_REQUESTED, logOutGoogle);
 }
 
 export default mainSaga;

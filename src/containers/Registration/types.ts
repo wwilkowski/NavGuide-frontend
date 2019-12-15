@@ -1,6 +1,6 @@
-import { SIGN_UP_GOOGLE_USER_SUCCESSED, SIGN_UP_REQUESTED, SIGN_UP_SUCCESSED } from './constants';
+// Store
 
-export interface UserDataType {
+export interface IUserData {
   firstName: string;
   lastName: string;
   country: string;
@@ -10,30 +10,44 @@ export interface UserDataType {
   experience: number;
 }
 
-export interface RegistrationDataType {
-  user: UserDataType;
+export interface IRegisterStore {
+  user: IUserData;
   registrationInProgress: boolean;
+  registrationToken: string;
 }
 
-export interface SignUpUserSuccessedAction {
-  type: typeof SIGN_UP_GOOGLE_USER_SUCCESSED;
-  user: UserDataType;
+// Google
+
+export interface ISignUpGoogleSuccessedAction {
+  type: string;
+  user: IUserData;
+  registerToken: string;
 }
 
-export interface SignUpSuccessedAction {
-  type: typeof SIGN_UP_SUCCESSED;
-  user: UserDataType;
+export interface ISignUpGoogleRequest {
+  type: string;
+  code: string;
+}
+
+// Confirm
+
+export interface IConfirmSignUpSuccessedAction {
+  type: string;
+  user: IUserData;
   token: string;
 }
 
-export type SignUpActionType = SignUpUserSuccessedAction | SignUpSuccessedAction;
-
-export interface SignUpRequest {
-  type: typeof SIGN_UP_REQUESTED;
-  user: UserDataType;
-}
-
-export interface SignUpResponse {
-  user: UserDataType;
+export interface IConfirmSignUpRequest {
+  type: string;
+  user: IUserData;
   token: string;
 }
+
+export interface IConfirmSignUpResponse {
+  user: IUserData;
+  token: string;
+}
+
+// action types
+
+export type ISignUpActionType = ISignUpGoogleSuccessedAction | IConfirmSignUpSuccessedAction;

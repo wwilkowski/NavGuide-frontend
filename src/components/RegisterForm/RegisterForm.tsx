@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Yup from 'yup';
 import { withFormik, FormikProps, Form, Field } from 'formik';
-import { UserDataType } from '../../containers/Registration/types';
+import { IUserData } from '../../containers/Registration/types';
 import { useTranslation } from 'react-i18next';
 
 export interface FormValues {
@@ -27,9 +27,6 @@ const SignupSchema = Yup.object().shape({
     .min(2, 'Too short!')
     .max(45, 'Too long!')
     .required('Required!'),
-  email: Yup.string()
-    .email()
-    .required(),
   tel: Yup.string()
     .min(5, 'Too short!')
     .max(45, 'Too long!')
@@ -53,10 +50,6 @@ const InnerForm = (props: FormikProps<FormValues>) => {
       <label htmlFor='country'>{t('Country')}</label>
       <Field id='country' type='text' name='country' />
       {touched.country && errors.country && <div>{errors.country}</div>}
-
-      <label htmlFor='email'>{t('Email')}</label>
-      <Field id='email' type='text' name='email' />
-      {touched.email && errors.email && <div>{errors.email}</div>}
 
       <label htmlFor='tel'>{t('Tel.')}</label>
       <Field id='tel' type='text' name='tel' />
@@ -85,7 +78,7 @@ const InnerForm = (props: FormikProps<FormValues>) => {
 };
 
 interface MyFormProps {
-  user: UserDataType;
+  user: IUserData;
   onSubmit: (user: FormValues) => void;
 }
 

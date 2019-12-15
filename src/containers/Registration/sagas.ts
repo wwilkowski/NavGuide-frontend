@@ -1,63 +1,95 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { SIGN_UP_GOOGLE_USER_REQUESTED, SIGN_UP_REQUESTED } from './constants';
+import { SIGN_UP_GOOGLE_REQUESTED, CONFIRM_SIGN_UP_REQUESTED } from './constants';
 
 import history from '../../history';
 import * as actions from './actions';
-import { SignUpRequest } from './types';
+import { IConfirmSignUpRequest, ISignUpGoogleRequest } from './types';
+import { NotificationManager } from 'react-notifications';
+import i18n from '../../locales/i18n';
+import { setToken } from '../../helpers/tokenCookie';
 
 const forwardTo = (location: string) => {
   history.push(location);
 };
 
-function* signUpGoogleUser() {
+const signUpGoogleEndpoint = `http://tarajki.tk:8123/auth/google/register`;
+const confirmGoogleEndpoint = `http://tarajki.tk:8123/auth/google/register/confirm`;
+
+function* signUpGoogleUser(action: ISignUpGoogleRequest) {
   try {
-    const userData = yield call(
-      fetch,
-      "https://jsonplaceholder.typicode.com/todos"
-    );
-    yield userData.json();
-    const templateUser = {
-      firstName: 'Wojciech',
-      lastName: 'Glugla',
-      country: 'Poland',
-      email: 'gluglawojciech@gmail.com',
-      tel: '123456789',
-      gender: 'Male',
-      experience: 5
-    };
-    yield put(actions.signUpGoogleUserSuccessed(templateUser));
-    yield call(forwardTo, '/register');
-  } catch {
-    yield put(actions.signUpGoogleUserFailed());
+    const response = yield call(fetch, signUpGoogleEndpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        code: `${action.code}`
+      })
+    });
+    const status = response.status;
+    const json = yield response.json();
+    if (status >= 200 && status <= 300) {
+      const templateUser = {
+        firstName: json.firstName,
+        lastName: json.lastName,
+        country: json.country,
+        email: json.email,
+        tel: '',
+        gender: 'Male',
+        experience: 1
+      };
+      yield put(
+        actions.signUpGoogleSuccessed({
+          user: templateUser,
+          registerToken: json.authorizationToken
+        })
+      );
+      yield call(forwardTo, '/register');
+      yield NotificationManager.success(i18n.t('Complete your data to finish registration process.'), i18n.t('Verification successed!'));
+    } else {
+      switch (json.status) {
+        case 409:
+          throw new Error('User already exists! Try to log in.');
+        default:
+          throw new Error('Unexpected problem.');
+      }
+    }
+  } catch (error) {
+    yield put(actions.signUpGoogleFailed());
+    yield NotificationManager.error(i18n.t(error.message), i18n.t('Verification failed!'));
   }
 }
 
-function* signUpUser(action: SignUpRequest) {
+function* confirmGoogleUser(action: IConfirmSignUpRequest) {
   try {
-    const signUpResponse = yield call(fetch, 'https://jsonplaceholder.typicode.com/todos');
-    yield signUpResponse.json();
-    const templateResponse = {
-      user: {
-        firstName: 'Wojciech',
-        lastName: 'Glugla',
-        country: 'Poland',
-        email: 'gluglawojciech@gmail.com',
-        tel: '123456789',
-        gender: 'Male',
-        experience: 5
+    const response = yield call(fetch, confirmGoogleEndpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${action.token}`
       },
-      token: 'template_token123'
-    };
-    yield put(actions.signUpSuccessed(templateResponse));
-    yield call(forwardTo, '/register');
-  } catch {
-    yield put(actions.signUpFailed());
+      body: JSON.stringify({
+        ...action.user
+      })
+    });
+    const json = yield response.json();
+    if (response.status >= 200 && response.status <= 300) {
+      yield put(actions.confirmSignUpSuccessed(json));
+      yield setToken(json.token);
+      yield call(forwardTo, '/');
+      yield NotificationManager.success(i18n.t('Verification successed!'));
+    } else {
+      throw new Error('Unexpected error while confirming Google registration');
+    }
+  } catch (error) {
+    yield put(actions.confirmSignUpFailed());
+    yield NotificationManager.error(i18n.t(error.message), i18n.t('Verification successed!'));
   }
 }
 
 function* mainSaga() {
-  yield takeLatest(SIGN_UP_REQUESTED, signUpUser);
-  yield takeLatest(SIGN_UP_GOOGLE_USER_REQUESTED, signUpGoogleUser);
+  yield takeLatest(SIGN_UP_GOOGLE_REQUESTED, signUpGoogleUser);
+  yield takeLatest(CONFIRM_SIGN_UP_REQUESTED, confirmGoogleUser);
 }
 
 export default mainSaga;
