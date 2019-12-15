@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import * as types from "./types";
 import { useTranslation } from "react-i18next";
 
-const SearchForm = ({
-  onSubmit,
-  geoMode,
-  geoModeChange
-}: types.ISearchFormProps) => {
+const SearchForm = ({ onSubmit }: types.ISearchFormProps) => {
   const { t } = useTranslation();
 
   const [location, setLocation] = useState("");
@@ -21,17 +17,23 @@ const SearchForm = ({
     onSubmit(location);
   };
 
+  const [geoMode, setGeoMode] = useState<boolean>(false);
+
+  const handleGeoModeChange = () => {
+    setGeoMode(geoMode ? !geoMode : !geoMode);
+  };
+
   const geoButton = !geoMode && (
-    <button onClick={geoModeChange}>{t("Set GEO")}</button>
+    <button onClick={handleGeoModeChange}>{t("Set GEO")}</button>
   );
 
   const cancelGeoButton = geoMode && (
-    <button onClick={geoModeChange}>{t("Unset GEO")}</button>
+    <button onClick={handleGeoModeChange}>{t("Unset GEO")}</button>
   );
 
   const radiusInput = geoMode && <input type="number" min="0"></input>;
 
-  //do tego przelacznika setState i metode obslugujaca zmiane
+  //add changeHandler
   const searchSwitch = geoMode && (
     <>
       <label>
