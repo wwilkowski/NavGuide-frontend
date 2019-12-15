@@ -20,7 +20,8 @@ function* logInGoogle(action: types.ILogInGoogleRequest) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        code: action.code
+        code: action.code,
+        request: window.location.host
       })
     });
     const json = yield response.json();
