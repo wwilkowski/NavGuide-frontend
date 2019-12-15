@@ -27,7 +27,7 @@ function* rootSaga() {
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['registration']
+  blacklist: ['registration', 'profile']
 };
 
 export let persistor: Persistor;
