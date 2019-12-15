@@ -1,0 +1,3 @@
+export const TEMP_REQUESTED = 'TEMP_REQUESTED';
+export const TEMP_SUCCESSED = 'TEMP_SUCCESSED';
+export const TEMP_FAILED = 'TEMP_FAILED';

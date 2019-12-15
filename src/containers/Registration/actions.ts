@@ -1,30 +1,36 @@
 import * as constants from './constants';
-import { UserDataType, SignUpResponse } from './types';
+import { IUserData, IConfirmSignUpResponse } from './types';
 
-export const signUpGoogleUserRequest = (code: string) => ({
-  type: constants.SIGN_UP_GOOGLE_USER_REQUESTED,
+export const signUpGoogleRequest = (code: string) => ({
+  type: constants.SIGN_UP_GOOGLE_REQUESTED,
   code
 });
 
-export const signUpGoogleUserSuccessed = (user: UserDataType) => ({
-  type: constants.SIGN_UP_GOOGLE_USER_SUCCESSED,
-  user
-});
+interface signUpGoogleResponse {
+  user: IUserData;
+  registerToken: string;
+}
 
-export const signUpGoogleUserFailed = () => ({
-  type: constants.SIGN_UP_GOOGLE_USER_FAILED
-});
-
-export const signUpRequest = (user: UserDataType) => ({
-  type: constants.SIGN_UP_REQUESTED,
-  user
-});
-
-export const signUpSuccessed = (response: SignUpResponse) => ({
-  type: constants.SIGN_UP_SUCCESSED,
+export const signUpGoogleSuccessed = (response: signUpGoogleResponse) => ({
+  type: constants.SIGN_UP_GOOGLE_SUCCESSED,
   user: response.user,
+  registerToken: response.registerToken
+});
+
+export const signUpGoogleFailed = () => ({
+  type: constants.SIGN_UP_GOOGLE_FAILED
+});
+
+export const confirmSignUpRequest = (user: IUserData, token: string) => ({
+  type: constants.CONFIRM_SIGN_UP_REQUESTED,
+  user,
+  token
+});
+
+export const confirmSignUpSuccessed = (response: IConfirmSignUpResponse) => ({
+  type: constants.CONFIRM_SIGN_UP_SUCCESSED,
   token: response.token
 });
-export const signUpFailed = () => ({
-  type: constants.SIGN_UP_FAILED
+export const confirmSignUpFailed = () => ({
+  type: constants.CONFIRM_SIGN_UP_FAILED
 });
