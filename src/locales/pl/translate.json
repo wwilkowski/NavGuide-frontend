@@ -10,6 +10,13 @@
     "Experience": "Doświadczenie",
     "Submit": "Wyślij",
     "Male": "Mężczyzna",
-    "Female": "Kobieta"
+    "Female": "Kobieta",
+    "Location": "Lokalizacja",
+    "Find": "Szukaj",
+    "Trip number": "Wycieczka numer",
+    "Duration": "Czas trwania",
+    "Number of people (max)": "Liczba osób (max)",
+    "Price": "Cena",
+    "Number of views": "Liczba wyświetleń"
   }
 }

@@ -11,12 +11,12 @@ const Header: React.FC = () => {
   const { t } = useTranslation();
 
   const registrationInProgress = useSelector(
-    (state: StoreType) => state.user.registrationInProgress
+    (state: StoreType) => state.registration.registrationInProgress
   );
 
   const dispatcher = useDispatch();
   const signUpWithUserCode = (code: string) => {
-    dispatcher(actions.signUpUserRequest("test"));
+    dispatcher(actions.signUpGoogleUserRequest("test"));
   };
 
   return (

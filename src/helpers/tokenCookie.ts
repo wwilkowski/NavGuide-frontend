@@ -1,8 +1,9 @@
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
-export const tokenCookieName = 'authToken';
+export const tokenCookieName = "authToken";
 
-export const initTokenCookie = (token: string) => Cookies.set(tokenCookieName, token);
+export const initTokenCookie = (token: string) =>
+  Cookies.set(tokenCookieName, token);
 
 export const ifTokenExists = () => Cookies.get(tokenCookieName) !== undefined;
 
