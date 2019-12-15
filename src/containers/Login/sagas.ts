@@ -35,7 +35,6 @@ function* logInGoogle(action: types.ILogInGoogleRequest) {
     };
     const token = json.token;
     yield put(actions.logInGoogleSuccessed(templateUser));
-    console.log(json);
     yield initTokenCookie(token);
     NotificationManager.success('Zalogowano pomyślnie!');
     yield call(forwardTo, '/profile');

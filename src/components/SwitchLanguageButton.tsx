@@ -11,6 +11,7 @@ const SwitchLanguageButton = ({ code }: SwitchLanguageButtonProps) => {
     <button
       onClick={() => {
         i18n.changeLanguage(code);
+        localStorage.setItem('appLanguage', code);
       }}
     >
       {code}

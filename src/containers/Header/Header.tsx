@@ -30,7 +30,10 @@ const Header: React.FC = () => {
   return (
     <header className={styles.header}>
       <Link to='/'>{t('Home')}</Link>
-      {!registrationInProgress && <GoogleButton text='Sign up with Google' onSuccess={signUpWithUserCode} onFailure={signUpWithUserCode} />}
+      <Link to='/profile'>{t('Profile')}</Link>
+      {!registrationInProgress && !isLoggedIn && (
+        <GoogleButton text='Sign up with Google' onSuccess={signUpWithUserCode} onFailure={signUpWithUserCode} />
+      )}
       {isLoggedIn ? (
         <GoogleButton text='Log out' onSuccess={logout} onFailure={logout} />
       ) : (

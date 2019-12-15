@@ -45,7 +45,7 @@ function* signUpGoogleUser(action: ISignUpGoogleRequest) {
         })
       );
       yield call(forwardTo, '/register');
-      yield NotificationManager.success(i18n.t('Uzupełnij swój profil, aby zakończyć rejestrację'), i18n.t('Verification successed!'));
+      yield NotificationManager.success(i18n.t('Complete your data to finish registration process.'), i18n.t('Verification successed!'));
     } else {
       switch (json.status) {
         case 409:
@@ -76,7 +76,7 @@ function* confirmGoogleUser(action: IConfirmSignUpRequest) {
     if (response.status >= 200 && response.status <= 300) {
       yield put(actions.confirmSignUpSuccessed(json));
       yield setToken(json.token);
-      yield call(forwardTo, '/profile');
+      yield call(forwardTo, '/');
       yield NotificationManager.success(i18n.t('Verification successed!'));
     } else {
       throw new Error('Unexpected error while confirming Google registration');
