@@ -13,6 +13,11 @@ const TripBrowser: React.FC = () => {
   dispatcher(actions.fetchTripsFromStore());
 
   const [trips, setTrips] = useState<ISingleTripType[]>([]);
+  const [geoMode, setGeoMode] = useState<boolean>(false);
+
+  const handleGeoModeChange = () => {
+    setGeoMode(geoMode ? !geoMode : !geoMode);
+  };
 
   //filtrowanie wycieczek
   let filterTripsData: ISingleTripType[] = [];
@@ -25,7 +30,11 @@ const TripBrowser: React.FC = () => {
 
   return (
     <div>
-      <SearchForm onSubmit={onSearchFormSubmit} />
+      <SearchForm
+        onSubmit={onSearchFormSubmit}
+        geoMode={geoMode}
+        geoModeChange={handleGeoModeChange}
+      />
       <ListTrips trips={trips} />
     </div>
   );
