@@ -13,7 +13,7 @@ const forwardTo = (location: string) => {
 };
 
 const signUpGoogleEndpoint = `https://8.ip-164-132-53.eu/auth/google/register`;
-const confirmGoogleEndpoint = `https://8.ip-164-132-53.eu/google/register/confirm`;
+const confirmGoogleEndpoint = `https://8.ip-164-132-53.eu/auth/google/register/confirm`;
 
 function* signUpGoogleUser(action: ISignUpGoogleRequest) {
   try {
