@@ -16,10 +16,11 @@ function* tempSaga() {
       }
     });
     if (response.status >= 200 && response.status <= 300) {
-      throw new Error();
+      const json = yield response.json();
+      yield put(actions.templateSuccessed(json.firstName));
+    } else {
+      throw new Error(response);
     }
-    const json = yield response.json();
-    yield put(actions.templateSuccessed(json.firstName));
   } catch (error) {
     console.log('ERROR', error);
   }

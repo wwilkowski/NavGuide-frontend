@@ -25,7 +25,7 @@ function* signUpGoogleUser(action: ISignUpGoogleRequest) {
       },
       body: JSON.stringify({
         code: `${action.code}`,
-        request: window.location.host
+        request: window.location.origin
       })
     });
     const status = response.status;
