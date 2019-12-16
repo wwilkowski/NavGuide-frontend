@@ -52,9 +52,9 @@ function* logInGoogle(action: types.ILogInGoogleRequest) {
 function* logOutGoogle() {
   try {
     yield put(actions.logOutGoogleSuccessed());
+    yield call(forwardTo, '/');
     yield setToken('');
     NotificationManager.success('Zostaniesz przeniesiony na stronę główną', 'Wylogowanie przebiegło pomyślnie!');
-    yield call(forwardTo, '/');
   } catch {
     NotificationManager.error('Spróbuj ponownie później', 'Coś poszło nie tak!');
     yield put(actions.logOutGoogleFailed());
