@@ -7,7 +7,7 @@ const ListTrips = ({ trips }: types.IListTripsProps) => {
   const { t } = useTranslation();
 
   const listTrips = trips.map((trip: ISingleTripType) => (
-    <div>
+    <>
       <label>
         {t("Trip number")} {trip.id}
       </label>
@@ -25,7 +25,7 @@ const ListTrips = ({ trips }: types.IListTripsProps) => {
       <li key={(trip.id + 4).toString()}>
         {t("Number of vievs")}: {trip.inSearch}
       </li>
-    </div>
+    </>
   ));
 
   return <ul>{listTrips}</ul>;

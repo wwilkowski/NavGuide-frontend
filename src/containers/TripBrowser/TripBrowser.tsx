@@ -5,6 +5,7 @@ import * as actions from "./actions";
 import { StoreType } from "../../store";
 import SearchForm from "../../components/TripBrowser/SearchForm";
 import ListTrips from "../../components/TripBrowser/ListTrips";
+import ListSuggestedTrips from "../../components/TripBrowser/ListSuggestedTrips";
 
 const TripBrowser: React.FC = () => {
   const tripsData = useSelector((state: StoreType) => state.tripBrowser);
@@ -12,10 +13,22 @@ const TripBrowser: React.FC = () => {
   const dispatcher = useDispatch();
   dispatcher(actions.fetchTripsFromStore());
 
-  const [trips, setTrips] = useState<ISingleTripType[]>([]);
-
-  //filtrowanie wycieczek
   let filterTripsData: ISingleTripType[] = [];
+
+  const [suggestedTrips, setSuggestedTrips] = useState<ISingleTripType[]>([]);
+  const onSearchFormChange = (location: string) => {
+    filterTripsData = [];
+    tripsData.trips.forEach((el: ISingleTripType) => {
+      if (
+        el.location.substr(0, location.length) === location &&
+        location.length > 0
+      )
+        filterTripsData.push(el);
+    });
+    setSuggestedTrips(filterTripsData);
+  };
+
+  const [trips, setTrips] = useState<ISingleTripType[]>([]);
   const onSearchFormSubmit = (location: string) => {
     tripsData.trips.forEach((el: ISingleTripType) => {
       if (el.location === location) filterTripsData.push(el);
@@ -25,7 +38,12 @@ const TripBrowser: React.FC = () => {
 
   return (
     <div>
-      <SearchForm onSubmit={onSearchFormSubmit} />
+      <SearchForm
+        onChange={onSearchFormChange}
+        onSubmit={onSearchFormSubmit}
+        trips={trips}
+      />
+      <ListSuggestedTrips trips={suggestedTrips} />
       <ListTrips trips={trips} />
     </div>
   );

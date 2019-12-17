@@ -2,6 +2,7 @@ import { FETCH_TRIPS_REQUESTED } from "./constants";
 import { call, put, takeLatest } from "redux-saga/effects";
 import * as actions from "./actions";
 import { IMultiTripsType } from "./types";
+import TemplateTrips from './TemplateTrips'
 
 function* fetchTripsFromStore() {
   try {
@@ -72,7 +73,7 @@ function* fetchTripsFromStore() {
       ]
     };
 
-    yield put(actions.fetchTripsSuccesed(templateTrips));
+    yield put(actions.fetchTripsSuccesed(TemplateTrips));
   } catch {
     yield put(actions.fetchTripsFailed("Error: can't fetch trips from store"));
   }
