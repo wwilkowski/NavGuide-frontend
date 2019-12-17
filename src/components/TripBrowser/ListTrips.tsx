@@ -3,7 +3,7 @@ import * as types from "./types";
 import { ISingleTripType } from "../../containers/TripBrowser/types";
 import { useTranslation } from "react-i18next";
 
-const ListTrips = ({ trips }: types.IListTripsProps) => {
+const ListTrips = ({ trips, mode }: types.IListTripsProps) => {
   const { t } = useTranslation();
 
   const listTrips = trips.map((trip: ISingleTripType) => (
@@ -28,7 +28,12 @@ const ListTrips = ({ trips }: types.IListTripsProps) => {
     </>
   ));
 
-  return <ul>{listTrips}</ul>;
+  return (
+    <>
+      {mode === "random" ? <p>{t("No trips for your search")}</p> : null}
+      <ul>{listTrips}</ul>
+    </>
+  );
 };
 
 export default ListTrips;

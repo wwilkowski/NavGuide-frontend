@@ -1,6 +1,6 @@
 import { IMultiTripsType } from "./types";
 
-const templateTrips: IMultiTripsType = {
+export const templateTrips: IMultiTripsType = {
   trips: [
     {
       id: 1,
@@ -93,4 +93,4 @@ const templateTrips: IMultiTripsType = {
   ]
 };
 
-export default templateTrips;
+export const templateCities = ["Torun", "Krakow", "Lipka", "Zlotow"];

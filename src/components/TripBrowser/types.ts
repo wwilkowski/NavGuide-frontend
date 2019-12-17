@@ -8,8 +8,10 @@ export interface ISearchFormProps {
 
 export interface IListTripsProps {
   trips: ISingleTripType[];
+  mode: string;
 }
 
 export interface IListSuggestedTripsProps {
-  trips: ISingleTripType[];
+  onCityClick: (location: string) => void;
+  suggestedTrips: string[];
 }

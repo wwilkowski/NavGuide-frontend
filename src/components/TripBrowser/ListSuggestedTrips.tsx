@@ -1,15 +1,21 @@
 import React from "react";
 import { IListSuggestedTripsProps } from "./types";
-import { ISingleTripType } from "../../containers/TripBrowser/types";
 
-const ListSuggestedTrips = ({ trips }: IListSuggestedTripsProps) => {
-  const suggestedTrips = trips.map((trip: ISingleTripType) => (
-    <>
-      <li onClick={() => console.log(trip.location)}>{trip.location}</li>
-    </>
-  ));
-
-  return <ul>{suggestedTrips}</ul>;
+const ListSuggestedTrips = ({
+  onCityClick,
+  suggestedTrips
+}: IListSuggestedTripsProps) => {
+  return (
+    <ul>
+      {suggestedTrips.map((trip: string, index: number) => (
+        <>
+          <li key={index.toString()} onClick={() => onCityClick(trip)}>
+            {trip}
+          </li>
+        </>
+      ))}
+    </ul>
+  );
 };
 
 export default ListSuggestedTrips;

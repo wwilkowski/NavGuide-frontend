@@ -13,7 +13,6 @@ const SearchForm = ({ onChange, onSubmit }: types.ISearchFormProps) => {
   };
   const handleFormSubmit = (event: React.FormEvent<EventTarget>) => {
     event.preventDefault();
-    setLocation("");
     onSubmit(location);
   };
 

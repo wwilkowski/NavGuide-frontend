@@ -17,6 +17,8 @@
     "Duration": "Czas trwania",
     "Number of people (max)": "Liczba osób (max)",
     "Price": "Cena",
-    "Number of views": "Liczba wyświetleń"
+    "Number of views": "Liczba wyświetleń",
+    "Set GEO": "Ustaw GEO",
+    "Unset GEO": "Usuń GEO"
   }
 }
