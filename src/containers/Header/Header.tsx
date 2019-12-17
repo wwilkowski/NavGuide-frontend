@@ -8,6 +8,7 @@ import SwitchLanguageButton from '../../components/SwitchLanguageButton';
 import { StoreType } from '../../store';
 import { useTranslation } from 'react-i18next';
 import styles from './Header.module.scss';
+import LogoutButton from '../../components/LogoutButton/LogoutButton';
 
 const Header: React.FC = () => {
   const { t } = useTranslation();
@@ -23,8 +24,8 @@ const Header: React.FC = () => {
     dispatcher(logInGoogleRequest(code));
   };
 
-  const logout = (code: string) => {
-    dispatcher(logOutGoogleRequest(code));
+  const logout = () => {
+    dispatcher(logOutGoogleRequest());
   };
 
   return (
@@ -35,7 +36,7 @@ const Header: React.FC = () => {
         <GoogleButton text='Sign up with Google' onSuccess={signUpWithUserCode} onFailure={signUpWithUserCode} />
       )}
       {isLoggedIn ? (
-        <GoogleButton text='Log out' onSuccess={logout} onFailure={logout} />
+        <LogoutButton onClick={logout} />
       ) : (
         <GoogleButton text='Sign in with Google' onSuccess={signInWithUserCode} onFailure={signInWithUserCode} />
       )}

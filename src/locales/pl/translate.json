@@ -24,6 +24,18 @@
     "You're logged in!": "Jesteś zalogowany!",
     "Complete your data to finish registration process.": "Uzupełnij swój profil, aby zakończyć rejestrację.",
     "Verification failed!": "Weryfikacja nie powiodła się!",
-    "User already exists! Try to log in.": "Użytkownik już istnieje. Spróbuj się zalogować."
+    "User already exists! Try to log in.": "Użytkownik już istnieje. Spróbuj się zalogować.",
+    "You are not logged in!": "Nie jesteś zalogowany!",
+    "You will be taken to the main page!": "Zostaniesz przeniesiony na stronę główną!",
+    "Logged out successfully": "Wylogowano pomyślnie",
+    "Something goes wrong": "Coś poszło nie tak",
+    "Try again later!": "Spróbuj ponownie później!",
+    "Logged in successfully!": "Zalogowano pomyślnie!",
+    "Form warning": "Błąd formularza",
+    "First name is required!": "Imię jest wymagane!",
+    "Last name is required!": "Nazwisko jest wymagane!",
+    "Country is required!": "Państwo jest wymagane!",
+    "Telephone number is required!": "Państwo jest wymagane",
+    "Input is not valid!": "Niepoprawne dane!"
   }
 }

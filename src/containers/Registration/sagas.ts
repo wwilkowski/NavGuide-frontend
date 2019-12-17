@@ -1,12 +1,13 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { SIGN_UP_GOOGLE_REQUESTED, CONFIRM_SIGN_UP_REQUESTED } from './constants';
+import { logInGoogleSuccessed } from '../Login/actions';
 
 import history from '../../history';
 import * as actions from './actions';
 import { IConfirmSignUpRequest, ISignUpGoogleRequest } from './types';
 import { NotificationManager } from 'react-notifications';
 import i18n from '../../locales/i18n';
-import { setToken } from '../../helpers/tokenCookie';
+import { initTokenCookie } from '../../helpers/tokenCookie';
 
 const forwardTo = (location: string) => {
   history.push(location);
@@ -77,15 +78,16 @@ function* confirmGoogleUser(action: IConfirmSignUpRequest) {
     const json = yield response.json();
     if (response.status >= 200 && response.status <= 300) {
       yield put(actions.confirmSignUpSuccessed(json));
-      yield setToken(json.token);
+      yield initTokenCookie(json.token);
+      yield put(logInGoogleSuccessed(action.user));
       yield call(forwardTo, '/');
       yield NotificationManager.success(i18n.t('Verification successed!'));
     } else {
       throw new Error('Unexpected error while confirming Google registration');
     }
   } catch (error) {
+    yield NotificationManager.error(i18n.t(error.message), i18n.t('Validation error!'));
     yield put(actions.confirmSignUpFailed());
-    yield NotificationManager.error(i18n.t(error.message), i18n.t('Verification successed!'));
   }
 }
 

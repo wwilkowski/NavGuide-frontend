@@ -19,7 +19,7 @@ const Profile = () => {
 
   useEffect(() => {
     if (!loggedIn) {
-      NotificationManager.warning(t('You are not logged in!'), t('Warning!'));
+      NotificationManager.warning(t('You are not logged in!'), t('Warning'));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

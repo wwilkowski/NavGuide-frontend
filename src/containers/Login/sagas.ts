@@ -5,6 +5,7 @@ import * as actions from './actions';
 import * as constants from './constants';
 import * as types from './types';
 import { NotificationManager } from 'react-notifications';
+import i18n from '../../locales/i18n';
 
 const forwardTo = (location: string) => {
   history.push(location);
@@ -26,6 +27,7 @@ function* logInGoogle(action: types.ILogInGoogleRequest) {
     });
     if (response.status >= 200 && response.status <= 300) {
       const json = yield response.json();
+      console.log(json);
       const templateUser = {
         firstName: 'Wojciech',
         lastName: 'Glugla',
@@ -38,13 +40,13 @@ function* logInGoogle(action: types.ILogInGoogleRequest) {
       const token = json.token;
       yield put(actions.logInGoogleSuccessed(templateUser));
       yield initTokenCookie(token);
-      NotificationManager.success('Zalogowano pomyślnie!');
+      NotificationManager.success(i18n.t('Logged in successfully!'));
       yield call(forwardTo, '/profile');
     } else {
       throw new Error();
     }
   } catch {
-    NotificationManager.error('Spróbuj ponownie później', 'Coś poszło nie tak!');
+    NotificationManager.error('Try again later!', 'Something goes wrong');
     yield put(actions.logInGoogleFailed());
   }
 }
@@ -54,9 +56,9 @@ function* logOutGoogle() {
     yield put(actions.logOutGoogleSuccessed());
     yield call(forwardTo, '/');
     yield setToken('');
-    NotificationManager.success('Zostaniesz przeniesiony na stronę główną', 'Wylogowanie przebiegło pomyślnie!');
+    NotificationManager.success('You will be taken to the main page!', 'Logged out successfully');
   } catch {
-    NotificationManager.error('Spróbuj ponownie później', 'Coś poszło nie tak!');
+    NotificationManager.error('Try again later!', 'Something goes wrong');
     yield put(actions.logOutGoogleFailed());
   }
 }

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as Yup from 'yup';
 import { withFormik, FormikProps, Form, Field } from 'formik';
 import { IUserData } from '../../containers/Registration/types';
 import { useTranslation } from 'react-i18next';
+import { NotificationManager } from 'react-notifications';
+import i18n from '../../locales/i18n';
 
 export interface FormValues {
   firstName: string;
@@ -14,46 +16,58 @@ export interface FormValues {
   experience: number;
 }
 
+const regex = {
+  firstName: /([a-zA-Z',.-]+( [a-zA-Z',.-]+)*){1,100}/,
+  lastName: /([a-zA-Z',.-]+( [a-zA-Z',.-]+)*){1,100}/,
+  country: /([a-zA-Z',.-]+( [a-zA-Z',.-]+)*){1,100}/,
+  phone: /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+};
+
 const SignupSchema = Yup.object().shape({
   firstName: Yup.string()
-    .min(5, 'Too short!')
-    .max(45, 'Too long!')
-    .required('Required!'),
+    .matches(regex.firstName, i18n.t('Input is not valid!'))
+    .required('First name is required!'),
   lastName: Yup.string()
-    .min(5, 'Too short!')
-    .max(45, 'Too long!')
-    .required('Required!'),
+    .matches(regex.lastName, i18n.t('Input is not valid!'))
+    .required('Last name is required!'),
   country: Yup.string()
-    .min(2, 'Too short!')
-    .max(45, 'Too long!')
-    .required('Required!'),
+    .matches(regex.country, i18n.t('Input is not valid!'))
+    .required('Country is required!'),
   tel: Yup.string()
-    .min(5, 'Too short!')
-    .max(45, 'Too long!')
-    .required('Required!')
+    .matches(regex.phone, i18n.t('Input is not valid!'))
+    .required('Telephone number is required!')
 });
 
 const InnerForm = (props: FormikProps<FormValues>) => {
   const { t } = useTranslation();
   const { touched, errors, isSubmitting } = props;
+
+  useEffect(() => {
+    if (Object.keys(errors).length !== 0 && isSubmitting) {
+      Object.values(errors).forEach(error => {
+        NotificationManager.warning(t(`${error}`), t('Form warning'));
+      });
+    }
+  }, [errors, isSubmitting, t]);
+
   return (
     <Form>
       <h1>{t('Register Form')}</h1>
       <label htmlFor='firstName'>{t('First name')}</label>
       <Field id='firstName' type='text' name='firstName' />
-      {touched.firstName && errors.firstName && <div>{errors.firstName}</div>}
+      {errors.firstName && touched.firstName && <div>{t(errors.firstName)}</div>}
 
       <label htmlFor='lastName'>{t('Last name')}</label>
       <Field id='lastName' type='text' name='lastName' />
-      {touched.lastName && errors.lastName && <div>{errors.lastName}</div>}
+      {errors.lastName && touched.lastName && <div>{t(errors.lastName)}</div>}
 
       <label htmlFor='country'>{t('Country')}</label>
       <Field id='country' type='text' name='country' />
-      {touched.country && errors.country && <div>{errors.country}</div>}
+      {errors.country && touched.country && <div>{t(errors.country)}</div>}
 
       <label htmlFor='tel'>{t('Tel.')}</label>
       <Field id='tel' type='text' name='tel' />
-      {touched.tel && errors.tel && <div>{errors.tel}</div>}
+      {errors.tel && touched.tel && <div>{t(errors.tel)}</div>}
 
       <label htmlFor='gender'>{t('Gender')}</label>
       <Field as='select' id='gender' name='gender'>

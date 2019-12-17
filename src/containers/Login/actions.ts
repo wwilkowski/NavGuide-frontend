@@ -15,9 +15,8 @@ export const logInGoogleFailed = () => ({
   type: constants.LOG_IN_GOOGLE_FAILED
 });
 
-export const logOutGoogleRequest = (code: string) => ({
-  type: constants.LOG_OUT_GOOGLE_REQUESTED,
-  code
+export const logOutGoogleRequest = () => ({
+  type: constants.LOG_OUT_GOOGLE_REQUESTED
 });
 
 export const logOutGoogleSuccessed = () => ({
