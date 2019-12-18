@@ -30,7 +30,7 @@ const ListTrips = ({ trips, mode }: types.IListTripsProps) => {
 
   return (
     <>
-      {mode === "random" ? <p>{t("No trips for your search")}</p> : null}
+      {mode === "random" ? <p>{t("No trips in this place")}</p> : null}
       <ul>{listTrips}</ul>
     </>
   );

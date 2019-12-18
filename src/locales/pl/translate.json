@@ -19,6 +19,9 @@
     "Price": "Cena",
     "Number of views": "Liczba wyświetleń",
     "Set GEO": "Ustaw GEO",
-    "Unset GEO": "Usuń GEO"
+    "Unset GEO": "Usuń GEO",
+    "Form is empty": "Formularz jest pusty",
+    "Warning": "Ostrzeżenie",
+    "No trips in this place": "Brak wycieczek w tym miejscu"
   }
 }

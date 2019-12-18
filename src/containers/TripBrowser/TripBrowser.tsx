@@ -7,27 +7,30 @@ import SearchForm from "../../components/TripBrowser/SearchForm";
 import ListTrips from "../../components/TripBrowser/ListTrips";
 import ListSuggestedTrips from "../../components/TripBrowser/ListSuggestedTrips";
 import { templateCities } from "./TemplateTrips";
+import { useTranslation } from "react-i18next";
 
 const TripBrowser: React.FC = () => {
+  const { t } = useTranslation();
+
   const [mode, setMode] = useState<string>("");
   const generateRandomTrips = () => {
     let randomId: number = 0;
     const min = 1;
     const max = tripsData.trips.length;
 
-
-    //i ustala ile ma wylosowac wycieczek (czasami pojawia sie jedna wiecej???)
+    //i ustala ile ma wylosowac wycieczek (czasami pojawia sie jedna wiecej???) usunac duplikaty
     let i = 0;
     while (i < 5) {
       randomId = Math.floor(Math.random() * (max - min) + min);
 
       tripsData.trips.forEach((el: ISingleTripType) => {
-        if (el.id === randomId && !filterTripsData.includes(el)) {
+        if (!filterTripsData.includes(el) && el.id === randomId) {
           filterTripsData.push(el);
           i++;
         }
       });
     }
+
     setSearchedTrips(filterTripsData);
     setMode("random");
   };
@@ -59,6 +62,13 @@ const TripBrowser: React.FC = () => {
         });
     setSuggestedTrips([]);
     setSearchedTrips(filterTripsData);
+    setFormValue(location);
+  };
+
+  ////////////////////////////////////////////
+  const [formValue, setFormValue] = useState<string>("");
+  const handleCityHover = (location: string) => {
+    setFormValue(location);
   };
 
   return (
@@ -66,10 +76,11 @@ const TripBrowser: React.FC = () => {
       <SearchForm
         onChange={onSearchFormChange}
         onSubmit={onSearchFormSubmit}
-        trips={searchedTrips}
+        value={formValue}
       />
       <ListSuggestedTrips
         onCityClick={onSearchFormSubmit}
+        onCityHover={handleCityHover}
         suggestedTrips={suggestedTrips}
       />
       <ListTrips trips={searchedTrips} mode={mode} />
