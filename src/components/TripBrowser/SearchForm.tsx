@@ -1,19 +1,24 @@
 import React, { useState } from "react";
 import * as types from "./types";
 import { useTranslation } from "react-i18next";
-import ListSuggestedTrips from "./ListSuggestedTrips";
+import { NotificationManager } from "react-notifications";
 
-const SearchForm = ({ onChange, onSubmit }: types.ISearchFormProps) => {
+const SearchForm = ({ onChange, onSubmit, value }: types.ISearchFormProps) => {
   const { t } = useTranslation();
 
-  const [location, setLocation] = useState<string>("");
+  //nie ustawia sie location na value
+  const [location, setLocation] = useState<string>(value);
+
   const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLocation(event.target.value);
     onChange(event.target.value);
   };
   const handleFormSubmit = (event: React.FormEvent<EventTarget>) => {
     event.preventDefault();
-    onSubmit(location);
+
+    location !== ""
+      ? onSubmit(location)
+      : NotificationManager.warning(t("Form is empty"), t("Warning"));
   };
 
   const [geoMode, setGeoMode] = useState<boolean>(false);

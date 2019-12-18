@@ -11,18 +11,18 @@ const ListTrips = ({ trips, mode }: types.IListTripsProps) => {
       <label>
         {t("Trip number")} {trip.id}
       </label>
-      <li key={trip.id.toString()}>{trip.location}</li>
-      <li key={(trip.id + 1).toString()}>
+      <li key={trip.id.toString() + "location"}>{trip.location}</li>
+      <li key={(trip.id).toString() + "duration"}>
         {t("Duration")}: {trip.begin} - {trip.end}
       </li>
-      <li key={(trip.id + 2).toString()}>
+      <li key={(trip.id).toString() + "maxPeople"}>
         {t("Number of people (max)")}: {trip.maxPeople}
       </li>
-      <li key={(trip.id + 3).toString()}>
+      <li key={(trip.id).toString() + "price"}>
         {t("Price")}: {trip.price}
         {trip.priceType}
       </li>
-      <li key={(trip.id + 4).toString()}>
+      <li key={(trip.id).toString() + "numberOFVievs"}>
         {t("Number of vievs")}: {trip.inSearch}
       </li>
     </>
@@ -30,7 +30,7 @@ const ListTrips = ({ trips, mode }: types.IListTripsProps) => {
 
   return (
     <>
-      {mode === "random" ? <p>{t("No trips for your search")}</p> : null}
+      {mode === "random" ? <p>{t("No trips in this place")}</p> : null}
       <ul>{listTrips}</ul>
     </>
   );
