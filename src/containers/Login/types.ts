@@ -3,9 +3,9 @@ export interface IUserData {
   lastName: string;
   country: string;
   email: string;
-  tel: string;
+  telephone: string;
   gender: string;
-  experience: number;
+  experience: string;
 }
 export interface ILogInSuccessedAction {
   type: string;

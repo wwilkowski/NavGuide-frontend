@@ -9,6 +9,7 @@ const SwitchLanguageButton = ({ code }: SwitchLanguageButtonProps) => {
   const { i18n } = useTranslation();
   return (
     <button
+      className='button'
       onClick={() => {
         i18n.changeLanguage(code);
         localStorage.setItem('appLanguage', code);

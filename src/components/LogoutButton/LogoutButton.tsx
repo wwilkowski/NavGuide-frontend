@@ -7,7 +7,11 @@ interface IProps {
 
 const LogoutButton = ({ onClick }: IProps) => {
   const { t } = useTranslation();
-  return <button onClick={onClick}>{t('Logout')}</button>;
+  return (
+    <button className='button is-danger' onClick={onClick}>
+      {t('Logout')}
+    </button>
+  );
 };
 
 export default LogoutButton;
