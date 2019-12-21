@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { SIGN_UP_GOOGLE_REQUESTED, CONFIRM_SIGN_UP_REQUESTED } from './constants';
+import { SIGN_UP_GOOGLE_REQUESTED, CONFIRM_SIGN_UP_REQUESTED, GET_INTERESTS_REQUESTED } from './constants';
 import { logInGoogleSuccessed } from '../Login/actions';
 
 import history from '../../history';
@@ -15,6 +15,7 @@ const forwardTo = (location: string) => {
 
 const signUpGoogleEndpoint = `https://8.ip-164-132-53.eu/auth/google/register`;
 const confirmGoogleEndpoint = `https://8.ip-164-132-53.eu/auth/google/register/confirm`;
+const interestsEndpoint = `https://8.ip-164-132-53.eu/interests`;
 
 function* signUpGoogleUser(action: ISignUpGoogleRequest) {
   try {
@@ -37,9 +38,9 @@ function* signUpGoogleUser(action: ISignUpGoogleRequest) {
         lastName: json.lastName,
         country: json.country,
         email: json.email,
-        tel: '',
-        gender: 'Male',
-        experience: 1
+        telephone: '',
+        gender: 'Female',
+        experience: 'NOVICE'
       };
       yield put(
         actions.signUpGoogleSuccessed({
@@ -91,9 +92,20 @@ function* confirmGoogleUser(action: IConfirmSignUpRequest) {
   }
 }
 
+function* getInterests() {
+  try {
+    const response = yield call(fetch, interestsEndpoint);
+    const json = yield response.json();
+    yield put(actions.getInterestsSuccessed(json));
+  } catch (error) {
+    yield put(actions.getInterestsFailed());
+  }
+}
+
 function* mainSaga() {
   yield takeLatest(SIGN_UP_GOOGLE_REQUESTED, signUpGoogleUser);
   yield takeLatest(CONFIRM_SIGN_UP_REQUESTED, confirmGoogleUser);
+  yield takeLatest(GET_INTERESTS_REQUESTED, getInterests);
 }
 
 export default mainSaga;

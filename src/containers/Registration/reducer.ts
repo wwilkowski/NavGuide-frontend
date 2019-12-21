@@ -1,27 +1,34 @@
-import { SIGN_UP_GOOGLE_SUCCESSED } from './constants';
-import { ISignUpGoogleSuccessedAction, IRegisterStore } from './types';
+import * as constants from './constants';
+import * as types from './types';
 
-const initialState: IRegisterStore = {
+const initialState: types.IRegisterStore = {
   user: {
     firstName: '',
     lastName: '',
     country: '',
     email: '',
-    tel: '',
+    telephone: '',
     gender: '',
-    experience: 1
+    experience: ''
   },
   registrationInProgress: false,
-  registrationToken: ''
+  registrationToken: '',
+  interests: []
 };
 
-const RegistrationReducer = (state = initialState, action: ISignUpGoogleSuccessedAction) => {
+const RegistrationReducer = (state = initialState, action: types.ISignUpActionType) => {
   switch (action.type) {
-    case SIGN_UP_GOOGLE_SUCCESSED:
+    case constants.SIGN_UP_GOOGLE_SUCCESSED:
       return {
+        ...state,
         user: action.user,
         registrationInProgress: true,
         registrationToken: action.registerToken
+      };
+    case constants.GET_INTERESTS_SUCCESSED:
+      return {
+        ...state,
+        interests: action.interests
       };
     default:
       return state;
