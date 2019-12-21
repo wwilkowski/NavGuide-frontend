@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as types from "./types";
 import { useTranslation } from "react-i18next";
 import { NotificationManager } from "react-notifications";
@@ -6,8 +6,17 @@ import { NotificationManager } from "react-notifications";
 const SearchForm = ({ onChange, onSubmit, value }: types.ISearchFormProps) => {
   const { t } = useTranslation();
 
-  //nie ustawia sie location na value
-  const [location, setLocation] = useState<string>(value);
+  const [radius, setRadius] = useState<string>("");
+  const [location, setLocation] = useState<string>("");
+  useEffect(() => {
+    setLocation(value);
+  }, [value]);
+
+  //HANDLE FORM METHODS
+
+  const handleRadiusChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRadius(event.target.value);
+  };
 
   const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLocation(event.target.value);
@@ -16,11 +25,21 @@ const SearchForm = ({ onChange, onSubmit, value }: types.ISearchFormProps) => {
   const handleFormSubmit = (event: React.FormEvent<EventTarget>) => {
     event.preventDefault();
 
-    location !== ""
-      ? onSubmit(location)
-      : NotificationManager.warning(t("Form is empty"), t("Warning"));
+    if (searchMode === "location") {
+      !location
+        ? NotificationManager.warning(t("Form is empty"), t("Warning"))
+        : onSubmit(location, searchMode);
+    } else if (searchMode === "geo") {
+      !radius
+        ? NotificationManager.warning(
+            t("Please set radius first"),
+            t("Warning")
+          )
+        : onSubmit(radius, searchMode);
+    }
   };
 
+  //ENABLE GEO BUTTON
   const [geoMode, setGeoMode] = useState<boolean>(false);
   const handleGeoModeChange = () => {
     setGeoMode(geoMode ? !geoMode : !geoMode);
@@ -31,13 +50,26 @@ const SearchForm = ({ onChange, onSubmit, value }: types.ISearchFormProps) => {
   const cancelGeoButton = geoMode && (
     <button onClick={handleGeoModeChange}>{t("Unset GEO")}</button>
   );
-  const radiusInput = geoMode && <input type="number" min="0"></input>;
+  const radiusInput = geoMode && (
+    <input
+      type="number"
+      min="0"
+      value={radius}
+      onChange={handleRadiusChange}
+    ></input>
+  );
 
-  const [selectedOption, setSelectedOption] = useState<string>("");
+  //SEARCH SWITCHES
+  const [searchMode, setSearchMode] = useState<string>("location");
+  const [selectedOption, setSelectedOption] = useState<string>("location");
   const handleSelectedOptionChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setSelectedOption(event.target.value);
+
+    event.target.value === "location"
+      ? setSearchMode("location")
+      : setSearchMode("geo");
   };
   const searchSwitches = geoMode && (
     <>

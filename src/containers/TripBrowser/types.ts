@@ -1,4 +1,4 @@
-import { SignPrivateKeyInput } from "crypto";
+import { useState, useEffect } from "react";
 import {
   FILTER_TRIPS,
   FETCH_TRIPS_REQUESTED,
@@ -8,13 +8,15 @@ import {
 export interface ISingleTripType {
   id: number;
   location: string;
-  radius: number;
   begin: string;
   end: string;
   maxPeople: number;
   price: number;
   priceType: string;
   inSearch: number;
+  lat: number;
+  lon: number;
+  radius: number;
 }
 
 export interface IMultiTripsType {
@@ -39,3 +41,46 @@ export type TripBrowserAction =
 export interface IFetchTripsRequest {
   type: typeof FETCH_TRIPS_REQUESTED;
 }
+
+//hook, ktory pobiera lokalizaccje
+
+interface IGeoLocationProps {
+  coords: {
+    latitude: number;
+    longitude: number;
+  };
+}
+
+interface IPositionData {
+  latitude: number;
+  longitude: number;
+}
+
+const initialPosition: IPositionData = {
+  latitude: 0,
+  longitude: 0
+};
+
+export const usePosition = () => {
+  const [position, setPosition] = useState<IPositionData>(initialPosition);
+
+  const onChange = ({ coords }: IGeoLocationProps) => {
+    setPosition({
+      latitude: coords.latitude,
+      longitude: coords.longitude
+    });
+  };
+
+  useEffect(() => {
+    const geo = navigator.geolocation;
+    if (!geo) {
+      console.log("GeoLocation doesn't supported");
+    }
+
+    const watcher = geo.watchPosition(onChange);
+
+    return () => geo.clearWatch(watcher);
+  }, []);
+
+  return { ...position };
+};

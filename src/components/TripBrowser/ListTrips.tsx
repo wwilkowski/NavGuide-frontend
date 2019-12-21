@@ -6,32 +6,36 @@ import { useTranslation } from "react-i18next";
 const ListTrips = ({ trips, mode }: types.IListTripsProps) => {
   const { t } = useTranslation();
 
-  const listTrips = trips.map((trip: ISingleTripType) => (
-    <>
-      <label>
-        {t("Trip number")} {trip.id}
-      </label>
-      <li key={trip.id.toString() + "location"}>{trip.location}</li>
-      <li key={(trip.id).toString() + "duration"}>
-        {t("Duration")}: {trip.begin} - {trip.end}
-      </li>
-      <li key={(trip.id).toString() + "maxPeople"}>
-        {t("Number of people (max)")}: {trip.maxPeople}
-      </li>
-      <li key={(trip.id).toString() + "price"}>
-        {t("Price")}: {trip.price}
-        {trip.priceType}
-      </li>
-      <li key={(trip.id).toString() + "numberOFVievs"}>
-        {t("Number of vievs")}: {trip.inSearch}
-      </li>
-    </>
-  ));
-
   return (
     <>
       {mode === "random" ? <p>{t("No trips in this place")}</p> : null}
-      <ul>{listTrips}</ul>
+      <ul>
+        {trips.map((trip: ISingleTripType) => (
+          <li key={trip.id}>
+            <p>
+              {t("Trip number") + " "}
+              {trip.id}
+            </p>
+            <p>{trip.location}</p>
+            <p>
+              {" "}
+              {t("Duration")}: {trip.begin} - {trip.end}
+            </p>
+            <p>
+              {" "}
+              {t("Number of people (max)")}: {trip.maxPeople}
+            </p>
+            <p>
+              {t("Price")}: {trip.price}
+              {trip.priceType}
+            </p>
+            <p>
+              {" "}
+              {t("Number of vievs")}: {trip.inSearch}
+            </p>
+          </li>
+        ))}
+      </ul>
     </>
   );
 };

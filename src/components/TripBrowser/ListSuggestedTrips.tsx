@@ -9,15 +9,13 @@ const ListSuggestedTrips = ({
   return (
     <ul>
       {suggestedTrips.map((trip: string, index: number) => (
-        <>
-          <li
-            key={index.toString()}
-            onClick={() => onCityClick(trip)}
-            onMouseEnter={() => onCityHover(trip)}
-          >
-            {trip}
-          </li>
-        </>
+        <li
+          key={index.toString()}
+          onClick={() => onCityClick(trip, "location")}
+          onMouseEnter={() => onCityHover(trip)}
+        >
+          {trip}
+        </li>
       ))}
     </ul>
   );
