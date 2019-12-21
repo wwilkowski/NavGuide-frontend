@@ -1,26 +1,31 @@
 import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { withFormik, FormikProps, Form, Field } from 'formik';
 import { IUserData } from '../../containers/Registration/types';
 import { useTranslation } from 'react-i18next';
 import { NotificationManager } from 'react-notifications';
 import i18n from '../../locales/i18n';
+import Checkbox from '../../shared/Checkbox';
+import { StoreType } from '../../store';
+import countryCodes from '../../helpers/countryCodes.json';
 
 export interface FormValues {
   firstName: string;
   lastName: string;
   country: string;
   email: string;
-  tel: string;
+  telephone: string;
   gender: string;
-  experience: number;
+  experience: string;
+  interests: number[];
 }
 
 const regex = {
   firstName: /([a-zA-Z',.-]+( [a-zA-Z',.-]+)*){1,100}/,
   lastName: /([a-zA-Z',.-]+( [a-zA-Z',.-]+)*){1,100}/,
   country: /([a-zA-Z',.-]+( [a-zA-Z',.-]+)*){1,100}/,
-  phone: /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+  telephone: /^\d{9}$/
 };
 
 const SignupSchema = Yup.object().shape({
@@ -30,18 +35,16 @@ const SignupSchema = Yup.object().shape({
   lastName: Yup.string()
     .matches(regex.lastName, i18n.t('Input is not valid!'))
     .required('Last name is required!'),
-  country: Yup.string()
-    .matches(regex.country, i18n.t('Input is not valid!'))
-    .required('Country is required!'),
-  tel: Yup.string()
-    .matches(regex.phone, i18n.t('Input is not valid!'))
+  telephone: Yup.string()
+    .matches(regex.telephone, i18n.t('Input is not valid!'))
     .required('Telephone number is required!')
 });
 
 const InnerForm = (props: FormikProps<FormValues>) => {
   const { t } = useTranslation();
-  const { touched, errors, isSubmitting } = props;
+  const interests = useSelector((state: StoreType) => state.registration.interests);
 
+  const { touched, errors, isSubmitting } = props;
   useEffect(() => {
     if (Object.keys(errors).length !== 0 && isSubmitting) {
       Object.values(errors).forEach(error => {
@@ -49,45 +52,87 @@ const InnerForm = (props: FormikProps<FormValues>) => {
       });
     }
   }, [errors, isSubmitting, t]);
-
   return (
-    <Form>
-      <h1>{t('Register Form')}</h1>
-      <label htmlFor='firstName'>{t('First name')}</label>
-      <Field id='firstName' type='text' name='firstName' />
-      {errors.firstName && touched.firstName && <div>{t(errors.firstName)}</div>}
+    <div className='section'>
+      <Form>
+        <h1 className='title'>{t('Register Form')}</h1>
+        <div className='field'>
+          <label className='label' htmlFor='firstName'>
+            {t('First name')}
+          </label>
+          <Field className='input' id='firstName' type='text' name='firstName' />
+          {errors.firstName && touched.firstName && <div>{t(errors.firstName)}</div>}
+        </div>
 
-      <label htmlFor='lastName'>{t('Last name')}</label>
-      <Field id='lastName' type='text' name='lastName' />
-      {errors.lastName && touched.lastName && <div>{t(errors.lastName)}</div>}
+        <div className='field'>
+          <label className='label' htmlFor='lastName'>
+            {t('Last name')}
+          </label>
+          <Field className='input' id='lastName' type='text' name='lastName' />
+          {errors.lastName && touched.lastName && <div>{t(errors.lastName)}</div>}
+        </div>
+        <div className='select is-multiple'>
+          <label className='label' htmlFor='country'>
+            {t('Country')}
+          </label>
+          <Field as='select' id='country' name='country'>
+            {countryCodes.map(country => (
+              <option value={country.code}>{t(country.name)}</option>
+            ))}
+            <option value='male'>{t('Male')}</option>
+            <option value='female'>{t('Female')}</option>
+          </Field>
+        </div>
 
-      <label htmlFor='country'>{t('Country')}</label>
-      <Field id='country' type='text' name='country' />
-      {errors.country && touched.country && <div>{t(errors.country)}</div>}
+        <div className='field'>
+          <label className='label' htmlFor='tel'>
+            {t('Telephone')}
+          </label>
+          <Field className='input' id='telephone' type='text' name='telephone' />
+          {errors.telephone && touched.telephone && <div>{t(errors.telephone)}</div>}
+        </div>
 
-      <label htmlFor='tel'>{t('Tel.')}</label>
-      <Field id='tel' type='text' name='tel' />
-      {errors.tel && touched.tel && <div>{t(errors.tel)}</div>}
+        <div className='field'>
+          <label className='label' htmlFor='gender'>
+            {t('Gender')}
+          </label>
+          <div className='select'>
+            <Field as='select' id='gender' name='gender'>
+              <option value='male'>{t('Male')}</option>
+              <option value='female'>{t('Female')}</option>
+            </Field>
+          </div>
+        </div>
 
-      <label htmlFor='gender'>{t('Gender')}</label>
-      <Field as='select' id='gender' name='gender'>
-        <option value='male'>{t('Male')}</option>
-        <option value='female'>{t('Female')}</option>
-      </Field>
+        <div className='field'>
+          <label className='label' htmlFor='experience'>
+            {t('Experience')}
+          </label>
+          <div className='select'>
+            <Field as='select' id='experience' name='experience'>
+              <option value='AMBASSADOR'>ambassador</option>
+              <option value='EXPERT'>expert</option>
+              <option value='ADEPT'>adept</option>
+              <option value='COMPETENT'>competent</option>
+              <option value='EXPERIENCED'>experienced</option>
+              <option value='NOVICE'>novice</option>
+            </Field>
+          </div>
+        </div>
 
-      <label htmlFor='experience'>{t('Experience')}</label>
-      <Field as='select' id='experience' name='experience'>
-        <option value='1'>1</option>
-        <option value='2'>2</option>
-        <option value='3'>3</option>
-        <option value='4'>4</option>
-        <option value='5'>5</option>
-      </Field>
+        <div className='field'>
+          {interests.map(interest => (
+            <label key={interest.id} className='checkbox' htmlFor={interest.name}>
+              <Checkbox id='interests' name='interests' value={interest.name} valueKey={interest.id} />
+            </label>
+          ))}
+        </div>
 
-      <button type='submit' disabled={isSubmitting}>
-        {t('Submit')}
-      </button>
-    </Form>
+        <button className='button is-primary' type='submit' disabled={isSubmitting}>
+          {t('Submit')}
+        </button>
+      </Form>
+    </div>
   );
 };
 
@@ -98,15 +143,16 @@ interface MyFormProps {
 
 const MyForm = withFormik<MyFormProps, FormValues>({
   mapPropsToValues: (props: MyFormProps) => {
-    const { firstName, lastName, country, email, tel, gender, experience } = props.user;
+    const { firstName, lastName, country, email, telephone, gender, experience } = props.user;
     return {
       firstName: firstName || '',
       lastName: lastName || '',
-      country: country || '',
+      country: country.toUpperCase() || 'PL',
       email: email || '',
-      tel: tel || '',
+      telephone: telephone || '',
       gender: gender || '',
-      experience: experience || 1
+      experience: experience || 'NOVICE',
+      interests: []
     };
   },
   validationSchema: SignupSchema,

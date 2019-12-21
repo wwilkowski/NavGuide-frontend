@@ -27,15 +27,14 @@ function* logInGoogle(action: types.ILogInGoogleRequest) {
     });
     if (response.status >= 200 && response.status <= 300) {
       const json = yield response.json();
-      console.log(json);
       const templateUser = {
         firstName: 'Wojciech',
         lastName: 'Glugla',
         country: 'Poland',
         email: 'gluglawojciech@gmail.com',
-        tel: '123456789',
+        telephone: '123456789',
         gender: 'Male',
-        experience: 5
+        experience: 'NOVICE'
       };
       const token = json.token;
       yield put(actions.logInGoogleSuccessed(templateUser));
