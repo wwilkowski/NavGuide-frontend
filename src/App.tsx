@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Registration from './containers/Registration/Registration';
 import Header from './containers/Header/Header';
 import Profile from './containers/Profile/Profile';
-import { NotificationContainer } from 'react-notifications';
-import 'react-notifications/lib/notifications.css';
+// import { NotificationContainer } from 'react-notifications';
+// import 'react-notifications/lib/notifications.css';
 import { useTranslation } from 'react-i18next';
+import 'bulma/css/bulma.css';
+import ReactNotification from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
 
 // templates
 const Home = () => {
@@ -20,6 +23,7 @@ const NotFound = () => {
 const App: React.FC = () => {
   return (
     <>
+      <ReactNotification />
       <Header />
       <Switch>
         <Route exact path='/' component={Home} />
@@ -27,7 +31,6 @@ const App: React.FC = () => {
         <Route path='/profile' component={Profile} />
         <Route component={NotFound} />
       </Switch>
-      <NotificationContainer />
     </>
   );
 };

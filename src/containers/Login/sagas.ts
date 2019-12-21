@@ -4,8 +4,8 @@ import history from '../../history';
 import * as actions from './actions';
 import * as constants from './constants';
 import * as types from './types';
-import { NotificationManager } from 'react-notifications';
 import i18n from '../../locales/i18n';
+import { showNotification } from '../../helpers/notification';
 
 const forwardTo = (location: string) => {
   history.push(location);
@@ -39,13 +39,13 @@ function* logInGoogle(action: types.ILogInGoogleRequest) {
       const token = json.token;
       yield put(actions.logInGoogleSuccessed(templateUser));
       yield initTokenCookie(token);
-      NotificationManager.success(i18n.t('Logged in successfully!'));
+      showNotification('success', i18n.t('Logged in successfully!'), '');
       yield call(forwardTo, '/profile');
     } else {
       throw new Error();
     }
   } catch {
-    NotificationManager.error('Try again later!', 'Something goes wrong');
+    showNotification('danger', i18n.t('Something goes wrong'), i18n.t('Try again later!'));
     yield put(actions.logInGoogleFailed());
   }
 }
@@ -55,9 +55,9 @@ function* logOutGoogle() {
     yield put(actions.logOutGoogleSuccessed());
     yield call(forwardTo, '/');
     yield setToken('');
-    NotificationManager.success('You will be taken to the main page!', 'Logged out successfully');
+    showNotification('success', i18n.t('Logged out successfully'), i18n.t('You will be taken to the main page!'));
   } catch {
-    NotificationManager.error('Try again later!', 'Something goes wrong');
+    showNotification('danger', i18n.t('Something goes wrong'), i18n.t('Try again later!'));
     yield put(actions.logOutGoogleFailed());
   }
 }

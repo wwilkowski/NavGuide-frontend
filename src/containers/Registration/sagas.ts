@@ -5,9 +5,9 @@ import { logInGoogleSuccessed } from '../Login/actions';
 import history from '../../history';
 import * as actions from './actions';
 import { IConfirmSignUpRequest, ISignUpGoogleRequest } from './types';
-import { NotificationManager } from 'react-notifications';
 import i18n from '../../locales/i18n';
 import { initTokenCookie } from '../../helpers/tokenCookie';
+import { showNotification } from '../../helpers/notification';
 
 const forwardTo = (location: string) => {
   history.push(location);
@@ -49,7 +49,7 @@ function* signUpGoogleUser(action: ISignUpGoogleRequest) {
         })
       );
       yield call(forwardTo, '/register');
-      yield NotificationManager.success(i18n.t('Complete your data to finish registration process.'), i18n.t('Verification successed!'));
+      showNotification('success', i18n.t('Verification successed!'), i18n.t('Complete your data to finish registration process.'));
     } else {
       switch (json.status) {
         case 409:
@@ -60,7 +60,7 @@ function* signUpGoogleUser(action: ISignUpGoogleRequest) {
     }
   } catch (error) {
     yield put(actions.signUpGoogleFailed());
-    yield NotificationManager.error(i18n.t(error.message), i18n.t('Verification failed!'));
+    showNotification('danger', i18n.t('Verification failed!'), i18n.t(error.message));
   }
 }
 
@@ -82,12 +82,12 @@ function* confirmGoogleUser(action: IConfirmSignUpRequest) {
       yield initTokenCookie(json.token);
       yield put(logInGoogleSuccessed(action.user));
       yield call(forwardTo, '/');
-      yield NotificationManager.success(i18n.t('Verification successed!'));
+      showNotification('danger', i18n.t('Validation successed!'), '');
     } else {
       throw new Error('Unexpected error while confirming Google registration');
     }
   } catch (error) {
-    yield NotificationManager.error(i18n.t(error.message), i18n.t('Validation error!'));
+    showNotification('danger', i18n.t('Validation error!'), i18n.t(error.message));
     yield put(actions.confirmSignUpFailed());
   }
 }
