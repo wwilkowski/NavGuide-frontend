@@ -1,9 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-interface SwitchLanguageButtonProps {
-  code: string;
-}
+import { SwitchLanguageButtonProps } from './types';
 
 const SwitchLanguageButton = ({ code }: SwitchLanguageButtonProps) => {
   const { i18n } = useTranslation();

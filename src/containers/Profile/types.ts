@@ -1,12 +1,27 @@
-export interface ITempSaga {
+import { IInterest } from '../Registration/types';
+
+export interface IUserData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  country: string;
+  experience: string;
+  telephone: string;
+  avatar: string;
+  interests: IInterest[];
+  role: string;
+}
+export interface ILogInSuccessedAction {
   type: string;
+  user: IUserData;
 }
 
-export interface ITempRSuccessed {
-  type: string;
-  firstName: string;
+export interface IProfileData {
+  user: IUserData;
+  isLoggedIn: boolean;
 }
 
-export interface IProfileStore {
-  firstName: string;
+export interface ILogInGoogleRequest {
+  type: string;
+  code: string;
 }
