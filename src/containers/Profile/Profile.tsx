@@ -1,36 +1,27 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import * as actions from './actions';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { StoreType } from '../../store';
-import { Redirect } from 'react-router-dom';
-import { NotificationManager } from 'react-notifications';
-import { useTranslation } from 'react-i18next';
 
 const Profile = () => {
-  const dispatcher = useDispatch();
-  const { t } = useTranslation();
-
-  const firstName = useSelector((state: StoreType) => state.profile.firstName);
-  const loggedIn = useSelector((state: StoreType) => state.login.isLoggedIn);
-
-  useEffect(() => {
-    dispatcher(actions.templateRequest());
-  }, [dispatcher]);
-
-  useEffect(() => {
-    if (!loggedIn) {
-      NotificationManager.warning(t('You are not logged in!'), t('Warning'));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  const user = useSelector((state: StoreType) => state.profile.user);
   return (
     <div>
-      {!loggedIn && <Redirect to='/' />}
-      <h1>{t('Profile')}</h1>
+      <img src={user.avatar} alt='' />
       <p>
-        {t('Hello')} {firstName}. {t("You're logged in!")}
+        {user.firstName} {user.lastName}
       </p>
+      <p>{user.email}</p>
+      <p>Experience: {user.experience}</p>
+      <p>Country: {user.country}</p>
+      <p>Tel: {user.telephone}</p>
+      <p>Interests:</p>
+      <ul>
+        {user.interests.map((interest, index) => (
+          <li key={index}>
+            <p>{interest.name}</p>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

@@ -1,42 +1,24 @@
+import { Field, Form, FormikProps, withFormik } from 'formik';
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import * as Yup from 'yup';
-import { withFormik, FormikProps, Form, Field } from 'formik';
-import { IUserData } from '../../containers/Registration/types';
-import { useTranslation } from 'react-i18next';
-import { NotificationManager } from 'react-notifications';
+import countryCodes from '../../helpers/countryCodes.json';
+import { showNotification } from '../../helpers/notification';
 import i18n from '../../locales/i18n';
 import Checkbox from '../../shared/Checkbox';
 import { StoreType } from '../../store';
-import countryCodes from '../../helpers/countryCodes.json';
-
-export interface FormValues {
-  firstName: string;
-  lastName: string;
-  country: string;
-  email: string;
-  telephone: string;
-  gender: string;
-  experience: string;
-  interests: number[];
-}
-
-const regex = {
-  firstName: /([a-zA-Z',.-]+( [a-zA-Z',.-]+)*){1,100}/,
-  lastName: /([a-zA-Z',.-]+( [a-zA-Z',.-]+)*){1,100}/,
-  country: /([a-zA-Z',.-]+( [a-zA-Z',.-]+)*){1,100}/,
-  telephone: /^\d{9}$/
-};
+import { FormValues, MyFormProps } from './types';
 
 const SignupSchema = Yup.object().shape({
   firstName: Yup.string()
-    .matches(regex.firstName, i18n.t('Input is not valid!'))
+    .matches(/([a-zA-Z',.-]+( [a-zA-Z',.-]+)*){1,100}/, i18n.t('Input is not valid!'))
     .required('First name is required!'),
   lastName: Yup.string()
-    .matches(regex.lastName, i18n.t('Input is not valid!'))
+    .matches(/([a-zA-Z',.-]+( [a-zA-Z',.-]+)*){1,100}/, i18n.t('Input is not valid!'))
     .required('Last name is required!'),
   telephone: Yup.string()
-    .matches(regex.telephone, i18n.t('Input is not valid!'))
+    .matches(/^\d{9}$/, i18n.t('Input is not valid!'))
     .required('Telephone number is required!')
 });
 
@@ -45,13 +27,15 @@ const InnerForm = (props: FormikProps<FormValues>) => {
   const interests = useSelector((state: StoreType) => state.registration.interests);
 
   const { touched, errors, isSubmitting } = props;
+
   useEffect(() => {
     if (Object.keys(errors).length !== 0 && isSubmitting) {
       Object.values(errors).forEach(error => {
-        NotificationManager.warning(t(`${error}`), t('Form warning'));
+        showNotification('warning', t('Form warning'), t(`${error}`));
       });
     }
   }, [errors, isSubmitting, t]);
+
   return (
     <div className='section'>
       <Form>
@@ -110,12 +94,12 @@ const InnerForm = (props: FormikProps<FormValues>) => {
           </label>
           <div className='select'>
             <Field as='select' id='experience' name='experience'>
-              <option value='AMBASSADOR'>ambassador</option>
-              <option value='EXPERT'>expert</option>
-              <option value='ADEPT'>adept</option>
-              <option value='COMPETENT'>competent</option>
-              <option value='EXPERIENCED'>experienced</option>
-              <option value='NOVICE'>novice</option>
+              <option value='AMBASSADOR'>{t('ambassador')}</option>
+              <option value='EXPERT'>{t('expert')}</option>
+              <option value='ADEPT'>{t('adept')}</option>
+              <option value='COMPETENT'>{t('competent')}</option>
+              <option value='EXPERIENCED'>{t('experienced')}</option>
+              <option value='NOVICE'>{t('novice')}</option>
             </Field>
           </div>
         </div>
@@ -136,14 +120,9 @@ const InnerForm = (props: FormikProps<FormValues>) => {
   );
 };
 
-interface MyFormProps {
-  user: IUserData;
-  onSubmit: (user: FormValues) => void;
-}
-
 const MyForm = withFormik<MyFormProps, FormValues>({
   mapPropsToValues: (props: MyFormProps) => {
-    const { firstName, lastName, country, email, telephone, gender, experience } = props.user;
+    const { firstName, lastName, country, email, telephone, gender, experience } = props.templateUser;
     return {
       firstName: firstName || '',
       lastName: lastName || '',

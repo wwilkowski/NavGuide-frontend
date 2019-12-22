@@ -1,25 +1,19 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { SIGN_UP_GOOGLE_REQUESTED, CONFIRM_SIGN_UP_REQUESTED, GET_INTERESTS_REQUESTED } from './constants';
-import { logInGoogleSuccessed } from '../Login/actions';
-
-import history from '../../history';
-import * as actions from './actions';
-import { IConfirmSignUpRequest, ISignUpGoogleRequest } from './types';
-import i18n from '../../locales/i18n';
-import { initTokenCookie } from '../../helpers/tokenCookie';
 import { showNotification } from '../../helpers/notification';
-
-const forwardTo = (location: string) => {
-  history.push(location);
-};
+import { initTokenCookie } from '../../helpers/tokenCookie';
+import { forwardTo } from '../../history';
+import i18n from '../../locales/i18n';
+import { logInGoogleSuccessed } from '../Profile/actions';
+import * as actions from './actions';
+import * as constants from './constants';
+import * as types from './types';
 
 const signUpGoogleEndpoint = `https://8.ip-164-132-53.eu/auth/google/register`;
 const confirmGoogleEndpoint = `https://8.ip-164-132-53.eu/auth/google/register/confirm`;
 const interestsEndpoint = `https://8.ip-164-132-53.eu/interests`;
 
-function* signUpGoogleUser(action: ISignUpGoogleRequest) {
+function* signUpGoogleUser(action: types.ISignUpGoogleRequest) {
   try {
-    console.log(window.location.host);
     const response = yield call(fetch, signUpGoogleEndpoint, {
       method: 'POST',
       headers: {
@@ -44,12 +38,12 @@ function* signUpGoogleUser(action: ISignUpGoogleRequest) {
       };
       yield put(
         actions.signUpGoogleSuccessed({
-          user: templateUser,
+          templateUser: templateUser,
           registerToken: json.authorizationToken
         })
       );
-      yield call(forwardTo, '/register');
       showNotification('success', i18n.t('Verification successed!'), i18n.t('Complete your data to finish registration process.'));
+      yield call(forwardTo, '/register');
     } else {
       switch (json.status) {
         case 409:
@@ -64,7 +58,7 @@ function* signUpGoogleUser(action: ISignUpGoogleRequest) {
   }
 }
 
-function* confirmGoogleUser(action: IConfirmSignUpRequest) {
+function* confirmGoogleUser(action: types.IConfirmSignUpRequest) {
   try {
     const response = yield call(fetch, confirmGoogleEndpoint, {
       method: 'POST',
@@ -73,16 +67,27 @@ function* confirmGoogleUser(action: IConfirmSignUpRequest) {
         Authorization: `Bearer ${action.token}`
       },
       body: JSON.stringify({
-        ...action.user
+        ...action.templateUser
       })
     });
-    const json = yield response.json();
+    const { firstName, lastName, country, email, experience, telephone, avatar, interests, role, token } = yield response.json();
+    const user = {
+      firstName,
+      lastName,
+      email,
+      country,
+      experience,
+      telephone,
+      avatar,
+      interests,
+      role
+    };
     if (response.status >= 200 && response.status <= 300) {
-      yield put(actions.confirmSignUpSuccessed(json));
-      yield initTokenCookie(json.token);
-      yield put(logInGoogleSuccessed(action.user));
-      yield call(forwardTo, '/');
-      showNotification('danger', i18n.t('Validation successed!'), '');
+      yield put(actions.confirmSignUpSuccessed(token));
+      yield initTokenCookie(token);
+      yield put(logInGoogleSuccessed(user));
+      showNotification('success', i18n.t('Validation successed!'), i18n.t('You are logged in!'));
+      yield call(forwardTo, '/profile');
     } else {
       throw new Error('Unexpected error while confirming Google registration');
     }
@@ -103,9 +108,9 @@ function* getInterests() {
 }
 
 function* mainSaga() {
-  yield takeLatest(SIGN_UP_GOOGLE_REQUESTED, signUpGoogleUser);
-  yield takeLatest(CONFIRM_SIGN_UP_REQUESTED, confirmGoogleUser);
-  yield takeLatest(GET_INTERESTS_REQUESTED, getInterests);
+  yield takeLatest(constants.SIGN_UP_GOOGLE_REQUESTED, signUpGoogleUser);
+  yield takeLatest(constants.CONFIRM_SIGN_UP_REQUESTED, confirmGoogleUser);
+  yield takeLatest(constants.GET_INTERESTS_REQUESTED, getInterests);
 }
 
 export default mainSaga;

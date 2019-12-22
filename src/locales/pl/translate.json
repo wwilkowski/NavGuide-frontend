@@ -36,6 +36,17 @@
     "Last name is required!": "Nazwisko jest wymagane!",
     "Country is required!": "Państwo jest wymagane!",
     "Telephone number is required!": "Państwo jest wymagane",
-    "Input is not valid!": "Niepoprawne dane!"
+    "Input is not valid!": "Niepoprawne dane!",
+    "You are logged in!": "Jesteś zalogowany/a!",
+    "novice": "nowicjusz",
+    "experienced": "doświadczenie",
+    "competent": "fachowiec",
+    "adept": "adept",
+    "expert": "ekspert",
+    "ambassador": "ambasador",
+    "Validation successed!": "Walidacja powiodła się!",
+    "Logout": "Wyloguj się",
+    "You don't have permission to this content": "Nie masz uprawnień do tej zawartości",
+    "You are not logged in!": "Nie jesteś zalogowany!"
   }
 }

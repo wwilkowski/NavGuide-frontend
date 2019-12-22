@@ -12,7 +12,7 @@ export interface IUserData {
 }
 
 export interface IRegisterStore {
-  user: IUserData;
+  templateUser: IUserData;
   registrationInProgress: boolean;
   registrationToken: string;
   interests: IInterest[];
@@ -22,7 +22,7 @@ export interface IRegisterStore {
 
 export interface ISignUpGoogleSuccessedAction {
   type: typeof SIGN_UP_GOOGLE_SUCCESSED;
-  user: IUserData;
+  templateUser: IUserData;
   registerToken: string;
 }
 
@@ -41,7 +41,7 @@ export interface IConfirmSignUpSuccessedAction {
 
 export interface IConfirmSignUpRequest {
   type: string;
-  user: IUserData;
+  templateUser: IUserData;
   token: string;
 }
 

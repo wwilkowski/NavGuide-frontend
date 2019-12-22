@@ -11,7 +11,6 @@ const Checkbox = props => {
             name={props.name}
             value={props.value}
             onChange={() => {
-              console.log(field.value);
               if (field.value.includes(props.valueKey)) {
                 for (let i = 0; i < field.value.length; i++) {
                   if (field.value[i] === props.valueKey) {

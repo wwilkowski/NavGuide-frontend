@@ -1,9 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-interface IProps {
-  onClick: () => void;
-}
+import { IProps } from './types';
 
 const LogoutButton = ({ onClick }: IProps) => {
   const { t } = useTranslation();

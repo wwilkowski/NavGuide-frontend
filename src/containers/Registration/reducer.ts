@@ -2,7 +2,7 @@ import * as constants from './constants';
 import * as types from './types';
 
 const initialState: types.IRegisterStore = {
-  user: {
+  templateUser: {
     firstName: '',
     lastName: '',
     country: '',
@@ -21,7 +21,7 @@ const RegistrationReducer = (state = initialState, action: types.ISignUpActionTy
     case constants.SIGN_UP_GOOGLE_SUCCESSED:
       return {
         ...state,
-        user: action.user,
+        templateUser: action.templateUser,
         registrationInProgress: true,
         registrationToken: action.registerToken
       };

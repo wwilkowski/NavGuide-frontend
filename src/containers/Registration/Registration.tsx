@@ -1,7 +1,8 @@
 import React from 'react';
-import RegisterForm, { FormValues } from '../../components/RegisterForm/RegisterForm';
-import { Switch, Route, Redirect } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import RegisterForm from '../../components/RegisterForm/RegisterForm';
+import { FormValues } from '../../components/RegisterForm/types';
 import { StoreType } from '../../store';
 import * as actions from './actions';
 
@@ -18,7 +19,7 @@ const Registration: React.FC = () => {
       <Switch>
         <Route exact path={'/register'}>
           {registrationData.registrationInProgress ? (
-            <RegisterForm onSubmit={onRegisterFormSubmit} user={registrationData.user} />
+            <RegisterForm onSubmit={onRegisterFormSubmit} templateUser={registrationData.templateUser} />
           ) : (
             <Redirect to='/' />
           )}

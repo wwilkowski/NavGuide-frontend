@@ -8,7 +8,7 @@ export const showNotification = (type: string, title: string, message: string) =
     insert: 'top',
     container: 'top-right',
     dismiss: {
-      duration: 0,
+      duration: 2000,
       onScreen: true
     }
   });
