@@ -73,7 +73,7 @@ const TripBrowser: React.FC = () => {
       });
     } else if (searchMode === "geo") {
       setRadiusValue(location);
-      setMode("normal");
+      setMode("geo");
       setFormValue("");
 
       const r = parseInt(location, 10) / 100;
@@ -88,6 +88,8 @@ const TripBrowser: React.FC = () => {
         if (tripInRange(trip, R, r, x1, x2, y1, y2)) filterTripsData.push(trip);
       });
     } else if (location.length > 0 && !templateCities.includes(location)) {
+      setMode("random");
+
       let randomId: number;
       const min = 1;
       const max = tripsData.trips.length;
@@ -103,25 +105,26 @@ const TripBrowser: React.FC = () => {
           }
         });
       }
-
-      setSearchedTrips(filterTripsData);
-      setMode("random");
     }
 
     //FILTRACJA Z TAGAMI
     const filterTripsDataWithTags: ISingleTripType[] = [];
-    filterTripsData.forEach((trip: ISingleTripType) => {
-      const len = activeTags.length;
-      let i = 0;
-      trip.tags.forEach((tag: ITag) => {
-        if (activeTags.includes(tag.name)) i++;
-      });
+    if (mode !== "random") {
+      filterTripsData.forEach((trip: ISingleTripType) => {
+        const len = activeTags.length;
+        let i = 0;
+        trip.tags.forEach((tag: ITag) => {
+          if (activeTags.includes(tag.name)) i++;
+        });
 
-      if (i === len) filterTripsDataWithTags.push(trip);
-    });
+        if (i === len) filterTripsDataWithTags.push(trip);
+      });
+    }
 
     setSuggestedTrips([]);
-    setSearchedTrips(filterTripsDataWithTags);
+    mode === "normal" || mode === "geo"
+      ? setSearchedTrips(filterTripsDataWithTags)
+      : setSearchedTrips(filterTripsData);
   };
 
   const handleCityHover = (location: string) => {

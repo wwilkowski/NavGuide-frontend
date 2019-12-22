@@ -22,7 +22,8 @@
     "Unset GEO": "Usuń GEO",
     "Form is empty": "Formularz jest pusty",
     "Warning": "Ostrzeżenie",
-    "No trips in this place": "Brak wycieczek w tym miejscu",
-    "Increase the radius?": "Zwiększyć promień?"
+    "No matching trips": "Brak pasujących wycieczek",
+    "Increase the radius?": "Zwiększyć promień?",
+    "Suggested trips": "Polecane wycieczki"
   }
 }

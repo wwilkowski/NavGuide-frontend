@@ -12,10 +12,14 @@ const ListTrips = ({
 
   return (
     <>
-      {mode === "random" ? <p>{t("No trips in this place")}</p> : null}
-      {trips.length === 0 && mode === "normal" ? (
+      {mode === "random" ? (
         <p>
-          {t("No trips in this place")}. {t("Increase the radius?")}
+          {t("No matching trips")} {t("Suggested trips")}:
+        </p>
+      ) : null}
+      {trips.length === 0 && mode === "geo" ? (
+        <p>
+          {t("No matching trips")}. {t("Increase the radius?")}
           <button
             onClick={() => {
               onIncreaseRadius(5);
