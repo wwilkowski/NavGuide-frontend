@@ -1,14 +1,30 @@
 import React from "react";
 import * as types from "./types";
-import { ISingleTripType } from "../../containers/TripBrowser/types";
+import { ISingleTripType, ITag } from "../../containers/TripBrowser/types";
 import { useTranslation } from "react-i18next";
 
-const ListTrips = ({ trips, mode }: types.IListTripsProps) => {
+const ListTrips = ({
+  trips,
+  mode,
+  onIncreaseRadius
+}: types.IListTripsProps) => {
   const { t } = useTranslation();
 
   return (
     <>
       {mode === "random" ? <p>{t("No trips in this place")}</p> : null}
+      {trips.length === 0 && mode === "normal" ? (
+        <p>
+          {t("No trips in this place")}. {t("Increase the radius?")}
+          <button
+            onClick={() => {
+              onIncreaseRadius(5);
+            }}
+          >
+            {t("ADD 5KM")}
+          </button>
+        </p>
+      ) : null}
       <ul>
         {trips.map((trip: ISingleTripType) => (
           <li key={trip.id}>
@@ -18,11 +34,9 @@ const ListTrips = ({ trips, mode }: types.IListTripsProps) => {
             </p>
             <p>{trip.location}</p>
             <p>
-              {" "}
               {t("Duration")}: {trip.begin} - {trip.end}
             </p>
             <p>
-              {" "}
               {t("Number of people (max)")}: {trip.maxPeople}
             </p>
             <p>
@@ -30,7 +44,6 @@ const ListTrips = ({ trips, mode }: types.IListTripsProps) => {
               {trip.priceType}
             </p>
             <p>
-              {" "}
               {t("Number of vievs")}: {trip.inSearch}
             </p>
           </li>

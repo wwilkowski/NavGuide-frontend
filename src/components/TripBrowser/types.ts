@@ -1,19 +1,29 @@
-import { ISingleTripType } from "../../containers/TripBrowser/types";
+import { ISingleTripType, ITag } from "../../containers/TripBrowser/types";
 import { SetStateAction } from "react";
 
 export interface ISearchFormProps {
   onChange: (location: string) => void;
-  onSubmit: (location: string, searchMode: string) => void;
-  value: string;
+  onSubmit: (
+    location: string,
+    searchMode: string,
+    activeTags: string[]
+  ) => void;
+  formValue: string;
+  radiusValue: string;
 }
 
 export interface IListTripsProps {
   trips: ISingleTripType[];
   mode: string;
+  onIncreaseRadius: (r: number) => void;
 }
 
 export interface IListSuggestedTripsProps {
-  onCityClick: (location: string, searchMode: string) => void;
+  onCityClick: (
+    location: string,
+    searchMode: string,
+    activeTags: string[]
+  ) => void;
   onCityHover: (location: string) => void;
   suggestedTrips: string[];
 }

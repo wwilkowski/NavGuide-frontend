@@ -5,6 +5,11 @@ import {
   FETCH_TRIPS_SUCCESED
 } from "./constants";
 
+export interface ITag {
+  id: number;
+  name: string;
+}
+
 export interface ISingleTripType {
   id: number;
   location: string;
@@ -17,6 +22,7 @@ export interface ISingleTripType {
   lat: number;
   lon: number;
   radius: number;
+  tags: ITag[];
 }
 
 export interface IMultiTripsType {

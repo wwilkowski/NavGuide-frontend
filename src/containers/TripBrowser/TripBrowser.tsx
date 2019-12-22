@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ISingleTripType, IMultiTripsType, usePosition } from "./types";
+import { ISingleTripType, IMultiTripsType, usePosition, ITag } from "./types";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "./actions";
 import { StoreType } from "../../store";
@@ -15,36 +15,13 @@ const TripBrowser: React.FC = () => {
   const [suggestedTrips, setSuggestedTrips] = useState<string[]>([]); //lista, pojawia się w podpowiedziach miejscowosci
   const [searchedTrips, setSearchedTrips] = useState<ISingleTripType[]>([]); //przefiltrowane wycieczki
   const [formValue, setFormValue] = useState<string>(""); //wartosc formularza
+  const [radiusValue, setRadiusValue] = useState<string>("");
 
   dispatcher(actions.fetchTripsFromStore());
 
   const position = usePosition();
 
   let filterTripsData: ISingleTripType[] = [];
-
-  //GENERUJE LOSOWE WYCIECZKI
-  const generateRandomTrips = () => {
-    setSearchedTrips([]);
-
-    let randomId: number;
-    const min = 1;
-    const max = tripsData.trips.length;
-
-    let i = 0;
-    while (i < 5) {
-      randomId = Math.floor(Math.random() * (max - min) + min);
-
-      tripsData.trips.forEach((trip: ISingleTripType) => {
-        if (trip.id === randomId && !filterTripsData.includes(trip)) {
-          filterTripsData.push(trip);
-          i++;
-        }
-      });
-    }
-
-    setSearchedTrips(filterTripsData);
-    setMode("random");
-  };
 
   //WERYFIKUJE CZY WYCIECZKA JEST W ZASIEGU PODANEGO PROMIENIA (NA PODSTAWIE WLASNOSCI DWOCH OKREGOW)
   const tripInRange = (
@@ -82,8 +59,12 @@ const TripBrowser: React.FC = () => {
     setSuggestedTrips(listCities);
   };
 
-  const onSearchFormSubmit = (location: string, searchMode: string) => {
-    if (searchMode === "location") {
+  const onSearchFormSubmit = (
+    location: string,
+    searchMode: string,
+    activeTags: string[]
+  ) => {
+    if (searchMode === "location" && templateCities.includes(location)) {
       setMode("normal");
       setFormValue(location);
 
@@ -91,6 +72,7 @@ const TripBrowser: React.FC = () => {
         if (el.location === location) filterTripsData.push(el);
       });
     } else if (searchMode === "geo") {
+      setRadiusValue(location);
       setMode("normal");
       setFormValue("");
 
@@ -105,15 +87,50 @@ const TripBrowser: React.FC = () => {
 
         if (tripInRange(trip, R, r, x1, x2, y1, y2)) filterTripsData.push(trip);
       });
-    } else if (location.length > 0 && !templateCities.includes(location))
-      generateRandomTrips();
+    } else if (location.length > 0 && !templateCities.includes(location)) {
+      let randomId: number;
+      const min = 1;
+      const max = tripsData.trips.length;
+
+      let i = 0;
+      while (i < 5) {
+        randomId = Math.floor(Math.random() * (max - min) + min);
+
+        tripsData.trips.forEach((trip: ISingleTripType) => {
+          if (trip.id === randomId && !filterTripsData.includes(trip)) {
+            filterTripsData.push(trip);
+            i++;
+          }
+        });
+      }
+
+      setSearchedTrips(filterTripsData);
+      setMode("random");
+    }
+
+    //FILTRACJA Z TAGAMI
+    const filterTripsDataWithTags: ISingleTripType[] = [];
+    filterTripsData.forEach((trip: ISingleTripType) => {
+      const len = activeTags.length;
+      let i = 0;
+      trip.tags.forEach((tag: ITag) => {
+        if (activeTags.includes(tag.name)) i++;
+      });
+
+      if (i === len) filterTripsDataWithTags.push(trip);
+    });
 
     setSuggestedTrips([]);
-    setSearchedTrips(filterTripsData);
+    setSearchedTrips(filterTripsDataWithTags);
   };
 
   const handleCityHover = (location: string) => {
     setFormValue(location);
+  };
+
+  const onIncreaseRadius = (r: number) => {
+    r += parseInt(radiusValue, 10);
+    onSearchFormSubmit(r.toString(), "geo", []);
   };
 
   return (
@@ -121,14 +138,19 @@ const TripBrowser: React.FC = () => {
       <SearchForm
         onChange={onSearchFormChange}
         onSubmit={onSearchFormSubmit}
-        value={formValue}
+        formValue={formValue}
+        radiusValue={radiusValue}
       />
       <ListSuggestedTrips
         onCityClick={onSearchFormSubmit}
         onCityHover={handleCityHover}
         suggestedTrips={suggestedTrips}
       />
-      <ListTrips trips={searchedTrips} mode={mode} />
+      <ListTrips
+        trips={searchedTrips}
+        mode={mode}
+        onIncreaseRadius={onIncreaseRadius}
+      />
     </div>
   );
 };

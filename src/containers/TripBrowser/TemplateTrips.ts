@@ -2,6 +2,29 @@ import { IMultiTripsType } from "./types";
 
 // 0.01 KM
 
+const tags = [
+  {
+    id: 1,
+    name: "tag1"
+  },
+  {
+    id: 2,
+    name: "tag2"
+  },
+  {
+    id: 3,
+    name: "tag3"
+  },
+  {
+    id: 4,
+    name: "tag4"
+  },
+  {
+    id: 5,
+    name: "tag5"
+  }
+];
+
 export const templateTrips: IMultiTripsType = {
   trips: [
     {
@@ -15,7 +38,8 @@ export const templateTrips: IMultiTripsType = {
       inSearch: 0,
       lat: 52.279986,
       lon: 17.3522939,
-      radius: 0.1
+      radius: 0.1,
+      tags: [tags[1], tags[2]]
     },
     {
       id: 2,
@@ -28,7 +52,8 @@ export const templateTrips: IMultiTripsType = {
       inSearch: 0,
       lat: 52.279986,
       lon: 17.3522939,
-      radius: 0.5
+      radius: 0.5,
+      tags: [tags[0], tags[4]]
     },
     {
       id: 3,
@@ -41,7 +66,8 @@ export const templateTrips: IMultiTripsType = {
       inSearch: 0,
       lat: 52.279986,
       lon: 17.3522939,
-      radius: 0.1
+      radius: 0.1,
+      tags: [tags[1]]
     },
     {
       id: 4,
@@ -54,7 +80,8 @@ export const templateTrips: IMultiTripsType = {
       inSearch: 0,
       lat: 0,
       lon: 0,
-      radius: 10
+      radius: 10,
+      tags: [tags[1], tags[2], tags[3]]
     },
     {
       id: 5,
@@ -67,7 +94,8 @@ export const templateTrips: IMultiTripsType = {
       inSearch: 0,
       lat: 0,
       lon: 0,
-      radius: 10
+      radius: 10,
+      tags: [tags[1], tags[2], tags[3]]
     },
     {
       id: 6,
@@ -80,7 +108,8 @@ export const templateTrips: IMultiTripsType = {
       inSearch: 0,
       lat: 0,
       lon: 0,
-      radius: 10
+      radius: 10,
+      tags: [tags[1], tags[2], tags[3]]
     },
     {
       id: 7,
@@ -93,7 +122,8 @@ export const templateTrips: IMultiTripsType = {
       inSearch: 0,
       lat: 0,
       lon: 0,
-      radius: 10
+      radius: 10,
+      tags: [tags[1], tags[2], tags[3]]
     },
     {
       id: 8,
@@ -106,7 +136,8 @@ export const templateTrips: IMultiTripsType = {
       inSearch: 0,
       lat: 0,
       lon: 0,
-      radius: 10
+      radius: 10,
+      tags: [tags[1], tags[3]]
     }
   ]
 };
