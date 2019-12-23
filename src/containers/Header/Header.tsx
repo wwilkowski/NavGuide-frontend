@@ -1,20 +1,20 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import GoogleButton from '../../components/GoogleButton/GoogleButton';
-import { useDispatch, useSelector } from 'react-redux';
-import { signUpGoogleRequest, getInterestsRequest } from '../Registration/actions';
-import { logInGoogleRequest, logOutGoogleRequest } from '../Login/actions';
-import SwitchLanguageButton from '../../components/SwitchLanguageButton';
-import { StoreType } from '../../store';
-import { useTranslation } from 'react-i18next';
 import LogoutButton from '../../components/LogoutButton/LogoutButton';
+import SwitchLanguageButton from '../../components/SwitchLanguageButton/SwitchLanguageButton';
+import { StoreType } from '../../store';
+import { logInGoogleRequest, logOutGoogleRequest } from '../Profile/actions';
+import { getInterestsRequest, signUpGoogleRequest } from '../Registration/actions';
 
 const Header: React.FC = () => {
-  const { t } = useTranslation();
-
-  const registrationInProgress = useSelector((state: StoreType) => state.registration.registrationInProgress);
-  const isLoggedIn = useSelector((state: StoreType) => state.login.isLoggedIn);
   const dispatcher = useDispatch();
+  const registrationInProgress = useSelector((state: StoreType) => state.registration.registrationInProgress);
+  const isLoggedIn = useSelector((state: StoreType) => state.profile.isLoggedIn);
+  const { t } = useTranslation();
 
   const signUpWithUserCode = (code: string) => {
     dispatcher(signUpGoogleRequest(code));
@@ -32,11 +32,11 @@ const Header: React.FC = () => {
     <nav className='navbar' role='navigation' aria-label='main navigation'>
       <div className='navbar-brand'>
         <a className='navbar-item' href='/'>
-          <h1 className='has-text-weight-bold	'> Lorem ipsum</h1>
+          <h1 className='has-text-weight-bold	'>Lorem ipsum</h1>
         </a>
       </div>
 
-      <div id='navbarBasicExample' className='navbar-menu'>
+      <div id='navbarBasicExample' className='navbar-menu is-active'>
         <div className='navbar-start'>
           <Link to='/' className='navbar-item'>
             {t('Home')}

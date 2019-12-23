@@ -7,13 +7,13 @@ export const signUpGoogleRequest = (code: string) => ({
 });
 
 interface signUpGoogleResponse {
-  user: types.IUserData;
+  templateUser: types.IUserData;
   registerToken: string;
 }
 
 export const signUpGoogleSuccessed = (response: signUpGoogleResponse): types.ISignUpActionType => ({
   type: constants.SIGN_UP_GOOGLE_SUCCESSED,
-  user: response.user,
+  templateUser: response.templateUser,
   registerToken: response.registerToken
 });
 
@@ -21,15 +21,15 @@ export const signUpGoogleFailed = () => ({
   type: constants.SIGN_UP_GOOGLE_FAILED
 });
 
-export const confirmSignUpRequest = (user: types.IUserData, token: string) => ({
+export const confirmSignUpRequest = (templateUser: types.IUserData, token: string) => ({
   type: constants.CONFIRM_SIGN_UP_REQUESTED,
-  user,
+  templateUser,
   token
 });
 
-export const confirmSignUpSuccessed = (response: types.IConfirmSignUpResponse) => ({
+export const confirmSignUpSuccessed = (token: string) => ({
   type: constants.CONFIRM_SIGN_UP_SUCCESSED,
-  token: response.token
+  token
 });
 
 export const confirmSignUpFailed = () => ({
