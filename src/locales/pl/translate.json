@@ -10,6 +10,7 @@
     "Country": "Kraj",
     "Gender": "Płeć",
     "Experience": "Doświadczenie",
+    "Telephone": "Telefon",
     "Submit": "Wyślij",
     "Male": "Mężczyzna",
     "Female": "Kobieta",
@@ -35,7 +36,7 @@
     "First name is required!": "Imię jest wymagane!",
     "Last name is required!": "Nazwisko jest wymagane!",
     "Country is required!": "Państwo jest wymagane!",
-    "Telephone number is required!": "Państwo jest wymagane",
+    "Telephone number is required!": "Numer telefonu jest wymagany!",
     "Input is not valid!": "Niepoprawne dane!",
     "You are logged in!": "Jesteś zalogowany/a!",
     "novice": "nowicjusz",
@@ -46,7 +47,6 @@
     "ambassador": "ambasador",
     "Validation successed!": "Walidacja powiodła się!",
     "Logout": "Wyloguj się",
-    "You don't have permission to this content": "Nie masz uprawnień do tej zawartości",
-    "You are not logged in!": "Nie jesteś zalogowany!"
+    "You don't have permission to this content": "Nie masz uprawnień do tej zawartości"
   }
 }
