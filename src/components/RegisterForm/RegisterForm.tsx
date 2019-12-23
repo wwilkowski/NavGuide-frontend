@@ -63,8 +63,6 @@ const InnerForm = (props: FormikProps<FormValues>) => {
             {countryCodes.map(country => (
               <option value={country.code}>{t(country.name)}</option>
             ))}
-            <option value='male'>{t('Male')}</option>
-            <option value='female'>{t('Female')}</option>
           </Field>
         </div>
 

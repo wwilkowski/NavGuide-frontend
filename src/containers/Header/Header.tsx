@@ -50,13 +50,13 @@ const Header: React.FC = () => {
         <div className='navbar-end'>
           <div className='navbar-item'>
             <div className='buttons'>
-              {!registrationInProgress && !isLoggedIn && (
-                <GoogleButton text='Sign up with Google' onSuccess={signUpWithUserCode} onFailure={signUpWithUserCode} />
-              )}
               {isLoggedIn ? (
                 <LogoutButton onClick={logout} />
               ) : (
-                <GoogleButton text='Sign in with Google' onSuccess={signInWithUserCode} onFailure={signInWithUserCode} />
+                <>
+                  <GoogleButton text='Sign up with Google' onSuccess={signUpWithUserCode} onFailure={signUpWithUserCode} />
+                  <GoogleButton text='Sign in with Google' onSuccess={signInWithUserCode} onFailure={signInWithUserCode} />
+                </>
               )}
               <SwitchLanguageButton code='pl' />
               <SwitchLanguageButton code='en' />
