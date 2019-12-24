@@ -10,6 +10,9 @@ import { templateCities } from "./TemplateTrips";
 
 const TripBrowser: React.FC = () => {
   const tripsData = useSelector((state: StoreType) => state.tripBrowser);
+  const activeTags = useSelector(
+    (state: StoreType) => state.tripBrowser.activeTags
+  );
   const dispatcher = useDispatch();
   const [mode, setMode] = useState<string>(""); //tryb wyswietlania wycieczek (czy losowo czy normalnie)
   const [suggestedTrips, setSuggestedTrips] = useState<string[]>([]); //lista, pojawia się w podpowiedziach miejscowosci
@@ -58,10 +61,9 @@ const TripBrowser: React.FC = () => {
   };
 
   const onSearchFormSubmit = (location: string, searchMode: string) => {
-    if (searchMode === "location" && templateCities.includes(location)) {
-      dispatcher(actions.fetchTripsFromStore());
-      console.log(tripsData);
+    dispatcher(actions.fetchTripsFromStore());
 
+    if (searchMode === "location" && templateCities.includes(location)) {
       setMode("normal");
       setFormValue(location);
 
@@ -86,7 +88,6 @@ const TripBrowser: React.FC = () => {
       });
     } else if (location.length > 0 && !templateCities.includes(location)) {
       setMode("random");
-
       let randomId: number;
       const min = 1;
       const max = tripsData.trips.length;
@@ -107,7 +108,7 @@ const TripBrowser: React.FC = () => {
     //FILTRACJA Z TAGAMI
     const filterTripsDataWithTags: ISingleTripType[] = [];
     if (mode !== "random") {
-      /*filterTripsData.forEach((trip: ISingleTripType) => {
+      filterTripsData.forEach((trip: ISingleTripType) => {
         const len = activeTags.length;
         let i = 0;
         trip.tags.forEach((tag: ITag) => {
@@ -115,12 +116,12 @@ const TripBrowser: React.FC = () => {
         });
 
         if (i === len) filterTripsDataWithTags.push(trip);
-      });*/
+      });
     }
 
     setSuggestedTrips([]);
     mode === "normal" || mode === "geo"
-      ? setSearchedTrips(filterTripsData)
+      ? setSearchedTrips(filterTripsDataWithTags) //withTags
       : setSearchedTrips(filterTripsData);
   };
 
@@ -136,6 +137,7 @@ const TripBrowser: React.FC = () => {
 
   const onTagChange = (tags: string[]) => {
     dispatcher(actions.setActiveTags(tags));
+    console.log(activeTags);
   };
 
   return (

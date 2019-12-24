@@ -16,10 +16,11 @@ const TripBrowserReducer = (
 ) => {
   switch (action.type) {
     case FETCH_TRIPS_SUCCESED:
-      return { ...state, trips: action.trips };
+      return { ...state, trips: action.trips.trips };
     case FILTER_TRIPS:
       return state;
     case SET_ACTIVE_TAGS:
+      return { ...state, activeTags: action.tags };
     default:
       return state;
   }

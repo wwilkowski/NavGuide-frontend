@@ -146,11 +146,4 @@ export const templateTrips: IMultiTripsType = {
   ]
 };
 
-export const templateCities = [
-  "Torun",
-  "Krakow",
-  "Lipka",
-  "Zlotow",
-  "Toronto",
-  "Torino"
-];
+export const templateCities = ["Krakow", "Zlotow", "Toronto", "Torino"];

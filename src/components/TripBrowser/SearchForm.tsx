@@ -30,8 +30,6 @@ const SearchForm = ({
   const [tag5, setTag5] = useState<boolean>(false);
   let activeTags: string[] = [];
   const createActiveTagsTable = () => {
-    activeTags = [];
-
     if (tag1) activeTags.push("tag1");
     if (tag2) activeTags.push("tag2");
     if (tag3) activeTags.push("tag3");
