@@ -1,4 +1,8 @@
-import { IMultiTripsType } from "./types";
+import {
+  IMultiTripsType,
+  ISingleTripType,
+  IMultiTripsAndTagsType
+} from "./types";
 
 // 0.01 KM
 
@@ -29,7 +33,7 @@ export const templateTrips: IMultiTripsType = {
   trips: [
     {
       id: 1,
-      location: "Torun",
+      location: "Zlotow",
       begin: "10-02-2020",
       end: "11-02-2020",
       maxPeople: 10,
@@ -39,7 +43,7 @@ export const templateTrips: IMultiTripsType = {
       lat: 52.279986,
       lon: 17.3522939,
       radius: 0.1,
-      tags: [tags[1], tags[2]]
+      tags: [tags[0]]
     },
     {
       id: 2,
@@ -53,11 +57,11 @@ export const templateTrips: IMultiTripsType = {
       lat: 52.279986,
       lon: 17.3522939,
       radius: 0.5,
-      tags: [tags[0], tags[4]]
+      tags: [tags[0], tags[1]]
     },
     {
       id: 3,
-      location: "Lipka",
+      location: "Zlotow",
       begin: "10-02-2020",
       end: "11-02-2020",
       maxPeople: 10,
@@ -67,7 +71,7 @@ export const templateTrips: IMultiTripsType = {
       lat: 52.279986,
       lon: 17.3522939,
       radius: 0.1,
-      tags: [tags[1]]
+      tags: [tags[0], tags[1], tags[2]]
     },
     {
       id: 4,
@@ -81,7 +85,7 @@ export const templateTrips: IMultiTripsType = {
       lat: 0,
       lon: 0,
       radius: 10,
-      tags: [tags[1], tags[2], tags[3]]
+      tags: [tags[4], tags[3]]
     },
     {
       id: 5,
@@ -95,7 +99,7 @@ export const templateTrips: IMultiTripsType = {
       lat: 0,
       lon: 0,
       radius: 10,
-      tags: [tags[1], tags[2], tags[3]]
+      tags: [tags[3]]
     },
     {
       id: 6,
@@ -109,7 +113,7 @@ export const templateTrips: IMultiTripsType = {
       lat: 0,
       lon: 0,
       radius: 10,
-      tags: [tags[1], tags[2], tags[3]]
+      tags: []
     },
     {
       id: 7,
@@ -123,7 +127,7 @@ export const templateTrips: IMultiTripsType = {
       lat: 0,
       lon: 0,
       radius: 10,
-      tags: [tags[1], tags[2], tags[3]]
+      tags: []
     },
     {
       id: 8,
@@ -137,7 +141,7 @@ export const templateTrips: IMultiTripsType = {
       lat: 0,
       lon: 0,
       radius: 10,
-      tags: [tags[1], tags[3]]
+      tags: []
     }
   ]
 };

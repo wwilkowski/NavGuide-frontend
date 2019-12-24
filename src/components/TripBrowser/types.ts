@@ -3,13 +3,10 @@ import { SetStateAction } from "react";
 
 export interface ISearchFormProps {
   onChange: (location: string) => void;
-  onSubmit: (
-    location: string,
-    searchMode: string,
-    activeTags: string[]
-  ) => void;
+  onSubmit: (location: string, searchMode: string) => void;
   formValue: string;
   radiusValue: string;
+  onTagChange: (tags: string[]) => void;
 }
 
 export interface IListTripsProps {
@@ -19,11 +16,7 @@ export interface IListTripsProps {
 }
 
 export interface IListSuggestedTripsProps {
-  onCityClick: (
-    location: string,
-    searchMode: string,
-    activeTags: string[]
-  ) => void;
+  onCityClick: (location: string, searchMode: string) => void;
   onCityHover: (location: string) => void;
   suggestedTrips: string[];
 }

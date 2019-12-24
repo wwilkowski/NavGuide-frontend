@@ -2,9 +2,14 @@ import {
   FETCH_TRIPS_REQUESTED,
   FILTER_TRIPS,
   FETCH_TRIPS_SUCCESED,
-  FETCH_TRIPS_FAILED
+  FETCH_TRIPS_FAILED,
+  SET_ACTIVE_TAGS
 } from "./constants";
-import { IMultiTripsType } from "./types";
+import {
+  IMultiTripsType,
+  IMultiTripsAndTagsType,
+  ISingleTripType
+} from "./types";
 
 export const fetchTripsFromStore = () => ({
   type: FETCH_TRIPS_REQUESTED
@@ -23,4 +28,9 @@ export const fetchTripsFailed = (message: string) => ({
 export const filterTrips = (location: string) => ({
   type: FILTER_TRIPS,
   location
+});
+
+export const setActiveTags = (tags: string[]) => ({
+  type: SET_ACTIVE_TAGS,
+  tags
 });

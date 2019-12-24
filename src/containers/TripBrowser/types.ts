@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import {
   FILTER_TRIPS,
   FETCH_TRIPS_REQUESTED,
-  FETCH_TRIPS_SUCCESED
+  FETCH_TRIPS_SUCCESED,
+  SET_ACTIVE_TAGS
 } from "./constants";
 
 export interface ITag {
@@ -29,6 +30,11 @@ export interface IMultiTripsType {
   trips: ISingleTripType[];
 }
 
+export interface IMultiTripsAndTagsType {
+  trips: ISingleTripType[];
+  activeTags: string[];
+}
+
 export interface IFetchTripsSuccesedAction {
   type: typeof FETCH_TRIPS_SUCCESED;
   trips: IMultiTripsType;
@@ -39,17 +45,22 @@ export interface IFilterTripsAction {
   location: string;
 }
 
+export interface ISetActiveTagsAction {
+  type: typeof SET_ACTIVE_TAGS;
+  tags: string[];
+}
+
 export type TripBrowserAction =
   | IFetchTripsRequest
   | IFilterTripsAction
-  | IFetchTripsSuccesedAction;
+  | IFetchTripsSuccesedAction
+  | ISetActiveTagsAction;
 
 export interface IFetchTripsRequest {
   type: typeof FETCH_TRIPS_REQUESTED;
 }
 
 //hook, ktory pobiera lokalizaccje
-
 interface IGeoLocationProps {
   coords: {
     latitude: number;

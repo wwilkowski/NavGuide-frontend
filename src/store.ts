@@ -10,12 +10,12 @@ import tripBrowserSaga from "./containers/TripBrowser/sagas";
 import { all } from "redux-saga/effects";
 import { RegistrationDataType } from "./containers/Registration/types";
 import { LoginDataType } from "./containers/Login/types";
-import { IMultiTripsType } from "./containers/TripBrowser/types";
+import { IMultiTripsAndTagsType } from "./containers/TripBrowser/types";
 
 export interface StoreType {
   registration: RegistrationDataType;
   login: LoginDataType;
-  tripBrowser: IMultiTripsType;
+  tripBrowser: IMultiTripsAndTagsType;
 }
 
 function* rootSaga() {

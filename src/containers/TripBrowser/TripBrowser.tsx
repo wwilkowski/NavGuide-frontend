@@ -17,8 +17,6 @@ const TripBrowser: React.FC = () => {
   const [formValue, setFormValue] = useState<string>(""); //wartosc formularza
   const [radiusValue, setRadiusValue] = useState<string>("");
 
-  dispatcher(actions.fetchTripsFromStore());
-
   const position = usePosition();
 
   let filterTripsData: ISingleTripType[] = [];
@@ -59,12 +57,11 @@ const TripBrowser: React.FC = () => {
     setSuggestedTrips(listCities);
   };
 
-  const onSearchFormSubmit = (
-    location: string,
-    searchMode: string,
-    activeTags: string[]
-  ) => {
+  const onSearchFormSubmit = (location: string, searchMode: string) => {
     if (searchMode === "location" && templateCities.includes(location)) {
+      dispatcher(actions.fetchTripsFromStore());
+      console.log(tripsData);
+
       setMode("normal");
       setFormValue(location);
 
@@ -110,7 +107,7 @@ const TripBrowser: React.FC = () => {
     //FILTRACJA Z TAGAMI
     const filterTripsDataWithTags: ISingleTripType[] = [];
     if (mode !== "random") {
-      filterTripsData.forEach((trip: ISingleTripType) => {
+      /*filterTripsData.forEach((trip: ISingleTripType) => {
         const len = activeTags.length;
         let i = 0;
         trip.tags.forEach((tag: ITag) => {
@@ -118,12 +115,12 @@ const TripBrowser: React.FC = () => {
         });
 
         if (i === len) filterTripsDataWithTags.push(trip);
-      });
+      });*/
     }
 
     setSuggestedTrips([]);
     mode === "normal" || mode === "geo"
-      ? setSearchedTrips(filterTripsDataWithTags)
+      ? setSearchedTrips(filterTripsData)
       : setSearchedTrips(filterTripsData);
   };
 
@@ -131,9 +128,14 @@ const TripBrowser: React.FC = () => {
     setFormValue(location);
   };
 
+  //w tej metodzie trzeba znalezc sposob zeby pobieralo dostepne tagi
   const onIncreaseRadius = (r: number) => {
     r += parseInt(radiusValue, 10);
-    onSearchFormSubmit(r.toString(), "geo", []);
+    onSearchFormSubmit(r.toString(), "geo");
+  };
+
+  const onTagChange = (tags: string[]) => {
+    dispatcher(actions.setActiveTags(tags));
   };
 
   return (
@@ -143,6 +145,7 @@ const TripBrowser: React.FC = () => {
         onSubmit={onSearchFormSubmit}
         formValue={formValue}
         radiusValue={radiusValue}
+        onTagChange={onTagChange}
       />
       <ListSuggestedTrips
         onCityClick={onSearchFormSubmit}

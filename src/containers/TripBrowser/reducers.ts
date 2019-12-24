@@ -1,8 +1,13 @@
-import { IMultiTripsType, ISingleTripType, TripBrowserAction } from "./types";
-import { FILTER_TRIPS, FETCH_TRIPS_SUCCESED } from "./constants";
+import { TripBrowserAction, IMultiTripsAndTagsType } from "./types";
+import {
+  FILTER_TRIPS,
+  FETCH_TRIPS_SUCCESED,
+  SET_ACTIVE_TAGS
+} from "./constants";
 
-const initialState: IMultiTripsType = {
-  trips: []
+const initialState: IMultiTripsAndTagsType = {
+  trips: [],
+  activeTags: []
 };
 
 const TripBrowserReducer = (
@@ -11,9 +16,10 @@ const TripBrowserReducer = (
 ) => {
   switch (action.type) {
     case FETCH_TRIPS_SUCCESED:
-      return action.trips;
+      return { ...state, trips: action.trips };
     case FILTER_TRIPS:
       return state;
+    case SET_ACTIVE_TAGS:
     default:
       return state;
   }

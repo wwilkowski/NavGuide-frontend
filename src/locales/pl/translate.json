@@ -24,6 +24,7 @@
     "Warning": "Ostrzeżenie",
     "No matching trips": "Brak pasujących wycieczek",
     "Increase the radius?": "Zwiększyć promień?",
-    "Suggested trips": "Polecane wycieczki"
+    "Suggested trips": "Polecane wycieczki",
+    "Please set radius first": "Najpierw podaj promień"
   }
 }

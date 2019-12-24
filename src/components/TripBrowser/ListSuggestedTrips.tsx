@@ -11,7 +11,7 @@ const ListSuggestedTrips = ({
       {suggestedTrips.map((trip: string, index: number) => (
         <li
           key={index.toString()}
-          onClick={() => onCityClick(trip, "location", [])}
+          onClick={() => onCityClick(trip, "location")}
           onMouseEnter={() => onCityHover(trip)}
         >
           {trip}

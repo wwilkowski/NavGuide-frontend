@@ -8,7 +8,8 @@ const SearchForm = ({
   onChange,
   onSubmit,
   formValue,
-  radiusValue
+  radiusValue,
+  onTagChange
 }: types.ISearchFormProps) => {
   const { t } = useTranslation();
 
@@ -27,6 +28,16 @@ const SearchForm = ({
   const [tag3, setTag3] = useState<boolean>(false);
   const [tag4, setTag4] = useState<boolean>(false);
   const [tag5, setTag5] = useState<boolean>(false);
+  let activeTags: string[] = [];
+  const createActiveTagsTable = () => {
+    activeTags = [];
+
+    if (tag1) activeTags.push("tag1");
+    if (tag2) activeTags.push("tag2");
+    if (tag3) activeTags.push("tag3");
+    if (tag4) activeTags.push("tag4");
+    if (tag5) activeTags.push("tag5");
+  };
 
   const handleRadiusChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRadius(event.target.value);
@@ -38,32 +49,27 @@ const SearchForm = ({
   const handleFormSubmit = (event: React.FormEvent<EventTarget>) => {
     event.preventDefault();
 
-    const activeTags: string[] = [];
-    if (tag1) activeTags.push('tag1');
-    if (tag2) activeTags.push('tag2');
-    if (tag3) activeTags.push('tag3');
-    if (tag4) activeTags.push('tag4');
-    if (tag5) activeTags.push('tag5');
-
+    createActiveTagsTable();
 
     if (searchMode === "location") {
       !location
         ? NotificationManager.warning(t("Form is empty"), t("Warning"))
-        : onSubmit(location, searchMode, activeTags);
+        : onSubmit(location, searchMode);
     } else if (searchMode === "geo") {
       !radius
         ? NotificationManager.warning(
             t("Please set radius first"),
             t("Warning")
           )
-        : onSubmit(radius, searchMode, activeTags);
+        : onSubmit(radius, searchMode);
     }
   };
 
   //ENABLE GEO BUTTON
   const [geoMode, setGeoMode] = useState<boolean>(false);
   const handleGeoModeChange = () => {
-    setGeoMode(geoMode ? !geoMode : !geoMode);
+    if (geoMode) setSearchMode("location");
+    setGeoMode(!geoMode);
   };
   const geoButton = !geoMode && (
     <button onClick={handleGeoModeChange}>{t("Set GEO")}</button>
@@ -115,6 +121,37 @@ const SearchForm = ({
     </>
   );
 
+  //nie dziala, bo po uruchomieniu akcji ponownie kilka razy pobieraja sie wycieczki ze store'a (handleTagChange)
+  const handleTagChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    switch (event.target.name) {
+      case "tag1":
+        setTag1(!tag1);
+        createActiveTagsTable();
+        onTagChange(activeTags);
+        break;
+      case "tag2":
+        setTag2(!tag2);
+        createActiveTagsTable();
+        onTagChange(activeTags);
+        break;
+      case "tag3":
+        setTag3(!tag3);
+        createActiveTagsTable();
+        onTagChange(activeTags);
+        break;
+      case "tag4":
+        setTag4(!tag4);
+        createActiveTagsTable();
+        onTagChange(activeTags);
+        break;
+      case "tag5":
+        setTag5(!tag5);
+        createActiveTagsTable();
+        onTagChange(activeTags);
+        break;
+    }
+  };
+
   return (
     <form onSubmit={handleFormSubmit}>
       <label>{t("Location")}: </label>
@@ -128,7 +165,7 @@ const SearchForm = ({
           name="tag1"
           type="checkbox"
           checked={tag1}
-          onChange={() => setTag1(!tag1)}
+          onChange={handleTagChange}
         />
         tag1
       </label>
@@ -137,7 +174,7 @@ const SearchForm = ({
           name="tag2"
           type="checkbox"
           checked={tag2}
-          onChange={() => setTag2(!tag2)}
+          onChange={handleTagChange}
         />
         tag2
       </label>
@@ -146,7 +183,7 @@ const SearchForm = ({
           name="tag3"
           type="checkbox"
           checked={tag3}
-          onChange={() => setTag3(!tag3)}
+          onChange={handleTagChange}
         />
         tag3
       </label>
@@ -155,7 +192,7 @@ const SearchForm = ({
           name="tag4"
           type="checkbox"
           checked={tag4}
-          onChange={() => setTag4(!tag4)}
+          onChange={handleTagChange}
         />
         tag4
       </label>
@@ -164,7 +201,7 @@ const SearchForm = ({
           name="tag5"
           type="checkbox"
           checked={tag5}
-          onChange={() => setTag5(!tag5)}
+          onChange={handleTagChange}
         />
         tag5
       </label>
