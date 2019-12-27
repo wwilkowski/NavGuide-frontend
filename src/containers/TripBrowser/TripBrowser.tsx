@@ -13,23 +13,21 @@ const TripBrowser: React.FC = () => {
   const tagsData = useSelector((state: StoreType) => state.tripBrowser.tags);
   const dispatcher = useDispatch();
 
-  const [mode, setMode] = useState<string>(""); //tryb wyswietlania wycieczek (czy losowo czy normalnie)
-  const [suggestedTrips, setSuggestedTrips] = useState<string[]>([]); //lista, pojawia się w podpowiedziach miejscowosci
-  const [searchedTrips, setSearchedTrips] = useState<ISingleTripType[]>([]); //przefiltrowane wycieczki
-  const [formValue, setFormValue] = useState<string>(""); //wartosc formularza
-  const [position, setPosition] = useState<IPosition>({
+  const [mode, setMode] = useState<string>(""); 
+  const [suggestedTrips, setSuggestedTrips] = useState<string[]>([]);
+  const [searchedTrips, setSearchedTrips] = useState<ISingleTripType[]>([]); 
+  const [formValue, setFormValue] = useState<string>("");
+  const [activeTags, setActiveTags] = useState<string[]>([]);
+  const [positionValue, setPositionValue] = useState<IPosition>({
     latitude: 0,
     longitude: 0,
     radius: 0
   });
-  const [radiusValue, setRadiusValue] = useState<string>("");
-  const [activeTags, setActiveTags] = useState<string[]>([]);
 
   //const position = usePosition();
 
   let filterTripsData: ISingleTripType[] = [];
 
-  //WERYFIKUJE CZY WYCIECZKA JEST W ZASIEGU PODANEGO PROMIENIA (NA PODSTAWIE WLASNOSCI DWOCH OKREGOW)
   const tripInRange = (
     trip: ISingleTripType,
     R: number,
@@ -72,6 +70,7 @@ const TripBrowser: React.FC = () => {
 
   const onSearchFormSubmit = (
     location: string,
+    position: IPosition,
     searchMode: string,
     activeTags: string[]
   ) => {
@@ -86,12 +85,17 @@ const TripBrowser: React.FC = () => {
         if (el.location === location) filterTripsData.push(el);
       });
     } else if (searchMode === "geo") {
-      setRadiusValue(location);
+      setPositionValue({
+        latitude: position.latitude,
+        longitude: position.longitude,
+        radius: position.radius
+      });
+
       mode = "geo";
       setMode(mode);
       setFormValue("");
 
-      const r = parseInt(location, 10) / 100;
+      const r = position.radius / 100;
       const x1 = position.latitude;
       const y1 = position.longitude;
 
@@ -146,8 +150,14 @@ const TripBrowser: React.FC = () => {
   };
 
   const onIncreaseRadius = (r: number) => {
-    r += parseInt(radiusValue, 10);
-    onSearchFormSubmit(r.toString(), "geo", activeTags);
+    setPositionValue({
+      latitude: positionValue.latitude,
+      longitude: positionValue.longitude,
+      radius: r
+    });
+
+    console.log(positionValue);
+    onSearchFormSubmit("", positionValue, "geo", activeTags);
   };
 
   const updateActiveTags = (tagNames: string[]) => {
@@ -161,7 +171,7 @@ const TripBrowser: React.FC = () => {
         onChange={onSearchFormChange}
         onSubmit={onSearchFormSubmit}
         formValue={formValue}
-        radiusValue={radiusValue}
+        positionValue={positionValue}
         tagsData={tagsData}
         updateActiveTags={updateActiveTags}
       />
@@ -181,3 +191,6 @@ const TripBrowser: React.FC = () => {
 };
 
 export default TripBrowser;
+
+
+//tagi i setPositionValue

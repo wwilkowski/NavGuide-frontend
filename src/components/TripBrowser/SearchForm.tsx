@@ -2,34 +2,61 @@ import React, { useState, useEffect } from "react";
 import * as types from "./types";
 import { useTranslation } from "react-i18next";
 import { NotificationManager } from "react-notifications";
-import { ITag } from "../../containers/TripBrowser/types";
+import { ITag, IPosition } from "../../containers/TripBrowser/types";
 
 const SearchForm = ({
   onChange,
   onSubmit,
   formValue,
-  radiusValue,
+  positionValue,
   tagsData,
   updateActiveTags
 }: types.ISearchFormProps) => {
   const { t } = useTranslation();
 
-  const [radius, setRadius] = useState<string>("");
   const [location, setLocation] = useState<string>("");
+  const [position, setPosition] = useState<IPosition>({
+    latitude: 0,
+    longitude: 0,
+    radius: 0
+  });
   const [tags, setTags] = useState<ITag[]>([]);
   useEffect(() => {
     setLocation(formValue);
   }, [formValue]);
   useEffect(() => {
-    setRadius(radiusValue);
-  }, [radiusValue]);
+    setPosition(positionValue);
+  }, [positionValue]);
   useEffect(() => {
     setTags(tagsData);
   }, [tagsData]);
 
   const handleRadiusChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRadius(event.target.value);
+    setPosition({
+      latitude: position.latitude,
+      longitude: position.longitude,
+      radius: parseInt(event.target.value)
+    });
   };
+
+  const handleLatitudeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPosition({
+      latitude: parseFloat(event.target.value),
+      longitude: position.longitude,
+      radius: position.radius
+    });
+  };
+
+  const handleLongitudeChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setPosition({
+      latitude: position.latitude,
+      longitude: parseFloat(event.target.value),
+      radius: position.radius
+    });
+  };
+
   const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLocation(event.target.value);
     onChange(event.target.value);
@@ -40,14 +67,16 @@ const SearchForm = ({
     if (searchMode === "location") {
       !location
         ? NotificationManager.warning(t("Form is empty"), t("Warning"))
-        : onSubmit(location, searchMode, activeTags);
+        : onSubmit(location, position, searchMode, activeTags);
     } else if (searchMode === "geo") {
-      !radius
+      position.latitude === 0 ||
+      position.longitude === 0 ||
+      position.radius === 0
         ? NotificationManager.warning(
             t("Please set radius first"),
             t("Warning")
           )
-        : onSubmit(radius, searchMode, activeTags);
+        : onSubmit("", position, searchMode, activeTags);
     }
   };
 
@@ -62,13 +91,25 @@ const SearchForm = ({
   const cancelGeoButton = geoMode && (
     <button onClick={handleGeoModeChange}>{t("Unset GEO")}</button>
   );
-  const radiusInput = geoMode && (
-    <input
-      type="number"
-      min="0"
-      value={radius}
-      onChange={handleRadiusChange}
-    ></input>
+  const positionInputs = geoMode && (
+    <>
+      <input
+        type="text"
+        value={position.latitude}
+        onChange={handleLatitudeChange}
+      ></input>
+      <input
+        type="text"
+        value={position.longitude}
+        onChange={handleLongitudeChange}
+      ></input>
+      <input
+        type="number"
+        min="0"
+        value={position.radius}
+        onChange={handleRadiusChange}
+      ></input>
+    </>
   );
 
   const [searchMode, setSearchMode] = useState<string>("location");
@@ -128,7 +169,7 @@ const SearchForm = ({
       <input type="text" value={location} onChange={handleFormChange} />
       {geoButton}
       {cancelGeoButton}
-      {radiusInput}
+      {positionInputs}
       {searchSwitches}
       {tags.map((tag: ITag) => (
         <label key={tag.id}>
