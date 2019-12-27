@@ -4,18 +4,19 @@ import { IListSuggestedTripsProps } from "./types";
 const ListSuggestedTrips = ({
   onCityClick,
   onCityHover,
-  suggestedTrips
+  suggestedTrips,
+  activeTags
 }: IListSuggestedTripsProps) => {
   return (
     <ul>
       {suggestedTrips.map((trip: string, index: number) => (
-        <li
+        <a
           key={index.toString()}
-          onClick={() => onCityClick(trip, "location")}
+          onClick={() => onCityClick(trip, "location", activeTags)}
           onMouseEnter={() => onCityHover(trip)}
         >
           {trip}
-        </li>
+        </a>
       ))}
     </ul>
   );

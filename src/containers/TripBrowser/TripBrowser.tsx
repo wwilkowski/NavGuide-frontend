@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ISingleTripType, IMultiTripsType, usePosition, ITag } from "./types";
+import { ISingleTripType, usePosition, ITag, IPosition } from "./types";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "./actions";
 import { StoreType } from "../../store";
@@ -9,18 +9,23 @@ import ListSuggestedTrips from "../../components/TripBrowser/ListSuggestedTrips"
 import { templateCities } from "./TemplateTrips";
 
 const TripBrowser: React.FC = () => {
-  const tripsData = useSelector((state: StoreType) => state.tripBrowser);
-  const activeTags = useSelector(
-    (state: StoreType) => state.tripBrowser.activeTags
-  );
+  const tripsData = useSelector((state: StoreType) => state.tripBrowser.trips);
+  const tagsData = useSelector((state: StoreType) => state.tripBrowser.tags);
   const dispatcher = useDispatch();
+
   const [mode, setMode] = useState<string>(""); //tryb wyswietlania wycieczek (czy losowo czy normalnie)
   const [suggestedTrips, setSuggestedTrips] = useState<string[]>([]); //lista, pojawia się w podpowiedziach miejscowosci
   const [searchedTrips, setSearchedTrips] = useState<ISingleTripType[]>([]); //przefiltrowane wycieczki
   const [formValue, setFormValue] = useState<string>(""); //wartosc formularza
+  const [position, setPosition] = useState<IPosition>({
+    latitude: 0,
+    longitude: 0,
+    radius: 0
+  });
   const [radiusValue, setRadiusValue] = useState<string>("");
+  const [activeTags, setActiveTags] = useState<string[]>([]);
 
-  const position = usePosition();
+  //const position = usePosition();
 
   let filterTripsData: ISingleTripType[] = [];
 
@@ -50,6 +55,11 @@ const TripBrowser: React.FC = () => {
     return false;
   };
 
+  const setupDataFromAPI = () => {
+    dispatcher(actions.fetchTripsRequested());
+    dispatcher(actions.fetchTagsRequested());
+  };
+
   const onSearchFormChange = (location: string) => {
     const listCities: string[] = [];
     templateCities.forEach((el: string) => {
@@ -60,26 +70,32 @@ const TripBrowser: React.FC = () => {
     setSuggestedTrips(listCities);
   };
 
-  const onSearchFormSubmit = (location: string, searchMode: string) => {
-    dispatcher(actions.fetchTripsFromStore());
-
+  const onSearchFormSubmit = (
+    location: string,
+    searchMode: string,
+    activeTags: string[]
+  ) => {
+    setActiveTags(activeTags);
+    let mode = "";
     if (searchMode === "location" && templateCities.includes(location)) {
-      setMode("normal");
+      mode = "normal";
+      setMode(mode);
       setFormValue(location);
 
-      tripsData.trips.forEach((el: ISingleTripType) => {
+      tripsData.forEach((el: ISingleTripType) => {
         if (el.location === location) filterTripsData.push(el);
       });
     } else if (searchMode === "geo") {
       setRadiusValue(location);
-      setMode("geo");
+      mode = "geo";
+      setMode(mode);
       setFormValue("");
 
       const r = parseInt(location, 10) / 100;
       const x1 = position.latitude;
       const y1 = position.longitude;
 
-      tripsData.trips.forEach((trip: ISingleTripType) => {
+      tripsData.forEach((trip: ISingleTripType) => {
         const R = trip.radius / 100;
         const x2 = trip.lat;
         const y2 = trip.lon;
@@ -87,16 +103,17 @@ const TripBrowser: React.FC = () => {
         if (tripInRange(trip, R, r, x1, x2, y1, y2)) filterTripsData.push(trip);
       });
     } else if (location.length > 0 && !templateCities.includes(location)) {
-      setMode("random");
+      mode = "random";
+      setMode(mode);
       let randomId: number;
       const min = 1;
-      const max = tripsData.trips.length;
+      const max = tripsData.length;
 
       let i = 0;
       while (i < 5) {
         randomId = Math.floor(Math.random() * (max - min) + min);
 
-        tripsData.trips.forEach((trip: ISingleTripType) => {
+        tripsData.forEach((trip: ISingleTripType) => {
           if (trip.id === randomId && !filterTripsData.includes(trip)) {
             filterTripsData.push(trip);
             i++;
@@ -105,9 +122,8 @@ const TripBrowser: React.FC = () => {
       }
     }
 
-    //FILTRACJA Z TAGAMI
     const filterTripsDataWithTags: ISingleTripType[] = [];
-    if (mode !== "random") {
+    if (mode != "random") {
       filterTripsData.forEach((trip: ISingleTripType) => {
         const len = activeTags.length;
         let i = 0;
@@ -120,8 +136,8 @@ const TripBrowser: React.FC = () => {
     }
 
     setSuggestedTrips([]);
-    mode === "normal" || mode === "geo"
-      ? setSearchedTrips(filterTripsDataWithTags) //withTags
+    mode != "random"
+      ? setSearchedTrips(filterTripsDataWithTags)
       : setSearchedTrips(filterTripsData);
   };
 
@@ -129,30 +145,31 @@ const TripBrowser: React.FC = () => {
     setFormValue(location);
   };
 
-  //w tej metodzie trzeba znalezc sposob zeby pobieralo dostepne tagi
   const onIncreaseRadius = (r: number) => {
     r += parseInt(radiusValue, 10);
-    onSearchFormSubmit(r.toString(), "geo");
+    onSearchFormSubmit(r.toString(), "geo", activeTags);
   };
 
-  const onTagChange = (tags: string[]) => {
-    dispatcher(actions.setActiveTags(tags));
-    console.log(activeTags);
+  const updateActiveTags = (tagNames: string[]) => {
+    setActiveTags(tagNames);
   };
 
   return (
     <div>
+      <button onClick={setupDataFromAPI}>SETUP DATA</button>
       <SearchForm
         onChange={onSearchFormChange}
         onSubmit={onSearchFormSubmit}
         formValue={formValue}
         radiusValue={radiusValue}
-        onTagChange={onTagChange}
+        tagsData={tagsData}
+        updateActiveTags={updateActiveTags}
       />
       <ListSuggestedTrips
         onCityClick={onSearchFormSubmit}
         onCityHover={handleCityHover}
         suggestedTrips={suggestedTrips}
+        activeTags={activeTags}
       />
       <ListTrips
         trips={searchedTrips}
