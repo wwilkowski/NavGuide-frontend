@@ -11,7 +11,19 @@ export interface FormValues {
   interests: number[];
 }
 
+export interface FullFormValues {
+  firstName: string;
+  lastName: string;
+  country: string;
+  email: string;
+  telephone: string;
+  gender: string;
+  experience: string;
+  interests: number[];
+  toBeGuide: boolean;
+}
+
 export interface MyFormProps {
   templateUser: IUserData;
-  onSubmit: (user: FormValues) => void;
+  onSubmit: (user: FormValues, toBeGuide: boolean) => void;
 }

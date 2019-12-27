@@ -87,7 +87,12 @@ function* confirmGoogleUser(action: types.IConfirmSignUpRequest) {
       yield initTokenCookie(token);
       yield put(logInGoogleSuccessed(user));
       showNotification('success', i18n.t('Validation successed!'), i18n.t('You are logged in!'));
-      yield call(forwardTo, '/profile');
+      if (action.toBeGuide) {
+        showNotification('info', i18n.t('You want to be guide'), i18n.t('Complete your data to declare to be a guide!'));
+        yield call(forwardTo, '/register/guide');
+      } else {
+        yield call(forwardTo, '/profile');
+      }
     } else {
       throw new Error('Unexpected error while confirming Google registration');
     }

@@ -21,10 +21,11 @@ export const signUpGoogleFailed = () => ({
   type: constants.SIGN_UP_GOOGLE_FAILED
 });
 
-export const confirmSignUpRequest = (templateUser: types.IUserData, token: string) => ({
+export const confirmSignUpRequest = (templateUser: types.IUserData, token: string, toBeGuide: boolean) => ({
   type: constants.CONFIRM_SIGN_UP_REQUESTED,
   templateUser,
-  token
+  token,
+  toBeGuide
 });
 
 export const confirmSignUpSuccessed = (token: string) => ({

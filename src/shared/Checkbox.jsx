@@ -18,7 +18,7 @@ const Checkbox = props => {
                   }
                 }
               } else {
-                const nextValue = field.value.concat(parseInt(props.valueKey, 10));
+                const nextValue = field.value.concat(props.valueKey);
                 form.setFieldValue(props.name, nextValue);
               }
             }}

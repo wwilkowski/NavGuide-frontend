@@ -13,6 +13,7 @@ const initialState: types.IRegisterStore = {
   },
   registrationInProgress: false,
   registrationToken: '',
+  toBeGuide: false,
   interests: []
 };
 

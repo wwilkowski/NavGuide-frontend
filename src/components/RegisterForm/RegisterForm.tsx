@@ -8,7 +8,7 @@ import { showNotification } from '../../helpers/notification';
 import i18n from '../../locales/i18n';
 import Checkbox from '../../shared/Checkbox';
 import { StoreType } from '../../store';
-import { FormValues, MyFormProps } from './types';
+import { MyFormProps, FullFormValues } from './types';
 
 const SignupSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -22,7 +22,7 @@ const SignupSchema = Yup.object().shape({
     .required('Telephone number is required!')
 });
 
-const InnerForm = (props: FormikProps<FormValues>) => {
+const InnerForm = (props: FormikProps<FullFormValues>) => {
   const { t } = useTranslation();
   const interests = useSelector((state: StoreType) => state.registration.interests);
 
@@ -61,7 +61,9 @@ const InnerForm = (props: FormikProps<FormValues>) => {
           </label>
           <Field as='select' id='country' name='country'>
             {countryCodes.map(country => (
-              <option value={country.code}>{t(country.name)}</option>
+              <option key={country.code} value={country.code}>
+                {t(country.name)}
+              </option>
             ))}
           </Field>
         </div>
@@ -110,6 +112,13 @@ const InnerForm = (props: FormikProps<FormValues>) => {
           ))}
         </div>
 
+        <div className='field'>
+          <label className='checkbox' htmlFor={'toBeGuide'}>
+            {t('I want to be a guide')}
+            <Field id={'toBeGuide'} name='toBeGuide' type='checkbox' checked={props.values.toBeGuide} />
+          </label>
+        </div>
+
         <button className='button is-primary' type='submit' disabled={isSubmitting}>
           {t('Submit')}
         </button>
@@ -118,7 +127,7 @@ const InnerForm = (props: FormikProps<FormValues>) => {
   );
 };
 
-const MyForm = withFormik<MyFormProps, FormValues>({
+const MyForm = withFormik<MyFormProps, FullFormValues>({
   mapPropsToValues: (props: MyFormProps) => {
     const { firstName, lastName, country, email, telephone, gender, experience } = props.templateUser;
     return {
@@ -129,13 +138,15 @@ const MyForm = withFormik<MyFormProps, FormValues>({
       telephone: telephone || '',
       gender: gender || '',
       experience: experience || 'NOVICE',
-      interests: []
+      interests: [],
+      toBeGuide: false
     };
   },
   validationSchema: SignupSchema,
 
-  handleSubmit: (values: FormValues, { props }) => {
-    props.onSubmit({ ...values });
+  handleSubmit: (values: FullFormValues, { props }) => {
+    const { toBeGuide, ...user } = values;
+    props.onSubmit(user, toBeGuide);
   }
 })(InnerForm);
 

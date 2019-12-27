@@ -16,6 +16,7 @@ export interface IRegisterStore {
   registrationInProgress: boolean;
   registrationToken: string;
   interests: IInterest[];
+  toBeGuide: boolean;
 }
 
 // Google
@@ -43,6 +44,7 @@ export interface IConfirmSignUpRequest {
   type: string;
   templateUser: IUserData;
   token: string;
+  toBeGuide: boolean;
 }
 
 export interface IConfirmSignUpResponse {

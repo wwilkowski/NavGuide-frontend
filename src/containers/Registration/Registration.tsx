@@ -5,13 +5,16 @@ import RegisterForm from '../../components/RegisterForm/RegisterForm';
 import { FormValues } from '../../components/RegisterForm/types';
 import { StoreType } from '../../store';
 import * as actions from './actions';
+import PrivateRoute from '../../shared/PrivateRoute';
+import GuideRegisterForm from '../../components/GuideRegisterForm/GuideRegisterForm';
 
 const Registration: React.FC = () => {
   const dispatcher = useDispatch();
   const registrationData = useSelector((state: StoreType) => state.registration);
+  const isLoggedIn = useSelector((state: StoreType) => state.profile.isLoggedIn);
 
-  const onRegisterFormSubmit = (user: FormValues) => {
-    dispatcher(actions.confirmSignUpRequest(user, registrationData.registrationToken));
+  const onRegisterFormSubmit = (user: FormValues, toBeGuide: boolean) => {
+    dispatcher(actions.confirmSignUpRequest(user, registrationData.registrationToken, toBeGuide));
   };
 
   return (
@@ -24,6 +27,7 @@ const Registration: React.FC = () => {
             <Redirect to='/' />
           )}
         </Route>
+        <PrivateRoute path={'/register/guide'} component={GuideRegisterForm} isLoggedIn={isLoggedIn} />
         <Route>
           <p data-testid='content'>NotFoundPage</p>
         </Route>
