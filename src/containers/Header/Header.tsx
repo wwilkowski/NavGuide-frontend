@@ -44,6 +44,10 @@ const Header: React.FC = () => {
             {t('Profile')}
           </Link>
 
+          <Link to='/profile/edit' className='navbar-item'>
+            {t('Edit profile')}
+          </Link>
+
           <Link to='/register/guide' className='navbar-item'>
             {t('Become a guide')}
           </Link>
