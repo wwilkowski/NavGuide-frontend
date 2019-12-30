@@ -10,6 +10,7 @@ const Checkbox = props => {
             type='checkbox'
             name={props.name}
             value={props.value}
+            checked={field.value.includes(props.valueKey)}
             onChange={() => {
               if (field.value.includes(props.valueKey)) {
                 for (let i = 0; i < field.value.length; i++) {

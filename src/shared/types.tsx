@@ -1,6 +1,4 @@
-import { IUserData } from '../../shared/types';
-
-export interface FormValues {
+export interface IUserData {
   avatar: string;
   role: string;
   firstName: string;
@@ -10,29 +8,23 @@ export interface FormValues {
   telephone: string;
   gender: string;
   experience: string;
-  interests: number[];
-}
-
-export interface FullFormValues {
-  avatar: string;
-  role: string;
-  firstName: string;
-  lastName: string;
-  country: string;
-  email: string;
-  telephone: string;
-  gender: string;
-  experience: string;
-  interests: number[];
-  toBeGuide: boolean;
-}
-
-export interface MyFormProps {
-  templateUser: IUserData;
-  onSubmit: (user: FormValues, toBeGuide: boolean) => void;
+  interests: IInterest[];
 }
 
 export interface IInterest {
   id: number;
   name: string;
+}
+
+export interface IUserFormValues {
+  avatar: string;
+  role: string;
+  firstName: string;
+  lastName: string;
+  country: string;
+  email: string;
+  telephone: string;
+  gender: string;
+  experience: string;
+  interests: number[];
 }

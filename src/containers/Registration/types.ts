@@ -1,18 +1,19 @@
 // Store
 import { SIGN_UP_GOOGLE_SUCCESSED, CONFIRM_SIGN_UP_SUCCESSED, GET_INTERESTS_SUCCESSED } from './constants';
+import { IUserData } from '../../shared/types';
 
-export interface IUserData {
-  avatar: string;
-  role: string;
-  firstName: string;
-  lastName: string;
-  country: string;
-  email: string;
-  telephone: string;
-  gender: string;
-  experience: string;
-  interests: number[];
-}
+// export interface IUserData {
+//   avatar: string;
+//   role: string;
+//   firstName: string;
+//   lastName: string;
+//   country: string;
+//   email: string;
+//   telephone: string;
+//   gender: string;
+//   experience: string;
+//   interests: number[];
+// }
 
 export interface IRegisterStore {
   templateUser: IUserData;

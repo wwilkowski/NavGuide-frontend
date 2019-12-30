@@ -1,8 +1,8 @@
 import React from 'react';
-import { ITemplate } from '../../containers/Profile/types';
+import { IUserData } from '../../shared/types';
 
 interface Props {
-  user: ITemplate;
+  user: IUserData;
 }
 
 const UserProfile = ({ user }: Props) => {

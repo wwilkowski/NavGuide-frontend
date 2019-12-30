@@ -40,10 +40,14 @@ function* logInGoogle(action: types.ILogInGoogleRequest) {
       showNotification('success', i18n.t('Logged in successfully!'), '');
       yield call(forwardTo, '/profile');
     } else {
-      throw new Error();
+      if (response.status === 401) {
+        throw new Error('User does not exist!');
+      } else {
+        throw new Error('Something goes wrong');
+      }
     }
   } catch (e) {
-    showNotification('danger', i18n.t('Something goes wrong'), i18n.t('Try again later!'));
+    showNotification('danger', i18n.t(`${e.message}`), i18n.t('Try again later!'));
     yield put(actions.logInGoogleFailed());
   }
 }
