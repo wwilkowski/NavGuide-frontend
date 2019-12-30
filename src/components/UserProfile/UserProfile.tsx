@@ -1,12 +1,11 @@
-import React, { ReactElement } from 'react';
-import { IUserData } from '../../containers/Profile/types';
+import React from 'react';
+import { ITemplate } from '../../containers/Profile/types';
 
 interface Props {
-  user: IUserData;
+  user: ITemplate;
 }
 
 const UserProfile = ({ user }: Props) => {
-  // const {} = user;
   return (
     <div>
       <img src={user.avatar} alt='' />

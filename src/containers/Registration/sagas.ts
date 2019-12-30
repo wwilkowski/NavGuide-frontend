@@ -28,13 +28,16 @@ function* signUpGoogleUser(action: types.ISignUpGoogleRequest) {
     const json = yield response.json();
     if (status >= 200 && status <= 300) {
       const templateUser = {
+        avatar: '',
+        role: '',
         firstName: json.firstName,
         lastName: json.lastName,
         country: json.country,
         email: json.email,
         telephone: '',
         gender: 'Female',
-        experience: 'NOVICE'
+        experience: 'NOVICE',
+        interests: []
       };
       yield put(
         actions.signUpGoogleSuccessed({
@@ -70,7 +73,7 @@ function* confirmGoogleUser(action: types.IConfirmSignUpRequest) {
         ...action.templateUser
       })
     });
-    const { firstName, lastName, country, email, experience, telephone, avatar, interests, role, token } = yield response.json();
+    const { firstName, lastName, country, email, experience, telephone, avatar, interests, role, token, gender } = yield response.json();
     const user = {
       firstName,
       lastName,
@@ -80,7 +83,8 @@ function* confirmGoogleUser(action: types.IConfirmSignUpRequest) {
       telephone,
       avatar,
       interests,
-      role
+      role,
+      gender
     };
     if (response.status >= 200 && response.status <= 300) {
       yield put(actions.confirmSignUpSuccessed(token));

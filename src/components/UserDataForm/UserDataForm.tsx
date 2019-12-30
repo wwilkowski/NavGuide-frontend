@@ -1,14 +1,12 @@
 import { Field, Form, FormikProps, withFormik } from 'formik';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import countryCodes from '../../helpers/countryCodes.json';
 import { showNotification } from '../../helpers/notification';
 import i18n from '../../locales/i18n';
 import Checkbox from '../../shared/Checkbox';
-import { StoreType } from '../../store';
-import { MyFormProps, FullFormValues } from './types';
+import { MyFormProps, FullFormValues, IInterest } from './types';
 
 const SignupSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -24,7 +22,7 @@ const SignupSchema = Yup.object().shape({
 
 const InnerForm = (props: FormikProps<FullFormValues>) => {
   const { t } = useTranslation();
-  const interests = useSelector((state: StoreType) => state.registration.interests);
+  const [interests, setInterests] = useState([]);
 
   const { touched, errors, isSubmitting } = props;
 
@@ -36,10 +34,18 @@ const InnerForm = (props: FormikProps<FullFormValues>) => {
     }
   }, [errors, isSubmitting, t]);
 
+  useEffect(() => {
+    async function fetchData() {
+      const data = await fetch('https://8.ip-164-132-53.eu/interests');
+      const json = await data.json();
+      setInterests(json);
+    }
+    fetchData();
+  }, []);
+
   return (
     <div className='section'>
       <Form>
-        <h1 className='title'>{t('Register Form')}</h1>
         <div className='field'>
           <label className='label' htmlFor='firstName'>
             {t('First name')}
@@ -105,7 +111,7 @@ const InnerForm = (props: FormikProps<FullFormValues>) => {
         </div>
 
         <div className='field'>
-          {interests.map(interest => (
+          {interests.map((interest: IInterest) => (
             <label key={interest.id} className='checkbox' htmlFor={interest.name}>
               <Checkbox id='interests' name='interests' value={interest.name} valueKey={interest.id} />
             </label>
@@ -139,7 +145,9 @@ const MyForm = withFormik<MyFormProps, FullFormValues>({
       gender: gender || '',
       experience: experience || 'NOVICE',
       interests: [],
-      toBeGuide: false
+      toBeGuide: false,
+      avatar: '',
+      role: ''
     };
   },
   validationSchema: SignupSchema,

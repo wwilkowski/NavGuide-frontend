@@ -22,7 +22,7 @@ function* logInGoogle(action: types.ILogInGoogleRequest) {
       })
     });
     if (response.status >= 200 && response.status <= 300) {
-      const { firstName, lastName, country, email, experience, telephone, avatar, interests, role, token } = yield response.json();
+      const { firstName, lastName, country, email, experience, telephone, avatar, interests, role, token, gender } = yield response.json();
       const user = {
         firstName,
         lastName,
@@ -32,7 +32,8 @@ function* logInGoogle(action: types.ILogInGoogleRequest) {
         telephone,
         avatar,
         interests,
-        role
+        role,
+        gender
       };
       yield put(actions.logInGoogleSuccessed(user));
       yield initTokenCookie(token);

@@ -2,6 +2,8 @@
 import { SIGN_UP_GOOGLE_SUCCESSED, CONFIRM_SIGN_UP_SUCCESSED, GET_INTERESTS_SUCCESSED } from './constants';
 
 export interface IUserData {
+  avatar: string;
+  role: string;
   firstName: string;
   lastName: string;
   country: string;
@@ -9,6 +11,7 @@ export interface IUserData {
   telephone: string;
   gender: string;
   experience: string;
+  interests: number[];
 }
 
 export interface IRegisterStore {

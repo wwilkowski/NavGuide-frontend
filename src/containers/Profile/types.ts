@@ -1,16 +1,31 @@
 import { IInterest } from '../Registration/types';
 
 export interface IUserData {
+  avatar: string;
+  role: string;
   firstName: string;
   lastName: string;
-  email: string;
   country: string;
-  experience: string;
+  email: string;
   telephone: string;
-  avatar: string;
-  interests: IInterest[];
-  role: string;
+  gender: string;
+  experience: string;
+  interests: number[];
 }
+
+export interface ITemplate {
+  avatar: string;
+  role: string;
+  firstName: string;
+  lastName: string;
+  country: string;
+  email: string;
+  telephone: string;
+  gender: string;
+  experience: string;
+  interests: IInterest[];
+}
+
 export interface ILogInSuccessedAction {
   type: string;
   user: IUserData;

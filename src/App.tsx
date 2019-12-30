@@ -6,8 +6,6 @@ import 'react-notifications-component/dist/theme.css';
 import { Route, Switch } from 'react-router-dom';
 import Header from './containers/Header/Header';
 import Registration from './containers/Registration/Registration';
-import { useSelector } from 'react-redux';
-import { StoreType } from './store';
 import Profile from './containers/Profile/Profile';
 
 // templates
@@ -20,13 +18,7 @@ const NotFound = () => {
   return <p data-testid='content'>{t('Not found')}</p>;
 };
 
-const Edit = () => {
-  return <p> Edit! </p>;
-};
-
 const App: React.FC = () => {
-  const isLoggedIn = useSelector((state: StoreType) => state.profile.isLoggedIn);
-
   return (
     <>
       <ReactNotification />

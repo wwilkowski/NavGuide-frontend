@@ -1,6 +1,6 @@
-import { IUserData } from '../../containers/Registration/types';
-
 export interface FormValues {
+  avatar: string;
+  role: string;
   firstName: string;
   lastName: string;
   country: string;
@@ -12,6 +12,8 @@ export interface FormValues {
 }
 
 export interface FullFormValues {
+  avatar: string;
+  role: string;
   firstName: string;
   lastName: string;
   country: string;
@@ -24,6 +26,11 @@ export interface FullFormValues {
 }
 
 export interface MyFormProps {
-  templateUser: IUserData;
+  templateUser: FormValues;
   onSubmit: (user: FormValues, toBeGuide: boolean) => void;
+}
+
+export interface IInterest {
+  id: number;
+  name: string;
 }
