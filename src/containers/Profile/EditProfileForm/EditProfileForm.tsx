@@ -9,7 +9,7 @@ const EditProfileForm = () => {
   const { t } = useTranslation();
   const user = useSelector((state: StoreType) => state.profile.user);
 
-  const onEditProfileFormSubmit = (user: IUserFormValues, toBeGuide: boolean) => {
+  const onEditProfileFormSubmit = (user: IUserFormValues) => {
     alert(user);
   };
 

@@ -24,12 +24,11 @@ export interface FullFormValues {
   gender: string;
   experience: string;
   interests: number[];
-  toBeGuide: boolean;
 }
 
 export interface MyFormProps {
   templateUser: IUserData;
-  onSubmit: (user: FormValues, toBeGuide: boolean) => void;
+  onSubmit: (user: FormValues) => void;
 }
 
 export interface IInterest {

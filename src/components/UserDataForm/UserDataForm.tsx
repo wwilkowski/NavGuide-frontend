@@ -118,12 +118,12 @@ const InnerForm = (props: FormikProps<FullFormValues>) => {
           ))}
         </div>
 
-        <div className='field'>
+        {/* <div className='field'>
           <label className='checkbox' htmlFor={'toBeGuide'}>
             {t('I want to be a guide')}
             <Field id={'toBeGuide'} name='toBeGuide' type='checkbox' checked={props.values.toBeGuide} />
           </label>
-        </div>
+        </div> */}
 
         <button className='button is-primary' type='submit' disabled={isSubmitting}>
           {t('Submit')}
@@ -149,7 +149,6 @@ const MyForm = withFormik<MyFormProps, FullFormValues>({
       gender: gender || '',
       experience: experience || 'NOVICE',
       interests: interests.map(i => i.id) || [],
-      toBeGuide: false,
       avatar: '',
       role: ''
     };
@@ -157,8 +156,8 @@ const MyForm = withFormik<MyFormProps, FullFormValues>({
   validationSchema: SignupSchema,
 
   handleSubmit: (values: FullFormValues, { props }) => {
-    const { toBeGuide, ...user } = values;
-    props.onSubmit(user, toBeGuide);
+    const { ...user } = values;
+    props.onSubmit(user);
   }
 })(InnerForm);
 
