@@ -16,7 +16,7 @@ const SignupSchema = Yup.object().shape({
     .matches(/([a-zA-Z',.-]+( [a-zA-Z',.-]+)*){1,100}/, i18n.t('Input is not valid!'))
     .required('Last name is required!'),
   telephone: Yup.string()
-    .matches(/^\d{9}$/, i18n.t('Input is not valid!'))
+    .matches(/^[0-9]{2}\s?[0-9]{3}\s?[0-9]{3}\s?[0-9]{3}$/, i18n.t('Input is not valid!'))
     .required('Telephone number is required!')
 });
 
@@ -78,8 +78,11 @@ const InnerForm = (props: FormikProps<FullFormValues>) => {
           <label className='label' htmlFor='tel'>
             {t('Telephone')}
           </label>
-          <Field className='input' id='telephone' type='text' name='telephone' />
-          {errors.telephone && touched.telephone && <div>{t(errors.telephone)}</div>}
+          <p className='control has-icons-left'>
+            <span className='icon is-small is-left'>+</span>
+            <Field className='input telephoneInput' id='telephone' type='text' name='telephone' />
+            {errors.telephone && touched.telephone && <div>{t(errors.telephone)}</div>}
+          </p>
         </div>
 
         <div className='field'>
@@ -117,14 +120,6 @@ const InnerForm = (props: FormikProps<FullFormValues>) => {
             </label>
           ))}
         </div>
-
-        {/* <div className='field'>
-          <label className='checkbox' htmlFor={'toBeGuide'}>
-            {t('I want to be a guide')}
-            <Field id={'toBeGuide'} name='toBeGuide' type='checkbox' checked={props.values.toBeGuide} />
-          </label>
-        </div> */}
-
         <button className='button is-primary' type='submit' disabled={isSubmitting}>
           {t('Submit')}
         </button>
@@ -157,6 +152,7 @@ const MyForm = withFormik<MyFormProps, FullFormValues>({
 
   handleSubmit: (values: FullFormValues, { props }) => {
     const { ...user } = values;
+    user.telephone = user.telephone.replace(/\s/g, '');
     props.onSubmit(user);
   }
 })(InnerForm);

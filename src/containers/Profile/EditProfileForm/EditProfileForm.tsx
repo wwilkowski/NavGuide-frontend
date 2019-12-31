@@ -10,7 +10,9 @@ const EditProfileForm = () => {
   const user = useSelector((state: StoreType) => state.profile.user);
 
   const onEditProfileFormSubmit = (user: IUserFormValues) => {
-    alert(user);
+    setTimeout(() => {
+      alert(JSON.stringify(user, null, 2));
+    }, 1000);
   };
 
   return (
