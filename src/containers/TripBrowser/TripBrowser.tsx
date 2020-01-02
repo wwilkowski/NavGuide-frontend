@@ -1,21 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ISingleTripType, usePosition, ITag, IPosition } from "./types";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "./actions";
 import { StoreType } from "../../store";
-import SearchForm from "../../components/TripBrowser/SearchForm";
 import ListTrips from "../../components/TripBrowser/ListTrips";
 import ListSuggestedTrips from "../../components/TripBrowser/ListSuggestedTrips";
 import { templateCities } from "./TemplateTrips";
+import SearchForm from "../../components/TripBrowser/SearchForm";
 
 const TripBrowser: React.FC = () => {
   const tripsData = useSelector((state: StoreType) => state.tripBrowser.trips);
-  const tagsData = useSelector((state: StoreType) => state.tripBrowser.tags);
-  const dispatcher = useDispatch();
 
-  const [mode, setMode] = useState<string>(""); 
+  const [mode, setMode] = useState<string>("");
   const [suggestedTrips, setSuggestedTrips] = useState<string[]>([]);
-  const [searchedTrips, setSearchedTrips] = useState<ISingleTripType[]>([]); 
+  const [searchedTrips, setSearchedTrips] = useState<ISingleTripType[]>([]);
   const [formValue, setFormValue] = useState<string>("");
   const [activeTags, setActiveTags] = useState<string[]>([]);
   const [positionValue, setPositionValue] = useState<IPosition>({
@@ -24,7 +22,11 @@ const TripBrowser: React.FC = () => {
     radius: 0
   });
 
-  //const position = usePosition();
+  const dispatcher = useDispatch();
+  useEffect(() => {
+    dispatcher(actions.fetchTripsRequested());
+    dispatcher(actions.fetchTagsRequested());
+  });
 
   let filterTripsData: ISingleTripType[] = [];
 
@@ -51,11 +53,6 @@ const TripBrowser: React.FC = () => {
       return true;
 
     return false;
-  };
-
-  const setupDataFromAPI = () => {
-    dispatcher(actions.fetchTripsRequested());
-    dispatcher(actions.fetchTagsRequested());
   };
 
   const onSearchFormChange = (location: string) => {
@@ -94,7 +91,6 @@ const TripBrowser: React.FC = () => {
       mode = "geo";
       setMode(mode);
       setFormValue("");
-
       const r = position.radius / 100;
       const x1 = position.latitude;
       const y1 = position.longitude;
@@ -153,27 +149,31 @@ const TripBrowser: React.FC = () => {
     setPositionValue({
       latitude: positionValue.latitude,
       longitude: positionValue.longitude,
-      radius: r
+      radius: positionValue.radius + r
     });
 
-    console.log(positionValue);
-    onSearchFormSubmit("", positionValue, "geo", activeTags);
+    const newPositionValue: IPosition = {
+      latitude: positionValue.latitude,
+      longitude: positionValue.longitude,
+      radius: positionValue.radius + r
+    };
+
+    onSearchFormSubmit("", newPositionValue, "geo", activeTags);
   };
 
   const updateActiveTags = (tagNames: string[]) => {
     setActiveTags(tagNames);
+    console.log(tagNames);
   };
 
   return (
     <div>
-      <button onClick={setupDataFromAPI}>SETUP DATA</button>
       <SearchForm
         onChange={onSearchFormChange}
         onSubmit={onSearchFormSubmit}
+        updateActiveTags={updateActiveTags}
         formValue={formValue}
         positionValue={positionValue}
-        tagsData={tagsData}
-        updateActiveTags={updateActiveTags}
       />
       <ListSuggestedTrips
         onCityClick={onSearchFormSubmit}
@@ -191,6 +191,5 @@ const TripBrowser: React.FC = () => {
 };
 
 export default TripBrowser;
-
 
 //tagi i setPositionValue

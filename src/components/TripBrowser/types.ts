@@ -18,6 +18,7 @@ export interface ISearchFormProps {
   updateActiveTags: (tagNames: string[]) => void;
 }
 
+
 export interface IListTripsProps {
   trips: ISingleTripType[];
   mode: string;

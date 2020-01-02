@@ -1,18 +1,28 @@
 import React, { useState, useEffect } from "react";
-import * as types from "./types";
 import { useTranslation } from "react-i18next";
-import { NotificationManager } from "react-notifications";
-import { ITag, IPosition } from "../../containers/TripBrowser/types";
+import { IPosition, ITag } from "../../containers/TripBrowser/types";
+import { withFormik, FormikProps, Field, Form } from "formik";
+import { useSelector } from "react-redux";
+import { StoreType } from "../../store";
+import { labeledStatement } from "@babel/types";
 
-const SearchForm = ({
-  onChange,
-  onSubmit,
-  formValue,
-  positionValue,
-  tagsData,
-  updateActiveTags
-}: types.ISearchFormProps) => {
+interface ISearchFormValues {
+  location: string;
+  lat: number;
+  lon: number;
+  radius: number;
+  searchMode: string;
+  activeTags: string[];
+}
+
+const InnerForm = (
+  props: ISearchFormProps & FormikProps<ISearchFormValues>
+) => {
   const { t } = useTranslation();
+
+  const { values, setFieldValue } = props;
+
+  const tags = useSelector((state: StoreType) => state.tripBrowser.tags);
 
   const [location, setLocation] = useState<string>("");
   const [position, setPosition] = useState<IPosition>({
@@ -20,171 +30,210 @@ const SearchForm = ({
     longitude: 0,
     radius: 0
   });
-  const [tags, setTags] = useState<ITag[]>([]);
+
   useEffect(() => {
-    setLocation(formValue);
-  }, [formValue]);
+    setLocation(props.formValue);
+  }, [props.formValue]);
+
   useEffect(() => {
-    setPosition(positionValue);
-  }, [positionValue]);
-  useEffect(() => {
-    setTags(tagsData);
-  }, [tagsData]);
-
-  const handleRadiusChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPosition({
-      latitude: position.latitude,
-      longitude: position.longitude,
-      radius: parseInt(event.target.value)
+      latitude: props.positionValue.latitude,
+      longitude: props.positionValue.longitude,
+      radius: props.positionValue.radius
     });
-  };
+  }, [props.positionValue]);
 
-  const handleLatitudeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPosition({
-      latitude: parseFloat(event.target.value),
-      longitude: position.longitude,
-      radius: position.radius
-    });
-  };
-
-  const handleLongitudeChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setPosition({
-      latitude: position.latitude,
-      longitude: parseFloat(event.target.value),
-      radius: position.radius
-    });
-  };
-
-  const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLocation(event.target.value);
-    onChange(event.target.value);
-  };
-  const handleFormSubmit = (event: React.FormEvent<EventTarget>) => {
-    event.preventDefault();
-
-    if (searchMode === "location") {
-      !location
-        ? NotificationManager.warning(t("Form is empty"), t("Warning"))
-        : onSubmit(location, position, searchMode, activeTags);
-    } else if (searchMode === "geo") {
-      position.latitude === 0 ||
-      position.longitude === 0 ||
-      position.radius === 0
-        ? NotificationManager.warning(
-            t("Please set radius first"),
-            t("Warning")
-          )
-        : onSubmit("", position, searchMode, activeTags);
-    }
-  };
-
-  const [geoMode, setGeoMode] = useState<boolean>(false);
-  const handleGeoModeChange = () => {
-    if (geoMode) setSearchMode("location");
-    setGeoMode(!geoMode);
-  };
-  const geoButton = !geoMode && (
-    <button onClick={handleGeoModeChange}>{t("Set GEO")}</button>
-  );
-  const cancelGeoButton = geoMode && (
-    <button onClick={handleGeoModeChange}>{t("Unset GEO")}</button>
-  );
-  const positionInputs = geoMode && (
-    <>
-      <input
-        type="text"
-        value={position.latitude}
-        onChange={handleLatitudeChange}
-      ></input>
-      <input
-        type="text"
-        value={position.longitude}
-        onChange={handleLongitudeChange}
-      ></input>
-      <input
-        type="number"
-        min="0"
-        value={position.radius}
-        onChange={handleRadiusChange}
-      ></input>
-    </>
-  );
-
-  const [searchMode, setSearchMode] = useState<string>("location");
-  const [selectedOption, setSelectedOption] = useState<string>("location");
-  const handleSelectedOptionChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setSelectedOption(event.target.value);
-
-    event.target.value === "location"
-      ? setSearchMode("location")
-      : setSearchMode("geo");
-  };
-  const searchSwitches = geoMode && (
-    <>
-      <label>
-        <input
-          type="radio"
-          value="location"
-          checked={selectedOption === "location"}
-          onChange={handleSelectedOptionChange}
-        />
-        {t("location")}
-      </label>
-      <label>
-        <input
-          type="radio"
-          value="geo"
-          checked={selectedOption === "geo"}
-          onChange={handleSelectedOptionChange}
-        />
-        {t("GEO")}
-      </label>
-    </>
-  );
-
-  const [activeTags, setActiveTags] = useState<string[]>([]);
   const handleTagChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const tagNames = tags.map((tag: ITag) => tag.name);
-    const tmp = activeTags;
+    const tmp = values.activeTags;
     tagNames.forEach((tagName: string) => {
-      if (event.target.name === tagName) {
-        if (!activeTags.includes(tagName)) tmp.push(tagName);
+      if (event.target.value === tagName) {
+        if (!values.activeTags.includes(tagName)) tmp.push(tagName);
         else {
-          const index = activeTags.indexOf(tagName);
+          const index = values.activeTags.indexOf(tagName);
           tmp.splice(index, 1);
         }
       }
     });
-    setActiveTags(tmp);
-    updateActiveTags(tmp);
+    props.updateActiveTags(tmp);
+    setFieldValue("activeTags", tmp);
   };
 
   return (
-    <form onSubmit={handleFormSubmit}>
-      <label>{t("Location")}: </label>
-      <input type="text" value={location} onChange={handleFormChange} />
-      {geoButton}
-      {cancelGeoButton}
-      {positionInputs}
-      {searchSwitches}
+    <Form>
+      <label>
+        {t("Location")}:
+        <Field
+          id="location"
+          type="text"
+          name="location"
+          value={location}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            props.handleChange(event);
+            setLocation(event.target.value);
+            props.onChange(event.target.value);
+          }}
+        />
+      </label>
+
+      <label>
+        {t("Lat")}:
+        <Field
+          id="lat"
+          type="text"
+          name="lat"
+          value={position.latitude}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            props.handleChange(event);
+            setPosition({
+              latitude: parseFloat(event.target.value),
+              longitude: position.longitude,
+              radius: position.radius
+            });
+          }}
+        />
+      </label>
+
+      <label>
+        {t("Lon")}:
+        <Field
+          id="lon"
+          type="text"
+          name="lon"
+          value={position.longitude}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            props.handleChange(event);
+            setPosition({
+              latitude: position.latitude,
+              longitude: parseFloat(event.target.value),
+              radius: position.radius
+            });
+          }}
+        />
+      </label>
+
+      <label>
+        {t("Radius")}:
+        <Field
+          id="radius"
+          type="number"
+          min="0"
+          name="radius"
+          value={position.radius}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            props.handleChange(event);
+            setPosition({
+              latitude: position.latitude,
+              longitude: position.longitude,
+              radius: parseInt(event.target.value, 10)
+            });
+          }}
+        />
+      </label>
+
+      <label>
+        {t("Location")}:
+        <Field
+          id="locationSwitch"
+          type="radio"
+          name="searchMode"
+          value="location"
+          checked={values.searchMode === "location"}
+          onChange={props.handleChange}
+        />
+      </label>
+
+      <label>
+        {t("Geo")}:
+        <Field
+          id="geoSwitch"
+          type="radio"
+          name="searchMode"
+          value="geo"
+          checked={values.searchMode === "geo"}
+          onChange={props.handleChange}
+        />
+      </label>
+
       {tags.map((tag: ITag) => (
         <label key={tag.id}>
-          <input
-            name={tag.name}
+          <Field
+            name="activeTags"
             type="checkbox"
-            checked={activeTags.includes(tag.name)} //nie dziala
+            value={tag.name}
             onChange={handleTagChange}
           />
           {tag.name}
         </label>
       ))}
+
       <button type="submit">{t("Find")}</button>
-    </form>
+    </Form>
   );
 };
+
+const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
+  mapPropsToValues: (props: ISearchFormProps) => {
+    const formValue = props.formValue;
+    const positionValue = props.positionValue;
+
+    return {
+      location: formValue || "",
+      lat: positionValue.latitude || 0,
+      lon: positionValue.longitude || 0,
+      radius: positionValue.radius,
+      searchMode: "location",
+      activeTags: []
+    };
+  },
+
+  handleSubmit: (values: ISearchFormValues, { props }) => {
+    /* warningi */
+    if (
+      values.searchMode === "geo" &&
+      (values.lat === 0 || values.lon === 0 || values.radius === 0)
+    ) {
+      console.log("ustaw spol");
+    } else if (values.location === "" && values.searchMode === "location") {
+      console.log("wpisz miasto");
+    } else {
+      const position: IPosition = {
+        latitude: values.lat,
+        longitude: values.lon,
+        radius: values.radius
+      };
+
+      props.onSubmit(
+        values.location,
+        position,
+        values.searchMode,
+        values.activeTags
+      );
+    }
+  }
+})(InnerForm);
+
+interface ISearchFormProps {
+  onChange: (location: string) => void;
+  onSubmit: (
+    location: string,
+    position: IPosition,
+    searchMode: string,
+    activeTags: string[]
+  ) => void;
+  updateActiveTags: (tagNames: string[]) => void;
+  formValue: string;
+  positionValue: IPosition;
+}
+
+const SearchForm = (props: ISearchFormProps) => (
+  <ControlledSearchForm
+    onChange={props.onChange}
+    onSubmit={props.onSubmit}
+    updateActiveTags={props.updateActiveTags}
+    formValue={props.formValue}
+    positionValue={props.positionValue}
+  />
+);
 
 export default SearchForm;

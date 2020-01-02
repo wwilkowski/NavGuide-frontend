@@ -17,13 +17,13 @@ const ListSuggestedTrips = ({
   return (
     <ul>
       {suggestedTrips.map((trip: string, index: number) => (
-        <a
+        <li
           key={index.toString()}
           onClick={() => onCityClick(trip, position, "location", activeTags)}
           onMouseEnter={() => onCityHover(trip)}
         >
           {trip}
-        </a>
+        </li>
       ))}
     </ul>
   );
