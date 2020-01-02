@@ -36,7 +36,7 @@ const InnerForm = (props: FormikProps<FullFormValues>) => {
 
   useEffect(() => {
     async function fetchData() {
-      const data = await fetch('https://8.ip-164-132-53.eu/interests');
+      const data = await fetch('https://235.ip-51-91-9.eu/interests');
       const json = await data.json();
       setInterests(json);
     }

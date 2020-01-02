@@ -8,9 +8,9 @@ import * as actions from './actions';
 import * as constants from './constants';
 import * as types from './types';
 
-const signUpGoogleEndpoint = `https://8.ip-164-132-53.eu/auth/google/register`;
-const confirmGoogleEndpoint = `https://8.ip-164-132-53.eu/auth/google/register/confirm`;
-const interestsEndpoint = `https://8.ip-164-132-53.eu/interests`;
+const signUpGoogleEndpoint = `https://235.ip-51-91-9.eu/auth/google/register`;
+const confirmGoogleEndpoint = `https://235.ip-51-91-9.eu/auth/google/register/confirm`;
+const interestsEndpoint = `https://235.ip-51-91-9.eu/interests`;
 
 function* signUpGoogleUser(action: types.ISignUpGoogleRequest) {
   try {

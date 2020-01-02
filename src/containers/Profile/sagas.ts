@@ -7,7 +7,7 @@ import * as actions from './actions';
 import * as constants from './constants';
 import * as types from './types';
 
-const logInGoogleEndpoint = 'https://8.ip-164-132-53.eu/auth/google/login';
+const logInGoogleEndpoint = 'https://235.ip-51-91-9.eu/auth/google/login';
 
 function* logInGoogle(action: types.ILogInGoogleRequest) {
   try {
