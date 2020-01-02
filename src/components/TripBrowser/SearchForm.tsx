@@ -4,25 +4,21 @@ import { IPosition, ITag } from "../../containers/TripBrowser/types";
 import { withFormik, FormikProps, Field, Form } from "formik";
 import { useSelector } from "react-redux";
 import { StoreType } from "../../store";
-import { labeledStatement } from "@babel/types";
+import { NotificationManager } from "react-notifications";
+import * as Yup from "yup";
+import i18n from "../../locales/i18n";
+import { ISearchFormValues, ISearchFormProps } from "./types";
 
-interface ISearchFormValues {
-  location: string;
-  lat: number;
-  lon: number;
-  radius: number;
-  searchMode: string;
-  activeTags: string[];
-}
+const SearchFormSchema = Yup.object().shape({});
 
 const InnerForm = (
   props: ISearchFormProps & FormikProps<ISearchFormValues>
 ) => {
   const { t } = useTranslation();
 
-  const { values, setFieldValue } = props;
-
   const tags = useSelector((state: StoreType) => state.tripBrowser.tags);
+
+  const { values, setFieldValue, touched, isSubmitting, errors } = props;
 
   const [location, setLocation] = useState<string>("");
   const [position, setPosition] = useState<IPosition>({
@@ -61,99 +57,87 @@ const InnerForm = (
 
   return (
     <Form>
-      <label>
-        {t("Location")}:
-        <Field
-          id="location"
-          type="text"
-          name="location"
-          value={location}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            props.handleChange(event);
-            setLocation(event.target.value);
-            props.onChange(event.target.value);
-          }}
-        />
-      </label>
+      <label>{t("Location")}: </label>
+      <Field
+        id="location"
+        type="text"
+        name="location"
+        value={location}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          props.handleChange(event);
+          setLocation(event.target.value);
+          props.onChange(event.target.value);
+        }}
+      />
+      {errors.location && touched.location && <div>{t(errors.location)}</div>}
 
-      <label>
-        {t("Lat")}:
-        <Field
-          id="lat"
-          type="text"
-          name="lat"
-          value={position.latitude}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            props.handleChange(event);
-            setPosition({
-              latitude: parseFloat(event.target.value),
-              longitude: position.longitude,
-              radius: position.radius
-            });
-          }}
-        />
-      </label>
+      <label>{t("Lat")}: </label>
+      <Field
+        id="lat"
+        type="text"
+        name="lat"
+        value={position.latitude}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          props.handleChange(event);
+          setPosition({
+            latitude: parseFloat(event.target.value),
+            longitude: position.longitude,
+            radius: position.radius
+          });
+        }}
+      />
 
-      <label>
-        {t("Lon")}:
-        <Field
-          id="lon"
-          type="text"
-          name="lon"
-          value={position.longitude}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            props.handleChange(event);
-            setPosition({
-              latitude: position.latitude,
-              longitude: parseFloat(event.target.value),
-              radius: position.radius
-            });
-          }}
-        />
-      </label>
+      <label>{t("Lon")}: </label>
+      <Field
+        id="lon"
+        type="text"
+        name="lon"
+        value={position.longitude}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          props.handleChange(event);
+          setPosition({
+            latitude: position.latitude,
+            longitude: parseFloat(event.target.value),
+            radius: position.radius
+          });
+        }}
+      />
 
-      <label>
-        {t("Radius")}:
-        <Field
-          id="radius"
-          type="number"
-          min="0"
-          name="radius"
-          value={position.radius}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            props.handleChange(event);
-            setPosition({
-              latitude: position.latitude,
-              longitude: position.longitude,
-              radius: parseInt(event.target.value, 10)
-            });
-          }}
-        />
-      </label>
+      <label>{t("Radius")}: </label>
+      <Field
+        id="radius"
+        type="text"
+        name="radius"
+        value={position.radius}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          props.handleChange(event);
+          setPosition({
+            latitude: position.latitude,
+            longitude: position.longitude,
+            radius: parseInt(event.target.value, 10)
+          });
+        }}
+      />
 
-      <label>
-        {t("Location")}:
-        <Field
-          id="locationSwitch"
-          type="radio"
-          name="searchMode"
-          value="location"
-          checked={values.searchMode === "location"}
-          onChange={props.handleChange}
-        />
-      </label>
+      <label>{t("Location")}: </label>
+      <Field
+        id="locationSwitch"
+        type="radio"
+        name="searchMode"
+        value="location"
+        checked={values.searchMode === "location"}
+        onChange={props.handleChange}
+      />
 
-      <label>
-        {t("Geo")}:
-        <Field
-          id="geoSwitch"
-          type="radio"
-          name="searchMode"
-          value="geo"
-          checked={values.searchMode === "geo"}
-          onChange={props.handleChange}
-        />
-      </label>
+      <label>{t("Geo")}: </label>
+      <Field
+        id="geoSwitch"
+        type="radio"
+        name="searchMode"
+        value="geo"
+        checked={values.searchMode === "geo"}
+        onChange={props.handleChange}
+      />
 
       {tags.map((tag: ITag) => (
         <label key={tag.id}>
@@ -181,21 +165,23 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
       location: formValue || "",
       lat: positionValue.latitude || 0,
       lon: positionValue.longitude || 0,
-      radius: positionValue.radius,
+      radius: positionValue.radius || 0,
       searchMode: "location",
       activeTags: []
     };
   },
 
+  validationSchema: SearchFormSchema,
+
   handleSubmit: (values: ISearchFormValues, { props }) => {
-    /* warningi */
+    //warningi z tlumaczeniem
     if (
       values.searchMode === "geo" &&
       (values.lat === 0 || values.lon === 0 || values.radius === 0)
     ) {
-      console.log("ustaw spol");
+      NotificationManager.warning(`Please set the cords please`, `Warning`);
     } else if (values.location === "" && values.searchMode === "location") {
-      console.log("wpisz miasto");
+      NotificationManager.warning(`Please enter city first`, `Warning`);
     } else {
       const position: IPosition = {
         latitude: values.lat,
@@ -212,19 +198,6 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
     }
   }
 })(InnerForm);
-
-interface ISearchFormProps {
-  onChange: (location: string) => void;
-  onSubmit: (
-    location: string,
-    position: IPosition,
-    searchMode: string,
-    activeTags: string[]
-  ) => void;
-  updateActiveTags: (tagNames: string[]) => void;
-  formValue: string;
-  positionValue: IPosition;
-}
 
 const SearchForm = (props: ISearchFormProps) => (
   <ControlledSearchForm

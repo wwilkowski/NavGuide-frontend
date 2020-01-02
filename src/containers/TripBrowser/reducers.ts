@@ -1,8 +1,9 @@
 import { TripBrowserAction, IMultiTripsAndTagsType } from "./types";
 import {
-  FETCH_TRIPS_SUCCESED,
-  SET_ACTIVE_TAGS,
-  FETCH_TAGS_SUCCESED
+  FETCH_RANDOM_TRIPS_SUCCESED,
+  FETCH_TAGS_SUCCESED,
+  FETCH_CITY_TRIPS_SUCCESED,
+  FETCH_GEO_TRIPS_SUCCESED
 } from "./constants";
 
 const initialState: IMultiTripsAndTagsType = {
@@ -15,12 +16,14 @@ const TripBrowserReducer = (
   action: TripBrowserAction
 ) => {
   switch (action.type) {
-    case FETCH_TRIPS_SUCCESED:
+    case FETCH_RANDOM_TRIPS_SUCCESED:
+      return { ...state, trips: action.trips.trips };
+    case FETCH_CITY_TRIPS_SUCCESED:
+      return { ...state, trips: action.trips.trips };
+    case FETCH_GEO_TRIPS_SUCCESED:
       return { ...state, trips: action.trips.trips };
     case FETCH_TAGS_SUCCESED:
       return { ...state, tags: action.tags };
-    case SET_ACTIVE_TAGS:
-      return { ...state, activeTags: action.tags };
     default:
       return state;
   }

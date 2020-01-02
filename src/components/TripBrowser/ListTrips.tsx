@@ -36,16 +36,10 @@ const ListTrips = ({
               {t("Trip number") + " "}
               {trip.id}
             </p>
-            <p>{trip.location}</p>
+            <p>{trip.name}</p>
+            <p>{trip.city}</p>
             <p>
-              {t("Duration")}: {trip.begin} - {trip.end}
-            </p>
-            <p>
-              {t("Number of people (max)")}: {trip.maxPeople}
-            </p>
-            <p>
-              {t("Price")}: {trip.price}
-              {trip.priceType}
+              {t("Price")}: {trip.price} {trip.priceType}
             </p>
             <p>
               {t("Number of vievs")}: {trip.inSearch}

@@ -1,12 +1,17 @@
 import { useState, useEffect } from "react";
 import {
-  FETCH_TRIPS_REQUESTED,
-  FETCH_TRIPS_SUCCESED,
-  SET_ACTIVE_TAGS,
   FETCH_TAGS_SUCCESED,
   FETCH_TAGS_REQUESTED,
-  FETCH_TRIPS_FAILED,
-  FETCH_TAGS_FAILED
+  FETCH_TAGS_FAILED,
+  FETCH_RANDOM_TRIPS_REQUESTED,
+  FETCH_CITY_TRIPS_REQUESTED,
+  FETCH_GEO_TRIPS_REQUESTED,
+  FETCH_RANDOM_TRIPS_FAILED,
+  FETCH_GEO_TRIPS_SUCCESED,
+  FETCH_RANDOM_TRIPS_SUCCESED,
+  FETCH_CITY_TRIPS_SUCCESED,
+  FETCH_CITY_TRIPS_FAILED,
+  FETCH_GEO_TRIPS_FAILED
 } from "./constants";
 
 export interface ITag {
@@ -21,17 +26,14 @@ export interface IPosition {
 }
 
 export interface ISingleTripType {
+  city: string;
   id: number;
-  location: string;
-  begin: string;
-  end: string;
-  maxPeople: number;
-  price: number;
-  priceType: string;
   inSearch: number;
   lat: number;
   lon: number;
-  radius: number;
+  name: string;
+  price: number;
+  priceType: string;
   tags: ITag[];
 }
 
@@ -44,13 +46,33 @@ export interface IMultiTripsAndTagsType {
   tags: ITag[];
 }
 
-export interface IFetchTripsSuccesedAction {
-  type: typeof FETCH_TRIPS_SUCCESED;
+export interface IFetchRandomTripsSuccesedAction {
+  type: typeof FETCH_RANDOM_TRIPS_SUCCESED;
   trips: IMultiTripsType;
 }
 
-export interface IFetchTripsFailedAction {
-  type: typeof FETCH_TRIPS_FAILED;
+export interface IFetchRandomTripsFailedAction {
+  type: typeof FETCH_RANDOM_TRIPS_FAILED;
+  message: string;
+}
+
+export interface IFetchCityTripsSuccesedAction {
+  type: typeof FETCH_CITY_TRIPS_SUCCESED;
+  trips: IMultiTripsType;
+}
+
+export interface IFetchCityTripsFailedAction {
+  type: typeof FETCH_CITY_TRIPS_FAILED;
+  message: string;
+}
+
+export interface IFetchGeoTripsSuccesedAction {
+  type: typeof FETCH_GEO_TRIPS_SUCCESED;
+  trips: IMultiTripsType;
+}
+
+export interface IFetchGeoTripsFailedAction {
+  type: typeof FETCH_GEO_TRIPS_FAILED;
   message: string;
 }
 
@@ -64,21 +86,31 @@ export interface IFetchTagsFailedAction {
   message: string;
 }
 
-export interface ISetActiveTagsAction {
-  type: typeof SET_ACTIVE_TAGS;
-  tags: string[];
+export type TripBrowserAction =
+  | IFetchRandomTripsRequest
+  | IFetchRandomTripsSuccesedAction
+  | IFetchRandomTripsFailedAction
+  | IFetchCityTripsSuccesedAction
+  | IFetchCityTripsFailedAction
+  | IFetchGeoTripsSuccesedAction
+  | IFetchTagsSuccesedAction
+  | IFetchTagsSuccesedAction
+  | IFetchRandomTripsFailedAction;
+
+export interface IFetchRandomTripsRequest {
+  type: typeof FETCH_RANDOM_TRIPS_REQUESTED;
 }
 
-export type TripBrowserAction =
-  | IFetchTripsRequest
-  | IFetchTripsSuccesedAction
-  | IFetchTripsFailedAction
-  | IFetchTagsSuccesedAction
-  | IFetchTripsFailedAction
-  | ISetActiveTagsAction;
+export interface IFetchCityTripsRequest {
+  type: typeof FETCH_CITY_TRIPS_REQUESTED;
+  city: string;
+}
 
-export interface IFetchTripsRequest {
-  type: typeof FETCH_TRIPS_REQUESTED;
+export interface IFetchGeoTripsRequest {
+  type: typeof FETCH_GEO_TRIPS_REQUESTED;
+  lat: number;
+  lon: number;
+  radius: number;
 }
 
 export interface IFetchTagsRequest {
