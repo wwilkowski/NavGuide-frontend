@@ -8,9 +8,9 @@ import * as actions from './actions';
 import * as constants from './constants';
 import * as types from './types';
 
-const signUpGoogleEndpoint = `https://8.ip-164-132-53.eu/auth/google/register`;
-const confirmGoogleEndpoint = `https://8.ip-164-132-53.eu/auth/google/register/confirm`;
-const interestsEndpoint = `https://8.ip-164-132-53.eu/interests`;
+const signUpGoogleEndpoint = `https://235.ip-51-91-9.eu/auth/google/register`;
+const confirmGoogleEndpoint = `https://235.ip-51-91-9.eu/auth/google/register/confirm`;
+const interestsEndpoint = `https://235.ip-51-91-9.eu/interests`;
 
 function* signUpGoogleUser(action: types.ISignUpGoogleRequest) {
   try {
@@ -28,13 +28,16 @@ function* signUpGoogleUser(action: types.ISignUpGoogleRequest) {
     const json = yield response.json();
     if (status >= 200 && status <= 300) {
       const templateUser = {
+        avatar: '',
+        role: '',
         firstName: json.firstName,
         lastName: json.lastName,
         country: json.country,
         email: json.email,
         telephone: '',
         gender: 'Female',
-        experience: 'NOVICE'
+        experience: 'NOVICE',
+        interests: []
       };
       yield put(
         actions.signUpGoogleSuccessed({
@@ -70,7 +73,7 @@ function* confirmGoogleUser(action: types.IConfirmSignUpRequest) {
         ...action.templateUser
       })
     });
-    const { firstName, lastName, country, email, experience, telephone, avatar, interests, role, token } = yield response.json();
+    const { firstName, lastName, country, email, experience, telephone, avatar, interests, role, token, gender } = yield response.json();
     const user = {
       firstName,
       lastName,
@@ -80,14 +83,20 @@ function* confirmGoogleUser(action: types.IConfirmSignUpRequest) {
       telephone,
       avatar,
       interests,
-      role
+      role,
+      gender
     };
     if (response.status >= 200 && response.status <= 300) {
       yield put(actions.confirmSignUpSuccessed(token));
       yield initTokenCookie(token);
       yield put(logInGoogleSuccessed(user));
       showNotification('success', i18n.t('Validation successed!'), i18n.t('You are logged in!'));
-      yield call(forwardTo, '/profile');
+      if (action.toBeGuide) {
+        showNotification('info', i18n.t('You want to be guide'), i18n.t('Complete your data to declare to be a guide!'));
+        yield call(forwardTo, '/register/guide');
+      } else {
+        yield call(forwardTo, '/profile');
+      }
     } else {
       throw new Error('Unexpected error while confirming Google registration');
     }

@@ -10,6 +10,7 @@ const Checkbox = props => {
             type='checkbox'
             name={props.name}
             value={props.value}
+            checked={field.value.includes(props.valueKey)}
             onChange={() => {
               if (field.value.includes(props.valueKey)) {
                 for (let i = 0; i < field.value.length; i++) {
@@ -18,7 +19,7 @@ const Checkbox = props => {
                   }
                 }
               } else {
-                const nextValue = field.value.concat(parseInt(props.valueKey, 10));
+                const nextValue = field.value.concat(props.valueKey);
                 form.setFieldValue(props.name, nextValue);
               }
             }}

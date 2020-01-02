@@ -3,16 +3,20 @@ import * as types from './types';
 
 const initialState: types.IRegisterStore = {
   templateUser: {
+    avatar: '',
+    role: '',
     firstName: '',
     lastName: '',
     country: '',
     email: '',
     telephone: '',
     gender: '',
-    experience: ''
+    experience: '',
+    interests: []
   },
   registrationInProgress: false,
   registrationToken: '',
+  toBeGuide: false,
   interests: []
 };
 

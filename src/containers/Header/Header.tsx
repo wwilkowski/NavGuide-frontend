@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,7 +11,6 @@ import { getInterestsRequest, signUpGoogleRequest } from '../Registration/action
 
 const Header: React.FC = () => {
   const dispatcher = useDispatch();
-  const registrationInProgress = useSelector((state: StoreType) => state.registration.registrationInProgress);
   const isLoggedIn = useSelector((state: StoreType) => state.profile.isLoggedIn);
   const { t } = useTranslation();
 
@@ -44,6 +42,14 @@ const Header: React.FC = () => {
 
           <Link to='/profile' className='navbar-item'>
             {t('Profile')}
+          </Link>
+
+          <Link to='/profile/edit' className='navbar-item'>
+            {t('Edit profile')}
+          </Link>
+
+          <Link to='/register/guide' className='navbar-item'>
+            {t('Become a guide')}
           </Link>
         </div>
 

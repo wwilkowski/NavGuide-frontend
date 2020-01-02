@@ -1,5 +1,6 @@
 import * as constants from './constants';
 import * as types from './types';
+import { IUserFormValues, IUserData } from '../../shared/types';
 
 export const signUpGoogleRequest = (code: string) => ({
   type: constants.SIGN_UP_GOOGLE_REQUESTED,
@@ -7,7 +8,7 @@ export const signUpGoogleRequest = (code: string) => ({
 });
 
 interface signUpGoogleResponse {
-  templateUser: types.IUserData;
+  templateUser: IUserData;
   registerToken: string;
 }
 
@@ -21,10 +22,11 @@ export const signUpGoogleFailed = () => ({
   type: constants.SIGN_UP_GOOGLE_FAILED
 });
 
-export const confirmSignUpRequest = (templateUser: types.IUserData, token: string) => ({
+export const confirmSignUpRequest = (templateUser: IUserFormValues, token: string, toBeGuide: boolean) => ({
   type: constants.CONFIRM_SIGN_UP_REQUESTED,
   templateUser,
-  token
+  token,
+  toBeGuide
 });
 
 export const confirmSignUpSuccessed = (token: string) => ({
