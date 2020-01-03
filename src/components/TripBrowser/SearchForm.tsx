@@ -26,6 +26,8 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
 
   useEffect(() => {
     setLocation(props.formValue);
+    values.location = props.formValue;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.formValue]);
 
   useEffect(() => {
@@ -76,7 +78,6 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
         value={position.latitude}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
           props.handleChange(event);
-          console.log(event.target.value);
           setPosition({
             latitude: event.target.value ? parseFloat(event.target.value) : 0,
             longitude: position.longitude,
@@ -178,7 +179,6 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
         longitude: values.lon,
         radius: values.radius
       };
-
       props.onSubmit(values.location, position, values.searchMode, values.activeTags);
     }
   }

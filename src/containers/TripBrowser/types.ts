@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import {
   FETCH_TAGS_SUCCESED,
   FETCH_TAGS_REQUESTED,
@@ -12,7 +12,7 @@ import {
   FETCH_CITY_TRIPS_SUCCESED,
   FETCH_CITY_TRIPS_FAILED,
   FETCH_GEO_TRIPS_FAILED
-} from "./constants";
+} from './constants';
 
 export interface ITag {
   id: number;

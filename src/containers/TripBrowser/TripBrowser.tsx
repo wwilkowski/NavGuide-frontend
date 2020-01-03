@@ -27,6 +27,20 @@ const TripBrowser: React.FC = () => {
     setSearchedTrips(tripsData);
   }, [tripsData]);
 
+  useEffect(() => {
+    if (activeTags.length) {
+      setSearchedTrips(
+        tripsData.filter(trip => {
+          const tripTagsNames = trip.tags.map(tag => tag.name);
+          return tripTagsNames.includes(activeTags[0]);
+        })
+      );
+    } else {
+      setSearchedTrips(tripsData);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tripsData]);
+
   const dispatcher = useDispatch();
   useEffect(() => {
     dispatcher(actions.fetchTagsRequested());
@@ -77,9 +91,12 @@ const TripBrowser: React.FC = () => {
         if (i === len) filterTripsDataWithTags.push(trip);
       });
     }
-
     setSuggestedTrips([]);
-    mode !== 'random' ? setSearchedTrips(filterTripsDataWithTags) : setSearchedTrips(tripsData);
+    if (mode !== 'random') {
+      setSearchedTrips(filterTripsDataWithTags);
+    } else {
+      setSearchedTrips(tripsData);
+    }
   };
 
   const handleCityHover = (location: string) => {
@@ -102,6 +119,7 @@ const TripBrowser: React.FC = () => {
   };
 
   const updateActiveTags = (tagNames: string[]) => {
+    console.log('updateActiveTags', tagNames);
     setActiveTags(tagNames);
   };
 
