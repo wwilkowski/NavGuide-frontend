@@ -70,6 +70,10 @@
     "No matching trips": "Brak pasujących wycieczek",
     "Increase the radius?": "Zwiększyć promień?",
     "Suggested trips": "Polecane wycieczki",
-    "Please set cords first": "Najpierw podaj współrzędne"
+    "Please set cords first": "Najpierw podaj współrzędne",
+    "Search type": "Sposób wyszukiwania",
+    "Radius": "Promień",
+    "Lat": "Szer",
+    "Lon": "Wys"
   }
 }

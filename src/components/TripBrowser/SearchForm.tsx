@@ -55,98 +55,137 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
   };
 
   return (
-    <Form>
-      <label>{t('Location')}: </label>
-      <Field
-        id='location'
-        type='text'
-        name='location'
-        value={location}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-          props.handleChange(event);
-          setLocation(event.target.value);
-          props.onChange(event.target.value);
-        }}
-      />
-      {errors.location && touched.location && <div>{t(errors.location)}</div>}
+    <div className='columns'>
+      <Form className='column is-one-third' style={{ padding: '3rem' }}>
+        <div className='field is-horizontal columns'>
+          <div className='field-label is-normal'>
+            <label htmlFor='location' className='label'>
+              {t('Location')}:
+            </label>
+          </div>
 
-      <label>{t('Lat')}: </label>
-      <Field
-        id='lat'
-        type='text'
-        name='lat'
-        value={position.latitude}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-          props.handleChange(event);
-          setPosition({
-            latitude: event.target.value ? parseFloat(event.target.value) : 0,
-            longitude: position.longitude,
-            radius: position.radius
-          });
-        }}
-      />
+          <Field
+            className='input'
+            id='location'
+            type='text'
+            name='location'
+            value={location}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              props.handleChange(event);
+              setLocation(event.target.value);
+              props.onChange(event.target.value);
+            }}
+          />
+          {errors.location && touched.location && <div>{t(errors.location)}</div>}
+        </div>
+        <div className='field columns'>
+          <div className='field-label is-normal'>
+            <label htmlFor='lat' className='label'>
+              {t('Lat')}:{' '}
+            </label>
+          </div>
+          <Field
+            className='input'
+            id='lat'
+            type='text'
+            name='lat'
+            value={position.latitude}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              props.handleChange(event);
+              setPosition({
+                latitude: event.target.value ? parseFloat(event.target.value) : 0,
+                longitude: position.longitude,
+                radius: position.radius
+              });
+            }}
+          />
+          <div className='field-label is-normal'>
+            <label htmlFor='lon' className='label'>
+              {t('Lon')}:
+            </label>
+          </div>
+          <Field
+            className='input'
+            id='lon'
+            type='text'
+            name='lon'
+            value={position.longitude}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              props.handleChange(event);
+              setPosition({
+                latitude: position.latitude,
+                longitude: event.target.value ? parseFloat(event.target.value) : 0,
+                radius: position.radius
+              });
+            }}
+          />
+        </div>
+        <div className='field is-horizontal columns'>
+          <div className='field-label is-normal'>
+            <label htmlFor='radius' className='label'>
+              {t('Radius')}:
+            </label>
+          </div>
+          <Field
+            className='input'
+            id='radius'
+            type='text'
+            name='radius'
+            value={position.radius}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              props.handleChange(event);
+              setPosition({
+                latitude: position.latitude,
+                longitude: position.longitude,
+                radius: event.target.value ? parseInt(event.target.value, 10) : 0
+              });
+            }}
+          />
+        </div>
+        <div className='field is-horizontal columns'>
+          <div className='control column is-half'>
+            <label className='radio label' htmlFor='locationSwitch' style={{ textAlign: 'left' }}>
+              {t('Location')}
+              <Field
+                id='locationSwitch'
+                type='radio'
+                name='searchMode'
+                value='location'
+                checked={values.searchMode === 'location'}
+                onChange={props.handleChange}
+              />
+            </label>
+          </div>
 
-      <label>{t('Lon')}: </label>
-      <Field
-        id='lon'
-        type='text'
-        name='lon'
-        value={position.longitude}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-          props.handleChange(event);
-          setPosition({
-            latitude: position.latitude,
-            longitude: event.target.value ? parseFloat(event.target.value) : 0,
-            radius: position.radius
-          });
-        }}
-      />
-
-      <label>{t('Radius')}: </label>
-      <Field
-        id='radius'
-        type='text'
-        name='radius'
-        value={position.radius}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-          props.handleChange(event);
-          setPosition({
-            latitude: position.latitude,
-            longitude: position.longitude,
-            radius: event.target.value ? parseInt(event.target.value, 10) : 0
-          });
-        }}
-      />
-
-      <label>{t('Location')}: </label>
-      <Field
-        id='locationSwitch'
-        type='radio'
-        name='searchMode'
-        value='location'
-        checked={values.searchMode === 'location'}
-        onChange={props.handleChange}
-      />
-
-      <label>{t('Geo')}: </label>
-      <Field
-        id='geoSwitch'
-        type='radio'
-        name='searchMode'
-        value='geo'
-        checked={values.searchMode === 'geo'}
-        onChange={props.handleChange}
-      />
-
-      {tags.map((tag: ITag) => (
-        <label key={tag.id}>
-          <Field name='activeTags' type='checkbox' value={tag.name} onChange={handleTagChange} />
-          {tag.name}
-        </label>
-      ))}
-
-      <button type='submit'>{t('Find')}</button>
-    </Form>
+          <div className='control column is-half'>
+            <label className='radio label' htmlFor='geoSwitch' style={{ textAlign: 'left' }}>
+              {t('Geo')}:
+              <Field
+                id='geoSwitch'
+                type='radio'
+                name='searchMode'
+                value='geo'
+                checked={values.searchMode === 'geo'}
+                onChange={props.handleChange}
+              />
+            </label>
+          </div>
+        </div>
+        <div className='field is-grouped is-grouped-multiline columns'>
+          {tags.map((tag: ITag) => (
+            <p className='control' key={tag.id}>
+              <label className='checkbox label'>
+                <Field name='activeTags' type='checkbox' value={tag.name} onChange={handleTagChange} />
+                {tag.name}
+              </label>
+            </p>
+          ))}
+        </div>
+        <button className='button is-primary' type='submit'>
+          {t('Find')}
+        </button>
+      </Form>
+    </div>
   );
 };
 

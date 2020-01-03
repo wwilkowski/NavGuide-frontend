@@ -10,10 +10,7 @@ import Profile from './containers/Profile/Profile';
 import TripBrowser from './containers/TripBrowser/TripBrowser';
 
 // templates
-const Home = () => {
-  const { t } = useTranslation();
-  return <p data-testid='content'>{t('Home Page')}</p>;
-};
+
 const NotFound = () => {
   const { t } = useTranslation();
   return <p data-testid='content'>{t('Not found')}</p>;
@@ -26,7 +23,6 @@ const App: React.FC = () => {
       <Header />
       <Switch>
         <Route exact path='/'>
-          <Home />
           <TripBrowser />
         </Route>
         <Route path='/register' component={Registration} />
