@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 import { StoreType } from '../../store';
 import { NotificationManager } from 'react-notifications';
 import * as Yup from 'yup';
-import i18n from '../../locales/i18n';
 import { ISearchFormValues, ISearchFormProps } from './types';
 
 const SearchFormSchema = Yup.object().shape({});
@@ -16,7 +15,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
 
   const tags = useSelector((state: StoreType) => state.tripBrowser.tags);
 
-  const { values, setFieldValue, touched, isSubmitting, errors } = props;
+  const { values, setFieldValue, touched, errors } = props;
 
   const [location, setLocation] = useState<string>('');
   const [position, setPosition] = useState<IPosition>({

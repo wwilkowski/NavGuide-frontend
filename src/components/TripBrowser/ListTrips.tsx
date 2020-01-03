@@ -1,31 +1,27 @@
-import React from "react";
-import * as types from "./types";
-import { ISingleTripType, ITag } from "../../containers/TripBrowser/types";
-import { useTranslation } from "react-i18next";
+import React from 'react';
+import * as types from './types';
+import { ISingleTripType } from '../../containers/TripBrowser/types';
+import { useTranslation } from 'react-i18next';
 
-const ListTrips = ({
-  trips,
-  mode,
-  onIncreaseRadius
-}: types.IListTripsProps) => {
+const ListTrips = ({ trips, mode, onIncreaseRadius }: types.IListTripsProps) => {
   const { t } = useTranslation();
 
   return (
     <>
-      {mode === "random" ? (
+      {mode === 'random' ? (
         <p>
-          {t("No matching trips")} {t("Suggested trips")}:
+          {t('No matching trips')} {t('Suggested trips')}:
         </p>
       ) : null}
-      {trips.length === 0 && mode === "geo" ? (
+      {trips.length === 0 && mode === 'geo' ? (
         <p>
-          {t("No matching trips")}. {t("Increase the radius?")}
+          {t('No matching trips')}. {t('Increase the radius?')}
           <button
             onClick={() => {
               onIncreaseRadius(5);
             }}
           >
-            {t("ADD 5KM")}
+            {t('ADD 5KM')}
           </button>
         </p>
       ) : null}
@@ -33,16 +29,16 @@ const ListTrips = ({
         {trips.map((trip: ISingleTripType) => (
           <li key={trip.id}>
             <p>
-              {t("Trip number") + " "}
+              {t('Trip number') + ' '}
               {trip.id}
             </p>
             <p>{trip.name}</p>
             <p>{trip.city}</p>
             <p>
-              {t("Price")}: {trip.price} {trip.priceType}
+              {t('Price')}: {trip.price} {trip.priceType}
             </p>
             <p>
-              {t("Number of vievs")}: {trip.inSearch}
+              {t('Number of vievs')}: {trip.inSearch}
             </p>
           </li>
         ))}
