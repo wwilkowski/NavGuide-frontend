@@ -47,6 +47,14 @@
     "ambassador": "ambasador",
     "Validation successed!": "Walidacja powiodła się!",
     "Logout": "Wyloguj się",
-    "You don't have permission to this content": "Nie masz uprawnień do tej zawartości"
+    "You don't have permission to this content": "Nie masz uprawnień do tej zawartości",
+    "Languages": "Języki",
+    "Describe yourself": "Opisz się w kilku zdaniach",
+    "Become a guide": "Zostań przewodnikiem",
+    "Edit profile": "Edytuj profil",
+    "You want to be guide": "Wyraziłeś chęć zostania przewodnikiem",
+    "Complete your data to declare to be a guide!": "Uzupełnij dane, aby wysłać zgłoszenie!",
+    "User does not exist!": "Użytkownik nie istnieje!",
+    "I want to be a guide too": "Chcę zostać także przewodnikiem"
   }
 }

@@ -1,12 +1,12 @@
 import * as constants from './constants';
-import * as types from './types';
+import { IUserData } from '../../shared/types';
 
 export const logInGoogleRequest = (code: string) => ({
   type: constants.LOG_IN_GOOGLE_REQUESTED,
   code
 });
 
-export const logInGoogleSuccessed = (user: types.IUserData) => ({
+export const logInGoogleSuccessed = (user: IUserData) => ({
   type: constants.LOG_IN_GOOGLE_SUCCESSED,
   user
 });
