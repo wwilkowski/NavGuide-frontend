@@ -55,6 +55,21 @@
     "You want to be guide": "Wyraziłeś chęć zostania przewodnikiem",
     "Complete your data to declare to be a guide!": "Uzupełnij dane, aby wysłać zgłoszenie!",
     "User does not exist!": "Użytkownik nie istnieje!",
-    "I want to be a guide too": "Chcę zostać także przewodnikiem"
+    "I want to be a guide too": "Chcę zostać także przewodnikiem",
+    "Location": "Lokalizacja",
+    "Find": "Szukaj",
+    "Trip number": "Wycieczka numer",
+    "Duration": "Czas trwania",
+    "Number of people (max)": "Liczba osób (max)",
+    "Price": "Cena",
+    "Number of views": "Liczba wyświetleń",
+    "Set GEO": "Ustaw GEO",
+    "Unset GEO": "Usuń GEO",
+    "Please enter city first": "Najpierw podaj miasto",
+    "Warning": "Ostrzeżenie",
+    "No matching trips": "Brak pasujących wycieczek",
+    "Increase the radius?": "Zwiększyć promień?",
+    "Suggested trips": "Polecane wycieczki",
+    "Please set cords first": "Najpierw podaj współrzędne"
   }
 }

@@ -10,14 +10,18 @@ import { IProfileData } from './containers/Profile/types';
 import registration from './containers/Registration/reducer';
 import SignUpUserSaga from './containers/Registration/sagas';
 import { IRegisterStore } from './containers/Registration/types';
+import tripBrowser from './containers/TripBrowser/reducers';
+import tripBrowserSaga from './containers/TripBrowser/sagas';
+import { IMultiTripsAndTagsType } from './containers/TripBrowser/types';
 
 export interface StoreType {
   registration: IRegisterStore;
   profile: IProfileData;
+  tripBrowser: IMultiTripsAndTagsType;
 }
 
 function* rootSaga() {
-  yield all([SignUpUserSaga(), logInUserSaga()]);
+  yield all([SignUpUserSaga(), logInUserSaga(), tripBrowserSaga()]);
 }
 
 const persistConfig = {
@@ -29,7 +33,7 @@ const persistConfig = {
 export let persistor: Persistor;
 export const configureStore = () => {
   const sagaMiddleware = createSagaMiddleware();
-  const rootReducer = combineReducers({ registration, profile });
+  const rootReducer = combineReducers({ registration, profile, tripBrowser });
   let persistedReducer = persistReducer(persistConfig, rootReducer);
   const store = createStore(persistedReducer, composeWithDevTools(applyMiddleware(sagaMiddleware)));
   persistor = persistStore(store);

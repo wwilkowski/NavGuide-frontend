@@ -7,6 +7,7 @@ import { Route, Switch } from 'react-router-dom';
 import Header from './containers/Header/Header';
 import Registration from './containers/Registration/Registration';
 import Profile from './containers/Profile/Profile';
+import TripBrowser from './containers/TripBrowser/TripBrowser';
 
 // templates
 const Home = () => {
@@ -24,7 +25,10 @@ const App: React.FC = () => {
       <ReactNotification />
       <Header />
       <Switch>
-        <Route exact path='/' component={Home} />
+        <Route exact path='/'>
+          <Home />
+          <TripBrowser />
+        </Route>
         <Route path='/register' component={Registration} />
         <Route path='/profile' component={Profile} />
         <Route component={NotFound} />
@@ -34,3 +38,5 @@ const App: React.FC = () => {
 };
 
 export default App;
+
+//<Route path='/register' component={Registration} />
