@@ -6,7 +6,6 @@ import { StoreType } from '../../store';
 import ListTrips from '../../components/TripBrowser/ListTrips';
 import ListSuggestedTrips from '../../components/TripBrowser/ListSuggestedTrips';
 import SearchForm from '../../components/TripBrowser/SearchForm';
-import OffersMap from '../OffersMap/OffersMap';
 
 const templateCities = ['Lipka', 'Torun', 'Warszawa'];
 
@@ -125,26 +124,24 @@ const TripBrowser: React.FC = () => {
   };
 
   return (
-    <div className='columns'>
-      <div className='column is-one-third'>
+    <div>
+      <div className='columns'>
         <SearchForm
           onChange={onSearchFormChange}
           onSubmit={onSearchFormSubmit}
           updateActiveTags={updateActiveTags}
           formValue={formValue}
           positionValue={positionValue}
+          trips={searchedTrips}
         />
-        <ListSuggestedTrips
-          onCityClick={onSearchFormSubmit}
-          onCityHover={handleCityHover}
-          suggestedTrips={suggestedTrips}
-          activeTags={activeTags}
-        />
-        <ListTrips trips={searchedTrips} mode={mode} onIncreaseRadius={onIncreaseRadius} />
       </div>
-      <div className='column is-two-thirds'>
-        <OffersMap radius={positionValue.radius} />
-      </div>
+      <ListSuggestedTrips
+        onCityClick={onSearchFormSubmit}
+        onCityHover={handleCityHover}
+        suggestedTrips={suggestedTrips}
+        activeTags={activeTags}
+      />
+      <ListTrips trips={searchedTrips} mode={mode} onIncreaseRadius={onIncreaseRadius} />
     </div>
   );
 };
