@@ -6,6 +6,7 @@ import { StoreType } from '../../store';
 import ListTrips from '../../components/TripBrowser/ListTrips';
 import ListSuggestedTrips from '../../components/TripBrowser/ListSuggestedTrips';
 import SearchForm from '../../components/TripBrowser/SearchForm';
+import OffersMap from '../OffersMap/OffersMap';
 
 const templateCities = ['Lipka', 'Torun', 'Warszawa'];
 
@@ -18,9 +19,9 @@ const TripBrowser: React.FC = () => {
   const [activeTags, setActiveTags] = useState<string[]>([]);
   const [formValue, setFormValue] = useState<string>('');
   const [positionValue, setPositionValue] = useState<IPosition>({
-    latitude: 0,
-    longitude: 0,
-    radius: 0
+    latitude: 53.01023065,
+    longitude: 18.594376006630313,
+    radius: 5
   });
 
   useEffect(() => {
@@ -124,21 +125,26 @@ const TripBrowser: React.FC = () => {
   };
 
   return (
-    <div>
-      <SearchForm
-        onChange={onSearchFormChange}
-        onSubmit={onSearchFormSubmit}
-        updateActiveTags={updateActiveTags}
-        formValue={formValue}
-        positionValue={positionValue}
-      />
-      <ListSuggestedTrips
-        onCityClick={onSearchFormSubmit}
-        onCityHover={handleCityHover}
-        suggestedTrips={suggestedTrips}
-        activeTags={activeTags}
-      />
-      <ListTrips trips={searchedTrips} mode={mode} onIncreaseRadius={onIncreaseRadius} />
+    <div className='columns'>
+      <div className='column is-one-third'>
+        <SearchForm
+          onChange={onSearchFormChange}
+          onSubmit={onSearchFormSubmit}
+          updateActiveTags={updateActiveTags}
+          formValue={formValue}
+          positionValue={positionValue}
+        />
+        <ListSuggestedTrips
+          onCityClick={onSearchFormSubmit}
+          onCityHover={handleCityHover}
+          suggestedTrips={suggestedTrips}
+          activeTags={activeTags}
+        />
+        <ListTrips trips={searchedTrips} mode={mode} onIncreaseRadius={onIncreaseRadius} />
+      </div>
+      <div className='column is-two-thirds'>
+        <OffersMap radius={positionValue.radius} />
+      </div>
     </div>
   );
 };

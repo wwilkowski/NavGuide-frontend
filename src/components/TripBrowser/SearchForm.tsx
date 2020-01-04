@@ -55,8 +55,8 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
   };
 
   return (
-    <div className='columns'>
-      <Form className='column is-one-third' style={{ padding: '3rem' }}>
+    <div>
+      <Form style={{ padding: '3rem' }}>
         <div className='field is-horizontal columns'>
           <div className='field-label is-normal'>
             <label htmlFor='location' className='label'>
