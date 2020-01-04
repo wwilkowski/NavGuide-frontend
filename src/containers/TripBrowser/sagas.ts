@@ -1,16 +1,11 @@
-import {
-  FETCH_RANDOM_TRIPS_REQUESTED,
-  FETCH_TAGS_REQUESTED,
-  FETCH_CITY_TRIPS_REQUESTED,
-  FETCH_GEO_TRIPS_REQUESTED
-} from "./constants";
-import { call, put, takeLatest } from "redux-saga/effects";
-import * as actions from "./actions";
-import * as types from "./types";
+import { FETCH_RANDOM_TRIPS_REQUESTED, FETCH_TAGS_REQUESTED, FETCH_CITY_TRIPS_REQUESTED, FETCH_GEO_TRIPS_REQUESTED } from './constants';
+import { call, put, takeLatest } from 'redux-saga/effects';
+import * as actions from './actions';
+import * as types from './types';
 
-const randomTripsEndpoint = "https://235.ip-51-91-9.eu/guests/offers";
-const cityTripsEdnpoint = "https://235.ip-51-91-9.eu/guests/offers/city?name=";
-const tagsEndpoint = "https://235.ip-51-91-9.eu/tags";
+const randomTripsEndpoint = 'https://235.ip-51-91-9.eu/guests/offers';
+const cityTripsEdnpoint = 'https://235.ip-51-91-9.eu/guests/offers/city?name=';
+const tagsEndpoint = 'https://235.ip-51-91-9.eu/tags';
 
 function* fetchRandomTripsFromAPI() {
   try {
@@ -40,13 +35,11 @@ function* fetchRandomTripsFromAPI() {
     } else {
       switch (json.status) {
         default:
-          throw new Error("Unexpected problem");
+          throw new Error('Unexpected problem');
       }
     }
   } catch (error) {
-    yield put(
-      actions.fetchRandomTripsFailed(`Can't fetch random trips from API`)
-    );
+    yield put(actions.fetchRandomTripsFailed(`Can't fetch random trips from API`));
   }
 }
 
@@ -76,7 +69,7 @@ function* fetchCityTripsFromAPI(action: types.IFetchCityTripsRequest) {
     } else {
       switch (json.status) {
         default:
-          throw new Error("Unexpected problem");
+          throw new Error('Unexpected problem');
       }
     }
   } catch (error) {
@@ -89,6 +82,7 @@ function* fetchGeoTripsFromAPI(action: types.IFetchGeoTripsRequest) {
     const lat = action.lat;
     const lon = action.lon;
     const radius = action.radius;
+    console.log('RADIUS: ', radius);
 
     const endpoint = `https://235.ip-51-91-9.eu/guests/offers/geo?lat=${lat}&lon=${lon}&radius=${radius}`;
 
@@ -116,7 +110,7 @@ function* fetchGeoTripsFromAPI(action: types.IFetchGeoTripsRequest) {
     } else {
       switch (json.status) {
         default:
-          throw new Error("Unexpected problem");
+          throw new Error('Unexpected problem');
       }
     }
   } catch (error) {

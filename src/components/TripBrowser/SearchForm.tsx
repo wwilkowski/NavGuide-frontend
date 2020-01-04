@@ -132,15 +132,16 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
           <Field
             className='input'
             id='radius'
-            type='text'
+            type='number'
             name='radius'
+            step='.1'
             value={position.radius}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               props.handleChange(event);
               setPosition({
                 latitude: position.latitude,
                 longitude: position.longitude,
-                radius: event.target.value ? parseInt(event.target.value, 10) : 0
+                radius: event.target.value ? parseFloat(event.target.value) : 0
               });
             }}
           />

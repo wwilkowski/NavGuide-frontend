@@ -21,9 +21,11 @@ const LeafletMap = (props: Props) => {
         <Popup>You</Popup>
       </Marker>
       {props.trips.map(trip => (
-        <Marker position={{ lat: trip.lat + 0.0, lng: trip.lon + 0.0 }} color='red' />
+        <Marker position={{ lat: trip.lat + 0.0, lng: trip.lon + 0.0 }} color='red'>
+          <Popup>{trip.name}</Popup>
+        </Marker>
       ))}
-      <Circle center={{ lat: latitude, lng: longitude }} color='red' radius={radius * 100}>
+      <Circle center={{ lat: latitude, lng: longitude }} color='red' radius={radius * 1000}>
         <Popup>Popup in CircleMarker</Popup>
       </Circle>
     </Map>
