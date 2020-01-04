@@ -1,28 +1,44 @@
-import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { IPosition, ITag } from '../../containers/TripBrowser/types';
-import { withFormik, FormikProps, Field, Form } from 'formik';
-import { useSelector } from 'react-redux';
-import { StoreType } from '../../store';
-import * as Yup from 'yup';
-import { ISearchFormValues, ISearchFormProps } from './types';
-import { showNotification } from '../../helpers/notification';
+import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import {
+  IPosition,
+  ITag,
+  usePosition
+} from "../../containers/TripBrowser/types";
+import { withFormik, FormikProps, Field, Form } from "formik";
+import { useSelector } from "react-redux";
+import { StoreType } from "../../store";
+import * as Yup from "yup";
+import { ISearchFormValues, ISearchFormProps } from "./types";
+import { showNotification } from "../../helpers/notification";
 
 const SearchFormSchema = Yup.object().shape({});
 
-const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => {
+const InnerForm = (
+  props: ISearchFormProps & FormikProps<ISearchFormValues>
+) => {
   const { t } = useTranslation();
 
   const tags = useSelector((state: StoreType) => state.tripBrowser.tags);
 
-  const { values, setFieldValue, touched, errors } = props;
+  const currentPosition = usePosition();
 
-  const [location, setLocation] = useState<string>('');
+  const { values, setFieldValue, touched, errors, isSubmitting } = props;
+
+  const [location, setLocation] = useState<string>("");
   const [position, setPosition] = useState<IPosition>({
     latitude: 0,
     longitude: 0,
     radius: 0
   });
+
+  useEffect(() => {
+    if (Object.keys(errors).length !== 0 && isSubmitting) {
+      Object.values(errors).forEach(error => {
+        showNotification("warning", t("Form warning"), t(`${error}`));
+      });
+    }
+  }, [errors, isSubmitting, t]);
 
   useEffect(() => {
     setLocation(props.formValue);
@@ -51,24 +67,24 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
       }
     });
     props.updateActiveTags(tmp);
-    setFieldValue('activeTags', tmp);
+    setFieldValue("activeTags", tmp);
   };
 
   return (
-    <div className='columns'>
-      <Form className='column is-one-third' style={{ padding: '3rem' }}>
-        <div className='field is-horizontal columns'>
-          <div className='field-label is-normal'>
-            <label htmlFor='location' className='label'>
-              {t('Location')}:
+    <div className="columns">
+      <Form className="column is-one-third" style={{ padding: "3rem" }}>
+        <div className="field is-horizontal columns">
+          <div className="field-label is-normal">
+            <label htmlFor="location" className="label">
+              {t("Location")}:
             </label>
           </div>
 
           <Field
-            className='input'
-            id='location'
-            type='text'
-            name='location'
+            className="input"
+            id="location"
+            type="text"
+            name="location"
             value={location}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               props.handleChange(event);
@@ -76,113 +92,155 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
               props.onChange(event.target.value);
             }}
           />
-          {errors.location && touched.location && <div>{t(errors.location)}</div>}
+          {errors.location && touched.location && (
+            <div>{t(errors.location)}</div>
+          )}
         </div>
-        <div className='field columns'>
-          <div className='field-label is-normal'>
-            <label htmlFor='lat' className='label'>
-              {t('Lat')}:{' '}
+        <div className="field columns">
+          <div className="field-label is-normal">
+            <label htmlFor="lat" className="label">
+              {t("Lat")}:{" "}
             </label>
           </div>
           <Field
-            className='input'
-            id='lat'
-            type='text'
-            name='lat'
+            className="input"
+            id="lat"
+            type="text"
+            name="lat"
             value={position.latitude}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               props.handleChange(event);
               setPosition({
-                latitude: event.target.value ? parseFloat(event.target.value) : 0,
+                latitude: event.target.value
+                  ? parseFloat(event.target.value)
+                  : 0,
                 longitude: position.longitude,
                 radius: position.radius
               });
             }}
           />
-          <div className='field-label is-normal'>
-            <label htmlFor='lon' className='label'>
-              {t('Lon')}:
+          <div className="field-label is-normal">
+            <label htmlFor="lon" className="label">
+              {t("Lon")}:
             </label>
           </div>
           <Field
-            className='input'
-            id='lon'
-            type='text'
-            name='lon'
+            className="input"
+            id="lon"
+            type="text"
+            name="lon"
             value={position.longitude}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               props.handleChange(event);
               setPosition({
                 latitude: position.latitude,
-                longitude: event.target.value ? parseFloat(event.target.value) : 0,
+                longitude: event.target.value
+                  ? parseFloat(event.target.value)
+                  : 0,
                 radius: position.radius
               });
             }}
           />
         </div>
-        <div className='field is-horizontal columns'>
-          <div className='field-label is-normal'>
-            <label htmlFor='radius' className='label'>
-              {t('Radius')}:
+        <div className="field is-horizontal columns">
+          <div className="field-label is-normal">
+            <label htmlFor="radius" className="label">
+              {t("Radius")}:
             </label>
           </div>
           <Field
-            className='input'
-            id='radius'
-            type='text'
-            name='radius'
+            className="input"
+            id="radius"
+            type="text"
+            name="radius"
             value={position.radius}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               props.handleChange(event);
               setPosition({
                 latitude: position.latitude,
                 longitude: position.longitude,
-                radius: event.target.value ? parseInt(event.target.value, 10) : 0
+                radius: event.target.value
+                  ? parseInt(event.target.value, 10)
+                  : 0
               });
             }}
           />
         </div>
-        <div className='field is-horizontal columns'>
-          <div className='control column is-half'>
-            <label className='radio label' htmlFor='locationSwitch' style={{ textAlign: 'left' }}>
-              {t('Location')}
+        <div className="field is-horizontal columns">
+          <div className="field columns is-half">
+            <label className="radio label" htmlFor="currentGeo">
+              <input
+                type="button"
+                value="CURRENT GEO"
+                onClick={() => {
+                  console.log(currentPosition);
+                  setPosition({
+                    latitude: currentPosition.latitude,
+                    longitude: currentPosition.longitude,
+                    radius: position.radius
+                  });
+                  setFieldValue("lat", currentPosition.latitude);
+                  setFieldValue("lon", currentPosition.longitude);
+                }}
+              />
+            </label>
+          </div>
+        </div>
+        <div className="field is-horizontal columns">
+          <div className="control column is-half">
+            <label
+              className="radio label"
+              htmlFor="locationSwitch"
+              style={{ textAlign: "left" }}
+            >
+              {t("Location")}
               <Field
-                id='locationSwitch'
-                type='radio'
-                name='searchMode'
-                value='location'
-                checked={values.searchMode === 'location'}
+                id="locationSwitch"
+                type="radio"
+                name="searchMode"
+                value="location"
+                checked={values.searchMode === "location"}
                 onChange={props.handleChange}
               />
             </label>
           </div>
 
-          <div className='control column is-half'>
-            <label className='radio label' htmlFor='geoSwitch' style={{ textAlign: 'left' }}>
-              {t('Geo')}:
+          <div className="control column is-half">
+            <label
+              className="radio label"
+              htmlFor="geoSwitch"
+              style={{ textAlign: "left" }}
+            >
+              {t("Geo")}:
               <Field
-                id='geoSwitch'
-                type='radio'
-                name='searchMode'
-                value='geo'
-                checked={values.searchMode === 'geo'}
+                id="geoSwitch"
+                type="radio"
+                name="searchMode"
+                value="geo"
+                checked={values.searchMode === "geo"}
                 onChange={props.handleChange}
               />
             </label>
           </div>
         </div>
-        <div className='field is-grouped is-grouped-multiline columns'>
+        <div className="field is-grouped is-grouped-multiline columns">
           {tags.map((tag: ITag) => (
-            <p className='control' key={tag.id}>
-              <label className='checkbox label'>
-                <Field name='activeTags' type='checkbox' value={tag.name} onChange={handleTagChange} />
+            <p className="control" key={tag.id}>
+              <label className="checkbox label">
+                <Field
+                  name="activeTags"
+                  type="checkbox"
+                  value={tag.name}
+                  checked={values.activeTags.includes(tag.name)}
+                  onChange={handleTagChange}
+                />
                 {tag.name}
               </label>
             </p>
           ))}
         </div>
-        <button className='button is-primary' type='submit'>
-          {t('Find')}
+        <button className="button is-primary" type="submit">
+          {t("Find")}
         </button>
       </Form>
     </div>
@@ -195,11 +253,11 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
     const positionValue = props.positionValue;
 
     return {
-      location: formValue || '',
+      location: formValue || "",
       lat: positionValue.latitude || 0,
       lon: positionValue.longitude || 0,
-      radius: positionValue.radius || 0,
-      searchMode: 'location',
+      radius: positionValue.radius || 1,
+      searchMode: "location",
       activeTags: []
     };
   },
@@ -208,17 +266,26 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
 
   handleSubmit: (values: ISearchFormValues, { props }) => {
     //warningi z tlumaczeniem
-    if (values.searchMode === 'geo' && (values.lat === 0 || values.lon === 0 || values.radius === 0)) {
-      showNotification('warning', 'Warning', 'Please set the cords first');
-    } else if (values.location === '' && values.searchMode === 'location') {
-      showNotification('warning', 'Warning', 'Please enter city first');
+    if (
+      values.searchMode === "geo" &&
+      (values.lat === 0 || values.lon === 0 || values.radius === 0)
+    ) {
+      showNotification("warning", "Warning", "Please set the cords first");
+    } else if (values.location === "" && values.searchMode === "location") {
+      showNotification("warning", "Warning", "Please enter city first");
     } else {
       const position: IPosition = {
         latitude: values.lat,
         longitude: values.lon,
         radius: values.radius
       };
-      props.onSubmit(values.location, position, values.searchMode, values.activeTags);
+      //za kazdym razem radius resetuje sie do wartosci przed zwiekszeniem jej buttonem 'ADD 5KM'
+      props.onSubmit(
+        values.location,
+        position,
+        values.searchMode,
+        values.activeTags
+      );
     }
   }
 })(InnerForm);
