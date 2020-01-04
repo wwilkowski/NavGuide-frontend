@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 
 const ListTrips = ({ trips, mode, onIncreaseRadius }: types.IListTripsProps) => {
   const { t } = useTranslation();
-  console.log('LIST TRIPS DOSTALO: ', trips);
   return (
     <>
       {mode === 'random' ? (

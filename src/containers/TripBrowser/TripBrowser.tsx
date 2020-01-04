@@ -119,7 +119,6 @@ const TripBrowser: React.FC = () => {
   };
 
   const updateActiveTags = (tagNames: string[]) => {
-    console.log('updateActiveTags', tagNames);
     setActiveTags(tagNames);
   };
 
