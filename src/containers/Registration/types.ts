@@ -1,6 +1,7 @@
 // Store
-import { SIGN_UP_GOOGLE_SUCCESSED, CONFIRM_SIGN_UP_SUCCESSED, GET_INTERESTS_SUCCESSED } from './constants';
+import { SIGN_UP_GOOGLE_SUCCESSED, CONFIRM_SIGN_UP_SUCCESSED, GET_INTERESTS_SUCCESSED, SEND_REGISTER_GUIDE_REQUEST } from './constants';
 import { IUserData } from '../../shared/types';
+import { FormValues } from '../../components/GuideRegisterForm/types';
 
 // export interface IUserData {
 //   avatar: string;
@@ -74,6 +75,13 @@ export interface IGetInterestsSuccessedAction {
 export interface IGetInterestsSuccessed {
   type: typeof GET_INTERESTS_SUCCESSED;
   interests: IInterest[];
+}
+
+// register guide
+
+export interface ISendRegisterGuideRequest {
+  type: typeof SEND_REGISTER_GUIDE_REQUEST,
+  guideValues: FormValues
 }
 
 // action types

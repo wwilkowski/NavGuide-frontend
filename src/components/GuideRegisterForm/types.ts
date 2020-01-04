@@ -4,4 +4,6 @@ export interface FormValues {
   description: string;
 }
 
-export interface MyFormProps {}
+export interface MyFormProps {
+  onSubmit: (values: FormValues) => void;
+}
