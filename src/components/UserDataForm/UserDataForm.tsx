@@ -91,8 +91,8 @@ const InnerForm = (props: FormikProps<FullFormValues>) => {
           </label>
           <div className='select'>
             <Field as='select' id='gender' name='gender'>
-              <option value='male'>{t('Male')}</option>
-              <option value='female'>{t('Female')}</option>
+              <option value='MALE'>{t('Male')}</option>
+              <option value='FEMALE'>{t('Female')}</option>
             </Field>
           </div>
         </div>
@@ -131,17 +131,13 @@ const InnerForm = (props: FormikProps<FullFormValues>) => {
 const MyForm = withFormik<MyFormProps, FullFormValues>({
   mapPropsToValues: (props: MyFormProps) => {
     const { firstName, lastName, country, email, telephone, gender, experience, interests } = props.templateUser;
-    console.log(
-      'zainteresowania: ',
-      interests.map(i => i.id)
-    );
     return {
       firstName: firstName || '',
       lastName: lastName || '',
       country: country.toUpperCase() || 'PL',
       email: email || '',
       telephone: telephone || '',
-      gender: gender || '',
+      gender: gender || 'MALE',
       experience: experience || 'NOVICE',
       interests: interests.map(i => i.id) || [],
       avatar: '',
@@ -152,6 +148,8 @@ const MyForm = withFormik<MyFormProps, FullFormValues>({
 
   handleSubmit: (values: FullFormValues, { props }) => {
     const { ...user } = values;
+
+    console.log(user.gender);
     user.telephone = user.telephone.replace(/\s/g, '');
     props.onSubmit(user);
   }

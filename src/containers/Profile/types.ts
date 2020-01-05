@@ -1,4 +1,4 @@
-import { IUserData } from '../../shared/types';
+import { IUserData, IUserFormValues } from "../../shared/types";
 
 // export interface IUserData {
 //   avatar: string;
@@ -12,6 +12,11 @@ import { IUserData } from '../../shared/types';
 //   experience: string;
 //   interests: number[];
 // }
+export interface IEditProfileAction {
+  type: string;
+  editUser: IUserData;
+  user: IUserFormValues;
+}
 
 export interface ILogInSuccessedAction {
   type: string;

@@ -12,6 +12,8 @@ const templateCities = ['Lipka', 'Torun', 'Warszawa'];
 const TripBrowser: React.FC = () => {
   const tripsData = useSelector((state: StoreType) => state.tripBrowser.trips);
 
+  const dispatcher = useDispatch();
+
   const [mode, setMode] = useState<string>('');
   const [suggestedTrips, setSuggestedTrips] = useState<string[]>([]);
   const [searchedTrips, setSearchedTrips] = useState<ISingleTripType[]>([]);
@@ -20,7 +22,7 @@ const TripBrowser: React.FC = () => {
   const [positionValue, setPositionValue] = useState<IPosition>({
     latitude: 53.01023065,
     longitude: 18.594376006630313,
-    radius: 5
+    radius: 0.5
   });
 
   useEffect(() => {
@@ -28,23 +30,51 @@ const TripBrowser: React.FC = () => {
   }, [tripsData]);
 
   useEffect(() => {
-    if (activeTags.length) {
-      setSearchedTrips(
-        tripsData.filter(trip => {
-          const tripTagsNames = trip.tags.map(tag => tag.name);
-          return tripTagsNames.includes(activeTags[0]);
-        })
-      );
-    } else {
-      setSearchedTrips(tripsData);
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tripsData]);
+    if (activeTags.length) {
+      const filterTripsDataWithTags: ISingleTripType[] = [];
+      let iTag = 0;
+      tripsData.forEach((trip: ISingleTripType) => {
+        trip.tags.forEach((tag: ITag) => {
+          if (activeTags.includes(tag.name)) {
+            iTag++;
+          }
+        });
+        if (iTag > 0) filterTripsDataWithTags.push(trip);
+      });
 
-  const dispatcher = useDispatch();
+      setSearchedTrips(filterTripsDataWithTags);
+    }
+    setSuggestedTrips([]);
+  }, [activeTags, tripsData]);
+
   useEffect(() => {
     dispatcher(actions.fetchTagsRequested());
   }, [dispatcher]);
+
+  const handleCityHover = (location: string) => {
+    setFormValue(location);
+  };
+
+  const updateActiveTags = (tagNames: string[]) => {
+    setActiveTags(tagNames);
+  };
+
+  const onIncreaseRadius = (r: number) => {
+    setPositionValue({
+      latitude: positionValue.latitude,
+      longitude: positionValue.longitude,
+      radius: positionValue.radius + r
+    });
+
+    const newPositionValue: IPosition = {
+      latitude: positionValue.latitude,
+      longitude: positionValue.longitude,
+      radius: positionValue.radius + r
+    };
+
+    onSearchFormSubmit('', newPositionValue, 'geo', activeTags);
+  };
 
   const onSearchFormChange = (location: string) => {
     const listCities: string[] = [];
@@ -57,7 +87,7 @@ const TripBrowser: React.FC = () => {
   };
 
   const onSearchFormSubmit = (location: string, position: IPosition, searchMode: string, activeTags: string[]) => {
-    setActiveTags(activeTags);
+    //setActiveTags(activeTags);
     if (searchMode === 'location' && templateCities.includes(location)) {
       setMode('normal');
       setFormValue(location);
@@ -79,8 +109,8 @@ const TripBrowser: React.FC = () => {
     }
 
     //to przeniesiec do useEffect z tripdata
-    const filterTripsDataWithTags: ISingleTripType[] = [];
-    if (mode !== 'random') {
+    /*const filterTripsDataWithTags: ISingleTripType[] = [];
+    if (mode !== "random") {
       tripsData.forEach((trip: ISingleTripType) => {
         const len = activeTags.length;
         let i = 0;
@@ -91,36 +121,13 @@ const TripBrowser: React.FC = () => {
         if (i === len) filterTripsDataWithTags.push(trip);
       });
     }
+
     setSuggestedTrips([]);
-    if (mode !== 'random') {
+    if (mode !== "random") {
       setSearchedTrips(filterTripsDataWithTags);
     } else {
       setSearchedTrips(tripsData);
-    }
-  };
-
-  const handleCityHover = (location: string) => {
-    setFormValue(location);
-  };
-
-  const onIncreaseRadius = (r: number) => {
-    setPositionValue({
-      latitude: positionValue.latitude,
-      longitude: positionValue.longitude,
-      radius: positionValue.radius + r
-    });
-
-    const newPositionValue: IPosition = {
-      latitude: positionValue.latitude,
-      longitude: positionValue.longitude,
-      radius: positionValue.radius + r
-    };
-    onSearchFormSubmit('', newPositionValue, 'geo', activeTags);
-  };
-
-  const updateActiveTags = (tagNames: string[]) => {
-    console.log('updateActiveTags', tagNames);
-    setActiveTags(tagNames);
+    }*/
   };
 
   return (

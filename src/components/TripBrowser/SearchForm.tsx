@@ -8,6 +8,8 @@ import * as Yup from 'yup';
 import { ISearchFormValues, ISearchFormProps } from './types';
 import { showNotification } from '../../helpers/notification';
 import LeafletMap from '../../components/LeafletMap/LeafletMap';
+import i18n from '../../locales/i18n';
+import { usePosition } from '../../helpers/position';
 
 const SearchFormSchema = Yup.object().shape({});
 
@@ -16,7 +18,10 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
 
   const tags = useSelector((state: StoreType) => state.tripBrowser.tags);
 
-  const { values, setFieldValue, touched, errors } = props;
+  //problem, bo usePosition nie mozna wywolac w onClick
+  const currentPosition = usePosition();
+
+  const { values, setFieldValue, touched, errors, isSubmitting } = props;
 
   const [location, setLocation] = useState<string>('');
   const [position, setPosition] = useState<IPosition>({
@@ -24,6 +29,14 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
     longitude: 0,
     radius: 0
   });
+
+  useEffect(() => {
+    if (Object.keys(errors).length !== 0 && isSubmitting) {
+      Object.values(errors).forEach(error => {
+        showNotification('warning', t('Form warning'), t(`${error}`));
+      });
+    }
+  }, [errors, isSubmitting, t]);
 
   useEffect(() => {
     setLocation(props.formValue);
@@ -147,6 +160,26 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
           />
         </div>
         <div className='field is-horizontal columns'>
+          <div className='field columns is-half'>
+            <label className='radio label' htmlFor='currentGeo'>
+              <input
+                type='button'
+                value='CURRENT GEO'
+                onClick={() => {
+                  console.log(currentPosition);
+                  setPosition({
+                    latitude: currentPosition.latitude,
+                    longitude: currentPosition.longitude,
+                    radius: position.radius
+                  });
+                  setFieldValue('lat', currentPosition.latitude);
+                  setFieldValue('lon', currentPosition.longitude);
+                }}
+              />
+            </label>
+          </div>
+        </div>
+        <div className='field is-horizontal columns'>
           <div className='control column is-half'>
             <label className='radio label' htmlFor='locationSwitch' style={{ textAlign: 'left' }}>
               {t('Location')}
@@ -179,7 +212,13 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
           {tags.map((tag: ITag) => (
             <p className='control' key={tag.id}>
               <label className='checkbox label'>
-                <Field name='activeTags' type='checkbox' value={tag.name} onChange={handleTagChange} />
+                <Field
+                  name='activeTags'
+                  type='checkbox'
+                  value={tag.name}
+                  checked={values.activeTags.includes(tag.name)}
+                  onChange={handleTagChange}
+                />
                 {tag.name}
               </label>
             </p>
@@ -202,7 +241,7 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
       location: formValue || '',
       lat: positionValue.latitude || 0,
       lon: positionValue.longitude || 0,
-      radius: positionValue.radius || 0,
+      radius: positionValue.radius || 1,
       searchMode: 'location',
       activeTags: []
     };
@@ -213,15 +252,16 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
   handleSubmit: (values: ISearchFormValues, { props }) => {
     //warningi z tlumaczeniem
     if (values.searchMode === 'geo' && (values.lat === 0 || values.lon === 0 || values.radius === 0)) {
-      showNotification('warning', 'Warning', 'Please set the cords first');
+      showNotification('warning', i18n.t('Warning'), i18n.t('Please set the cords first'));
     } else if (values.location === '' && values.searchMode === 'location') {
-      showNotification('warning', 'Warning', 'Please enter city first');
+      showNotification('warning', i18n.t('Warning'), i18n.t('Please enter city first'));
     } else {
       const position: IPosition = {
         latitude: values.lat,
         longitude: values.lon,
         radius: values.radius
       };
+      //za kazdym razem radius resetuje sie do wartosci przed zwiekszeniem jej buttonem 'ADD 5KM'
       props.onSubmit(values.location, position, values.searchMode, values.activeTags);
     }
   }

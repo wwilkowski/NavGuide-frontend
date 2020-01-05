@@ -1,5 +1,5 @@
-import React from 'react';
-import { Field } from 'formik';
+import React from "react";
+import { Field } from "formik";
 
 const Checkbox = props => {
   return (
@@ -7,10 +7,10 @@ const Checkbox = props => {
       {({ field, form }) => (
         <label>
           <input
-            type='checkbox'
+            type="checkbox"
             name={props.name}
             value={props.value}
-            checked={field.value.includes(props.valueKey)}
+            //checked={field.value.includes(props.valueKey)}
             onChange={() => {
               if (field.value.includes(props.valueKey)) {
                 for (let i = 0; i < field.value.length; i++) {

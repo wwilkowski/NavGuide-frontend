@@ -20,7 +20,6 @@ const PrivateRoute = props => {
     <Route
       {...rest}
       render={routeProps => {
-        console.log('routeProps: ', routeProps);
         return isLoggedIn ? <Component {...rest} /> : redirectWithNotification();
       }}
     />

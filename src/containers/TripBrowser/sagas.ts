@@ -82,7 +82,6 @@ function* fetchGeoTripsFromAPI(action: types.IFetchGeoTripsRequest) {
     const lat = action.lat;
     const lon = action.lon;
     const radius = action.radius;
-    console.log('RADIUS: ', radius);
 
     const endpoint = `https://235.ip-51-91-9.eu/guests/offers/geo?lat=${lat}&lon=${lon}&radius=${radius}`;
 
