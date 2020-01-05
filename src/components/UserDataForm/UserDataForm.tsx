@@ -131,15 +131,16 @@ const InnerForm = (props: FormikProps<FullFormValues>) => {
 const MyForm = withFormik<MyFormProps, FullFormValues>({
   mapPropsToValues: (props: MyFormProps) => {
     const { firstName, lastName, country, email, telephone, gender, experience, interests } = props.templateUser;
+
     return {
       firstName: firstName || '',
       lastName: lastName || '',
       country: country.toUpperCase() || 'PL',
       email: email || '',
       telephone: telephone || '',
-      gender: gender || 'MALE',
+      gender: gender || 'FEMALE',
       experience: experience || 'NOVICE',
-      interests: interests.map(i => i.id) || [],
+      interests: interests.length ? interests.map(i => i.id) : [],
       avatar: '',
       role: ''
     };
@@ -148,8 +149,9 @@ const MyForm = withFormik<MyFormProps, FullFormValues>({
 
   handleSubmit: (values: FullFormValues, { props }) => {
     const { ...user } = values;
-
-    console.log(user.gender);
+    if (!user.interests) {
+      user.interests = [];
+    }
     user.telephone = user.telephone.replace(/\s/g, '');
     props.onSubmit(user);
   }
