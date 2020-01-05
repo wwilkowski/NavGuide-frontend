@@ -1,10 +1,5 @@
-import * as constants from "./constants";
-import {
-  IUserData,
-  IUserFormValues,
-  IEditProfileValues
-} from "../../shared/types";
-import { StoreType } from "../../store";
+import * as constants from './constants';
+import { IUserData, IUserFormValues } from '../../shared/types';
 
 export const logInGoogleRequest = (code: string) => ({
   type: constants.LOG_IN_GOOGLE_REQUESTED,
