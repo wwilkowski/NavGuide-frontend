@@ -30,16 +30,6 @@ const TripBrowser: React.FC = () => {
   }, [tripsData]);
 
   useEffect(() => {
-    /*if (activeTags.length) {
-      setSearchedTrips(
-        tripsData.filter(trip => {
-          const tripTagsNames = trip.tags.map(tag => tag.name);
-          return tripTagsNames.includes(activeTags[0]);
-        })
-      );
-    } else {
-      setSearchedTrips(tripsData);
-    }*/
     // eslint-disable-next-line react-hooks/exhaustive-deps
     if (activeTags.length) {
       const filterTripsDataWithTags: ISingleTripType[] = [];
@@ -50,7 +40,7 @@ const TripBrowser: React.FC = () => {
             iTag++;
           }
         });
-        if (iTag === activeTags.length) filterTripsDataWithTags.push(trip);
+        if (iTag > 0) filterTripsDataWithTags.push(trip);
       });
 
       setSearchedTrips(filterTripsDataWithTags);

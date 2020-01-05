@@ -13,10 +13,8 @@ const EditProfileForm = () => {
   const user = useSelector((state: StoreType) => state.profile.user);
 
   const onEditProfileFormSubmit = (editUser: IUserFormValues) => {
-    /*setTimeout(() => {
-      alert(JSON.stringify(user, null, 2));
-    }, 1000);*/
     dispatcher(actions.editProfileRequest(editUser, user));
+    console.log(editUser.gender);
   };
 
   return (

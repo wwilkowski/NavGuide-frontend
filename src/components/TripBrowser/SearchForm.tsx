@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  IPosition,
-  ITag,
-  usePosition
-} from "../../containers/TripBrowser/types";
+import { IPosition, ITag } from "../../containers/TripBrowser/types";
 import { withFormik, FormikProps, Field, Form } from "formik";
 import { useSelector } from "react-redux";
 import { StoreType } from "../../store";
 import * as Yup from "yup";
 import { ISearchFormValues, ISearchFormProps } from "./types";
 import { showNotification } from "../../helpers/notification";
+import i18n from "../../locales/i18n";
+import { usePosition } from "../../helpers/position";
+import { IPositionData } from "../../shared/types";
 
 const SearchFormSchema = Yup.object().shape({});
 
@@ -21,6 +20,7 @@ const InnerForm = (
 
   const tags = useSelector((state: StoreType) => state.tripBrowser.tags);
 
+  //problem, bo usePosition nie mozna wywolac w onClick
   const currentPosition = usePosition();
 
   const { values, setFieldValue, touched, errors, isSubmitting } = props;
@@ -31,6 +31,10 @@ const InnerForm = (
     longitude: 0,
     radius: 0
   });
+  /* const [currentPosition, setCurrentPosition] = useState<IPositionData>({
+    latitude: 0,
+    longitude: 0
+  });*/
 
   useEffect(() => {
     if (Object.keys(errors).length !== 0 && isSubmitting) {
@@ -159,9 +163,7 @@ const InnerForm = (
               setPosition({
                 latitude: position.latitude,
                 longitude: position.longitude,
-                radius: event.target.value
-                  ? parseInt(event.target.value, 10)
-                  : 0
+                radius: event.target.value ? parseFloat(event.target.value) : 0
               });
             }}
           />
@@ -270,9 +272,17 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
       values.searchMode === "geo" &&
       (values.lat === 0 || values.lon === 0 || values.radius === 0)
     ) {
-      showNotification("warning", "Warning", "Please set the cords first");
+      showNotification(
+        "warning",
+        i18n.t("Warning"),
+        i18n.t("Please set the cords first")
+      );
     } else if (values.location === "" && values.searchMode === "location") {
-      showNotification("warning", "Warning", "Please enter city first");
+      showNotification(
+        "warning",
+        i18n.t("Warning"),
+        i18n.t("Please enter city first")
+      );
     } else {
       const position: IPosition = {
         latitude: values.lat,

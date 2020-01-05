@@ -30,11 +30,25 @@ export interface IUserFormValues {
 }
 
 export interface IEditProfileValues {
-  country: string,
-  email: string,
-  experience: string,
-  firstName: string,
-  interests: number[],
-  lastName: string,
-  telephone: string
+  country: string;
+  email: string;
+  experience: string;
+  firstName: string;
+  interests: number[];
+  lastName: string;
+  telephone: string;
+}
+
+// localisation - usePosition()
+
+export interface IGeoLocationProps {
+  coords: {
+    latitude: number;
+    longitude: number;
+  };
+}
+
+export interface IPositionData {
+  latitude: number;
+  longitude: number;
 }

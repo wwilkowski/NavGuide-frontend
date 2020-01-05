@@ -15,7 +15,6 @@
     "Male": "Mężczyzna",
     "Female": "Kobieta",
     "Verification successed!": "Weryfikacja powiodła się!",
-    "Warning": "Ostrzeżenie",
     "Home": "Strona główna",
     "Profile": "Profil",
     "Sign in with Google": "Zaloguj się z Google",
@@ -74,6 +73,9 @@
     "Search type": "Sposób wyszukiwania",
     "Radius": "Promień",
     "Lat": "Szer",
-    "Lon": "Wys"
+    "Lon": "Wys",
+    "Please set the cords first": "Najpierw podaj współrzędne",
+    "Your profile is up to data": "Twój profil jest aktualny",
+    "Profile was edit": "Profil został edytowany"
   }
 }

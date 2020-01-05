@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import {
   FETCH_TAGS_SUCCESED,
   FETCH_TAGS_REQUESTED,
@@ -12,7 +12,7 @@ import {
   FETCH_CITY_TRIPS_SUCCESED,
   FETCH_CITY_TRIPS_FAILED,
   FETCH_GEO_TRIPS_FAILED
-} from './constants';
+} from "./constants";
 
 export interface ITag {
   id: number;
@@ -116,45 +116,3 @@ export interface IFetchGeoTripsRequest {
 export interface IFetchTagsRequest {
   type: typeof FETCH_TAGS_REQUESTED;
 }
-
-//hook, ktory pobiera lokalizaccje
-interface IGeoLocationProps {
-  coords: {
-    latitude: number;
-    longitude: number;
-  };
-}
-
-interface IPositionData {
-  latitude: number;
-  longitude: number;
-}
-
-const initialPosition: IPositionData = {
-  latitude: 0,
-  longitude: 0
-};
-
-export const usePosition = () => {
-  const [position, setPosition] = useState<IPositionData>(initialPosition);
-
-  const onChange = ({ coords }: IGeoLocationProps) => {
-    setPosition({
-      latitude: coords.latitude,
-      longitude: coords.longitude
-    });
-  };
-
-  useEffect(() => {
-    const geo = navigator.geolocation;
-    if (!geo) {
-      console.log("GeoLocation doesn't supported");
-    }
-
-    const watcher = geo.watchPosition(onChange);
-
-    return () => geo.clearWatch(watcher);
-  }, []);
-
-  return { ...position };
-};
