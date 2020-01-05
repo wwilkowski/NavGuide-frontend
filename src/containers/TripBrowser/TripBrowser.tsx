@@ -18,9 +18,9 @@ const TripBrowser: React.FC = () => {
   const [activeTags, setActiveTags] = useState<string[]>([]);
   const [formValue, setFormValue] = useState<string>('');
   const [positionValue, setPositionValue] = useState<IPosition>({
-    latitude: 0,
-    longitude: 0,
-    radius: 0
+    latitude: 53.01023065,
+    longitude: 18.594376006630313,
+    radius: 5
   });
 
   useEffect(() => {
@@ -125,13 +125,16 @@ const TripBrowser: React.FC = () => {
 
   return (
     <div>
-      <SearchForm
-        onChange={onSearchFormChange}
-        onSubmit={onSearchFormSubmit}
-        updateActiveTags={updateActiveTags}
-        formValue={formValue}
-        positionValue={positionValue}
-      />
+      <div className='columns'>
+        <SearchForm
+          onChange={onSearchFormChange}
+          onSubmit={onSearchFormSubmit}
+          updateActiveTags={updateActiveTags}
+          formValue={formValue}
+          positionValue={positionValue}
+          trips={searchedTrips}
+        />
+      </div>
       <ListSuggestedTrips
         onCityClick={onSearchFormSubmit}
         onCityHover={handleCityHover}
