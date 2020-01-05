@@ -1,25 +1,23 @@
-import React from "react";
-import { Field } from "formik";
+import React from 'react';
+import { Field } from 'formik';
 
 const Checkbox = props => {
+  console.log(props.valueKey);
   return (
     <Field name={props.name}>
       {({ field, form }) => (
         <label>
           <input
-            type="checkbox"
+            type='checkbox'
             name={props.name}
-            value={props.value}
-            //checked={field.value.includes(props.valueKey)}
+            value={props.valueKey}
+            checked={field.value && field.value.includes(props.valueKey) ? true : false}
             onChange={() => {
-              if (field.value.includes(props.valueKey)) {
-                for (let i = 0; i < field.value.length; i++) {
-                  if (field.value[i] === props.valueKey) {
-                    field.value.splice(i, 1);
-                  }
-                }
+              if (field.value && field.value.includes(props.valueKey)) {
+                const newInterests = field.value.filter(interest => interest !== props.valueKey);
+                form.setFieldValue(props.name, newInterests);
               } else {
-                const nextValue = field.value.concat(props.valueKey);
+                const nextValue = field.value ? [...field.value, props.valueKey] : [props.valueKey];
                 form.setFieldValue(props.name, nextValue);
               }
             }}
