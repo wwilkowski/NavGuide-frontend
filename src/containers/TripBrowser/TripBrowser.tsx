@@ -87,7 +87,6 @@ const TripBrowser: React.FC = () => {
   };
 
   const onSearchFormSubmit = (location: string, position: IPosition, searchMode: string, activeTags: string[]) => {
-    //setActiveTags(activeTags);
     if (searchMode === 'location' && templateCities.includes(location)) {
       setMode('normal');
       setFormValue(location);
@@ -101,33 +100,12 @@ const TripBrowser: React.FC = () => {
         radius: position.radius
       });
 
-      dispatcher(actions.fetchGeoTripsRequested(position.latitude, position.longitude, position.radius));
+      dispatcher(actions.fetchGeoTripsRequested(position.latitude, position.longitude, position.radius * 1000));
     } else if (location.length > 0 && !templateCities.includes(location)) {
       setMode('random');
 
       dispatcher(actions.fetchRandomTripsRequested());
     }
-
-    //to przeniesiec do useEffect z tripdata
-    /*const filterTripsDataWithTags: ISingleTripType[] = [];
-    if (mode !== "random") {
-      tripsData.forEach((trip: ISingleTripType) => {
-        const len = activeTags.length;
-        let i = 0;
-        trip.tags.forEach((tag: ITag) => {
-          if (activeTags.includes(tag.name)) i++;
-        });
-
-        if (i === len) filterTripsDataWithTags.push(trip);
-      });
-    }
-
-    setSuggestedTrips([]);
-    if (mode !== "random") {
-      setSearchedTrips(filterTripsDataWithTags);
-    } else {
-      setSearchedTrips(tripsData);
-    }*/
   };
 
   return (
