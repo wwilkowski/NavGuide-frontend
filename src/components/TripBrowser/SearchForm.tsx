@@ -7,6 +7,7 @@ import { StoreType } from '../../store';
 import * as Yup from 'yup';
 import { ISearchFormValues, ISearchFormProps } from './types';
 import { showNotification } from '../../helpers/notification';
+import LeafletMap from '../../components/LeafletMap/LeafletMap';
 
 const SearchFormSchema = Yup.object().shape({});
 
@@ -55,8 +56,8 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
   };
 
   return (
-    <div className='columns'>
-      <Form className='column is-one-third' style={{ padding: '3rem' }}>
+    <div>
+      <Form style={{ padding: '3rem' }}>
         <div className='field is-horizontal columns'>
           <div className='field-label is-normal'>
             <label htmlFor='location' className='label'>
@@ -87,7 +88,8 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
           <Field
             className='input'
             id='lat'
-            type='text'
+            type='number'
+            step='.01'
             name='lat'
             value={position.latitude}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -107,7 +109,8 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
           <Field
             className='input'
             id='lon'
-            type='text'
+            type='number'
+            step='.01'
             name='lon'
             value={position.longitude}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -129,15 +132,16 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
           <Field
             className='input'
             id='radius'
-            type='text'
+            type='number'
             name='radius'
+            step='.1'
             value={position.radius}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               props.handleChange(event);
               setPosition({
                 latitude: position.latitude,
                 longitude: position.longitude,
-                radius: event.target.value ? parseInt(event.target.value, 10) : 0
+                radius: event.target.value ? parseFloat(event.target.value) : 0
               });
             }}
           />
@@ -224,13 +228,21 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
 })(InnerForm);
 
 const SearchForm = (props: ISearchFormProps) => (
-  <ControlledSearchForm
-    onChange={props.onChange}
-    onSubmit={props.onSubmit}
-    updateActiveTags={props.updateActiveTags}
-    formValue={props.formValue}
-    positionValue={props.positionValue}
-  />
+  <div className='column columns'>
+    <div className='column is-half'>
+      <ControlledSearchForm
+        onChange={props.onChange}
+        onSubmit={props.onSubmit}
+        updateActiveTags={props.updateActiveTags}
+        formValue={props.formValue}
+        positionValue={props.positionValue}
+        trips={props.trips}
+      />
+    </div>
+    <div className='column is-half'>
+      <LeafletMap position={props.positionValue} trips={props.trips} />
+    </div>
+  </div>
 );
 
 export default SearchForm;
