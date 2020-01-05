@@ -10,7 +10,6 @@ export interface Props {
 
 const LeafletMap = (props: Props) => {
   const { latitude, longitude, radius } = props.position;
-  console.log('OTRZYMANE TRIPY: ', props.trips);
   return (
     <Map center={{ lat: latitude, lng: longitude }} zoom={15} style={{ height: '400px' }}>
       <TileLayer
@@ -21,8 +20,9 @@ const LeafletMap = (props: Props) => {
         <Popup>You</Popup>
       </Marker>
       {props.trips.map(trip => (
-        <Marker position={{ lat: trip.lat + 0.0, lng: trip.lon + 0.0 }} color='red'>
+        <Marker position={{ lat: trip.lat, lng: trip.lon }}>
           <Popup>{trip.name}</Popup>
+          <Circle center={{ lat: trip.lat, lng: trip.lon }} color='green' radius={trip.radius} />
         </Marker>
       ))}
       <Circle center={{ lat: latitude, lng: longitude }} color='red' radius={radius * 1000}>
