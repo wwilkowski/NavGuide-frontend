@@ -102,13 +102,14 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
             className='input'
             id='lat'
             type='number'
-            step='.01'
             name='lat'
             value={position.latitude}
+            min={0}
+            required
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               props.handleChange(event);
               setPosition({
-                latitude: event.target.value ? parseFloat(event.target.value) : 0,
+                latitude: parseFloat(event.target.value),
                 longitude: position.longitude,
                 radius: position.radius
               });
@@ -123,14 +124,15 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
             className='input'
             id='lon'
             type='number'
-            step='.01'
             name='lon'
+            min={0}
+            required
             value={position.longitude}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               props.handleChange(event);
               setPosition({
                 latitude: position.latitude,
-                longitude: event.target.value ? parseFloat(event.target.value) : 0,
+                longitude: parseFloat(event.target.value),
                 radius: position.radius
               });
             }}
@@ -239,8 +241,8 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
 
     return {
       location: formValue || '',
-      lat: positionValue.latitude || 0,
-      lon: positionValue.longitude || 0,
+      lat: positionValue.latitude,
+      lon: positionValue.longitude,
       radius: positionValue.radius || 1,
       searchMode: 'location',
       activeTags: []
