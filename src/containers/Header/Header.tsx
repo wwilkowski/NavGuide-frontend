@@ -34,7 +34,7 @@ const Header: React.FC = () => {
         </a>
       </div>
 
-      <div id='navbarBasicExample' className='navbar-menu is-active'>
+      <div id='navbarBasicExample' className='navbar is-active'>
         <div className='navbar-start'>
           <Link to='/' className='navbar-item'>
             {t('Home')}
