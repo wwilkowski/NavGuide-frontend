@@ -120,8 +120,8 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
             value={values.searchMode}
             onChange={props.handleChange}
           >
-            <FormControlLabel value='location' control={<Radio color='primary' />} label='Location' />
-            <FormControlLabel value='geo' control={<Radio color='primary' />} label='Geo' />
+            <FormControlLabel value='location' control={<Radio color='primary' />} label={t(`Place`)} />
+            <FormControlLabel value='geo' control={<Radio color='primary' />} label={t(`Location`)} />
           </RadioGroup>
         </FormControl>
         <ul className={styles.tagList}>
@@ -152,11 +152,6 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
               };
               navigator.geolocation.getCurrentPosition(
                 ({ coords: { latitude, longitude } }: Position) => {
-                  // setPosition({
-                  //   latitude,
-                  //   longitude,
-                  //   radius: 2
-                  // });
                   setFieldValue('lat', latitude);
                   setFieldValue('lon', longitude);
                   showNotification('success', 'Geolocation changed', 'You changed coords based on your location');
@@ -200,7 +195,6 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
   validationSchema: SearchFormSchema,
 
   handleSubmit: (values: ISearchFormValues, { props }) => {
-    //warningi z tlumaczeniem
     if (values.searchMode === 'geo' && (values.lat === 0 || values.lon === 0 || values.radius === 0)) {
       showNotification('warning', i18n.t('Warning'), i18n.t('Please set the cords first'));
     } else if (values.location === '' && values.searchMode === 'location') {

@@ -60,22 +60,6 @@ const TripBrowser: React.FC = () => {
     setActiveTags(tagNames);
   };
 
-  const onIncreaseRadius = (r: number) => {
-    setPositionValue({
-      latitude: positionValue.latitude,
-      longitude: positionValue.longitude,
-      radius: positionValue.radius + r
-    });
-
-    const newPositionValue: IPosition = {
-      latitude: positionValue.latitude,
-      longitude: positionValue.longitude,
-      radius: positionValue.radius + r
-    };
-
-    onSearchFormSubmit('', newPositionValue, 'geo', activeTags);
-  };
-
   const onSearchFormChange = (location: string, position: IPosition) => {
     setPositionValue(position);
     const listCities: string[] = [];
@@ -130,7 +114,7 @@ const TripBrowser: React.FC = () => {
           suggestedTrips={suggestedTrips}
           activeTags={activeTags}
         />
-        <ListTrips trips={searchedTrips} mode={mode} onIncreaseRadius={onIncreaseRadius} />
+        <ListTrips trips={searchedTrips} mode={mode} />
       </div>
     </div>
   );

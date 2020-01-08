@@ -22,7 +22,6 @@ export interface ISearchFormProps {
 export interface IListTripsProps {
   trips: ISingleTripType[];
   mode: string;
-  onIncreaseRadius: (r: number) => void;
 }
 
 export interface IListSuggestedTripsProps {
