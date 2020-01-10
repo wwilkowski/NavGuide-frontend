@@ -11,6 +11,7 @@ const templateCities = ['Lipka', 'Torun', 'Warszawa'];
 
 const TripBrowser: React.FC = () => {
   const tripsData = useSelector((state: StoreType) => state.tripBrowser.trips);
+  const suggestedCities = useSelector((state: StoreType) => state.tripBrowser.suggestedCities);
 
   const dispatcher = useDispatch();
 
@@ -26,11 +27,14 @@ const TripBrowser: React.FC = () => {
   });
 
   useEffect(() => {
+    setSuggestedTrips(suggestedCities);
+  }, [suggestedCities]);
+
+  useEffect(() => {
     setSearchedTrips(tripsData);
   }, [tripsData]);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     if (activeTags.length) {
       const filterTripsDataWithTags: ISingleTripType[] = [];
       let iTag = 0;
@@ -77,43 +81,7 @@ const TripBrowser: React.FC = () => {
   };
 
   const onSearchFormChange = (location: string) => {
-    /*const listCities: string[] = [];
-    templateCities.forEach((el: string) => {
-      if (el.substr(0, location.length) === location && location.length > 0) {
-        listCities.push(el);
-      }
-    });
-    setSuggestedTrips(listCities);*/
-
-    const controller = new AbortController();
-    const signal = controller.signal;
-
-    function fetchSuggestedTrips() {
-      /*const data = await fetch(`https://photon.komoot.de/api/?q=${location}&limit=5`, { signal });
-      const json = await data.json();*/
-
-      /*const names: string[] = [];
-      json.features.forEach((el: any) => {
-        if (!names.includes(el.properties.name)) names.push(el.properties.name);
-      });
-      console.log(location);
-      setSuggestedTrips(names);*/
-
-      fetch(`https://photon.komoot.de/api/?q=${location}&limit=5`, { signal })
-        .then(data => data.json())
-        .then(json => {
-          const names: string[] = [];
-
-          json.features.forEach((el: any) => {
-            if (!names.includes(el.properties.name)) names.push(el.properties.name);
-          });
-
-          setSuggestedTrips(names);
-        })
-        .catch(error => console.log(error));
-    }
-
-    fetchSuggestedTrips();
+    dispatcher(actions.fetchSuggestedCitiesRequested(location));
   };
 
   const onSearchFormSubmit = (location: string, position: IPosition, searchMode: string, activeTags: string[]) => {

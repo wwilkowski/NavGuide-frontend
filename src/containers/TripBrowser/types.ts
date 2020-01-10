@@ -11,7 +11,10 @@ import {
   FETCH_RANDOM_TRIPS_SUCCESED,
   FETCH_CITY_TRIPS_SUCCESED,
   FETCH_CITY_TRIPS_FAILED,
-  FETCH_GEO_TRIPS_FAILED
+  FETCH_GEO_TRIPS_FAILED,
+  FETCH_SUGGESTED_CITIES_REQUESTED,
+  FETCH_SUGGESTED_CITIES_SUCCESED,
+  FETCH_SUGGESTED_CITIES_FAILED
 } from './constants';
 
 export interface ITag {
@@ -45,6 +48,7 @@ export interface IMultiTripsType {
 export interface IMultiTripsAndTagsType {
   trips: ISingleTripType[];
   tags: ITag[];
+  suggestedCities: string[];
 }
 
 export interface IFetchRandomTripsSuccesedAction {
@@ -87,6 +91,16 @@ export interface IFetchTagsFailedAction {
   message: string;
 }
 
+export interface IFetchSuggestedCitiesSuccesedAction {
+  type: typeof FETCH_SUGGESTED_CITIES_SUCCESED;
+  suggestedCities: string[];
+}
+
+export interface IFetchSuggestedCitiesFailedAction {
+  type: typeof FETCH_SUGGESTED_CITIES_FAILED;
+  message: string;
+}
+
 export type TripBrowserAction =
   | IFetchRandomTripsRequest
   | IFetchRandomTripsSuccesedAction
@@ -96,7 +110,9 @@ export type TripBrowserAction =
   | IFetchGeoTripsSuccesedAction
   | IFetchTagsSuccesedAction
   | IFetchTagsSuccesedAction
-  | IFetchRandomTripsFailedAction;
+  | IFetchRandomTripsFailedAction
+  | IFetchSuggestedCitiesSuccesedAction
+  | IFetchSuggestedCitiesFailedAction;
 
 export interface IFetchRandomTripsRequest {
   type: typeof FETCH_RANDOM_TRIPS_REQUESTED;
@@ -116,4 +132,9 @@ export interface IFetchGeoTripsRequest {
 
 export interface IFetchTagsRequest {
   type: typeof FETCH_TAGS_REQUESTED;
+}
+
+export interface IFetchSuggestedCitiesRequest {
+  type: typeof FETCH_SUGGESTED_CITIES_REQUESTED;
+  location: string;
 }

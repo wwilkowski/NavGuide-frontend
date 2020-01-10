@@ -1,4 +1,10 @@
-import { FETCH_RANDOM_TRIPS_REQUESTED, FETCH_TAGS_REQUESTED, FETCH_CITY_TRIPS_REQUESTED, FETCH_GEO_TRIPS_REQUESTED } from './constants';
+import {
+  FETCH_RANDOM_TRIPS_REQUESTED,
+  FETCH_TAGS_REQUESTED,
+  FETCH_CITY_TRIPS_REQUESTED,
+  FETCH_GEO_TRIPS_REQUESTED,
+  FETCH_SUGGESTED_CITIES_REQUESTED
+} from './constants';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import * as actions from './actions';
 import * as types from './types';
@@ -132,11 +138,28 @@ function* fetchTagsFromAPI() {
   }
 }
 
+function* fetchSuggestedCitiesFromPhotonAPI(action: types.IFetchSuggestedCitiesRequest) {
+  try {
+    const response = yield call(fetch, `https://photon.komoot.de/api/?q=${action.location}&limit=10`);
+    const suggestedCities = yield response.json();
+
+    const cityNames: string[] = [];
+    suggestedCities.features.forEach((el: any) => {
+      if (!cityNames.includes(el.properties.name)) cityNames.push(el.properties.name);
+    });
+
+    yield put(actions.fetchSuggestedCitiesSuccesed(cityNames));
+  } catch {
+    yield put(actions.fetchSuggestedCitiesFailed("Error: can't fetch suggested cities from Photon API"));
+  }
+}
+
 function* mainSaga() {
   yield takeLatest(FETCH_RANDOM_TRIPS_REQUESTED, fetchRandomTripsFromAPI);
   yield takeLatest(FETCH_CITY_TRIPS_REQUESTED, fetchCityTripsFromAPI);
   yield takeLatest(FETCH_GEO_TRIPS_REQUESTED, fetchGeoTripsFromAPI);
   yield takeLatest(FETCH_TAGS_REQUESTED, fetchTagsFromAPI);
+  yield takeLatest(FETCH_SUGGESTED_CITIES_REQUESTED, fetchSuggestedCitiesFromPhotonAPI);
 }
 
 export default mainSaga;
