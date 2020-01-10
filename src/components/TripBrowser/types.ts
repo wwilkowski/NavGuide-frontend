@@ -1,4 +1,5 @@
-import { ISingleTripType, ITag, IPosition } from '../../containers/TripBrowser/types';
+import { ISingleTripType, IPosition } from '../../containers/TripBrowser/types';
+import { SetStateAction } from 'react';
 
 export interface ISearchFormValues {
   location: string;
@@ -10,9 +11,10 @@ export interface ISearchFormValues {
 }
 
 export interface ISearchFormProps {
-  onChange: (location: string) => void;
+  onChange: (location: string, position: IPosition) => void;
   onSubmit: (location: string, position: IPosition, searchMode: string, activeTags: string[]) => void;
   updateActiveTags: (tagNames: string[]) => void;
+  setPosition: (position: IPosition) => void;
   formValue: string;
   positionValue: IPosition;
   trips: ISingleTripType[];
@@ -20,7 +22,6 @@ export interface ISearchFormProps {
 export interface IListTripsProps {
   trips: ISingleTripType[];
   mode: string;
-  onIncreaseRadius: (r: number) => void;
 }
 
 export interface IListSuggestedTripsProps {

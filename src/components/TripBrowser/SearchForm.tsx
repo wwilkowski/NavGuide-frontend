@@ -9,7 +9,13 @@ import { ISearchFormValues, ISearchFormProps } from './types';
 import { showNotification } from '../../helpers/notification';
 import LeafletMap from '../../components/LeafletMap/LeafletMap';
 import i18n from '../../locales/i18n';
-import { usePosition } from '../../helpers/position';
+import Checkbox from '@material-ui/core/Checkbox';
+import styles from './SearchForm.module.scss';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 
 const SearchFormSchema = Yup.object().shape({});
 
@@ -18,17 +24,9 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
 
   const tags = useSelector((state: StoreType) => state.tripBrowser.tags);
 
-  //problem, bo usePosition nie mozna wywolac w onClick
-  const currentPosition = usePosition();
-
   const { values, setFieldValue, touched, errors, isSubmitting } = props;
 
   const [location, setLocation] = useState<string>('');
-  const [position, setPosition] = useState<IPosition>({
-    latitude: 0,
-    longitude: 0,
-    radius: 0
-  });
 
   useEffect(() => {
     if (Object.keys(errors).length !== 0 && isSubmitting) {
@@ -43,14 +41,6 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
     values.location = props.formValue;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.formValue]);
-
-  useEffect(() => {
-    setPosition({
-      latitude: props.positionValue.latitude,
-      longitude: props.positionValue.longitude,
-      radius: props.positionValue.radius
-    });
-  }, [props.positionValue]);
 
   const handleTagChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const tagNames = tags.map((tag: ITag) => tag.name);
@@ -70,12 +60,10 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
 
   return (
     <div>
-      <Form style={{ padding: '3rem' }}>
-        <div className='field is-horizontal columns'>
-          <div className='field-label is-normal'>
-            <label htmlFor='location' className='label'>
-              {t('Location')}:
-            </label>
+      <Form className={styles.searchForm}>
+        <div>
+          <div>
+            <label htmlFor='location'>{t('Location')}:</label>
           </div>
 
           <Field
@@ -84,151 +72,106 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
             type='text'
             name='location'
             value={location}
+            style={{ width: '300px' }}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               props.handleChange(event);
               setLocation(event.target.value);
-              props.onChange(event.target.value);
+              props.onChange(event.target.value, {
+                latitude: values.lat,
+                longitude: values.lon,
+                radius: values.radius
+              });
             }}
           />
           {errors.location && touched.location && <div>{t(errors.location)}</div>}
         </div>
-        <div className='field columns'>
-          <div className='field-label is-normal'>
-            <label htmlFor='lat' className='label'>
-              {t('Lat')}:{' '}
-            </label>
-          </div>
-          <Field
-            className='input'
-            id='lat'
-            type='number'
-            name='lat'
-            value={position.latitude}
-            min={0}
-            required
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              props.handleChange(event);
-              setPosition({
-                latitude: parseFloat(event.target.value),
-                longitude: position.longitude,
-                radius: position.radius
-              });
-            }}
-          />
-          <div className='field-label is-normal'>
-            <label htmlFor='lon' className='label'>
-              {t('Lon')}:
-            </label>
-          </div>
-          <Field
-            className='input'
-            id='lon'
-            type='number'
-            name='lon'
-            min={0}
-            required
-            value={position.longitude}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              props.handleChange(event);
-              setPosition({
-                latitude: position.latitude,
-                longitude: parseFloat(event.target.value),
-                radius: position.radius
-              });
-            }}
-          />
-        </div>
-        <div className='field is-horizontal columns'>
-          <div className='field-label is-normal'>
-            <label htmlFor='radius' className='label'>
-              {t('Radius')}:
-            </label>
+        <div>
+          <div>
+            <label htmlFor='radius'>{t('Radius')}:</label>
           </div>
           <Field
             className='input'
             id='radius'
             type='number'
             name='radius'
+            required
+            style={{ width: '200px' }}
+            min='0.1'
             step='.1'
-            value={position.radius}
+            value={props.positionValue.radius}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               props.handleChange(event);
-              setPosition({
-                latitude: position.latitude,
-                longitude: position.longitude,
-                radius: event.target.value ? parseFloat(event.target.value) : 0
-              });
+              const position = {
+                latitude: props.positionValue.latitude,
+                longitude: props.positionValue.longitude,
+                radius: parseFloat(event.target.value)
+              };
+              props.setPosition(position);
+              props.onSubmit(values.location, position, values.searchMode, values.activeTags);
             }}
           />
         </div>
-        <div className='field is-horizontal columns'>
-          <div className='field columns is-half'>
-            <label className='radio label' htmlFor='currentGeo'>
-              <input
-                type='button'
-                value='CURRENT GEO'
-                onClick={() => {
-                  console.log(currentPosition);
-                  setPosition({
-                    latitude: currentPosition.latitude,
-                    longitude: currentPosition.longitude,
-                    radius: position.radius
-                  });
-                  setFieldValue('lat', currentPosition.latitude);
-                  setFieldValue('lon', currentPosition.longitude);
-                }}
-              />
-            </label>
-          </div>
-        </div>
-        <div className='field is-horizontal columns'>
-          <div className='control column is-half'>
-            <label className='radio label' htmlFor='locationSwitch' style={{ textAlign: 'left' }}>
-              {t('Location')}
-              <Field
-                id='locationSwitch'
-                type='radio'
-                name='searchMode'
-                value='location'
-                checked={values.searchMode === 'location'}
-                onChange={props.handleChange}
-              />
-            </label>
-          </div>
-
-          <div className='control column is-half'>
-            <label className='radio label' htmlFor='geoSwitch' style={{ textAlign: 'left' }}>
-              {t('Geo')}:
-              <Field
-                id='geoSwitch'
-                type='radio'
-                name='searchMode'
-                value='geo'
-                checked={values.searchMode === 'geo'}
-                onChange={props.handleChange}
-              />
-            </label>
-          </div>
-        </div>
-        <div className='field is-grouped is-grouped-multiline columns'>
+        <FormControl component='fieldset'>
+          <FormLabel component='legend'>{t(`Search type`)}</FormLabel>
+          <RadioGroup
+            className={styles.modeList}
+            aria-label='searchMode'
+            name='searchMode'
+            value={values.searchMode}
+            onChange={props.handleChange}
+          >
+            <FormControlLabel value='location' control={<Radio color='primary' />} label={t(`Place`)} />
+            <FormControlLabel value='geo' control={<Radio color='primary' />} label={t(`Location`)} />
+          </RadioGroup>
+        </FormControl>
+        <ul className={styles.tagList}>
           {tags.map((tag: ITag) => (
-            <p className='control' key={tag.id}>
-              <label className='checkbox label'>
-                <Field
-                  name='activeTags'
-                  type='checkbox'
-                  value={tag.name}
-                  checked={values.activeTags.includes(tag.name)}
-                  onChange={handleTagChange}
-                />
-                {tag.name}
-              </label>
-            </p>
+            <li key={tag.id}>
+              <FormControlLabel
+                control={
+                  <Checkbox name='activeTags' value={tag.name} checked={values.activeTags.includes(tag.name)} onChange={handleTagChange} />
+                }
+                label={tag.name}
+              />
+            </li>
           ))}
-        </div>
+        </ul>
         <button className='button is-primary' type='submit'>
           {t('Find')}
         </button>
+        <label htmlFor='currentGeo'>
+          <input
+            type='button'
+            className='button is-info'
+            value='geolocation'
+            onClick={() => {
+              var options = {
+                enableHighAccuracy: true,
+                timeout: 5000,
+                maximumAge: 0
+              };
+              navigator.geolocation.getCurrentPosition(
+                ({ coords: { latitude, longitude } }: Position) => {
+                  setFieldValue('lat', latitude);
+                  setFieldValue('lon', longitude);
+                  showNotification('success', 'Geolocation changed', 'You changed coords based on your location');
+                },
+                error => {
+                  if (error.code === 1) {
+                    showNotification(
+                      'warning',
+                      t('You denied access to your geolocation'),
+                      t('Allow access following instructions [instruction will be here]')
+                    );
+                  } else {
+                    showNotification('danger', t('Something goes wrong'), t(`${error.message}`));
+                  }
+                },
+                options
+              );
+            }}
+          />
+        </label>
       </Form>
     </div>
   );
@@ -252,7 +195,6 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
   validationSchema: SearchFormSchema,
 
   handleSubmit: (values: ISearchFormValues, { props }) => {
-    //warningi z tlumaczeniem
     if (values.searchMode === 'geo' && (values.lat === 0 || values.lon === 0 || values.radius === 0)) {
       showNotification('warning', i18n.t('Warning'), i18n.t('Please set the cords first'));
     } else if (values.location === '' && values.searchMode === 'location') {
@@ -263,25 +205,23 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
         longitude: values.lon,
         radius: values.radius
       };
-      //za kazdym razem radius resetuje sie do wartosci przed zwiekszeniem jej buttonem 'ADD 5KM'
       props.onSubmit(values.location, position, values.searchMode, values.activeTags);
     }
   }
 })(InnerForm);
 
 const SearchForm = (props: ISearchFormProps) => (
-  <div className='column columns'>
-    <div className='column is-half'>
-      <ControlledSearchForm
-        onChange={props.onChange}
-        onSubmit={props.onSubmit}
-        updateActiveTags={props.updateActiveTags}
-        formValue={props.formValue}
-        positionValue={props.positionValue}
-        trips={props.trips}
-      />
-    </div>
-    <div className='column is-half'>
+  <div className='column'>
+    <ControlledSearchForm
+      onChange={props.onChange}
+      onSubmit={props.onSubmit}
+      updateActiveTags={props.updateActiveTags}
+      formValue={props.formValue}
+      positionValue={props.positionValue}
+      setPosition={props.setPosition}
+      trips={props.trips}
+    />
+    <div className='column is-full'>
       <LeafletMap position={props.positionValue} trips={props.trips} />
     </div>
   </div>
