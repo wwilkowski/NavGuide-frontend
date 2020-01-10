@@ -3,7 +3,7 @@ import * as types from './types';
 import { ISingleTripType } from '../../containers/TripBrowser/types';
 import { useTranslation } from 'react-i18next';
 
-const ListTrips = ({ trips, mode, onIncreaseRadius }: types.IListTripsProps) => {
+const ListTrips = ({ trips, mode }: types.IListTripsProps) => {
   const { t } = useTranslation();
   return (
     <>
@@ -12,18 +12,7 @@ const ListTrips = ({ trips, mode, onIncreaseRadius }: types.IListTripsProps) => 
           {t('No matching trips')} {t('Suggested trips')}:
         </p>
       ) : null}
-      {trips.length === 0 && mode === 'geo' ? (
-        <p>
-          {t('No matching trips')}. {t('Increase the radius?')}
-          <button
-            onClick={() => {
-              onIncreaseRadius(5);
-            }}
-          >
-            {t('ADD 5KM')}
-          </button>
-        </p>
-      ) : null}
+      {trips.length === 0 && mode === 'geo' ? <p>{t('No matching trips')}.</p> : null}
       <ul>
         {trips.map((trip: ISingleTripType) => (
           <li key={trip.id}>

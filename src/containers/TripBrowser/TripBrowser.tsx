@@ -60,23 +60,8 @@ const TripBrowser: React.FC = () => {
     setActiveTags(tagNames);
   };
 
-  const onIncreaseRadius = (r: number) => {
-    setPositionValue({
-      latitude: positionValue.latitude,
-      longitude: positionValue.longitude,
-      radius: positionValue.radius + r
-    });
-
-    const newPositionValue: IPosition = {
-      latitude: positionValue.latitude,
-      longitude: positionValue.longitude,
-      radius: positionValue.radius + r
-    };
-
-    onSearchFormSubmit('', newPositionValue, 'geo', activeTags);
-  };
-
-  const onSearchFormChange = (location: string) => {
+  const onSearchFormChange = (location: string, position: IPosition) => {
+    setPositionValue(position);
     const listCities: string[] = [];
     templateCities.forEach((el: string) => {
       if (el.substr(0, location.length) === location && location.length > 0) {
@@ -94,6 +79,7 @@ const TripBrowser: React.FC = () => {
     } else if (searchMode === 'geo') {
       setMode('geo');
       setFormValue('');
+      console.log(position);
       setPositionValue({
         latitude: position.latitude,
         longitude: position.longitude,
@@ -118,15 +104,18 @@ const TripBrowser: React.FC = () => {
           formValue={formValue}
           positionValue={positionValue}
           trips={searchedTrips}
+          setPosition={setPositionValue}
         />
       </div>
-      <ListSuggestedTrips
-        onCityClick={onSearchFormSubmit}
-        onCityHover={handleCityHover}
-        suggestedTrips={suggestedTrips}
-        activeTags={activeTags}
-      />
-      <ListTrips trips={searchedTrips} mode={mode} onIncreaseRadius={onIncreaseRadius} />
+      <div>
+        <ListSuggestedTrips
+          onCityClick={onSearchFormSubmit}
+          onCityHover={handleCityHover}
+          suggestedTrips={suggestedTrips}
+          activeTags={activeTags}
+        />
+        <ListTrips trips={searchedTrips} mode={mode} />
+      </div>
     </div>
   );
 };

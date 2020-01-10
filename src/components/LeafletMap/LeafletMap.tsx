@@ -11,7 +11,7 @@ export interface Props {
 const LeafletMap = (props: Props) => {
   const { latitude, longitude, radius } = props.position;
   return (
-    <Map center={{ lat: latitude, lng: longitude }} zoom={15} style={{ height: '400px' }}>
+    <Map center={{ lat: latitude, lng: longitude }} zoom={15} style={{ height: '550px' }}>
       <TileLayer
         url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
