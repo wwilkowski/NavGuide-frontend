@@ -184,8 +184,8 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
 
     return {
       location: formValue || '',
-      lat: positionValue.latitude || 0,
-      lon: positionValue.longitude || 0,
+      lat: positionValue.latitude,
+      lon: positionValue.longitude,
       radius: positionValue.radius || 1,
       searchMode: 'location',
       activeTags: []
