@@ -252,7 +252,6 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
   validationSchema: SearchFormSchema,
 
   handleSubmit: (values: ISearchFormValues, { props }) => {
-    //warningi z tlumaczeniem
     if (values.searchMode === 'geo' && (values.lat === 0 || values.lon === 0 || values.radius === 0)) {
       showNotification('warning', i18n.t('Warning'), i18n.t('Please set the cords first'));
     } else if (values.location === '' && values.searchMode === 'location') {
@@ -263,7 +262,6 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
         longitude: values.lon,
         radius: values.radius
       };
-      //za kazdym razem radius resetuje sie do wartosci przed zwiekszeniem jej buttonem 'ADD 5KM'
       props.onSubmit(values.location, position, values.searchMode, values.activeTags);
     }
   }
