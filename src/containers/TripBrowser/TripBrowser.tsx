@@ -84,18 +84,33 @@ const TripBrowser: React.FC = () => {
       }
     });
     setSuggestedTrips(listCities);*/
-    
 
-    async function fetchSuggestedTrips() {
-      const data = await fetch(`https://photon.komoot.de/api/?q=${location}&limit=5`, { signal });
-      const json = await data.json();
+    const controller = new AbortController();
+    const signal = controller.signal;
 
-      const names: string[] = [];
+    function fetchSuggestedTrips() {
+      /*const data = await fetch(`https://photon.komoot.de/api/?q=${location}&limit=5`, { signal });
+      const json = await data.json();*/
+
+      /*const names: string[] = [];
       json.features.forEach((el: any) => {
         if (!names.includes(el.properties.name)) names.push(el.properties.name);
       });
       console.log(location);
-      setSuggestedTrips(names);
+      setSuggestedTrips(names);*/
+
+      fetch(`https://photon.komoot.de/api/?q=${location}&limit=5`, { signal })
+        .then(data => data.json())
+        .then(json => {
+          const names: string[] = [];
+
+          json.features.forEach((el: any) => {
+            if (!names.includes(el.properties.name)) names.push(el.properties.name);
+          });
+
+          setSuggestedTrips(names);
+        })
+        .catch(error => console.log(error));
     }
 
     fetchSuggestedTrips();
