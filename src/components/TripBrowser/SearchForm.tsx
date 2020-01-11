@@ -16,10 +16,15 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import { usePosition } from '../../helpers/position';
+import ListSuggestedTrips from './ListSuggestedTrips';
+import { relative } from 'path';
 
 const SearchFormSchema = Yup.object().shape({});
 
 const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => {
+  const suggestedCities = useSelector((state: StoreType) => state.tripBrowser.suggestedCities);
+
   const { t } = useTranslation();
 
   const tags = useSelector((state: StoreType) => state.tripBrowser.tags);
@@ -84,6 +89,12 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
             }}
           />
           {errors.location && touched.location && <div>{t(errors.location)}</div>}
+          <ListSuggestedTrips
+            onCityClick={props.onSubmit}
+            onCityHover={props.onCityHover}
+            suggestedTrips={suggestedCities}
+            activeTags={values.activeTags}
+          />
         </div>
         <div>
           <div>
@@ -220,6 +231,7 @@ const SearchForm = (props: ISearchFormProps) => (
       positionValue={props.positionValue}
       setPosition={props.setPosition}
       trips={props.trips}
+      onCityHover={props.onCityHover}
     />
     <div className='column is-full'>
       <LeafletMap position={props.positionValue} trips={props.trips} />

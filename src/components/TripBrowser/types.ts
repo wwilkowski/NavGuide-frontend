@@ -18,6 +18,7 @@ export interface ISearchFormProps {
   formValue: string;
   positionValue: IPosition;
   trips: ISingleTripType[];
+  onCityHover: (location: string) => void;
 }
 export interface IListTripsProps {
   trips: ISingleTripType[];

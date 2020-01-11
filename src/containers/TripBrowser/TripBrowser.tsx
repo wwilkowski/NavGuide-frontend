@@ -4,13 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as actions from './actions';
 import { StoreType } from '../../store';
 import ListTrips from '../../components/TripBrowser/ListTrips';
-import ListSuggestedTrips from '../../components/TripBrowser/ListSuggestedTrips';
 import SearchForm from '../../components/TripBrowser/SearchForm';
 
 const templateCities = ['Lipka', 'Torun', 'Warszawa'];
 
 const TripBrowser: React.FC = () => {
   const tripsData = useSelector((state: StoreType) => state.tripBrowser.trips);
+  const suggestedCities = useSelector((state: StoreType) => state.tripBrowser.suggestedCities);
 
   const dispatcher = useDispatch();
 
@@ -26,11 +26,14 @@ const TripBrowser: React.FC = () => {
   });
 
   useEffect(() => {
+    setSuggestedTrips(suggestedCities);
+  }, [suggestedCities]);
+
+  useEffect(() => {
     setSearchedTrips(tripsData);
   }, [tripsData]);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     if (activeTags.length) {
       const filterTripsDataWithTags: ISingleTripType[] = [];
       let iTag = 0;
@@ -60,15 +63,24 @@ const TripBrowser: React.FC = () => {
     setActiveTags(tagNames);
   };
 
-  const onSearchFormChange = (location: string, position: IPosition) => {
-    setPositionValue(position);
-    const listCities: string[] = [];
-    templateCities.forEach((el: string) => {
-      if (el.substr(0, location.length) === location && location.length > 0) {
-        listCities.push(el);
-      }
+  const onIncreaseRadius = (r: number) => {
+    setPositionValue({
+      latitude: positionValue.latitude,
+      longitude: positionValue.longitude,
+      radius: positionValue.radius + r
     });
-    setSuggestedTrips(listCities);
+
+    const newPositionValue: IPosition = {
+      latitude: positionValue.latitude,
+      longitude: positionValue.longitude,
+      radius: positionValue.radius + r
+    };
+
+    onSearchFormSubmit('', newPositionValue, 'geo', activeTags);
+  };
+
+  const onSearchFormChange = (location: string) => {
+    dispatcher(actions.fetchSuggestedCitiesRequested(location));
   };
 
   const onSearchFormSubmit = (location: string, position: IPosition, searchMode: string, activeTags: string[]) => {
@@ -105,17 +117,13 @@ const TripBrowser: React.FC = () => {
           positionValue={positionValue}
           trips={searchedTrips}
           setPosition={setPositionValue}
+          onCityHover={handleCityHover}
         />
       </div>
       <div>
-        <ListSuggestedTrips
-          onCityClick={onSearchFormSubmit}
-          onCityHover={handleCityHover}
-          suggestedTrips={suggestedTrips}
-          activeTags={activeTags}
-        />
         <ListTrips trips={searchedTrips} mode={mode} />
       </div>
+      <ListTrips trips={searchedTrips} mode={mode} />
     </div>
   );
 };

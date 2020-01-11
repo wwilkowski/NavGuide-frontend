@@ -10,9 +10,12 @@ import {
   FETCH_GEO_TRIPS_FAILED,
   FETCH_TAGS_REQUESTED,
   FETCH_TAGS_SUCCESED,
-  FETCH_TAGS_FAILED
-} from "./constants";
-import { IMultiTripsType, ITag } from "./types";
+  FETCH_TAGS_FAILED,
+  FETCH_SUGGESTED_CITIES_REQUESTED,
+  FETCH_SUGGESTED_CITIES_SUCCESED,
+  FETCH_SUGGESTED_CITIES_FAILED
+} from './constants';
+import { IMultiTripsType, ITag } from './types';
 
 //RANDOM TRIPS
 export const fetchRandomTripsRequested = () => ({
@@ -46,11 +49,7 @@ export const fetchCityTripsFailed = (message: string) => ({
 });
 
 //GEO TRIPS
-export const fetchGeoTripsRequested = (
-  lat: number,
-  lon: number,
-  radius: number
-) => ({
+export const fetchGeoTripsRequested = (lat: number, lon: number, radius: number) => ({
   type: FETCH_GEO_TRIPS_REQUESTED,
   lat: lat,
   lon: lon,
@@ -79,5 +78,21 @@ export const fetchTagsSuccesed = (tags: ITag[]) => ({
 
 export const fetchTagsFailed = (message: string) => ({
   type: FETCH_TAGS_FAILED,
+  message
+});
+
+//SUGGESTED CITIES
+export const fetchSuggestedCitiesRequested = (location: string) => ({
+  type: FETCH_SUGGESTED_CITIES_REQUESTED,
+  location
+});
+
+export const fetchSuggestedCitiesSuccesed = (suggestedCities: string[]) => ({
+  type: FETCH_SUGGESTED_CITIES_SUCCESED,
+  suggestedCities
+});
+
+export const fetchSuggestedCitiesFailed = (message: string) => ({
+  type: FETCH_SUGGESTED_CITIES_FAILED,
   message
 });
