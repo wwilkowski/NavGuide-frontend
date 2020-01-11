@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as actions from './actions';
 import { StoreType } from '../../store';
 import ListTrips from '../../components/TripBrowser/ListTrips';
-import ListSuggestedTrips from '../../components/TripBrowser/ListSuggestedTrips';
 import SearchForm from '../../components/TripBrowser/SearchForm';
 
 const templateCities = ['Lipka', 'Torun', 'Warszawa'];
@@ -116,14 +115,9 @@ const TripBrowser: React.FC = () => {
           formValue={formValue}
           positionValue={positionValue}
           trips={searchedTrips}
+          onCityHover={handleCityHover}
         />
       </div>
-      <ListSuggestedTrips
-        onCityClick={onSearchFormSubmit}
-        onCityHover={handleCityHover}
-        suggestedTrips={suggestedTrips}
-        activeTags={activeTags}
-      />
       <ListTrips trips={searchedTrips} mode={mode} onIncreaseRadius={onIncreaseRadius} />
     </div>
   );

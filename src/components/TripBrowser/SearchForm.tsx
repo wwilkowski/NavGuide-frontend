@@ -10,10 +10,14 @@ import { showNotification } from '../../helpers/notification';
 import LeafletMap from '../../components/LeafletMap/LeafletMap';
 import i18n from '../../locales/i18n';
 import { usePosition } from '../../helpers/position';
+import ListSuggestedTrips from './ListSuggestedTrips';
+import { relative } from 'path';
 
 const SearchFormSchema = Yup.object().shape({});
 
 const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => {
+  const suggestedCities = useSelector((state: StoreType) => state.tripBrowser.suggestedCities);
+
   const { t } = useTranslation();
 
   const tags = useSelector((state: StoreType) => state.tripBrowser.tags);
@@ -91,6 +95,12 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
             }}
           />
           {errors.location && touched.location && <div>{t(errors.location)}</div>}
+          <ListSuggestedTrips
+            onCityClick={props.onSubmit}
+            onCityHover={props.onCityHover}
+            suggestedTrips={suggestedCities}
+            activeTags={values.activeTags}
+          />
         </div>
         <div className='field columns'>
           <div className='field-label is-normal'>
@@ -277,6 +287,7 @@ const SearchForm = (props: ISearchFormProps) => (
         formValue={props.formValue}
         positionValue={props.positionValue}
         trips={props.trips}
+        onCityHover={props.onCityHover}
       />
     </div>
     <div className='column is-half'>
