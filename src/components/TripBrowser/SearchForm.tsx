@@ -65,36 +65,39 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
 
   return (
     <div>
-      <Form className={styles.searchForm}>
+      <Form className={styles.searchForm} autoComplete='off'>
         <div>
           <div>
             <label htmlFor='location'>{t('Location')}:</label>
           </div>
-
-          <Field
-            className='input'
-            id='location'
-            type='text'
-            name='location'
-            value={location}
-            style={{ width: '300px' }}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              props.handleChange(event);
-              setLocation(event.target.value);
-              props.onChange(event.target.value, {
-                latitude: values.lat,
-                longitude: values.lon,
-                radius: values.radius
-              });
-            }}
-          />
-          {errors.location && touched.location && <div>{t(errors.location)}</div>}
-          <ListSuggestedTrips
-            onCityClick={props.onSubmit}
-            onCityHover={props.onCityHover}
-            suggestedTrips={suggestedCities}
-            activeTags={values.activeTags}
-          />
+          <div className={styles.locationInput}>
+            <Field
+              className='input'
+              id='location'
+              type='text'
+              name='location'
+              value={location}
+              style={{ width: '300px' }}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                props.handleChange(event);
+                setLocation(event.target.value);
+                props.onChange(event.target.value, {
+                  latitude: values.lat,
+                  longitude: values.lon,
+                  radius: values.radius
+                });
+              }}
+            ></Field>
+            {errors.location && touched.location && <div>{t(errors.location)}</div>}
+            <div className={styles.suggestedCitiesList}>
+              <ListSuggestedTrips
+                onCityClick={props.onSubmit}
+                onCityHover={props.onCityHover}
+                suggestedTrips={suggestedCities}
+                activeTags={values.activeTags}
+              />
+            </div>
+          </div>
         </div>
         <div>
           <div>

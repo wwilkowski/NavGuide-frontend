@@ -17,3 +17,13 @@
   flex-direction: row !important;
   min-width: 200px;
 }
+
+.locationInput {
+  position: relative;
+}
+
+.suggestedCitiesList {
+  width: 100%;
+  z-index: 10;
+  position: absolute;
+}
