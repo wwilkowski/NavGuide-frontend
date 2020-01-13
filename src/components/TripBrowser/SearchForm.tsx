@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IPosition, ITag } from '../../containers/TripBrowser/types';
+import { ITag, ISuggestedPlace } from '../../containers/TripBrowser/types';
 import { withFormik, FormikProps, Field, Form } from 'formik';
 import { useSelector } from 'react-redux';
 import { StoreType } from '../../store';
@@ -11,19 +11,14 @@ import LeafletMap from '../../components/LeafletMap/LeafletMap';
 import i18n from '../../locales/i18n';
 import Checkbox from '@material-ui/core/Checkbox';
 import styles from './SearchForm.module.scss';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
-import { usePosition } from '../../helpers/position';
 import ListSuggestedTrips from './ListSuggestedTrips';
-import { relative } from 'path';
+import ListTrips from './ListTrips';
 
 const SearchFormSchema = Yup.object().shape({});
 
 const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => {
-  const suggestedCities = useSelector((state: StoreType) => state.tripBrowser.suggestedCities);
+  const suggestedCities = useSelector((state: StoreType) => state.tripBrowser.places);
 
   const { t } = useTranslation();
 
@@ -70,34 +65,37 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
           <div>
             <label htmlFor='location'>{t('Location')}:</label>
           </div>
-          <div className={styles.locationInput}>
-            <Field
-              className='input'
-              id='location'
-              type='text'
-              name='location'
-              value={location}
-              style={{ width: '300px' }}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                props.handleChange(event);
-                setLocation(event.target.value);
-                props.onChange(event.target.value, {
-                  latitude: values.lat,
-                  longitude: values.lon,
-                  radius: values.radius
-                });
-              }}
-            ></Field>
-            {errors.location && touched.location && <div>{t(errors.location)}</div>}
-            <div className={styles.suggestedCitiesList}>
-              <ListSuggestedTrips
-                onCityClick={props.onSubmit}
-                onCityHover={props.onCityHover}
-                suggestedTrips={suggestedCities}
-                activeTags={values.activeTags}
-              />
-            </div>
-          </div>
+
+          <Field
+            className='input'
+            id='location'
+            type='text'
+            name='location'
+            value={location}
+            classname={styles.locationInput}
+            style={{ width: '300px' }}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              props.handleChange(event);
+              setLocation(event.target.value);
+              props.onChange(event.target.value);
+            }}
+          />
+          {errors.location && touched.location && <div>{t(errors.location)}</div>}
+          <ListSuggestedTrips
+            onCityClick={(location: ISuggestedPlace) => {
+              setFieldValue('lat', location.coords[1]);
+              setFieldValue('lon', location.coords[0]);
+              props.setPosition({
+                latitude: location.coords[1],
+                longitude: location.coords[0],
+                radius: props.positionValue.radius
+              });
+              props.onSubmit(location, props.positionValue.radius);
+            }}
+            onCityHover={props.onCityHover}
+            suggestedTrips={suggestedCities}
+            activeTags={values.activeTags}
+          />
         </div>
         <div>
           <div>
@@ -121,23 +119,9 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                 radius: parseFloat(event.target.value)
               };
               props.setPosition(position);
-              props.onSubmit(values.location, position, values.searchMode, values.activeTags);
             }}
           />
         </div>
-        <FormControl component='fieldset'>
-          <FormLabel component='legend'>{t(`Search type`)}</FormLabel>
-          <RadioGroup
-            className={styles.modeList}
-            aria-label='searchMode'
-            name='searchMode'
-            value={values.searchMode}
-            onChange={props.handleChange}
-          >
-            <FormControlLabel value='location' control={<Radio color='primary' />} label={t(`Place`)} />
-            <FormControlLabel value='geo' control={<Radio color='primary' />} label={t(`Location`)} />
-          </RadioGroup>
-        </FormControl>
         <ul className={styles.tagList}>
           {tags.map((tag: ITag) => (
             <li key={tag.id}>
@@ -169,6 +153,11 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                   setFieldValue('lat', latitude);
                   setFieldValue('lon', longitude);
                   showNotification('success', 'Geolocation changed', 'You changed coords based on your location');
+                  props.setPosition({
+                    ...props.positionValue,
+                    latitude,
+                    longitude
+                  });
                 },
                 error => {
                   if (error.code === 1) {
@@ -201,7 +190,7 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
       lat: positionValue.latitude,
       lon: positionValue.longitude,
       radius: positionValue.radius || 1,
-      searchMode: 'location',
+      searchMode: 'normal',
       activeTags: []
     };
   },
@@ -214,12 +203,7 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
     } else if (values.location === '' && values.searchMode === 'location') {
       showNotification('warning', i18n.t('Warning'), i18n.t('Please enter city first'));
     } else {
-      const position: IPosition = {
-        latitude: values.lat,
-        longitude: values.lon,
-        radius: values.radius
-      };
-      props.onSubmit(values.location, position, values.searchMode, values.activeTags);
+      props.onSubmit({ name: values.location, coords: [values.lon, values.lat] }, values.radius);
     }
   }
 })(InnerForm);
@@ -236,8 +220,11 @@ const SearchForm = (props: ISearchFormProps) => (
       trips={props.trips}
       onCityHover={props.onCityHover}
     />
-    <div className='column is-full'>
+    <div className={styles.mapContainer}>
       <LeafletMap position={props.positionValue} trips={props.trips} />
+      <div className={styles.tripList}>
+        <ListTrips trips={props.trips} mode={'normal'} />
+      </div>
     </div>
   </div>
 );

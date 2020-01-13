@@ -142,13 +142,13 @@ function* fetchSuggestedCitiesFromPhotonAPI(action: types.IFetchSuggestedCitiesR
   try {
     const response = yield call(fetch, `https://photon.komoot.de/api/?q=${action.location}&limit=10`);
     const suggestedCities = yield response.json();
-
-    const cityNames: string[] = [];
-    suggestedCities.features.forEach((el: any) => {
-      if (!cityNames.includes(el.properties.name)) cityNames.push(el.properties.name);
+    const places = suggestedCities.features.map((el: any) => {
+      return {
+        name: el.properties.name,
+        coords: el.geometry.coordinates
+      };
     });
-
-    yield put(actions.fetchSuggestedCitiesSuccesed(cityNames));
+    yield put(actions.fetchSuggestedCitiesSuccesed(places));
   } catch {
     yield put(actions.fetchSuggestedCitiesFailed("Error: can't fetch suggested cities from Photon API"));
   }

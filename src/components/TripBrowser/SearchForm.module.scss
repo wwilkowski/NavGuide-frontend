@@ -17,6 +17,19 @@
   min-width: 200px;
 }
 
+.tripList {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1000;
+  opacity: 0.9;
+}
+
+.mapContainer {
+  position: relative;
+  margin-top: 1rem;
+}
+
 .locationInput {
   position: relative;
 }
