@@ -22,7 +22,7 @@ const ListSuggestedTrips = ({ onCityClick, onCityHover, suggestedTrips }: IListS
       <List className={classes.root}>
         {suggestedTrips.map((trip: ISuggestedPlace, index: number) => (
           <ListItem button key={index} onClick={() => onCityClick(trip)} onMouseEnter={() => onCityHover(trip)}>
-            <ListItemText primary={trip} />
+            <ListItemText primary={trip.name} />
           </ListItem>
         ))}
       </List>

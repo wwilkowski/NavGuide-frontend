@@ -67,12 +67,11 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
           </div>
 
           <Field
-            className='input'
             id='location'
             type='text'
             name='location'
             value={location}
-            classname={styles.locationInput}
+            className={styles.locationInput + ' input'}
             style={{ width: '300px' }}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               props.handleChange(event);
