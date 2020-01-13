@@ -1,6 +1,6 @@
 import React from 'react';
 import { IListSuggestedTripsProps } from './types';
-import { IPosition } from '../../containers/TripBrowser/types';
+import { ISuggestedPlace } from '../../containers/TripBrowser/types';
 import { makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -15,26 +15,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ListSuggestedTrips = ({ onCityClick, onCityHover, suggestedTrips, activeTags }: IListSuggestedTripsProps) => {
-  const classes = useStyles();
-
-  const position: IPosition = {
-    latitude: 0,
-    longitude: 0,
-    radius: 0
-  };
-
 const ListSuggestedTrips = ({ onCityClick, onCityHover, suggestedTrips }: IListSuggestedTripsProps) => {
+  const classes = useStyles();
   return (
     <div>
       <List className={classes.root}>
-        {suggestedTrips.map((trip: string, index: number) => (
-          <ListItem
-            button
-            key={index}
-            onClick={() => onCityClick(trip, position, 'location', activeTags)}
-            onMouseEnter={() => onCityHover(trip)}
-          >
+        {suggestedTrips.map((trip: ISuggestedPlace, index: number) => (
+          <ListItem button key={index} onClick={() => onCityClick(trip)} onMouseEnter={() => onCityHover(trip)}>
             <ListItemText primary={trip} />
           </ListItem>
         ))}
