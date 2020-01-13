@@ -9,8 +9,8 @@ import List from '@material-ui/core/List';
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
-    height: 'auto',
-    maxWidth: 300,
+    maxHeight: '15em',
+    overflow: 'auto',
     backgroundColor: theme.palette.background.paper
   }
 }));
@@ -25,8 +25,8 @@ const ListSuggestedTrips = ({ onCityClick, onCityHover, suggestedTrips, activeTa
   };
 
   return (
-    <div className={classes.root}>
-      <List>
+    <div>
+      <List className={classes.root}>
         {suggestedTrips.map((trip: string, index: number) => (
           <ListItem
             button
@@ -39,17 +39,6 @@ const ListSuggestedTrips = ({ onCityClick, onCityHover, suggestedTrips, activeTa
         ))}
       </List>
     </div>
-    /*<ul>
-      {suggestedTrips.map((trip: string, index: number) => (
-        <li
-          key={index.toString()}
-          onClick={() => onCityClick(trip, position, "location", activeTags)}
-          onMouseEnter={() => onCityHover(trip)}
-        >
-          {trip}
-        </li>
-      ))}
-    </ul>*/
   );
 };
 
