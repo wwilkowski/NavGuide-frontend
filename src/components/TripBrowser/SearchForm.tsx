@@ -60,7 +60,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
 
   return (
     <div>
-      <Form className={styles.searchForm}>
+      <Form className={styles.searchForm} autoComplete='off'>
         <div>
           <div>
             <label htmlFor='location'>{t('Location')}:</label>
