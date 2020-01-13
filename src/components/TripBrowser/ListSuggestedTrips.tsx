@@ -24,6 +24,7 @@ const ListSuggestedTrips = ({ onCityClick, onCityHover, suggestedTrips, activeTa
     radius: 0
   };
 
+const ListSuggestedTrips = ({ onCityClick, onCityHover, suggestedTrips }: IListSuggestedTripsProps) => {
   return (
     <div>
       <List className={classes.root}>

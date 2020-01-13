@@ -48,7 +48,7 @@ export interface IMultiTripsType {
 export interface IMultiTripsAndTagsType {
   trips: ISingleTripType[];
   tags: ITag[];
-  suggestedCities: string[];
+  places: ISuggestedPlace[];
 }
 
 export interface IFetchRandomTripsSuccesedAction {
@@ -93,7 +93,7 @@ export interface IFetchTagsFailedAction {
 
 export interface IFetchSuggestedCitiesSuccesedAction {
   type: typeof FETCH_SUGGESTED_CITIES_SUCCESED;
-  suggestedCities: string[];
+  suggestedPlaces: ISuggestedPlace[];
 }
 
 export interface IFetchSuggestedCitiesFailedAction {
@@ -137,4 +137,9 @@ export interface IFetchTagsRequest {
 export interface IFetchSuggestedCitiesRequest {
   type: typeof FETCH_SUGGESTED_CITIES_REQUESTED;
   location: string;
+}
+
+export interface ISuggestedPlace {
+  name: string;
+  coords: number[];
 }

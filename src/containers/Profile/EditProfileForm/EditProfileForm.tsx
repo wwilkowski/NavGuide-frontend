@@ -13,7 +13,6 @@ const EditProfileForm = () => {
   const user = useSelector((state: StoreType) => state.profile.user);
 
   const onEditProfileFormSubmit = (editUser: IUserFormValues) => {
-    console.log(editUser);
     dispatcher(actions.editProfileRequest(editUser, user));
   };
 
