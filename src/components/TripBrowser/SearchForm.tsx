@@ -66,35 +66,37 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
             <label htmlFor='location'>{t('Location')}:</label>
           </div>
 
-          <Field
-            id='location'
-            type='text'
-            name='location'
-            value={location}
-            className={styles.locationInput + ' input'}
-            style={{ width: '300px' }}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              props.handleChange(event);
-              setLocation(event.target.value);
-              props.onChange(event.target.value);
-            }}
-          />
-          {errors.location && touched.location && <div>{t(errors.location)}</div>}
-          <ListSuggestedTrips
-            onCityClick={(location: ISuggestedPlace) => {
-              setFieldValue('lat', location.coords[1]);
-              setFieldValue('lon', location.coords[0]);
-              props.setPosition({
-                latitude: location.coords[1],
-                longitude: location.coords[0],
-                radius: props.positionValue.radius
-              });
-              props.onSubmit(location, props.positionValue.radius);
-            }}
-            onCityHover={props.onCityHover}
-            suggestedTrips={suggestedCities}
-            activeTags={values.activeTags}
-          />
+          <div className={styles.locationInput}>
+            <Field
+              id='location'
+              type='text'
+              name='location'
+              value={location}
+              className={'input'}
+              style={{ width: '300px' }}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                props.handleChange(event);
+                setLocation(event.target.value);
+                props.onChange(event.target.value);
+              }}
+            />
+            {errors.location && touched.location && <div>{t(errors.location)}</div>}
+            <ListSuggestedTrips
+              onCityClick={(location: ISuggestedPlace) => {
+                setFieldValue('lat', location.coords[1]);
+                setFieldValue('lon', location.coords[0]);
+                props.setPosition({
+                  latitude: location.coords[1],
+                  longitude: location.coords[0],
+                  radius: props.positionValue.radius
+                });
+                props.onSubmit(location, props.positionValue.radius);
+              }}
+              onCityHover={props.onCityHover}
+              suggestedTrips={suggestedCities}
+              activeTags={values.activeTags}
+            />
+          </div>
         </div>
         <div>
           <div>
