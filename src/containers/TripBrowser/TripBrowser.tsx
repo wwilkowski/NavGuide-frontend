@@ -110,10 +110,6 @@ const TripBrowser: React.FC = () => {
           onCityHover={handleCityHover}
         />
       </div>
-      <div>
-        <ListTrips trips={searchedTrips} mode={mode} />
-      </div>
-      <ListTrips trips={searchedTrips} mode={mode} />
     </div>
   );
 };

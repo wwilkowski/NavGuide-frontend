@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IPosition, ITag, ISuggestedPlace } from '../../containers/TripBrowser/types';
+import { ITag, ISuggestedPlace } from '../../containers/TripBrowser/types';
 import { withFormik, FormikProps, Field, Form } from 'formik';
 import { useSelector } from 'react-redux';
 import { StoreType } from '../../store';
@@ -11,12 +11,9 @@ import LeafletMap from '../../components/LeafletMap/LeafletMap';
 import i18n from '../../locales/i18n';
 import Checkbox from '@material-ui/core/Checkbox';
 import styles from './SearchForm.module.scss';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
 import ListSuggestedTrips from './ListSuggestedTrips';
+import ListTrips from './ListTrips';
 
 const SearchFormSchema = Yup.object().shape({});
 
@@ -75,6 +72,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
             type='text'
             name='location'
             value={location}
+            classname={styles.locationInput}
             style={{ width: '300px' }}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               props.handleChange(event);
@@ -124,19 +122,6 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
             }}
           />
         </div>
-        {/* <FormControl component='fieldset'>
-          <FormLabel component='legend'>{t(`Search type`)}</FormLabel>
-          <RadioGroup
-            className={styles.modeList}
-            aria-label='searchMode'
-            name='searchMode'
-            value={values.searchMode}
-            onChange={props.handleChange}
-          >
-            <FormControlLabel value='location' control={<Radio color='primary' />} label={t(`Place`)} />
-            <FormControlLabel value='geo' control={<Radio color='primary' />} label={t(`Location`)} />
-          </RadioGroup>
-        </FormControl> */}
         <ul className={styles.tagList}>
           {tags.map((tag: ITag) => (
             <li key={tag.id}>
@@ -235,8 +220,11 @@ const SearchForm = (props: ISearchFormProps) => (
       trips={props.trips}
       onCityHover={props.onCityHover}
     />
-    <div className='column is-full'>
+    <div className={styles.mapContainer}>
       <LeafletMap position={props.positionValue} trips={props.trips} />
+      <div className={styles.tripList}>
+        <ListTrips trips={props.trips} mode={'normal'} />
+      </div>
     </div>
   </div>
 );
