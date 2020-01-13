@@ -10,7 +10,7 @@ import {
 const initialState: IMultiTripsAndTagsType = {
   trips: [],
   tags: [],
-  suggestedCities: []
+  places: []
 };
 
 const TripBrowserReducer = (state = initialState, action: TripBrowserAction) => {
@@ -24,7 +24,7 @@ const TripBrowserReducer = (state = initialState, action: TripBrowserAction) => 
     case FETCH_TAGS_SUCCESED:
       return { ...state, tags: action.tags };
     case FETCH_SUGGESTED_CITIES_SUCCESED:
-      return { ...state, suggestedCities: action.suggestedCities };
+      return { ...state, places: action.suggestedPlaces };
     default:
       return state;
   }

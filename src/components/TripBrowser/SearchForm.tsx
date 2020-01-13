@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IPosition, ITag } from '../../containers/TripBrowser/types';
+import { IPosition, ITag, ISuggestedPlace } from '../../containers/TripBrowser/types';
 import { withFormik, FormikProps, Field, Form } from 'formik';
 import { useSelector } from 'react-redux';
 import { StoreType } from '../../store';
@@ -16,14 +16,12 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-import { usePosition } from '../../helpers/position';
 import ListSuggestedTrips from './ListSuggestedTrips';
-import { relative } from 'path';
 
 const SearchFormSchema = Yup.object().shape({});
 
 const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => {
-  const suggestedCities = useSelector((state: StoreType) => state.tripBrowser.suggestedCities);
+  const suggestedCities = useSelector((state: StoreType) => state.tripBrowser.places);
 
   const { t } = useTranslation();
 
@@ -81,16 +79,21 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               props.handleChange(event);
               setLocation(event.target.value);
-              props.onChange(event.target.value, {
-                latitude: values.lat,
-                longitude: values.lon,
-                radius: values.radius
-              });
+              props.onChange(event.target.value);
             }}
           />
           {errors.location && touched.location && <div>{t(errors.location)}</div>}
           <ListSuggestedTrips
-            onCityClick={props.onSubmit}
+            onCityClick={(location: ISuggestedPlace) => {
+              setFieldValue('lat', location.coords[1]);
+              setFieldValue('lon', location.coords[0]);
+              props.setPosition({
+                latitude: location.coords[1],
+                longitude: location.coords[0],
+                radius: props.positionValue.radius
+              });
+              props.onSubmit(location, props.positionValue.radius);
+            }}
             onCityHover={props.onCityHover}
             suggestedTrips={suggestedCities}
             activeTags={values.activeTags}
@@ -118,11 +121,10 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                 radius: parseFloat(event.target.value)
               };
               props.setPosition(position);
-              props.onSubmit(values.location, position, values.searchMode, values.activeTags);
             }}
           />
         </div>
-        <FormControl component='fieldset'>
+        {/* <FormControl component='fieldset'>
           <FormLabel component='legend'>{t(`Search type`)}</FormLabel>
           <RadioGroup
             className={styles.modeList}
@@ -134,7 +136,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
             <FormControlLabel value='location' control={<Radio color='primary' />} label={t(`Place`)} />
             <FormControlLabel value='geo' control={<Radio color='primary' />} label={t(`Location`)} />
           </RadioGroup>
-        </FormControl>
+        </FormControl> */}
         <ul className={styles.tagList}>
           {tags.map((tag: ITag) => (
             <li key={tag.id}>
@@ -166,6 +168,11 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                   setFieldValue('lat', latitude);
                   setFieldValue('lon', longitude);
                   showNotification('success', 'Geolocation changed', 'You changed coords based on your location');
+                  props.setPosition({
+                    ...props.positionValue,
+                    latitude,
+                    longitude
+                  });
                 },
                 error => {
                   if (error.code === 1) {
@@ -198,7 +205,7 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
       lat: positionValue.latitude,
       lon: positionValue.longitude,
       radius: positionValue.radius || 1,
-      searchMode: 'location',
+      searchMode: 'normal',
       activeTags: []
     };
   },
@@ -211,12 +218,7 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
     } else if (values.location === '' && values.searchMode === 'location') {
       showNotification('warning', i18n.t('Warning'), i18n.t('Please enter city first'));
     } else {
-      const position: IPosition = {
-        latitude: values.lat,
-        longitude: values.lon,
-        radius: values.radius
-      };
-      props.onSubmit(values.location, position, values.searchMode, values.activeTags);
+      props.onSubmit({ name: values.location, coords: [values.lon, values.lat] }, values.radius);
     }
   }
 })(InnerForm);

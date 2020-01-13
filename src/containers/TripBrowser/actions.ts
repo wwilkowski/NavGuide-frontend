@@ -15,7 +15,7 @@ import {
   FETCH_SUGGESTED_CITIES_SUCCESED,
   FETCH_SUGGESTED_CITIES_FAILED
 } from './constants';
-import { IMultiTripsType, ITag } from './types';
+import { IMultiTripsType, ITag, ISuggestedPlace } from './types';
 
 //RANDOM TRIPS
 export const fetchRandomTripsRequested = () => ({
@@ -87,9 +87,9 @@ export const fetchSuggestedCitiesRequested = (location: string) => ({
   location
 });
 
-export const fetchSuggestedCitiesSuccesed = (suggestedCities: string[]) => ({
+export const fetchSuggestedCitiesSuccesed = (places: ISuggestedPlace) => ({
   type: FETCH_SUGGESTED_CITIES_SUCCESED,
-  suggestedCities
+  suggestedPlaces: places
 });
 
 export const fetchSuggestedCitiesFailed = (message: string) => ({

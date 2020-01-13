@@ -1,13 +1,8 @@
-import React from "react";
-import { IListSuggestedTripsProps } from "./types";
-import { IPosition } from "../../containers/TripBrowser/types";
+import React from 'react';
+import { IListSuggestedTripsProps } from './types';
+import { IPosition, ISuggestedPlace } from '../../containers/TripBrowser/types';
 
-const ListSuggestedTrips = ({
-  onCityClick,
-  onCityHover,
-  suggestedTrips,
-  activeTags
-}: IListSuggestedTripsProps) => {
+const ListSuggestedTrips = ({ onCityClick, onCityHover, suggestedTrips, activeTags }: IListSuggestedTripsProps) => {
   const position: IPosition = {
     latitude: 0,
     longitude: 0,
@@ -16,13 +11,9 @@ const ListSuggestedTrips = ({
 
   return (
     <ul>
-      {suggestedTrips.map((trip: string, index: number) => (
-        <li
-          key={index.toString()}
-          onClick={() => onCityClick(trip, position, "location", activeTags)}
-          onMouseEnter={() => onCityHover(trip)}
-        >
-          {trip}
+      {suggestedTrips.map((trip: ISuggestedPlace, index: number) => (
+        <li key={index} onClick={() => onCityClick(trip)} onMouseEnter={() => onCityHover(trip)}>
+          {trip.name}
         </li>
       ))}
     </ul>
