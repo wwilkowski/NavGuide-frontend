@@ -8,7 +8,7 @@ import * as constants from './constants';
 import * as types from './types';
 
 const logInGoogleEndpoint = 'https://235.ip-51-91-9.eu/auth/google/login';
-const editProfileEndpoint = 'https://235.ip-51-91-9.eu/profile';
+const profileEndpoint = 'https://235.ip-51-91-9.eu/profile';
 
 function* logInGoogle(action: types.ILogInGoogleRequest) {
   try {
@@ -67,7 +67,7 @@ function* logOutGoogle() {
 
 function* editProfile(action: types.IEditProfileAction) {
   try {
-    const response = yield call(fetch, editProfileEndpoint, {
+    const response = yield call(fetch, profileEndpoint, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -116,10 +116,48 @@ function* editProfile(action: types.IEditProfileAction) {
   }
 }
 
+function* getProfile() {
+  try {
+    const response = yield call(fetch, profileEndpoint, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getToken()}`
+      }
+    });
+    if (response.status >= 200 && response.status <= 300) {
+      const { country, email, experience, firstName, interests, lastName, telephone, avatar, role, gender } = yield response.json();
+
+      const user = {
+        avatar,
+        role,
+        firstName,
+        lastName,
+        country,
+        email,
+        telephone,
+        gender,
+        experience,
+        interests
+      };
+      yield put(actions.getProfileSuccessed(user));
+    } else {
+      if (response.status === 401) {
+        throw new Error('You are not logged in');
+      } else {
+        throw new Error('Something goes wrong');
+      }
+    }
+  } catch (error) {
+    yield put(actions.getProfileFailed());
+  }
+}
+
 function* mainSaga() {
   yield takeLatest(constants.LOG_IN_GOOGLE_REQUESTED, logInGoogle);
   yield takeLatest(constants.LOG_OUT_GOOGLE_REQUESTED, logOutGoogle);
   yield takeLatest(constants.EDIT_PROFILE_REQUESTED, editProfile);
+  yield takeLatest(constants.GET_PROFILE_REQUESTED, getProfile);
 }
 
 export default mainSaga;

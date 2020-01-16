@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import * as types from './types';
 import { ISingleTripType } from '../../containers/TripBrowser/types';
 import { useTranslation } from 'react-i18next';
