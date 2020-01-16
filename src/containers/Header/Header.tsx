@@ -11,7 +11,7 @@ import { getInterestsRequest, signUpGoogleRequest } from '../Registration/action
 
 const Header: React.FC = () => {
   const dispatcher = useDispatch();
-  const isLoggedIn = useSelector((state: StoreType) => state.profile.isLoggedIn);
+  const profile = useSelector((state: StoreType) => state.profile);
   const { t } = useTranslation();
 
   const signUpWithUserCode = (code: string) => {
@@ -56,7 +56,7 @@ const Header: React.FC = () => {
         <div className='navbar-end'>
           <div className='navbar-item'>
             <div className='buttons'>
-              {isLoggedIn ? (
+              {profile.isLoggedIn ? (
                 <LogoutButton onClick={logout} />
               ) : (
                 <>
@@ -66,6 +66,7 @@ const Header: React.FC = () => {
               )}
               <SwitchLanguageButton code='pl' />
               <SwitchLanguageButton code='en' />
+              <p>{profile.user.firstName}</p>
             </div>
           </div>
         </div>

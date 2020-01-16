@@ -27,6 +27,19 @@ export const logOutGoogleFailed = () => ({
   type: constants.LOG_OUT_GOOGLE_FAILED
 });
 
+export const getProfileRequest = () => ({
+  type: constants.GET_PROFILE_REQUESTED
+});
+
+export const getProfileSuccessed = (user: IUserData) => ({
+  type: constants.GET_PROFILE_SUCCESSED,
+  user
+});
+
+export const getProfileFailed = () => ({
+  type: constants.GET_PROFILE_FAILED
+});
+
 export const editProfileRequest = (editUser: IUserFormValues, user: IUserData) => ({
   type: constants.EDIT_PROFILE_REQUESTED,
   editUser,
