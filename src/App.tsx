@@ -8,8 +8,7 @@ import Header from './containers/Header/Header';
 import Registration from './containers/Registration/Registration';
 import Profile from './containers/Profile/Profile';
 import TripBrowser from './containers/TripBrowser/TripBrowser';
-import { useDispatch, useSelector } from 'react-redux';
-import { StoreType } from './store';
+import { useDispatch } from 'react-redux';
 import { getProfileRequest } from './containers/Profile/actions';
 
 // templates
