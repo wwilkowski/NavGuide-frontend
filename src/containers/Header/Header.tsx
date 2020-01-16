@@ -89,51 +89,55 @@ const Header: React.FC = () => {
         </a>
       </div>
 
-      {!profile.isLoggedIn ? (
-        <>
-          <GoogleButton text='Sign up with Google' onSuccess={signUpWithUserCode} onFailure={signUpWithUserCode} />
-          <GoogleButton text='Sign in with Google' onSuccess={signInWithUserCode} onFailure={signInWithUserCode} />
-        </>
-      ) : (
-        <div className={classes.root}>
-          <div>
-            <Button ref={anchorRef} aria-controls={open ? 'menu-list-grow' : undefined} aria-haspopup='true' onClick={handleToggle}>
-              <img src={profile.user.avatar} alt='avatar' style={{ width: '40px', height: '40px', marginRight: '1rem' }} />
-              <p>{profile.user.firstName}</p>
-            </Button>
-            <Popper open={open} className={classes.popper} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-              {({ TransitionProps, placement }) => (
-                <Grow {...TransitionProps} style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}>
-                  <Paper>
-                    <ClickAwayListener onClickAway={handleClose}>
-                      <MenuList autoFocusItem={open} id='menu-list-grow' onKeyDown={handleListKeyDown}>
-                        <MenuItem onClick={handleClose}>
-                          <Link to='/profile' className='navbar-item'>
-                            {t('Profile')}
-                          </Link>
-                        </MenuItem>
-                        <MenuItem onClick={handleClose}>
-                          <Link to='/profile/edit' className='navbar-item'>
-                            {t('Edit profile')}
-                          </Link>
-                        </MenuItem>
-                        <MenuItem onClick={handleClose}>
-                          <Link to='/register/guide' className='navbar-item'>
-                            {t('Become a guide')}
-                          </Link>
-                        </MenuItem>
-                        <MenuItem onClick={handleClose}>
-                          <LogoutButton onClick={logout} />
-                        </MenuItem>
-                      </MenuList>
-                    </ClickAwayListener>
-                  </Paper>
-                </Grow>
-              )}
-            </Popper>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        {!profile.isLoggedIn ? (
+          <>
+            <GoogleButton text='Sign up with Google' onSuccess={signUpWithUserCode} onFailure={signUpWithUserCode} />
+            <GoogleButton text='Sign in with Google' onSuccess={signInWithUserCode} onFailure={signInWithUserCode} />
+          </>
+        ) : (
+          <div className={classes.root}>
+            <div>
+              <Button ref={anchorRef} aria-controls={open ? 'menu-list-grow' : undefined} aria-haspopup='true' onClick={handleToggle}>
+                <img src={profile.user.avatar} alt='avatar' style={{ width: '40px', height: '40px', marginRight: '1rem' }} />
+                <p>{profile.user.firstName}</p>
+              </Button>
+              <Popper open={open} className={classes.popper} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+                {({ TransitionProps, placement }) => (
+                  <Grow {...TransitionProps} style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}>
+                    <Paper>
+                      <ClickAwayListener onClickAway={handleClose}>
+                        <MenuList autoFocusItem={open} id='menu-list-grow' onKeyDown={handleListKeyDown}>
+                          <MenuItem onClick={handleClose}>
+                            <Link to='/profile' className='navbar-item'>
+                              {t('Profile')}
+                            </Link>
+                          </MenuItem>
+                          <MenuItem onClick={handleClose}>
+                            <Link to='/profile/edit' className='navbar-item'>
+                              {t('Edit profile')}
+                            </Link>
+                          </MenuItem>
+                          <MenuItem onClick={handleClose}>
+                            <Link to='/register/guide' className='navbar-item'>
+                              {t('Become a guide')}
+                            </Link>
+                          </MenuItem>
+                          <MenuItem onClick={handleClose}>
+                            <LogoutButton onClick={logout} />
+                          </MenuItem>
+                        </MenuList>
+                      </ClickAwayListener>
+                    </Paper>
+                  </Grow>
+                )}
+              </Popper>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+        <SwitchLanguageButton code='pl' />
+        <SwitchLanguageButton code='en' />
+      </div>
     </nav>
   );
 };

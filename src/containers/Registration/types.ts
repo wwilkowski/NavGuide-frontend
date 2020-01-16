@@ -1,5 +1,11 @@
 // Store
-import { SIGN_UP_GOOGLE_SUCCESSED, CONFIRM_SIGN_UP_SUCCESSED, GET_INTERESTS_SUCCESSED, SEND_REGISTER_GUIDE_REQUEST } from './constants';
+import {
+  SIGN_UP_GOOGLE_SUCCESSED,
+  CONFIRM_SIGN_UP_SUCCESSED,
+  GET_INTERESTS_SUCCESSED,
+  SEND_REGISTER_GUIDE_REQUEST,
+  GET_GUIDE_INFO_SUCCESSED
+} from './constants';
 import { IUserData } from '../../shared/types';
 import { FormValues } from '../../components/GuideRegisterForm/types';
 
@@ -22,6 +28,7 @@ export interface IRegisterStore {
   registrationToken: string;
   interests: IInterest[];
   toBeGuide: boolean;
+  guideRequests: IGuideRequest[];
 }
 
 // Google
@@ -80,10 +87,23 @@ export interface IGetInterestsSuccessed {
 // register guide
 
 export interface ISendRegisterGuideRequest {
-  type: typeof SEND_REGISTER_GUIDE_REQUEST,
-  guideValues: FormValues
+  type: typeof SEND_REGISTER_GUIDE_REQUEST;
+  guideValues: FormValues;
+}
+
+export interface IGetGuideInfoSuccessed {
+  type: typeof GET_GUIDE_INFO_SUCCESSED;
+  requests: IGuideRequest[];
 }
 
 // action types
 
-export type ISignUpActionType = ISignUpGoogleSuccessedAction | IGetInterestsSuccessed;
+export type ISignUpActionType = ISignUpGoogleSuccessedAction | IGetInterestsSuccessed | IGetGuideInfoSuccessed;
+
+export interface IGuideRequest {
+  date: string;
+  description: string;
+  languages: string[];
+  message: string;
+  status: string;
+}
