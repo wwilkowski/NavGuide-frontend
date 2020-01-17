@@ -27,6 +27,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     popper: {
       zIndex: 2000
+    },
+    link: {
+      width: '100%',
+      height: '100%'
     }
   })
 );
@@ -109,17 +113,17 @@ const Header: React.FC = () => {
                       <ClickAwayListener onClickAway={handleClose}>
                         <MenuList autoFocusItem={open} id='menu-list-grow' onKeyDown={handleListKeyDown}>
                           <MenuItem onClick={handleClose}>
-                            <Link to='/profile' className='navbar-item'>
+                            <Link to='/profile' className={classes.link}>
                               {t('Profile')}
                             </Link>
                           </MenuItem>
                           <MenuItem onClick={handleClose}>
-                            <Link to='/profile/edit' className='navbar-item'>
+                            <Link to='/profile/edit' className={classes.link}>
                               {t('Edit profile')}
                             </Link>
                           </MenuItem>
                           <MenuItem onClick={handleClose}>
-                            <Link to='/register/guide' className='navbar-item'>
+                            <Link to='/register/guide' className={classes.link}>
                               {t('Become a guide')}
                             </Link>
                           </MenuItem>

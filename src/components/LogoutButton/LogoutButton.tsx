@@ -5,7 +5,7 @@ import { IProps } from './types';
 const LogoutButton = ({ onClick }: IProps) => {
   const { t } = useTranslation();
   return (
-    <button className='button is-danger' onClick={onClick}>
+    <button className='button' onClick={onClick}>
       {t('Logout')}
     </button>
   );

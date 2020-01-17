@@ -5,6 +5,7 @@ import { StoreType } from '../../../store';
 import UserDataForm from '../../../components/UserDataForm/UserDataForm';
 import { IUserFormValues } from '../../../shared/types';
 import * as actions from '../actions';
+import AvatarForm from '../../../components/AvatarForm/AvatarForm';
 
 const EditProfileForm = () => {
   const { t } = useTranslation();
@@ -19,6 +20,7 @@ const EditProfileForm = () => {
   return (
     <>
       <h1 className='title'>{t('Edit profile Form')}</h1>
+      <AvatarForm />
       <UserDataForm onSubmit={onEditProfileFormSubmit} templateUser={user} />
     </>
   );

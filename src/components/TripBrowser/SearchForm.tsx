@@ -142,7 +142,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                 ({ coords: { latitude, longitude } }: Position) => {
                   setFieldValue('lat', latitude);
                   setFieldValue('lon', longitude);
-                  showNotification('success', 'Geolocation changed', 'You changed coords based on your location');
+                  showNotification('success', t('Geolocation changed'), t('You changed coords based on your location'));
                   props.setPosition({
                     ...props.positionValue,
                     latitude,
