@@ -54,3 +54,16 @@ export const editProfileSuccessed = (user: IUserData) => ({
 export const editProfileFailed = () => ({
   type: constants.EDIT_PROFILE_FAILED
 });
+
+export const sendAvatarRequest = (file: File) => ({
+  type: constants.SEND_AVATAR_REQUESTED,
+  file
+});
+
+export const sendAvatarSuccessed = () => ({
+  type: constants.SEND_AVATAR_SUCCESSED
+});
+
+export const sendAvatarFailed = () => ({
+  type: constants.SEND_AVATAR_FAILED
+});

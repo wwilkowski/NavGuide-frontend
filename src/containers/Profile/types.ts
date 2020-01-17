@@ -15,6 +15,11 @@ export interface IProfileData {
   isLoggedIn: boolean;
 }
 
+export interface ISendAvatarAction {
+  type: string;
+  file: File;
+}
+
 export interface ILogInGoogleRequest {
   type: string;
   code: string;
