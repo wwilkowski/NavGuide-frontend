@@ -79,6 +79,18 @@
     "Profile was edit": "Profil został edytowany",
     "Place": "Miejsce",
     "Geolocation changed": "Lokalizacja zmieniona",
-    "You changed coords based on your location": "Ustawiono lokalizację na podstawie położenia użytkownika"
+    "You changed coords based on your location": "Ustawiono lokalizację na podstawie położenia użytkownika",
+    "City": "Miasto",
+    "Guide": "Przewodnik",
+    "Name": "Nazwa",
+    "Photos": "Zdjęcia",
+    "Price Type": "Typ płatności",
+    "Max People": "Ilość osób (max)",
+    "Tags": "Tagi",
+    "Coords": "Współrzędne",
+    "You denied access to your geolocation": "Odmówiłeś dostępu do lokalizacji",
+    "Allow access following instructions [instruction will be here]": "Umożliw dostęp poprzez []",
+    "Guide request sent!": "Zgłoszenie na przewodnika wysłane!",
+    "Failed to send request": "Wystąpił problem przy wysyłaniu zgłoszenia"
   }
 }

@@ -160,7 +160,7 @@ function* getGuideInfo() {
       yield put(actions.getGuideInfoSuccessed(json));
     } else {
       yield put(actions.getInterestsFailed());
-      throw new Error('Unexpected error while checking guide requests');
+      throw new Error(i18n.t('Unexpected error while checking guide requests'));
     }
   } catch (error) {
     showNotification('danger', i18n.t('Failed to get guide requests!'), i18n.t(error.message));

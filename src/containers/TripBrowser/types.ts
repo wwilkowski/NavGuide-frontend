@@ -31,13 +31,19 @@ export interface IPosition {
 export interface ISingleTripType {
   city: string;
   id: number;
-  inSearch: number;
   lat: number;
   lon: number;
-  radius: number;
+  maxPeople: number;
   name: string;
+  owner: {
+    firstName: string;
+    languages: string[];
+    lastName: string;
+  };
+  photos: string[];
   price: number;
   priceType: string;
+  radius: number;
   tags: ITag[];
 }
 
