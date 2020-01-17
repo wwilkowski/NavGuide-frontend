@@ -5,7 +5,6 @@ import Checkbox from '../../shared/Checkbox';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import i18n from '../../locales/i18n';
-import countryCodes from '../../helpers/countryCodes.json';
 
 const GuideFormSchema = Yup.object().shape({
   description: Yup.string()
@@ -27,7 +26,7 @@ const MyForm = (props: FormikProps<types.FormValues>) => {
       code: 'EN'
     }
   ];
-  const { touched, errors, isSubmitting } = props;
+  const { touched, errors } = props;
   return (
     <form onSubmit={handleSubmit}>
       <label className='label'>{t('Languages')}</label>
