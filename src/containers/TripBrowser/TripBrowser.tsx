@@ -45,7 +45,7 @@ const TripBrowser: React.FC = () => {
   }, [tripsData]);
 
   useEffect(() => {
-    if (activeTags.length) {
+    if (activeTags && activeTags.length) {
       const filterTripsDataWithTags: ISingleTripType[] = [];
       let iTag = 0;
       tripsData.forEach((trip: ISingleTripType) => {
@@ -58,7 +58,7 @@ const TripBrowser: React.FC = () => {
       });
 
       setSearchedTrips(filterTripsDataWithTags);
-    }
+    } else setSearchedTrips(tripsData);
   }, [activeTags, tripsData]);
 
   useEffect(() => {
@@ -67,10 +67,6 @@ const TripBrowser: React.FC = () => {
 
   const handleCityHover = (location: ISuggestedPlace) => {
     setFormValue(location.name);
-  };
-
-  const updateActiveTags = (tagNames: string[]) => {
-    setActiveTags(tagNames);
   };
 
   const onSearchFormChange = (location: string) => {
@@ -96,7 +92,7 @@ const TripBrowser: React.FC = () => {
         <SearchForm
           onChange={onSearchFormChange}
           onSubmit={onSearchFormSubmit}
-          updateActiveTags={updateActiveTags}
+          updateActiveTags={setActiveTags}
           formValue={formValue}
           positionValue={positionValue}
           trips={searchedTrips}

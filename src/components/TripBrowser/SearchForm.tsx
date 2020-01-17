@@ -9,9 +9,8 @@ import { ISearchFormValues, ISearchFormProps } from './types';
 import { showNotification } from '../../helpers/notification';
 import LeafletMap from '../../components/LeafletMap/LeafletMap';
 import i18n from '../../locales/i18n';
-import Checkbox from '@material-ui/core/Checkbox';
+import Checkbox from '../../shared/Checkbox';
 import styles from './SearchForm.module.scss';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import ListSuggestedTrips from './ListSuggestedTrips';
 import ListTrips from './ListTrips';
 
@@ -39,24 +38,9 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
   useEffect(() => {
     setLocation(props.formValue);
     values.location = props.formValue;
+    props.updateActiveTags(values.activeTags);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.formValue]);
-
-  const handleTagChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const tagNames = tags.map((tag: ITag) => tag.name);
-    const tmp = values.activeTags;
-    tagNames.forEach((tagName: string) => {
-      if (event.target.value === tagName) {
-        if (!values.activeTags.includes(tagName)) tmp.push(tagName);
-        else {
-          const index = values.activeTags.indexOf(tagName);
-          tmp.splice(index, 1);
-        }
-      }
-    });
-    props.updateActiveTags(tmp);
-    setFieldValue('activeTags', tmp);
-  };
+  }, [props.formValue, values.activeTags]);
 
   return (
     <div>
@@ -136,12 +120,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
         <ul className={styles.tagList}>
           {tags.map((tag: ITag) => (
             <li key={tag.id}>
-              <FormControlLabel
-                control={
-                  <Checkbox name='activeTags' value={tag.name} checked={values.activeTags.includes(tag.name)} onChange={handleTagChange} />
-                }
-                label={tag.name}
-              />
+              <Checkbox name='activeTags' value={tag.name} valueKey={tag.name} />
             </li>
           ))}
         </ul>
