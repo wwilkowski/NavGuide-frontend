@@ -1,7 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { showNotification } from '../../helpers/notification';
 import { initTokenCookie, setToken, getToken } from '../../helpers/tokenCookie';
-import { forwardTo } from '../../history';
+import { forwardTo, refresh } from '../../history';
 import i18n from '../../locales/i18n';
 import * as actions from './actions';
 import * as constants from './constants';
@@ -9,6 +9,7 @@ import * as types from './types';
 
 const logInGoogleEndpoint = 'https://235.ip-51-91-9.eu/auth/google/login';
 const profileEndpoint = 'https://235.ip-51-91-9.eu/profile';
+const avatarEndpoint = 'https://235.ip-51-91-9.eu/profile/avatar';
 
 function* logInGoogle(action: types.ILogInGoogleRequest) {
   try {
@@ -153,11 +154,40 @@ function* getProfile() {
   }
 }
 
+function* sendAvatar(action: types.ISendAvatarAction) {
+  const formData = new FormData();
+  formData.append('file', action.file);
+  try {
+    const response = yield call(fetch, avatarEndpoint, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${getToken()}`
+      },
+      body: formData
+    });
+    if (response.status >= 200 && response.status <= 300) {
+      yield put(actions.sendAvatarSuccessed());
+      yield put(actions.getProfileRequest());
+      // yield call(refresh, '/profile/edit');
+    } else {
+      if (response.status === 401) {
+        throw new Error('You are not logged in');
+      } else {
+        throw new Error('Something goes wrong');
+      }
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(actions.sendAvatarFailed());
+  }
+}
+
 function* mainSaga() {
   yield takeLatest(constants.LOG_IN_GOOGLE_REQUESTED, logInGoogle);
   yield takeLatest(constants.LOG_OUT_GOOGLE_REQUESTED, logOutGoogle);
   yield takeLatest(constants.EDIT_PROFILE_REQUESTED, editProfile);
   yield takeLatest(constants.GET_PROFILE_REQUESTED, getProfile);
+  yield takeLatest(constants.SEND_AVATAR_REQUESTED, sendAvatar);
 }
 
 export default mainSaga;
