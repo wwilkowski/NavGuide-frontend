@@ -17,7 +17,8 @@ const initialState: types.IRegisterStore = {
   registrationInProgress: false,
   registrationToken: '',
   toBeGuide: false,
-  interests: []
+  interests: [],
+  guideRequests: []
 };
 
 const RegistrationReducer = (state = initialState, action: types.ISignUpActionType) => {
@@ -33,6 +34,11 @@ const RegistrationReducer = (state = initialState, action: types.ISignUpActionTy
       return {
         ...state,
         interests: action.interests
+      };
+    case constants.GET_GUIDE_INFO_SUCCESSED:
+      return {
+        ...state,
+        guideRequests: action.requests
       };
     default:
       return state;
