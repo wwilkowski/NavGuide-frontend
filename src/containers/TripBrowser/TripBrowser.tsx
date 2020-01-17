@@ -3,7 +3,6 @@ import { ISingleTripType, ITag, IPosition, ISuggestedPlace } from './types';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from './actions';
 import { StoreType } from '../../store';
-import ListTrips from '../../components/TripBrowser/ListTrips';
 import SearchForm from '../../components/TripBrowser/SearchForm';
 
 const TripBrowser: React.FC = () => {
@@ -12,8 +11,6 @@ const TripBrowser: React.FC = () => {
 
   const dispatcher = useDispatch();
 
-  const [mode, setMode] = useState<string>('normal');
-  const [suggestedTrips, setSuggestedTrips] = useState<ISuggestedPlace[]>([]);
   const [searchedTrips, setSearchedTrips] = useState<ISingleTripType[]>([]);
   const [activeTags, setActiveTags] = useState<string[]>([]);
   const [formValue, setFormValue] = useState<string>('UMK Wydział Matematyki i Informatyki');
@@ -41,9 +38,7 @@ const TripBrowser: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [positionValue.radius]);
 
-  useEffect(() => {
-    setSuggestedTrips(suggestedCities);
-  }, [suggestedCities]);
+  useEffect(() => {}, [suggestedCities]);
 
   useEffect(() => {
     setSearchedTrips(tripsData);
@@ -64,7 +59,6 @@ const TripBrowser: React.FC = () => {
 
       setSearchedTrips(filterTripsDataWithTags);
     }
-    setSuggestedTrips([]);
   }, [activeTags, tripsData]);
 
   useEffect(() => {
