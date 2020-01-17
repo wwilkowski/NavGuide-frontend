@@ -12,6 +12,7 @@ const signUpGoogleEndpoint = `https://235.ip-51-91-9.eu/auth/google/register`;
 const confirmGoogleEndpoint = `https://235.ip-51-91-9.eu/auth/google/register/confirm`;
 const interestsEndpoint = `https://235.ip-51-91-9.eu/interests`;
 const registerGuideEndpoint = 'https://235.ip-51-91-9.eu/guiderequests';
+const guideInfoEndpoint = 'https://235.ip-51-91-9.eu/profile/guiderequests';
 
 function* signUpGoogleUser(action: types.ISignUpGoogleRequest) {
   try {
@@ -144,11 +145,34 @@ function* registerGuide(action: types.ISendRegisterGuideRequest) {
   }
 }
 
+function* getGuideInfo() {
+  try {
+    const response = yield call(fetch, guideInfoEndpoint, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getToken()}`
+      }
+    });
+
+    if (response.status >= 200 && response.status <= 300) {
+      const json = yield response.json();
+      yield put(actions.getGuideInfoSuccessed(json));
+    } else {
+      yield put(actions.getInterestsFailed());
+      throw new Error('Unexpected error while checking guide requests');
+    }
+  } catch (error) {
+    showNotification('danger', i18n.t('Failed to get guide requests!'), i18n.t(error.message));
+  }
+}
+
 function* mainSaga() {
   yield takeLatest(constants.SIGN_UP_GOOGLE_REQUESTED, signUpGoogleUser);
   yield takeLatest(constants.CONFIRM_SIGN_UP_REQUESTED, confirmGoogleUser);
   yield takeLatest(constants.GET_INTERESTS_REQUESTED, getInterests);
   yield takeLatest(constants.SEND_REGISTER_GUIDE_REQUEST, registerGuide);
+  yield takeLatest(constants.GET_GUIDE_INFO_REQUEST, getGuideInfo);
 }
 
 export default mainSaga;
