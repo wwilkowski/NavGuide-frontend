@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, Ref } from 'react';
+import React from 'react';
 import { IListSuggestedTripsProps } from './types';
 import { ISuggestedPlace } from '../../containers/TripBrowser/types';
 import { makeStyles } from '@material-ui/core/styles';

@@ -1,7 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { showNotification } from '../../helpers/notification';
 import { initTokenCookie, setToken, getToken } from '../../helpers/tokenCookie';
-import { forwardTo, refresh } from '../../history';
+import { forwardTo } from '../../history';
 import i18n from '../../locales/i18n';
 import * as actions from './actions';
 import * as constants from './constants';
