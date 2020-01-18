@@ -26,12 +26,20 @@
 }
 
 .mapContainer {
-  position: relative;
   margin-top: 1rem;
+  display: flex;
+}
+
+.map {
+  width: 40%;
 }
 
 .locationInput {
   position: relative;
+}
+
+.offersListContainer {
+  width: 60%;
 }
 
 .suggestedCitiesList {

@@ -93,6 +93,8 @@
     "Guide request sent!": "Zgłoszenie na przewodnika wysłane!",
     "Failed to send request": "Wystąpił problem przy wysyłaniu zgłoszenia",
     "Coords not loaded yet!": "Współrzędne jeszcze nie pobrane z API!",
-    "Coords warning": "Ostrzeżenie o współrzędnych"
+    "Coords warning": "Ostrzeżenie o współrzędnych",
+    "per person": "za osobę",
+    "per group": "za grupę"
   }
 }

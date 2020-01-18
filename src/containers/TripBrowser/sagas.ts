@@ -8,8 +8,6 @@ import {
 import { call, put, takeLatest } from 'redux-saga/effects';
 import * as actions from './actions';
 import * as types from './types';
-import { useSelector } from 'react-redux';
-import { StoreType } from '../../store';
 
 const randomTripsEndpoint = 'https://235.ip-51-91-9.eu/guests/offers';
 const cityTripsEdnpoint = 'https://235.ip-51-91-9.eu/guests/offers/city?name=';

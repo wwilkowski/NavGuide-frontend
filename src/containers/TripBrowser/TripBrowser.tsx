@@ -4,11 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as actions from './actions';
 import { StoreType } from '../../store';
 import SearchForm from '../../components/TripBrowser/SearchForm';
-import { useTranslation } from 'react-i18next';
 
 const TripBrowser: React.FC = () => {
-  const { t } = useTranslation();
-
   const isLogged = useSelector((state: StoreType) => state.profile.isLoggedIn);
   const tripsData = useSelector((state: StoreType) => state.tripBrowser.trips);
   const suggestedCities = useSelector((state: StoreType) => state.tripBrowser.places);
@@ -104,18 +101,16 @@ const TripBrowser: React.FC = () => {
 
   return (
     <div>
-      <div className='columns'>
-        <SearchForm
-          onChange={onSearchFormChange}
-          onSubmit={onSearchFormSubmit}
-          updateActiveTags={setActiveTags}
-          formValue={formValue}
-          positionValue={positionValue}
-          trips={searchedTrips}
-          setPosition={setPositionValue}
-          onCityHover={handleCityHover}
-        />
-      </div>
+      <SearchForm
+        onChange={onSearchFormChange}
+        onSubmit={onSearchFormSubmit}
+        updateActiveTags={setActiveTags}
+        formValue={formValue}
+        positionValue={positionValue}
+        trips={searchedTrips}
+        setPosition={setPositionValue}
+        onCityHover={handleCityHover}
+      />
     </div>
   );
 };
