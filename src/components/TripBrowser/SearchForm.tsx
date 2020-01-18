@@ -199,7 +199,7 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
 })(InnerForm);
 
 const SearchForm = (props: ISearchFormProps) => (
-  <div className='column'>
+  <div>
     <ControlledSearchForm
       onChange={props.onChange}
       onSubmit={props.onSubmit}
@@ -211,8 +211,10 @@ const SearchForm = (props: ISearchFormProps) => (
       onCityHover={props.onCityHover}
     />
     <div className={styles.mapContainer}>
-      <LeafletMap position={props.positionValue} trips={props.trips} />
-      <div className={styles.tripList}>
+      <div className={styles.map}>
+        <LeafletMap position={props.positionValue} trips={props.trips} />
+      </div>
+      <div className={styles.offersListContainer}>
         <ListTrips trips={props.trips} mode={'normal'} />
       </div>
     </div>
