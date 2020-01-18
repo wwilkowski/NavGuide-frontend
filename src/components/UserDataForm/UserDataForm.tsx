@@ -103,12 +103,11 @@ const InnerForm = (props: FormikProps<FullFormValues>) => {
           </label>
           <div className='select'>
             <Field as='select' id='experience' name='experience'>
-              <option value='AMBASSADOR'>{t('ambassador')}</option>
-              <option value='EXPERT'>{t('expert')}</option>
-              <option value='ADEPT'>{t('adept')}</option>
-              <option value='COMPETENT'>{t('competent')}</option>
-              <option value='EXPERIENCED'>{t('experienced')}</option>
-              <option value='NOVICE'>{t('novice')}</option>
+              <option value='1'>1</option>
+              <option value='2'>2</option>
+              <option value='3'>3</option>
+              <option value='4'>4</option>
+              <option value='5'>5</option>
             </Field>
           </div>
         </div>
@@ -139,7 +138,7 @@ const MyForm = withFormik<MyFormProps, FullFormValues>({
       email: email || '',
       telephone: telephone || '',
       gender: gender || 'FEMALE',
-      experience: experience || 'NOVICE',
+      experience: experience || '1',
       interests: interests.length ? interests.map(i => i.id) : [],
       avatar: '',
       role: ''
