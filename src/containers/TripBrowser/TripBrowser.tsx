@@ -4,8 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as actions from './actions';
 import { StoreType } from '../../store';
 import SearchForm from '../../components/TripBrowser/SearchForm';
+import { useTranslation } from 'react-i18next';
 
 const TripBrowser: React.FC = () => {
+  const { t } = useTranslation();
+
+  const isLogged = useSelector((state: StoreType) => state.profile.isLoggedIn);
   const tripsData = useSelector((state: StoreType) => state.tripBrowser.trips);
   const suggestedCities = useSelector((state: StoreType) => state.tripBrowser.places);
 
@@ -25,7 +29,7 @@ const TripBrowser: React.FC = () => {
       name: formValue,
       coords: [positionValue.longitude, positionValue.latitude]
     };
-    onSearchFormSubmit(location, positionValue.radius);
+    onSearchFormSubmit(location, positionValue.radius, 'normal');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -34,7 +38,7 @@ const TripBrowser: React.FC = () => {
       name: formValue,
       coords: [positionValue.longitude, positionValue.latitude]
     };
-    onSearchFormSubmit(location, positionValue.radius);
+    onSearchFormSubmit(location, positionValue.radius, 'normal');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [positionValue.radius]);
 
@@ -70,19 +74,31 @@ const TripBrowser: React.FC = () => {
   };
 
   const onSearchFormChange = (location: string) => {
-    dispatcher(actions.fetchSuggestedCitiesRequested(location));
+    if (location.length === 0) {
+      dispatcher(actions.fetchSuggestedCitiesRequested(location, 0));
+    } else {
+      dispatcher(actions.fetchSuggestedCitiesRequested(location, 10));
+    }
   };
 
-  const onSearchFormSubmit = (location: ISuggestedPlace, radius: number) => {
+  const onSearchFormSubmit = (location: ISuggestedPlace, radius: number, mode: string) => {
+    if (mode === 'normal' && suggestedCities.length > 0 && location.name !== 'UMK Wydział Matematyki i Informatyki') {
+      //ABY ZADZIAŁAŁO TRZEBA POCZEKAĆ AŻ Z API SIE POBIORA WARTOŚCI
+      location.coords[0] = suggestedCities[0].coords[0];
+      location.coords[1] = suggestedCities[0].coords[1];
+      setFormValue(suggestedCities[0].name);
+      dispatcher(actions.fetchSuggestedCitiesRequested('', 0));
+    }
+
     if (location.name.length) {
       setPositionValue({
         latitude: location.coords[1],
         longitude: location.coords[0],
         radius
       });
-      dispatcher(actions.fetchGeoTripsRequested(location.coords[1], location.coords[0], radius * 1000));
+      dispatcher(actions.fetchGeoTripsRequested(location.coords[1], location.coords[0], radius * 1000, isLogged));
     } else {
-      dispatcher(actions.fetchRandomTripsRequested());
+      dispatcher(actions.fetchRandomTripsRequested(isLogged));
     }
   };
 

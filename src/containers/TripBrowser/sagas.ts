@@ -8,6 +8,8 @@ import {
 import { call, put, takeLatest } from 'redux-saga/effects';
 import * as actions from './actions';
 import * as types from './types';
+import { useSelector } from 'react-redux';
+import { StoreType } from '../../store';
 
 const randomTripsEndpoint = 'https://235.ip-51-91-9.eu/guests/offers';
 const cityTripsEdnpoint = 'https://235.ip-51-91-9.eu/guests/offers/city?name=';
@@ -23,19 +25,7 @@ function* fetchRandomTripsFromAPI() {
 
     if (status >= 200 && status <= 300) {
       json.forEach((trip: types.ISingleTripType) => {
-        const templateTrip = {
-          city: trip.city,
-          id: trip.id,
-          inSearch: 1,
-          lat: trip.lat,
-          lon: trip.lon,
-          radius: trip.radius,
-          name: trip.name,
-          price: trip.price,
-          priceType: trip.priceType,
-          tags: trip.tags
-        };
-        templateTrips.trips.push(templateTrip);
+        templateTrips.trips.push(trip);
       });
 
       yield put(actions.fetchRandomTripsSuccesed(templateTrips));
@@ -59,19 +49,7 @@ function* fetchCityTripsFromAPI(action: types.IFetchCityTripsRequest) {
 
     if (status >= 200 && status <= 300) {
       json.forEach((trip: types.ISingleTripType) => {
-        const templateTrip = {
-          city: trip.city,
-          id: trip.id,
-          inSearch: 1,
-          lat: trip.lat,
-          lon: trip.lon,
-          radius: trip.radius,
-          name: trip.name,
-          price: trip.price,
-          priceType: trip.priceType,
-          tags: trip.tags
-        };
-        templateTrips.trips.push(templateTrip);
+        templateTrips.trips.push(trip);
       });
       yield put(actions.fetchCityTripsSuccesed(templateTrips));
     } else {
@@ -91,28 +69,17 @@ function* fetchGeoTripsFromAPI(action: types.IFetchGeoTripsRequest) {
     const lon = action.lon;
     const radius = action.radius;
 
-    const endpoint = `https://235.ip-51-91-9.eu/guests/offers/geo?lat=${lat}&lon=${lon}&radius=${radius}`;
+    const endpointGuest = `https://235.ip-51-91-9.eu/guests/offers/geo?lat=${lat}&lon=${lon}&radius=${radius}`;
+    const endpoint = `https://235.ip-51-91-9.eu/offers/geo?lat=${lat}&lon=${lon}&radius=${radius}`;
 
-    const response = yield call(fetch, endpoint);
+    const response = action.isLogged ? yield call(fetch, endpoint) : yield call(fetch, endpointGuest);
     const status = response.status;
     const json = yield response.json();
     const templateTrips: types.IMultiTripsType = { trips: [] };
 
     if (status >= 200 && status <= 300) {
       json.forEach((trip: types.ISingleTripType) => {
-        const templateTrip = {
-          city: trip.city,
-          id: trip.id,
-          inSearch: 1,
-          lat: trip.lat,
-          lon: trip.lon,
-          radius: trip.radius,
-          name: trip.name,
-          price: trip.price,
-          priceType: trip.priceType,
-          tags: trip.tags
-        };
-        templateTrips.trips.push(templateTrip);
+        templateTrips.trips.push(trip);
       });
       yield put(actions.fetchGeoTripsSuccesed(templateTrips));
     } else {
@@ -140,7 +107,7 @@ function* fetchTagsFromAPI() {
 
 function* fetchSuggestedCitiesFromPhotonAPI(action: types.IFetchSuggestedCitiesRequest) {
   try {
-    const response = yield call(fetch, `https://photon.komoot.de/api/?q=${action.location}&limit=10`);
+    const response = yield call(fetch, `https://photon.komoot.de/api/?q=${action.location}&limit=${action.number}`);
     const suggestedCities = yield response.json();
     const places = suggestedCities.features.map((el: any) => {
       return {

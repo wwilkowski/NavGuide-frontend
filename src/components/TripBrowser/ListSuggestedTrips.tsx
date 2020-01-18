@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect, Ref } from 'react';
 import { IListSuggestedTripsProps } from './types';
 import { ISuggestedPlace } from '../../containers/TripBrowser/types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -18,6 +18,7 @@ const useStyles = makeStyles(theme => ({
 
 const ListSuggestedTrips = ({ onCityClick, onCityHover, suggestedTrips }: IListSuggestedTripsProps) => {
   const classes = useStyles();
+
   return (
     <div className={styles.suggestedCitiesList}>
       <List className={classes.root}>

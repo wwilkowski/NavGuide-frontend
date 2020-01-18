@@ -18,8 +18,9 @@ import {
 import { IMultiTripsType, ITag, ISuggestedPlace } from './types';
 
 //RANDOM TRIPS
-export const fetchRandomTripsRequested = () => ({
-  type: FETCH_RANDOM_TRIPS_REQUESTED
+export const fetchRandomTripsRequested = (isLogged: boolean) => ({
+  type: FETCH_RANDOM_TRIPS_REQUESTED,
+  isLogged
 });
 
 export const fetchRandomTripsSuccesed = (trips: IMultiTripsType) => ({
@@ -49,11 +50,12 @@ export const fetchCityTripsFailed = (message: string) => ({
 });
 
 //GEO TRIPS
-export const fetchGeoTripsRequested = (lat: number, lon: number, radius: number) => ({
+export const fetchGeoTripsRequested = (lat: number, lon: number, radius: number, isLogged: boolean) => ({
   type: FETCH_GEO_TRIPS_REQUESTED,
-  lat: lat,
-  lon: lon,
-  radius: radius
+  lat,
+  lon,
+  radius,
+  isLogged
 });
 
 export const fetchGeoTripsSuccesed = (trips: IMultiTripsType) => ({
@@ -82,9 +84,10 @@ export const fetchTagsFailed = (message: string) => ({
 });
 
 //SUGGESTED CITIES
-export const fetchSuggestedCitiesRequested = (location: string) => ({
+export const fetchSuggestedCitiesRequested = (location: string, number: number) => ({
   type: FETCH_SUGGESTED_CITIES_REQUESTED,
-  location
+  location,
+  number
 });
 
 export const fetchSuggestedCitiesSuccesed = (places: ISuggestedPlace) => ({
