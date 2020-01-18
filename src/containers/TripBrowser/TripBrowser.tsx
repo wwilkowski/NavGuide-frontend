@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as actions from './actions';
 import { StoreType } from '../../store';
 import SearchForm from '../../components/TripBrowser/SearchForm';
-import { showNotification } from '../../helpers/notification';
 import { useTranslation } from 'react-i18next';
 
 const TripBrowser: React.FC = () => {
@@ -75,7 +74,7 @@ const TripBrowser: React.FC = () => {
   };
 
   const onSearchFormChange = (location: string) => {
-    if (location.length == 0) {
+    if (location.length === 0) {
       dispatcher(actions.fetchSuggestedCitiesRequested(location, 0));
     } else {
       dispatcher(actions.fetchSuggestedCitiesRequested(location, 10));
@@ -83,7 +82,7 @@ const TripBrowser: React.FC = () => {
   };
 
   const onSearchFormSubmit = (location: ISuggestedPlace, radius: number, mode: string) => {
-    if (mode == 'normal' && suggestedCities.length > 0 && location.name != 'UMK Wydział Matematyki i Informatyki') {
+    if (mode === 'normal' && suggestedCities.length > 0 && location.name !== 'UMK Wydział Matematyki i Informatyki') {
       //ABY ZADZIAŁAŁO TRZEBA POCZEKAĆ AŻ Z API SIE POBIORA WARTOŚCI
       location.coords[0] = suggestedCities[0].coords[0];
       location.coords[1] = suggestedCities[0].coords[1];
