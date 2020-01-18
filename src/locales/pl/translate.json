@@ -91,6 +91,8 @@
     "You denied access to your geolocation": "Odmówiłeś dostępu do lokalizacji",
     "Allow access following instructions [instruction will be here]": "Umożliw dostęp poprzez []",
     "Guide request sent!": "Zgłoszenie na przewodnika wysłane!",
-    "Failed to send request": "Wystąpił problem przy wysyłaniu zgłoszenia"
+    "Failed to send request": "Wystąpił problem przy wysyłaniu zgłoszenia",
+    "Coords not loaded yet!": "Współrzędne jeszcze nie pobrane z API!",
+    "Coords warning": "Ostrzeżenie o współrzędnych"
   }
 }

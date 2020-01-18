@@ -74,7 +74,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                   longitude: location.coords[0],
                   radius: props.positionValue.radius
                 });
-                props.onSubmit(location, props.positionValue.radius);
+                props.onSubmit(location, props.positionValue.radius, 'suggested');
               }}
               onCityHover={props.onCityHover}
               suggestedTrips={suggestedCities}
@@ -193,7 +193,7 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
     } else if (values.location === '' && values.searchMode === 'location') {
       showNotification('warning', i18n.t('Warning'), i18n.t('Please enter city first'));
     } else {
-      props.onSubmit({ name: values.location, coords: [values.lon, values.lat] }, values.radius);
+      props.onSubmit({ name: values.location, coords: [values.lon, values.lat] }, values.radius, 'normal');
     }
   }
 })(InnerForm);

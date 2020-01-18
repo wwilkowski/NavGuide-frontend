@@ -74,7 +74,7 @@ const ListTrips = ({ trips, mode }: types.IListTripsProps) => {
               {t('Coords')}: {trip.lat} {trip.lon}
             </p>
             <p>
-              {t('Radius')}: {trip.radius}m
+              {t('Radius')}: {trip.radius}
             </p>
           </Card>
         ))}

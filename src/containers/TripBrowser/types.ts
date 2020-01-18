@@ -122,6 +122,7 @@ export type TripBrowserAction =
 
 export interface IFetchRandomTripsRequest {
   type: typeof FETCH_RANDOM_TRIPS_REQUESTED;
+  isLogged: boolean;
 }
 
 export interface IFetchCityTripsRequest {
@@ -134,6 +135,7 @@ export interface IFetchGeoTripsRequest {
   lat: number;
   lon: number;
   radius: number;
+  isLogged: boolean;
 }
 
 export interface IFetchTagsRequest {
@@ -143,6 +145,7 @@ export interface IFetchTagsRequest {
 export interface IFetchSuggestedCitiesRequest {
   type: typeof FETCH_SUGGESTED_CITIES_REQUESTED;
   location: string;
+  number: number;
 }
 
 export interface ISuggestedPlace {

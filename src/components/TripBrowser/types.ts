@@ -11,7 +11,7 @@ export interface ISearchFormValues {
 
 export interface ISearchFormProps {
   onChange: (location: string) => void;
-  onSubmit: (location: ISuggestedPlace, radius: number) => void;
+  onSubmit: (location: ISuggestedPlace, radius: number, mode: string) => void;
   updateActiveTags: (tagNames: string[]) => void;
   setPosition: (position: IPosition) => void;
   formValue: string;

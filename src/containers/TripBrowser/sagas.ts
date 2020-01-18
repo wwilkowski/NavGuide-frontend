@@ -69,14 +69,13 @@ function* fetchGeoTripsFromAPI(action: types.IFetchGeoTripsRequest) {
     const lon = action.lon;
     const radius = action.radius;
 
+    const endpointGuest = `https://235.ip-51-91-9.eu/guests/offers/geo?lat=${lat}&lon=${lon}&radius=${radius}`;
     const endpoint = `https://235.ip-51-91-9.eu/offers/geo?lat=${lat}&lon=${lon}&radius=${radius}`;
 
-    const response = yield call(fetch, endpoint);
+    const response = action.isLogged ? yield call(fetch, endpoint) : yield call(fetch, endpointGuest);
     const status = response.status;
     const json = yield response.json();
     const templateTrips: types.IMultiTripsType = { trips: [] };
-
-    console.log(json);
 
     if (status >= 200 && status <= 300) {
       json.forEach((trip: types.ISingleTripType) => {
@@ -108,7 +107,7 @@ function* fetchTagsFromAPI() {
 
 function* fetchSuggestedCitiesFromPhotonAPI(action: types.IFetchSuggestedCitiesRequest) {
   try {
-    const response = yield call(fetch, `https://photon.komoot.de/api/?q=${action.location}&limit=10`);
+    const response = yield call(fetch, `https://photon.komoot.de/api/?q=${action.location}&limit=${action.number}`);
     const suggestedCities = yield response.json();
     const places = suggestedCities.features.map((el: any) => {
       return {
