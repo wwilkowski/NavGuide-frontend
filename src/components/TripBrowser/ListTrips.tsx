@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { StoreType } from '../../store';
 import styles from './ListTrips.module.scss';
 
-const ListTrips = ({ trips, mode }: types.IListTripsProps) => {
+const ListTrips = ({ trips, mode, chosenOfferId, setChosenOfferId }: types.IListTripsProps) => {
   const isLogged: boolean = useSelector((state: StoreType) => state.profile.isLoggedIn);
   const { t } = useTranslation();
   const priceTypes = {
@@ -23,8 +23,14 @@ const ListTrips = ({ trips, mode }: types.IListTripsProps) => {
       {trips.length === 0 && mode === 'geo' ? <p>{t('No matching trips')}.</p> : null}
       <ul className={styles.tripsList}>
         {trips.map((trip: ISingleTripType) => (
-          <li className={styles.listItem} key={trip.id}>
-            <img className={styles.img} src='http://www.turystyka.torun.pl/upload/image/odkamela200113.png' alt='zdjęcie oferty' />
+          <li
+            className={styles.listItem}
+            key={trip.id}
+            onMouseOver={() => {
+              setChosenOfferId(trip.id);
+            }}
+          >
+            <img className={styles.img} src={trip.photos[0]} alt='zdjęcie oferty' />
             <div className={styles.description}>
               <h2 className={styles.title}>
                 {trip.name} <span className={styles.itemId}> (ID: {trip.id})</span>
