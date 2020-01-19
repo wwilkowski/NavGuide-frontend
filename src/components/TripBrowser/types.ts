@@ -22,6 +22,8 @@ export interface ISearchFormProps {
 export interface IListTripsProps {
   trips: ISingleTripType[];
   mode: string;
+  chosenOfferId: number | null;
+  setChosenOfferId: (offerId: number) => void;
 }
 
 export interface IListSuggestedTripsProps {
