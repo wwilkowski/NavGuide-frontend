@@ -30,7 +30,11 @@ const ListTrips = ({ trips, mode, chosenOfferId, setChosenOfferId }: types.IList
               setChosenOfferId(trip.id);
             }}
           >
-            <img className={styles.img} src={trip.photos[0]} alt='zdjęcie oferty' />
+            <img
+              className={styles.img}
+              src={trip.photos ? trip.photos[0] : 'https://pwik.krzanowice.pl/uploads/default-image.png'}
+              alt='zdjęcie oferty'
+            />
             <div className={styles.description}>
               <h2 className={styles.title}>
                 {trip.name} <span className={styles.itemId}> (ID: {trip.id})</span>
