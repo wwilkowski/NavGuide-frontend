@@ -37,7 +37,7 @@ const TripBrowser: React.FC = () => {
     };
     onSearchFormSubmit(location, positionValue.radius, 'normal');
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [positionValue.radius]);
+  }, [positionValue.radius, isLogged]);
 
   useEffect(() => {}, [suggestedCities]);
 

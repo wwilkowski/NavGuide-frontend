@@ -36,7 +36,7 @@ const ListTrips = ({ trips, mode }: types.IListTripsProps) => {
                 <p>
                   {t('Price')}: {trip.price} <span>({t(priceTypes['PER_PERSON'])})</span>
                 </p>
-                {isLogged && (
+                {isLogged && trip.owner && (
                   <div>
                     <p>
                       {t('Guide')}: {trip.owner.firstName} {trip.owner.lastName}
