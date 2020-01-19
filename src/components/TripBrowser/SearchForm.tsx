@@ -198,27 +198,40 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
   }
 })(InnerForm);
 
-const SearchForm = (props: ISearchFormProps) => (
-  <div>
-    <ControlledSearchForm
-      onChange={props.onChange}
-      onSubmit={props.onSubmit}
-      updateActiveTags={props.updateActiveTags}
-      formValue={props.formValue}
-      positionValue={props.positionValue}
-      setPosition={props.setPosition}
-      trips={props.trips}
-      onCityHover={props.onCityHover}
-    />
-    <div className={styles.mapContainer}>
-      <div className={styles.map}>
-        <LeafletMap position={props.positionValue} trips={props.trips} />
-      </div>
-      <div className={styles.offersListContainer}>
-        <ListTrips trips={props.trips} mode={'normal'} />
+const SearchForm = (props: ISearchFormProps) => {
+  const [chosenOfferId, setChosenOfferId] = useState<number | null>(null);
+
+  useEffect(() => {
+    console.log('Aktualna oferta: ', chosenOfferId);
+  }, [chosenOfferId]);
+
+  return (
+    <div>
+      <ControlledSearchForm
+        onChange={props.onChange}
+        onSubmit={props.onSubmit}
+        updateActiveTags={props.updateActiveTags}
+        formValue={props.formValue}
+        positionValue={props.positionValue}
+        setPosition={props.setPosition}
+        trips={props.trips}
+        onCityHover={props.onCityHover}
+      />
+      <div className={styles.mapContainer}>
+        <div className={styles.map}>
+          <LeafletMap
+            position={props.positionValue}
+            trips={props.trips}
+            chosenOfferId={chosenOfferId}
+            setChosenOfferId={setChosenOfferId}
+          />
+        </div>
+        <div className={styles.offersListContainer}>
+          <ListTrips trips={props.trips} mode={'normal'} chosenOfferId={chosenOfferId} setChosenOfferId={setChosenOfferId} />
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default SearchForm;
