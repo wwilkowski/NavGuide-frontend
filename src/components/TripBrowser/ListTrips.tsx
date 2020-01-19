@@ -37,23 +37,26 @@ const ListTrips = ({ trips, mode }: types.IListTripsProps) => {
                   {t('Price')}: {trip.price} <span>({t(priceTypes['PER_PERSON'])})</span>
                 </p>
                 {isLogged && (
-                  <p>
-                    {t('Guide')}: {trip.owner.firstName} {trip.owner.lastName}
-                  </p>
+                  <div>
+                    <p>
+                      {t('Guide')}: {trip.owner.firstName} {trip.owner.lastName}
+                    </p>
+
+                    <p>{t('Languages')}: </p>
+                    <ul>
+                      {trip.owner.languages.map((lang: string) => (
+                        <li>
+                          <span>{lang}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 )}
-                <p>{t('Languages')}: </p>
-                <ul>
-                  {trip.owner.languages.map((lang: string) => (
-                    <li>
-                      <span>{lang}</span>
-                    </li>
-                  ))}
-                </ul>
               </div>
               {trip.tags.length > 0 && (
                 <ul className={styles.tagList}>
                   {trip.tags.map((tag: ITag) => (
-                    <li className={styles.tag}>
+                    <li key={tag.name} className={styles.tag}>
                       <span>{tag.name}</span>
                     </li>
                   ))}
