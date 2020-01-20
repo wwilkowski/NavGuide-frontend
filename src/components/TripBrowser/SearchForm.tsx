@@ -201,10 +201,6 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
 const SearchForm = (props: ISearchFormProps) => {
   const [chosenOfferId, setChosenOfferId] = useState<number | null>(null);
 
-  useEffect(() => {
-    console.log('Aktualna oferta: ', chosenOfferId);
-  }, [chosenOfferId]);
-
   return (
     <div>
       <ControlledSearchForm

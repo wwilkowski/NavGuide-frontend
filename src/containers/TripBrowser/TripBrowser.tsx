@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ISingleTripType, ITag, IPosition, ISuggestedPlace } from './types';
+import { ISingleTripType, IPosition, ISuggestedPlace } from './types';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from './actions';
 import { StoreType } from '../../store';
@@ -47,18 +47,12 @@ const TripBrowser: React.FC = () => {
 
   useEffect(() => {
     if (activeTags && activeTags.length) {
-      const filterTripsDataWithTags: ISingleTripType[] = [];
-      let iTag = 0;
-      tripsData.forEach((trip: ISingleTripType) => {
-        trip.tags.forEach((tag: ITag) => {
-          if (activeTags.includes(tag.name)) {
-            iTag++;
-          }
-        });
-        if (iTag > 0) filterTripsDataWithTags.push(trip);
+      const filteredTrips = tripsData.filter(trip => {
+        const equalTags = trip.tags.filter(tag => activeTags.includes(tag.name));
+        if (equalTags.length > 0) return true;
+        return false;
       });
-
-      setSearchedTrips(filterTripsDataWithTags);
+      setSearchedTrips(filteredTrips);
     } else setSearchedTrips(tripsData);
   }, [activeTags, tripsData]);
 

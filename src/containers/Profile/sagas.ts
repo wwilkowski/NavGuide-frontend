@@ -177,7 +177,6 @@ function* sendAvatar(action: types.ISendAvatarAction) {
       }
     }
   } catch (error) {
-    console.log(error);
     yield put(actions.sendAvatarFailed());
   }
 }
