@@ -44,12 +44,6 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.formValue, values.activeTags]);
 
-  /*const el: any = document.querySelector('.listSuggestedTrips');
-  console.log(el);
-  if (el) {
-    if (suggestedListVisible) hideOnClickOutside(el);
-  }*/
-
   return (
     <div>
       <Form className={styles.searchForm} autoComplete='off'>
@@ -69,6 +63,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
               onClick={() => {
                 if (location != 'UMK Wydział Matematyki i Informatyki') setSuggestedListVisible(!suggestedListVisible);
               }}
+              onBlur={() => setSuggestedListVisible(false)}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 props.handleChange(event);
                 setLocation(event.target.value);
