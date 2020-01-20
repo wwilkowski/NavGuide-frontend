@@ -29,6 +29,9 @@ const ListTrips = ({ trips, mode, chosenOfferId, setChosenOfferId }: types.IList
             onMouseOver={() => {
               setChosenOfferId(trip.id);
             }}
+            onMouseOut={() => {
+              setChosenOfferId(null);
+            }}
           >
             <img
               className={styles.img}

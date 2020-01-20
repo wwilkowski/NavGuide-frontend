@@ -23,7 +23,7 @@ export interface IListTripsProps {
   trips: ISingleTripType[];
   mode: string;
   chosenOfferId: number | null;
-  setChosenOfferId: (offerId: number) => void;
+  setChosenOfferId: (offerId: number | null) => void;
 }
 
 export interface IListSuggestedTripsProps {
