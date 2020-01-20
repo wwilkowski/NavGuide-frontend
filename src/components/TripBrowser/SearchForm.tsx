@@ -56,7 +56,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
               type='text'
               name='location'
               value={location}
-              className={'input'}
+              className={`input`}
               style={{ width: '300px' }}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 props.handleChange(event);
