@@ -95,6 +95,14 @@
     "Coords not loaded yet!": "Współrzędne jeszcze nie pobrane z API!",
     "Coords warning": "Ostrzeżenie o współrzędnych",
     "per person": "za osobę",
-    "per group": "za grupę"
+    "per group": "za grupę",
+    "pending": "oczekuje",
+    "rejected": "odrzucony",
+    "You applied for being the guide": "Złożyłeś wniosek o bycie przewodnikiem",
+    "Request status": "Status zgłoszenia",
+    "Feedback": "Informacja zwrotna",
+    "No message": "Brak wiadomości",
+    "You are already a guide!": "Jesteś już przewodnikiem!",
+    "Create new offer": "Utwórz ofertę"
   }
 }
