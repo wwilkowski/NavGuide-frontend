@@ -13,6 +13,7 @@ import Checkbox from '../../shared/Checkbox';
 import styles from './SearchForm.module.scss';
 import ListSuggestedTrips from './ListSuggestedTrips';
 import ListTrips from './ListTrips';
+import { hideOnClickOutside } from '../../helpers/outsideClickEvent';
 
 const SearchFormSchema = Yup.object().shape({});
 
@@ -21,11 +22,12 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
 
   const { t } = useTranslation();
 
-  const tags = useSelector((state: StoreType) => state.tripBrowser.tags);
-
   const { values, setFieldValue, touched, errors, isSubmitting } = props;
 
+  const tags = useSelector((state: StoreType) => state.tripBrowser.tags);
+
   const [location, setLocation] = useState<string>('');
+  const [suggestedListVisible, setSuggestedListVisible] = useState<boolean>(true);
 
   useEffect(() => {
     if (Object.keys(errors).length !== 0 && isSubmitting) {
@@ -41,6 +43,12 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
     props.updateActiveTags(values.activeTags);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.formValue, values.activeTags]);
+
+  /*const el: any = document.querySelector('.listSuggestedTrips');
+  console.log(el);
+  if (el) {
+    if (suggestedListVisible) hideOnClickOutside(el);
+  }*/
 
   return (
     <div>
@@ -58,6 +66,9 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
               value={location}
               className={'input'}
               style={{ width: '300px' }}
+              onClick={() => {
+                if (location != 'UMK Wydział Matematyki i Informatyki') setSuggestedListVisible(!suggestedListVisible);
+              }}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 props.handleChange(event);
                 setLocation(event.target.value);
@@ -65,21 +76,25 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
               }}
             />
             {errors.location && touched.location && <div>{t(errors.location)}</div>}
-            <ListSuggestedTrips
-              onCityClick={(location: ISuggestedPlace) => {
-                setFieldValue('lat', location.coords[1]);
-                setFieldValue('lon', location.coords[0]);
-                props.setPosition({
-                  latitude: location.coords[1],
-                  longitude: location.coords[0],
-                  radius: props.positionValue.radius
-                });
-                props.onSubmit(location, props.positionValue.radius, 'suggested');
-              }}
-              onCityHover={props.onCityHover}
-              suggestedTrips={suggestedCities}
-              activeTags={values.activeTags}
-            />
+            {suggestedListVisible && (
+              <div className='listSuggestedTrips'>
+                <ListSuggestedTrips
+                  onCityClick={(location: ISuggestedPlace) => {
+                    setFieldValue('lat', location.coords[1]);
+                    setFieldValue('lon', location.coords[0]);
+                    props.setPosition({
+                      latitude: location.coords[1],
+                      longitude: location.coords[0],
+                      radius: props.positionValue.radius
+                    });
+                    props.onSubmit(location, props.positionValue.radius, 'suggested');
+                  }}
+                  onCityHover={props.onCityHover}
+                  suggestedTrips={suggestedCities}
+                  activeTags={values.activeTags}
+                />
+              </div>
+            )}
           </div>
         </div>
         <div>
