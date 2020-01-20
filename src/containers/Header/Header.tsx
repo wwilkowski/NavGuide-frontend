@@ -123,11 +123,19 @@ const Header: React.FC = () => {
                               {t('Edit profile')}
                             </Link>
                           </MenuItem>
-                          <MenuItem onClick={handleClose}>
-                            <Link to='/register/guide' className={classes.link}>
-                              {t('Become a guide')}
-                            </Link>
-                          </MenuItem>
+                          {profile.user.role !== 'GUIDE' ? (
+                            <MenuItem onClick={handleClose}>
+                              <Link to='/register/guide' className={classes.link}>
+                                {t('Become a guide')}
+                              </Link>
+                            </MenuItem>
+                          ) : (
+                            <MenuItem onClick={handleClose}>
+                              <Link to='/offers/create' className={classes.link}>
+                                {t('Create new offer')}
+                              </Link>
+                            </MenuItem>
+                          )}
                           <MenuItem onClick={handleClose}>
                             <LogoutButton onClick={logout} />
                           </MenuItem>

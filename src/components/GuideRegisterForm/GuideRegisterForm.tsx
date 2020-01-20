@@ -45,12 +45,11 @@ const MyForm = (props: FormikProps<types.FormValues>) => {
           {t('Experience')}
           <div className='select'>
             <Field as='select' id='experience' name='experience'>
-              <option value='AMBASSADOR'>{t('ambassador')}</option>
-              <option value='EXPERT'>{t('expert')}</option>
-              <option value='ADEPT'>{t('adept')}</option>
-              <option value='COMPETENT'>{t('competent')}</option>
-              <option value='EXPERIENCED'>{t('experienced')}</option>
-              <option value='NOVICE'>{t('novice')}</option>
+              <option value='1'>1</option>
+              <option value='2'>2</option>
+              <option value='3'>3</option>
+              <option value='4'>4</option>
+              <option value='5'>5</option>
             </Field>
           </div>
         </label>
@@ -73,7 +72,7 @@ const MyForm = (props: FormikProps<types.FormValues>) => {
 const MyEnhancedForm = withFormik<types.MyFormProps, types.FormValues>({
   mapPropsToValues: () => ({
     languages: [],
-    experience: 'NOVICE',
+    experience: '1',
     description: ''
   }),
   validationSchema: GuideFormSchema,
