@@ -16,6 +16,7 @@ import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import styles from './Header.module.scss';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -89,7 +90,7 @@ const Header: React.FC = () => {
     <nav className='navbar' role='navigation' aria-label='main navigation' style={{ display: 'flex', justifyContent: 'space-between' }}>
       <div className='navbar-brand'>
         <a className='navbar-item' href='/'>
-          <h1 className='has-text-weight-bold	'>Lorem ipsum</h1>
+          <h1 className={styles.logo}>NavGuide</h1>
         </a>
       </div>
 
@@ -103,7 +104,7 @@ const Header: React.FC = () => {
           <div className={classes.root}>
             <div>
               <Button ref={anchorRef} aria-controls={open ? 'menu-list-grow' : undefined} aria-haspopup='true' onClick={handleToggle}>
-                <img src={profile.user.avatar} alt='avatar' style={{ width: '40px', height: '40px', marginRight: '1rem' }} />
+                <img src={profile.user.avatar} alt='avatar' className={styles.avatar} />
                 <p>{profile.user.firstName}</p>
               </Button>
               <Popper open={open} className={classes.popper} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
