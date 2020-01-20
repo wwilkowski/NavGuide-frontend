@@ -1,22 +1,29 @@
 import React from 'react';
 import { IUserData } from '../../shared/types';
+import styles from './UserProfile.module.scss';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   user: IUserData;
 }
 
 const UserProfile = ({ user }: Props) => {
+  const { t } = useTranslation();
   return (
     <div>
-      <img src={user.avatar} alt='' />
-      <p>
+      <img src={user.avatar} alt='' className={styles.avatar} />
+      <p className={styles.name}>
         {user.firstName} {user.lastName}
       </p>
-      <p>{user.email}</p>
-      <p>Experience: {user.experience}</p>
-      <p>Country: {user.country}</p>
+      <p>Email: {user.email}</p>
+      <p>
+        {t(`Experience`)}: {user.experience}
+      </p>
+      <p>
+        {t(`Country`)}: {user.country}
+      </p>
       <p>Tel: {user.telephone}</p>
-      <p>Interests:</p>
+      <p>{t(`Interests`)}:</p>
       <ul>
         {user.interests.map((interest, index) => (
           <li key={index}>
