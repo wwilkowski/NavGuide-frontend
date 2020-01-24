@@ -13,7 +13,6 @@ import Checkbox from '../../shared/Checkbox';
 import styles from './SearchForm.module.scss';
 import ListSuggestedTrips from './ListSuggestedTrips';
 import ListTrips from './ListTrips';
-import { hideOnClickOutside } from '../../helpers/outsideClickEvent';
 
 const SearchFormSchema = Yup.object().shape({});
 
