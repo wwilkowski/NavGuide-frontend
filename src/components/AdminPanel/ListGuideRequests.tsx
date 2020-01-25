@@ -4,6 +4,8 @@ import styles from '../TripBrowser/ListTrips.module.scss';
 import * as types from '../../containers/AdminPanel/types';
 import { useTranslation } from 'react-i18next';
 
+//naprawic doswiadczenie
+
 const ListGuideRequests = (props: IListGuideRequestProps) => {
   const { guideRequests } = props;
   const { t } = useTranslation();

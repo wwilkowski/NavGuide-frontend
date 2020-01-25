@@ -1,4 +1,5 @@
 import * as constants from './constants';
+import { ISettleGuideRequestFormValues } from '../../components/AdminPanel/types';
 
 export interface IGuideRequest {
   id: number;
@@ -27,4 +28,23 @@ export interface IGetGuideRequestsFailed {
   message: string;
 }
 
-export type AdminPanelAction = IGetGuideRequestsSuccessed | IGetGuideRequestsFailed;
+export interface ISettleGuideRequest {
+  type: typeof constants.SETTLE_GUIDE_REQUEST;
+  data: ISettleGuideRequestFormValues;
+}
+
+export interface ISettleGuideRequestSuccessed {
+  type: typeof constants.SETTLE_GUIDE_REQUEST_SUCCESSED;
+}
+
+export interface ISettleGuideRequestFailed {
+  type: typeof constants.SETTLE_GUIDE_REQUEST_FAILED;
+  message: string;
+}
+
+export type AdminPanelAction =
+  | IGetGuideRequestsSuccessed
+  | IGetGuideRequestsFailed
+  | ISettleGuideRequest
+  | ISettleGuideRequestFailed
+  | ISettleGuideRequestSuccessed;
