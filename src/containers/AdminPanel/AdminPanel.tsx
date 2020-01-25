@@ -5,12 +5,13 @@ import ListGuideRequests from '../../components/AdminPanel/ListGuideRequests';
 import { StoreType } from '../../store';
 import SettleGuideRequestForm from '../../components/AdminPanel/SettleGuideRequestForm';
 import { ISettleGuideRequestFormValues } from '../../components/AdminPanel/types';
+import { IGuideRequest } from './types';
 
 const AdminPanel: React.FC = () => {
   const dispatcher = useDispatch();
 
   const guideRequests = useSelector((state: StoreType) => state.adminPanel.guideRequests);
-
+  const availableIDs = guideRequests.map((el: IGuideRequest) => el.id);
   useEffect(() => {
     dispatcher(actions.getGuideRequestsRequest());
   }, []);
@@ -22,7 +23,7 @@ const AdminPanel: React.FC = () => {
   return (
     <>
       <ListGuideRequests guideRequests={guideRequests} />
-      <SettleGuideRequestForm onSubmit={onSubmitForm} />
+      <SettleGuideRequestForm onSubmit={onSubmitForm} availableIDs={availableIDs} />
     </>
   );
 };

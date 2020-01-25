@@ -12,4 +12,5 @@ export interface ISettleGuideRequestFormValues {
 
 export interface ISettleGuideRequestFormProps {
   onSubmit: (data: ISettleGuideRequestFormValues) => void;
+  availableIDs: number[];
 }

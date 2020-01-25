@@ -10,7 +10,6 @@ const ListGuideRequests = (props: IListGuideRequestProps) => {
   const { guideRequests } = props;
   const { t } = useTranslation();
 
-  console.log(guideRequests);
   return (
     <ul className={styles.tripsList}>
       {guideRequests.map((req: types.IGuideRequest, index: number) => (
