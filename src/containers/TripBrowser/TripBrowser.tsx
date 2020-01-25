@@ -15,6 +15,7 @@ const TripBrowser: React.FC = () => {
   const [searchedTrips, setSearchedTrips] = useState<ISingleTripType[]>([]);
   const [activeTags, setActiveTags] = useState<string[]>([]);
   const [formValue, setFormValue] = useState<string>('UMK Wydział Matematyki i Informatyki');
+  const [prevFormValue, setPrevFormValue] = useState<string>('');
   const [positionValue, setPositionValue] = useState<IPosition>({
     latitude: 53.01023065,
     longitude: 18.594376006630313,
@@ -61,7 +62,7 @@ const TripBrowser: React.FC = () => {
   }, [dispatcher]);
 
   const handleCityHover = (location: ISuggestedPlace) => {
-    setFormValue(location.name);
+    //setFormValue(location.name);
   };
 
   const onSearchFormChange = (location: string) => {
@@ -73,13 +74,14 @@ const TripBrowser: React.FC = () => {
   };
 
   const onSearchFormSubmit = (location: ISuggestedPlace, radius: number, mode: string) => {
-    if (mode === 'normal' && suggestedCities.length > 0 && location.name !== 'UMK Wydział Matematyki i Informatyki') {
+    if (mode === 'normal' && suggestedCities.length > 0 && location.name !== prevFormValue) {
       //ABY ZADZIAŁAŁO TRZEBA POCZEKAĆ AŻ Z API SIE POBIORA WARTOŚCI
       location.coords[0] = suggestedCities[0].coords[0];
       location.coords[1] = suggestedCities[0].coords[1];
       setFormValue(suggestedCities[0].name);
-      dispatcher(actions.fetchSuggestedCitiesRequested('', 0));
     }
+
+    dispatcher(actions.fetchSuggestedCitiesRequested('', 0));
 
     if (location.name.length) {
       setPositionValue({
@@ -91,6 +93,7 @@ const TripBrowser: React.FC = () => {
     } else {
       dispatcher(actions.fetchRandomTripsRequested(isLogged));
     }
+    setPrevFormValue(location.name);
   };
 
   return (
