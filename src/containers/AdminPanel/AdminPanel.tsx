@@ -20,6 +20,8 @@ const AdminPanel: React.FC = () => {
     dispatcher(actions.settleGuideRequest(data));
   };
 
+  console.log(guideRequests);
+
   return (
     <>
       <ListGuideRequests guideRequests={guideRequests} />

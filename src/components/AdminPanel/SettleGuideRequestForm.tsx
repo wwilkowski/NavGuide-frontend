@@ -46,7 +46,7 @@ const InnerForm = (props: FormikProps<ISettleGuideRequestFormValues> & ISettleGu
 const MyForm = withFormik<ISettleGuideRequestFormProps, ISettleGuideRequestFormValues>({
   mapPropsToValues: (props: ISettleGuideRequestFormProps) => {
     return {
-      id: 0,
+      id: props.availableIDs[0],
       status: '',
       message: '...'
     };
