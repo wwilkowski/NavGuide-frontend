@@ -10,6 +10,7 @@ import Profile from './containers/Profile/Profile';
 import TripBrowser from './containers/TripBrowser/TripBrowser';
 import { useDispatch } from 'react-redux';
 import { getProfileRequest } from './containers/Profile/actions';
+import AdminPanel from './containers/AdminPanel/AdminPanel';
 
 // templates
 
@@ -35,6 +36,7 @@ const App: React.FC = () => {
         </Route>
         <Route path='/register' component={Registration} />
         <Route path='/profile' component={Profile} />
+        <Route path='/admin' component={AdminPanel} />
         <Route component={NotFound} />
       </Switch>
     </>
