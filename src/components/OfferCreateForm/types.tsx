@@ -1,12 +1,20 @@
+import { IPosition } from '../../containers/TripBrowser/types';
+
 export interface MyFormProps {
-  onSubmit: () => void;
+  onSubmit: (formData: FullFormValues) => void;
+  onChange: (location: string) => void;
+  position: IPosition;
+  place: string;
+  setPlace: (place: string) => void;
+  setPosition: (position: IPosition) => void;
 }
 
 export interface FullFormValues {
+  place: string;
   begin: Date;
   city: string;
   end: Date;
-  file: string[];
+  file: File[];
   lat: Number;
   lon: Number;
   maxPeople: Number;
@@ -14,5 +22,5 @@ export interface FullFormValues {
   price: Number;
   priceType: string;
   radius: Number;
-  tags: string[];
+  tags: number[];
 }
