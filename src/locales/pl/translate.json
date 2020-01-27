@@ -110,6 +110,8 @@
     "Begin": "Początek",
     "End": "Koniec",
     "Max people": "Maksymalna liczba osób",
-    "Price type": "Typ ceny"
+    "Price type": "Typ ceny",
+    "Please enter values first!": "Wypełnij wszystkie pola!",
+    "Message": "Wiadomość"
   }
 }
