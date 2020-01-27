@@ -9,7 +9,7 @@ import { ITag } from '../../containers/TripBrowser/types';
 import Checkbox from '../../shared/Checkbox';
 
 const InnerForm = (props: FormikProps<types.FullFormValues>) => {
-  const { touched, errors, isSubmitting } = props;
+  const { touched, errors } = props;
   const { t } = useTranslation();
   const dispatcher = useDispatch();
   const tags = useSelector((state: StoreType) => state.tripBrowser.tags);
