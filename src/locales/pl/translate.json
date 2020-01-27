@@ -104,6 +104,12 @@
     "No message": "Brak wiadomości",
     "You are already a guide!": "Jesteś już przewodnikiem!",
     "Create new offer": "Utwórz ofertę",
-    "Interests": "Zainteresowania"
+    "Interests": "Zainteresowania",
+    "Find place": "Znajdź miejsce",
+    "Offer name": "Nazwa oferty",
+    "Begin": "Początek",
+    "End": "Koniec",
+    "Max people": "Maksymalna liczba osób",
+    "Price type": "Typ ceny"
   }
 }

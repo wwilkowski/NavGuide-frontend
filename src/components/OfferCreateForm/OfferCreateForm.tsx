@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as types from './types';
 import { withFormik, FormikProps, Field, Form } from 'formik';
 import { useTranslation } from 'react-i18next';
@@ -7,20 +7,73 @@ import { useDispatch, useSelector } from 'react-redux';
 import { StoreType } from '../../store';
 import { ITag } from '../../containers/TripBrowser/types';
 import Checkbox from '../../shared/Checkbox';
+import ListSuggestedTrips from '../TripBrowser/ListSuggestedTrips';
+import { ISuggestedPlace } from '../../containers/TripBrowser/types';
 
-const InnerForm = (props: FormikProps<types.FullFormValues>) => {
-  const { touched, errors } = props;
+const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>) => {
+  const { touched, errors, setFieldValue, values } = props;
   const { t } = useTranslation();
   const dispatcher = useDispatch();
   const tags = useSelector((state: StoreType) => state.tripBrowser.tags);
+  const suggestedCities = useSelector((state: StoreType) => state.tripBrowser.places);
 
   useEffect(() => {
     dispatcher(fetchTagsRequested());
   }, [dispatcher]);
 
+  const [location, setLocation] = useState<string>('');
+  const [suggestedListVisible, setSuggestedListVisible] = useState<boolean>(false);
+  const [photos, setPhotos] = useState<File | undefined>(undefined);
+
+  const handlePhotoChange = (selectorFiles: FileList | null) => {
+    if (selectorFiles != null) {
+      setPhotos(selectorFiles[0]);
+      values.file.push(selectorFiles[0]);
+    }
+  };
+
   return (
     <div>
       <Form>
+        <label className='label' htmlFor='location'>
+          {t('Find place')}
+        </label>
+        <Field
+          id='location'
+          type='text'
+          name='location'
+          value={location}
+          className={`input`}
+          style={{ width: '300px' }}
+          onClick={() => {
+            setSuggestedListVisible(true);
+          }}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            props.handleChange(event);
+            setLocation(event.target.value);
+            props.onChange(event.target.value);
+          }}
+        />
+        {errors.place && touched.place && <div>{t(errors.place)}</div>}
+        {suggestedListVisible && (
+          <div>
+            <ListSuggestedTrips
+              onCityClick={(location: ISuggestedPlace) => {
+                setFieldValue('lat', location.coords[1]);
+                setFieldValue('lon', location.coords[0]);
+                props.setPosition({
+                  latitude: location.coords[1],
+                  longitude: location.coords[0],
+                  radius: props.position.radius
+                });
+                setSuggestedListVisible(false);
+              }}
+              onCityHover={(location: ISuggestedPlace) => {}}
+              suggestedTrips={suggestedCities}
+              activeTags={[]}
+            />
+          </div>
+        )}
         <div className='field'>
           <label className='label' htmlFor='name'>
             {t('Offer name')}
@@ -28,6 +81,7 @@ const InnerForm = (props: FormikProps<types.FullFormValues>) => {
           <Field className='input' id='name' type='text' name='name' />
           {errors.name && touched.name && <div>{t(errors.name)}</div>}
         </div>
+        <input type='file' onChange={e => handlePhotoChange(e.target.files)} />
         <div className='field'>
           <label className='label' htmlFor='begin'>
             {t('Begin')}
@@ -48,20 +102,6 @@ const InnerForm = (props: FormikProps<types.FullFormValues>) => {
           </label>
           <Field className='input' id='city' type='text' name='city' />
           {errors.city && touched.city && <div>{t(errors.city)}</div>}
-        </div>
-        <div className='field'>
-          <label className='label' htmlFor='lat'>
-            {t('Lat')}
-          </label>
-          <Field className='input' id='lat' type='number' name='lat' />
-          {errors.lat && touched.lat && <div>{t(`Incorrect number`)}</div>}
-        </div>
-        <div className='field'>
-          <label className='label' htmlFor='lon'>
-            {t('Lon')}
-          </label>
-          <Field className='input' id='lon' type='number' name='lon' />
-          {errors.lon && touched.lon && <div>{t(`Incorrect number`)}</div>}
         </div>
         <div className='field'>
           <label className='label' htmlFor='maxPeople'>
@@ -92,13 +132,40 @@ const InnerForm = (props: FormikProps<types.FullFormValues>) => {
           <label className='label' htmlFor='radius'>
             {t('Radius')}
           </label>
-          <Field className='input' id='radius' type='number' name='radius' />
+          <Field
+            className='input'
+            id='radius'
+            type='number'
+            name='radius'
+            required
+            min={0.1}
+            step='.1'
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              if (event.target.value.length) {
+                props.handleChange(event);
+                const position = {
+                  latitude: props.position.latitude,
+                  longitude: props.position.longitude,
+                  radius: parseFloat(event.target.value)
+                };
+                props.setPosition(position);
+              } else {
+                props.handleChange(event);
+                const position = {
+                  latitude: props.position.latitude,
+                  longitude: props.position.longitude,
+                  radius: 0
+                };
+                props.setPosition(position);
+              }
+            }}
+          />
           {errors.radius && touched.radius && <div>{t(`Incorrect number`)}</div>}
         </div>
         <ul>
           {tags.map((tag: ITag) => (
             <li key={tag.id}>
-              <Checkbox name='activeTags' value={tag.name} valueKey={tag.name} />
+              <Checkbox name='tags' value={tag.name} valueKey={tag.name} />
             </li>
           ))}
         </ul>
@@ -112,24 +179,26 @@ const InnerForm = (props: FormikProps<types.FullFormValues>) => {
 
 const OfferCreateForm = withFormik<types.MyFormProps, types.FullFormValues>({
   mapPropsToValues: (props: types.MyFormProps) => {
+    const { longitude, latitude, radius } = props.position;
     return {
+      place: props.place || '',
       begin: new Date(),
       city: 'Torun',
       end: new Date(),
       file: [],
-      lat: 0.0,
-      lon: 0.0,
+      lat: latitude || 0.0,
+      lon: longitude || 0.0,
       maxPeople: 0,
       name: 'Trip name',
       price: 0.0,
       priceType: 'PER_PERSON',
-      radius: 0.0,
+      radius: radius || 0.0,
       tags: []
     };
   },
 
   handleSubmit: (values: types.FullFormValues, { props }) => {
-    alert(JSON.stringify(values));
+    props.onSubmit(values);
   }
 })(InnerForm);
 
