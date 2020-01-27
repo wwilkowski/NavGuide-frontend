@@ -60,7 +60,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
               className={`input`}
               style={{ width: '300px' }}
               onClick={() => {
-                if (location != 'UMK Wydział Matematyki i Informatyki') setSuggestedListVisible(!suggestedListVisible);
+                if (location !== 'UMK Wydział Matematyki i Informatyki') setSuggestedListVisible(!suggestedListVisible);
               }}
               onBlur={() => setSuggestedListVisible(false)}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
