@@ -29,6 +29,10 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
   const [suggestedListVisible, setSuggestedListVisible] = useState<boolean>(true);
 
   useEffect(() => {
+    setSuggestedListVisible(true);
+  }, [location]);
+
+  useEffect(() => {
     if (Object.keys(errors).length !== 0 && isSubmitting) {
       Object.values(errors).forEach(error => {
         showNotification('warning', t('Form warning'), t(`${error}`));
@@ -62,7 +66,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
               onClick={() => {
                 if (location != 'UMK Wydział Matematyki i Informatyki') setSuggestedListVisible(!suggestedListVisible);
               }}
-              onBlur={() => setSuggestedListVisible(false)}
+              //onBlur={() => setSuggestedListVisible(false)}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 props.handleChange(event);
                 setLocation(event.target.value);
