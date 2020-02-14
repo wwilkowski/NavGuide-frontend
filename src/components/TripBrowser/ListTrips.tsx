@@ -5,8 +5,9 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { StoreType } from '../../store';
 import styles from './ListTrips.module.scss';
+import TripInfo from '../TripInfo/TripInfo';
 
-const ListTrips = ({ trips, mode, chosenOfferId, setChosenOfferId }: types.IListTripsProps) => {
+const ListTrips = ({ trips, mode, chosenOfferId, setChosenOfferId, changeTripInfoVisible }: types.IListTripsProps) => {
   const isLogged: boolean = useSelector((state: StoreType) => state.profile.isLoggedIn);
   const { t } = useTranslation();
   const priceTypes = {
@@ -32,6 +33,7 @@ const ListTrips = ({ trips, mode, chosenOfferId, setChosenOfferId }: types.IList
             onMouseOut={() => {
               setChosenOfferId(null);
             }}
+            onClick={() => changeTripInfoVisible(trip.id)}
           >
             <img
               className={styles.img}

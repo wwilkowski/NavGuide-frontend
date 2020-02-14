@@ -4,14 +4,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as actions from './actions';
 import { StoreType } from '../../store';
 import SearchForm from '../../components/TripBrowser/SearchForm';
+import TripInfo from '../../components/TripInfo/TripInfo';
 
 const TripBrowser: React.FC = () => {
   const isLogged = useSelector((state: StoreType) => state.profile.isLoggedIn);
   const tripsData = useSelector((state: StoreType) => state.tripBrowser.trips);
   const suggestedCities = useSelector((state: StoreType) => state.tripBrowser.places);
+  const tripInformations = 'Przykladowy opis wycieczki';
 
   const dispatcher = useDispatch();
 
+  const [tripInfoVisible, setTripInfoVisible] = useState<boolean>(false);
+  const [tripInfoId, setTripInfoId] = useState<number>(0);
   const [searchedTrips, setSearchedTrips] = useState<ISingleTripType[]>([]);
   const [activeTags, setActiveTags] = useState<string[]>([]);
   const [formValue, setFormValue] = useState<string>('UMK Wydział Matematyki i Informatyki');
@@ -96,6 +100,11 @@ const TripBrowser: React.FC = () => {
     setPrevFormValue(location.name);
   };
 
+  const changeTripInfoVisible = (tripId: number) => {
+    setTripInfoVisible(!tripInfoVisible);
+    setTripInfoId(tripId);
+  };
+
   return (
     <div>
       <SearchForm
@@ -107,7 +116,9 @@ const TripBrowser: React.FC = () => {
         trips={searchedTrips}
         setPosition={setPositionValue}
         onCityHover={handleCityHover}
+        changeTripInfoVisible={changeTripInfoVisible}
       />
+      {tripInfoVisible ? <TripInfo tripInformations={tripsData[tripInfoId]} changeTripInfoVisible={changeTripInfoVisible} /> : null}{' '}
     </div>
   );
 };
