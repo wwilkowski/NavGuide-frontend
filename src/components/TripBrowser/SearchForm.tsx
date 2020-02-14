@@ -225,6 +225,7 @@ const SearchForm = (props: ISearchFormProps) => {
         setPosition={props.setPosition}
         trips={props.trips}
         onCityHover={props.onCityHover}
+        changeTripInfoVisible={props.changeTripInfoVisible}
       />
       <div className={styles.mapContainer}>
         <div className={styles.map}>
@@ -236,7 +237,13 @@ const SearchForm = (props: ISearchFormProps) => {
           />
         </div>
         <div className={styles.offersListContainer}>
-          <ListTrips trips={props.trips} mode={'normal'} chosenOfferId={chosenOfferId} setChosenOfferId={setChosenOfferId} />
+          <ListTrips
+            trips={props.trips}
+            mode={'normal'}
+            chosenOfferId={chosenOfferId}
+            setChosenOfferId={setChosenOfferId}
+            changeTripInfoVisible={props.changeTripInfoVisible}
+          />
         </div>
       </div>
     </div>
