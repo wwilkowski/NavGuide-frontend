@@ -1,4 +1,5 @@
 import { ISingleTripType, IPosition, ISuggestedPlace } from '../../containers/TripBrowser/types';
+import { SetStateAction, Dispatch } from 'react';
 
 export interface ISearchFormValues {
   location: string;
@@ -18,12 +19,14 @@ export interface ISearchFormProps {
   positionValue: IPosition;
   trips: ISingleTripType[];
   onCityHover: (location: ISuggestedPlace) => void;
+  changeTripInfoVisible: (id: number) => void;
 }
 export interface IListTripsProps {
   trips: ISingleTripType[];
   mode: string;
   chosenOfferId: number | null;
   setChosenOfferId: (offerId: number | null) => void;
+  changeTripInfoVisible: (id: number) => void;
 }
 
 export interface IListSuggestedTripsProps {
