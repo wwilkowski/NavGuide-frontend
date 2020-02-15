@@ -11,7 +11,7 @@ import Offers from './containers/Offers/Offers';
 import { useDispatch } from 'react-redux';
 import { getProfileRequest } from './containers/Profile/actions';
 import AdminPanel from './containers/AdminPanel/AdminPanel';
-
+import 'bulma/css/bulma.css';
 // templates
 
 const NotFound = () => {
