@@ -101,7 +101,11 @@ const TripBrowser: React.FC = () => {
 
   const changeTripInfoVisible = (tripId: number) => {
     setTripInfoVisible(!tripInfoVisible);
-    setTripInfoId(tripId);
+    var i = 0;
+    tripsData.forEach((trip: ISingleTripType) => {
+      if (trip.id === tripId) setTripInfoId(i);
+      i++;
+    });
   };
 
   return (
@@ -117,9 +121,11 @@ const TripBrowser: React.FC = () => {
         onCityHover={handleCityHover}
         changeTripInfoVisible={changeTripInfoVisible}
       />
-      {tripInfoVisible ? <TripInfo tripInformations={tripsData[tripInfoId]} changeTripInfoVisible={changeTripInfoVisible} /> : null}{' '}
+      {tripInfoVisible ? <TripInfo tripInformations={tripsData[tripInfoId]} changeTripInfoVisible={changeTripInfoVisible} /> : null}
     </div>
   );
 };
 
 export default TripBrowser;
+
+//       {tripInfoVisible ? <TripInfo tripInformations={tripsData[tripInfoId]} changeTripInfoVisible={changeTripInfoVisible} /> : null}{' '}
