@@ -3,13 +3,19 @@ import { IGalleryProps } from './types';
 import styles from '../TripInfo.module.scss';
 
 const Gallery = ({ photos }: IGalleryProps) => {
-  const [activePhoto, setActivePhoto] = useState<string>(photos[0]);
-
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
   return (
     <>
-      <div className={styles.gallery__switchLeft} onClick={() => setActiveIndex((activeIndex - 1) % photos.length)}></div>
+      <div
+        className={styles.gallery__switchLeft}
+        onClick={() => {
+          if (activeIndex == 0) setActiveIndex(photos.length - 1);
+          else setActiveIndex((activeIndex - 1) % photos.length);
+        }}
+      >
+        <img src='../../assets/icons/leftArrow.png' />
+      </div>
       <div className={styles.gallery__content}>
         <img src={photos[activeIndex]} />
       </div>
@@ -17,9 +23,9 @@ const Gallery = ({ photos }: IGalleryProps) => {
       <div className={styles.gallery__footer}>
         {photos.map((photo: string, index: number) =>
           index === activeIndex ? (
-            <div className={styles.dotActive} />
+            <div key={index} className={styles.dotActive} />
           ) : (
-            <div className={styles.dot} onClick={() => setActiveIndex(index)}></div>
+            <div key={index} className={styles.dot} onClick={() => setActiveIndex(index)}></div>
           )
         )}
       </div>

@@ -32,7 +32,7 @@ const Informations = (props: IInformationsProps) => {
         </div>
         <div className={styles.content2}>
           <p style={{ width: '100%' }}>
-            <b>{t('Availability')}</b>
+            <b>{t('Availability')}:</b>
           </p>
           <div style={{ width: '50%' }}>
             <p>
@@ -50,8 +50,10 @@ const Informations = (props: IInformationsProps) => {
             <b>{t('Tags')}:</b>
           </p>
           <div className={styles.content3__tags}>
-            {tripData.tags.map((tag: ITag) => (
-              <div className={styles.tag}>{tag.name}</div>
+            {tripData.tags.map((tag: ITag, index: number) => (
+              <div key={index} className={styles.tag}>
+                {tag.name}
+              </div>
             ))}
           </div>
         </div>
@@ -74,7 +76,9 @@ const Informations = (props: IInformationsProps) => {
           <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/512px-User_font_awesome.svg.png'></img>
         </div>
         <div className={styles.guideContent1}>
-          <p>Foo Bar</p>
+          <p>
+            {tripData.owner.firstName} {tripData.owner.lastName}
+          </p>
         </div>
         <div className={styles.content1}>
           <p>
@@ -84,7 +88,7 @@ const Informations = (props: IInformationsProps) => {
             <b>{t('Country')}:</b>
           </p>
           <p>
-            <b>{t('Languages')}:</b>
+            <b>{t('Languages')}:</b> {tripData.owner.languages.map((lng: string) => `${lng} `)}
           </p>
         </div>
         <div className={styles.content3}>
