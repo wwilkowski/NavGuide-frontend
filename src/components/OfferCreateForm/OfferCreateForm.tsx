@@ -23,11 +23,9 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
 
   const [location, setLocation] = useState<string>('');
   const [suggestedListVisible, setSuggestedListVisible] = useState<boolean>(false);
-  const [photos, setPhotos] = useState<File | undefined>(undefined);
 
   const handlePhotoChange = (selectorFiles: FileList | null) => {
     if (selectorFiles != null) {
-      setPhotos(selectorFiles[0]);
       values.file.push(selectorFiles[0]);
     }
   };
