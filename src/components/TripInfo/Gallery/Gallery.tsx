@@ -1,7 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { IGalleryProps } from './types';
+import styles from '../TripInfo.module.scss';
 
-const Gallery = () => {
-  return <div>Galeria</div>;
+const Gallery = ({ photos }: IGalleryProps) => {
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+
+  return (
+    <>
+      <div
+        className={styles.gallery__switchLeft}
+        onClick={() => {
+          if (activeIndex == 0) setActiveIndex(photos.length - 1);
+          else setActiveIndex((activeIndex - 1) % photos.length);
+        }}
+      >
+        <img src='../../assets/icons/leftArrow.png' />
+      </div>
+      <div className={styles.gallery__content}>
+        <img src={photos[activeIndex]} />
+      </div>
+      <div className={styles.gallery__switchRight} onClick={() => setActiveIndex((activeIndex + 1) % photos.length)}></div>
+      <div className={styles.gallery__footer}>
+        {photos.map((photo: string, index: number) =>
+          index === activeIndex ? (
+            <div key={index} className={styles.dotActive} />
+          ) : (
+            <div key={index} className={styles.dot} onClick={() => setActiveIndex(index)}></div>
+          )
+        )}
+      </div>
+    </>
+  );
 };
 
 export default Gallery;

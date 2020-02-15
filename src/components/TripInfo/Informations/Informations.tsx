@@ -2,10 +2,11 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from '../TripInfo.module.scss';
 import { IInformationsProps } from './types';
+import { ITag } from '../../../containers/TripBrowser/types';
 
 const Informations = (props: IInformationsProps) => {
   const { t } = useTranslation();
-
+  const { tripData } = props;
   return props.mode === 'trip' ? (
     <div>
       <div className={styles.informations__header}>
@@ -18,39 +19,42 @@ const Informations = (props: IInformationsProps) => {
         </h1>
         <div className={styles.content1}>
           <p>
-            <b>{t('City')}:</b>
+            <b>{t('City')}:</b> {tripData.city}
           </p>
           <p>
-            <b>{t('Price')}:</b>
+            <b>{t('Price')}: </b>
+            {tripData.price} ({tripData.priceType})
           </p>
           <p>
-            <b>{t('Number of people (max)')}:</b>
+            <b>{t('Number of people (max)')}: </b>
+            {tripData.maxPeople}
           </p>
         </div>
         <div className={styles.content2}>
-          <p>
+          <p style={{ width: '100%' }}>
             <b>{t('Availability')}:</b>
           </p>
-          <table>
-            <tr>
-              <th>
-                <p>{t('From')}:</p>
-              </th>
-              <th>
-                <p>{t('To')}:</p>
-              </th>
-            </tr>
-          </table>
+          <div style={{ width: '50%' }}>
+            <p>
+              <b>From: </b> 1.01.2020
+            </p>
+          </div>
+          <div>
+            <p>
+              <b>To: </b> 1.03.2020
+            </p>
+          </div>
         </div>
         <div className={styles.content3}>
           <p>
             <b>{t('Tags')}:</b>
           </p>
           <div className={styles.content3__tags}>
-            <div className={styles.tag}>tag1</div>
-            <div className={styles.tag}>tag2</div>
-            <div className={styles.tag}>tag3</div>
-            <div className={styles.tag}>tag4</div>
+            {tripData.tags.map((tag: ITag, index: number) => (
+              <div key={index} className={styles.tag}>
+                {tag.name}
+              </div>
+            ))}
           </div>
         </div>
         <div className={styles.content4}>
@@ -66,6 +70,33 @@ const Informations = (props: IInformationsProps) => {
       <div className={styles.informations__header}>
         <button onClick={() => props.changeInformationsMode('trip')}>{t('trip')}</button>
         <button onClick={() => props.changeInformationsMode('guide')}>{t('guide')}</button>
+      </div>
+      <div className={styles.informations__content}>
+        <div className={styles.avatar}>
+          <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/512px-User_font_awesome.svg.png'></img>
+        </div>
+        <div className={styles.guideContent1}>
+          <p>
+            {tripData.owner.firstName} {tripData.owner.lastName}
+          </p>
+        </div>
+        <div className={styles.content1}>
+          <p>
+            <b>{t('Email')}:</b>
+          </p>
+          <p>
+            <b>{t('Country')}:</b>
+          </p>
+          <p>
+            <b>{t('Languages')}:</b> {tripData.owner.languages.map((lng: string) => `${lng} `)}
+          </p>
+        </div>
+        <div className={styles.content3}>
+          <p>
+            <b>{t('Experience')}:</b>
+          </p>
+          <p style={{ fontSize: '1.1em' }}>★★★☆☆</p>
+        </div>
       </div>
     </div>
   );
