@@ -21,6 +21,7 @@ export interface ISearchFormProps {
   onCityHover: (location: ISuggestedPlace) => void;
   changeTripInfoVisible: (id: number) => void;
 }
+
 export interface IListTripsProps {
   trips: ISingleTripType[];
   mode: string;

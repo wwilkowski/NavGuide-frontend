@@ -14,6 +14,7 @@ import tripBrowser from './containers/TripBrowser/reducers';
 import adminPanel from './containers/AdminPanel/reducer';
 import adminPanelSaga from './containers/AdminPanel/sagas';
 import tripBrowserSaga from './containers/TripBrowser/sagas';
+import offerSaga from './containers/Offers/sagas';
 import { IMultiTripsAndTagsType } from './containers/TripBrowser/types';
 import { IMultiGuideRequests } from './containers/AdminPanel/types';
 
@@ -25,7 +26,7 @@ export interface StoreType {
 }
 
 function* rootSaga() {
-  yield all([SignUpUserSaga(), logInUserSaga(), tripBrowserSaga(), adminPanelSaga()]);
+  yield all([SignUpUserSaga(), logInUserSaga(), tripBrowserSaga(), adminPanelSaga(), offerSaga()]);
 }
 
 const persistConfig = {

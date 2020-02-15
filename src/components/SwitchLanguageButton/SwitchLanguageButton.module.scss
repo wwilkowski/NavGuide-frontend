@@ -1,17 +1,12 @@
 .button {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 1em;
   background: none;
-  padding: 0 0.5rem;
   border: none;
-  margin: 0 0.2rem;
+  text-transform: uppercase;
   cursor: pointer;
+  opacity: 0.5;
+  font-size: 1em;
 }
 
-.enableLang {
+.enable {
   opacity: 1;
-}
-
-.disableLang {
-  opacity: 0.4;
 }

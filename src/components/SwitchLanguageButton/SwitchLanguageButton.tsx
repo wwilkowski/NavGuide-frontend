@@ -7,7 +7,7 @@ const SwitchLanguageButton = ({ code }: SwitchLanguageButtonProps) => {
   const { i18n } = useTranslation();
   return (
     <button
-      className={`${styles.button} ${localStorage.getItem('appLanguage') === code ? styles.enableLang : styles.disableLang}`}
+      className={`${styles.button} ${localStorage.getItem('appLanguage') === code ? styles.enable : styles.disable}`}
       onClick={() => {
         i18n.changeLanguage(code);
         localStorage.setItem('appLanguage', code);

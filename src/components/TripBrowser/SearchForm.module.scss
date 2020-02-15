@@ -1,49 +1,106 @@
+.viewToggler {
+  position: fixed;
+  left: 50%;
+  bottom: 2rem;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  z-index: 1000;
+  background: #ffffff;
+  border: 2px solid #000000;
+  @media (min-width: 900px) {
+    display: none;
+  }
+}
+
+.hidden {
+  @media (max-width: 900px) {
+    display: none;
+  }
+}
+
 .searchForm {
   display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  padding: 0 1rem;
-}
-
-.tagList {
-  display: flex;
-  padding: 0;
-  list-style-type: none;
-}
-
-.modeList {
-  display: flex;
-  flex-direction: row !important;
-  min-width: 200px;
-}
-
-.tripList {
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 100;
-  opacity: 0.9;
-}
-
-.mapContainer {
-  margin-top: 1rem;
-  display: flex;
-}
-
-.map {
-  width: 40%;
-}
-
-.locationInput {
-  position: relative;
-}
-
-.offersListContainer {
-  width: 60%;
-}
-
-.suggestedCitiesList {
+  flex-direction: column;
+  padding: 0.5rem;
   width: 100%;
-  z-index: 2;
-  position: absolute;
+  margin-bottom: 1rem;
+  &__inputsCase {
+    @media (min-width: 900px) {
+      display: flex;
+      flex: 50%;
+      div {
+        width: 50%;
+      }
+    }
+  }
+  &__label {
+    color: #444444;
+    font-size: 0.8em;
+  }
+  &__input {
+    border: none;
+    border-bottom: 1px solid #555555;
+    padding: 0.5rem;
+    font-family: 'Open sans';
+    width: 100%;
+    margin: 0.3rem 0;
+    font-size: 0.8em;
+  }
+  &__locationInput {
+    position: relative;
+  }
+  &__tagList {
+    display: flex;
+    margin: 0.3rem 0;
+  }
+  &__submitButton {
+    margin: 1rem 1rem 1rem 0;
+    font-family: 'Open sans';
+    font-size: 0.9em;
+    width: 100px;
+    border: 1px solid #19cc95;
+    color: #19cc95;
+    background: none;
+    border-radius: 5px;
+    padding: 0.4rem;
+    cursor: pointer;
+    @media (min-width: 900px) {
+      font-size: 0.8em;
+    }
+  }
+  &__geoButton {
+    margin: 1rem 0;
+    font-family: 'Open sans';
+    font-size: 0.9em;
+    width: 100px;
+    border: 1px solid #1496ed;
+    color: #1496ed;
+    background: none;
+    border-radius: 5px;
+    padding: 0.4rem;
+    cursor: pointer;
+    @media (min-width: 900px) {
+      font-size: 0.8em;
+    }
+  }
+  &__buttonCase {
+    margin: 0.5rem 0;
+  }
+}
+
+.container {
+  @media (min-width: 900px) {
+    display: flex;
+  }
+  &__el {
+    @media (min-width: 900px) {
+      width: 50%;
+      height: 85vh;
+      overflow-y: scroll;
+    }
+  }
 }

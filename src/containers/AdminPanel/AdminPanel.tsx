@@ -14,7 +14,7 @@ const AdminPanel: React.FC = () => {
   const availableIDs = guideRequests.map((el: IGuideRequest) => el.id);
   useEffect(() => {
     dispatcher(actions.getGuideRequestsRequest());
-  }, []);
+  }, [dispatcher]);
 
   const onSubmitForm = (data: ISettleGuideRequestFormValues) => {
     dispatcher(actions.settleGuideRequest(data));

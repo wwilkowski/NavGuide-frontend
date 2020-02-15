@@ -10,7 +10,6 @@ const TripBrowser: React.FC = () => {
   const isLogged = useSelector((state: StoreType) => state.profile.isLoggedIn);
   const tripsData = useSelector((state: StoreType) => state.tripBrowser.trips);
   const suggestedCities = useSelector((state: StoreType) => state.tripBrowser.places);
-  const tripInformations = 'Przykladowy opis wycieczki';
 
   const dispatcher = useDispatch();
 

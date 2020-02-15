@@ -18,10 +18,10 @@ var customIcon = new L.Icon({
   popupAnchor: [0, -51]
 });
 
-const LeafletMap = ({ position, trips, chosenOfferId, setChosenOfferId }: Props) => {
+const LeafletMap = ({ position, trips = [], chosenOfferId = null, setChosenOfferId }: Props) => {
   const { latitude, longitude, radius } = position;
   return (
-    <Map center={{ lat: latitude, lng: longitude }} zoom={13} style={{ height: '550px', zIndex: 1 }}>
+    <Map center={{ lat: latitude, lng: longitude }} zoom={13} style={{ zIndex: 1, height: window.innerWidth > 900 ? '85vh' : '300px', width: 'auto', position: 'relative' }}>
       <TileLayer
         url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -45,7 +45,7 @@ const LeafletMap = ({ position, trips, chosenOfferId, setChosenOfferId }: Props)
           />
         </Marker>
       ))}
-      <Circle center={{ lat: latitude, lng: longitude }} color='#111111' radius={radius * 1000} opacity={0.1  }>
+      <Circle center={{ lat: latitude, lng: longitude }} color='#111111' radius={radius * 1000} opacity={0.1}>
         <Popup>Popup in CircleMarker</Popup>
       </Circle>
     </Map>
