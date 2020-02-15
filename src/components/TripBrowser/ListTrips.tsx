@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { StoreType } from '../../store';
 import styles from './ListTrips.module.scss';
-import TripInfo from '../TripInfo/TripInfo';
 
 const ListTrips = ({ trips, mode, chosenOfferId, setChosenOfferId, changeTripInfoVisible }: types.IListTripsProps) => {
   const isLogged: boolean = useSelector((state: StoreType) => state.profile.isLoggedIn);
@@ -22,10 +21,9 @@ const ListTrips = ({ trips, mode, chosenOfferId, setChosenOfferId, changeTripInf
         </p>
       ) : null}
       {trips.length === 0 && mode === 'geo' ? <p>{t('No matching trips')}.</p> : null}
-      <ul className={styles.tripsList}>
+      <ul className={styles.listTrips}>
         {trips.map((trip: ISingleTripType) => (
           <li
-            className={styles.listItem}
             key={trip.id}
             onMouseOver={() => {
               setChosenOfferId(trip.id);
@@ -34,44 +32,43 @@ const ListTrips = ({ trips, mode, chosenOfferId, setChosenOfferId, changeTripInf
               setChosenOfferId(null);
             }}
             onClick={() => changeTripInfoVisible(trip.id)}
+            className={styles.offer}
           >
             <img
-              className={styles.img}
               src={trip.photos ? trip.photos[0] : 'https://pwik.krzanowice.pl/uploads/default-image.png'}
               alt='zdjęcie oferty'
+              className={styles.offer__photo}
             />
-            <div className={styles.description}>
-              <h2 className={styles.title}>
-                {trip.name} <span className={styles.itemId}> (ID: {trip.id})</span>
+            <div className={styles.offer__desc}>
+              <h2 className={styles.offer__title}>
+                {trip.name} <span> (ID: {trip.id})</span>
               </h2>
-              <div className={styles.informations}>
-                <p>
-                  {t('City')}: {trip.city}
-                </p>
-                <p>
-                  {t('Price')}: {trip.price} <span>({t(priceTypes['PER_PERSON'])})</span>
-                </p>
-                {isLogged && trip.owner && (
-                  <div>
-                    <p>
-                      {t('Guide')}: {trip.owner.firstName} {trip.owner.lastName}
-                    </p>
+              <p className={styles.offer__p}>
+                {t('City')}: {trip.city}
+              </p>
+              <p className={styles.offer__p}>
+                {t('Price')}: {trip.price} <span>({t(priceTypes['PER_PERSON'])})</span>
+              </p>
+              {isLogged && trip.owner && (
+                <div>
+                  <p className={styles.offer__p}>
+                    {t('Guide')}: {trip.owner.firstName} {trip.owner.lastName}
+                  </p>
 
-                    <p>{t('Languages')}: </p>
-                    <ul>
-                      {trip.owner.languages.map((lang: string) => (
-                        <li>
-                          <span>{lang}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
+                  <p className={styles.offer__p}>{t('Languages')}: </p>
+                  <ul>
+                    {trip.owner.languages.map((lang: string) => (
+                      <li>
+                        <span>{lang}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               {trip.tags.length > 0 && (
-                <ul className={styles.tagList}>
+                <ul className={styles.offer__tags}>
                   {trip.tags.map((tag: ITag) => (
-                    <li key={tag.name} className={styles.tag}>
+                    <li key={tag.name} className={styles.offer__tag}>
                       <span>{tag.name}</span>
                     </li>
                   ))}

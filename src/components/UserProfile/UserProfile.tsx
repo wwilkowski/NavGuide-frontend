@@ -1,6 +1,5 @@
 import React from 'react';
 import { IUserData } from '../../shared/types';
-import styles from './UserProfile.module.scss';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
@@ -11,8 +10,8 @@ const UserProfile = ({ user }: Props) => {
   const { t } = useTranslation();
   return (
     <div>
-      <img src={user.avatar} alt='' className={styles.avatar} />
-      <p className={styles.name}>
+      <img src={user.avatar} alt='' />
+      <p>
         {user.firstName} {user.lastName}
       </p>
       <p>Email: {user.email}</p>

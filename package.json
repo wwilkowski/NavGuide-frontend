@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.8.3",
     "@testing-library/react": "^9.3.2",
     "@types/jest": "24.0.23",
     "@types/js-cookie": "^2.2.4",
@@ -20,7 +19,6 @@
     "leaflet": "^1.6.0",
     "node-sass": "^4.13.0",
     "react": "^16.12.0",
-    "react-bulma-notification": "^1.1.0",
     "react-dom": "^16.12.0",
     "react-google-login": "^5.0.7",
     "react-i18next": "^11.2.5",

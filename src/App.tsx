@@ -1,4 +1,3 @@
-import 'bulma/css/bulma.css';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactNotification from 'react-notifications-component';

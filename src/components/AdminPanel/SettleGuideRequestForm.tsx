@@ -1,7 +1,6 @@
 import React from 'react';
 import { FormikProps, withFormik, Form, Field } from 'formik';
 import i18n from '../../locales/i18n';
-import styles from '../TripBrowser/ListTrips.module.scss';
 import { ISettleGuideRequestFormValues, ISettleGuideRequestFormProps } from './types';
 import { showNotification } from '../../helpers/notification';
 

@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { showNotification } from '../../helpers/notification';
-import { initTokenCookie, setToken, getToken } from '../../helpers/tokenCookie';
+import { getToken } from '../../helpers/tokenCookie';
 import { forwardTo } from '../../history';
 import i18n from '../../locales/i18n';
 import * as actions from './actions';
@@ -11,7 +11,7 @@ const offerEndpoint = 'https://235.ip-51-91-9.eu/offers';
 
 function* createOffer(action: types.ICreateOfferAction) {
   const formData = new FormData();
-  const { file, begin, end, city, lat, lon, maxPeople, name, price, priceType, radius, tags } = action.formData;
+  const { file, begin, end, city, lat, lon, maxPeople, name, price, priceType, radius } = action.formData;
   formData.append('file', file[0]);
   formData.append('begin', begin.toString());
   formData.append('end', end.toString());

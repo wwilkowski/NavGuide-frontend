@@ -1,52 +1,42 @@
-.listItem {
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.15), 0 1px 5px 0 rgba(0, 0, 0, 0.14);
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: flex-start;
-  align-items: space-between;
-  margin: 0.5rem 1rem;
-}
-
-.title {
-  font-weight: 600;
-}
-
-.tripsList {
-  overflow-y: scroll;
-}
-
-.img {
-  height: 150px;
-  width: 200px;
-}
-
-.description {
-  padding: 0.5rem 1.5rem 0 1.5rem;
+.offer {
+  margin: 1rem 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  @media (min-width: 500px) {
+    flex-direction: row;
+  }
+  &__desc {
+    padding: 0.5rem 1rem;
+  }
+  &__photo {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+    @media (min-width: 500px) {
+      width: 200px;
+      height: 150px;
+    }
+  }
+  &__title {
+    font-weight: 600;
+  }
+  &__p {
+    font-size: 0.9em;
+  }
+  &__tags {
+    display: flex;
+  }
+  &__tag {
+    border: 1px solid #dbdbdb;
+    border-radius: 5px;
+    color: #333333;
+    padding: 0.1rem 0.5rem;
+    margin-right: 0.2rem;
+    font-size: 0.7em;
+    cursor: pointer;
+    background: #ffffff;
+  }
 }
 
-.informations {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  font-size: 0.9rem;
-}
-
-.itemId {
-  font-weight: 200;
-}
-
-.tagList {
-  display: flex;
-}
-
-.tag {
-  background: #f6f6f6;
-  font-size: 0.9em;
-  padding: 0.2rem 0.5rem;
-  margin-right: 0.2rem;
+.listTrips {
 }
