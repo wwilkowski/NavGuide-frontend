@@ -96,6 +96,8 @@
   &__menu {
     @media (min-width: 800px) {
       position: absolute;
+      background: #ffffff;
+      padding: 1rem;
     }
   }
   &__hiddenMenu {
