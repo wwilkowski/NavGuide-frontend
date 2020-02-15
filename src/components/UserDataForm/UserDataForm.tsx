@@ -7,7 +7,6 @@ import { showNotification } from '../../helpers/notification';
 import i18n from '../../locales/i18n';
 import Checkbox from '../../shared/Checkbox';
 import { MyFormProps, FullFormValues, IInterest } from './types';
-import styles from './UserDataForm.module.scss';
 
 const SignupSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -102,9 +101,9 @@ const InnerForm = (props: FormikProps<FullFormValues>) => {
           <label className='label' htmlFor='experience'>
             {t('Experience')}
           </label>
-          <fieldset className={styles.rate} name='experience'>
+          <fieldset name='experience'>
             <input type='radio' id='5' name='rating' value='5' onClick={() => props.setFieldValue('experience', 5)} />
-            <label className={styles.full} htmlFor='5' title='Awesome - 5 stars'></label>
+            <label htmlFor='5' title='Awesome - 5 stars'></label>
             <input
               type='radio'
               id='4'
@@ -114,13 +113,13 @@ const InnerForm = (props: FormikProps<FullFormValues>) => {
                 props.setFieldValue('experience', 4);
               }}
             />
-            <label className={styles.full} htmlFor='4' title='Pretty good - 4 stars'></label>
+            <label htmlFor='4' title='Pretty good - 4 stars'></label>
             <input type='radio' id='3' name='rating' value='3' onClick={() => props.setFieldValue('experience', 3)} />
-            <label className={styles.full} htmlFor='3' title='Meh - 3 stars'></label>
+            <label htmlFor='3' title='Meh - 3 stars'></label>
             <input type='radio' id='2' name='rating' value='2' onClick={() => props.setFieldValue('experience', 2)} />
-            <label className={styles.full} htmlFor='2' title='Kinda bad - 2 stars'></label>
+            <label htmlFor='2' title='Kinda bad - 2 stars'></label>
             <input type='radio' id='1' name='rating' value='1' onClick={() => props.setFieldValue('experience', 1)} />
-            <label className={styles.full} htmlFor='1' title='Really bad - 1 star'></label>
+            <label htmlFor='1' title='Really bad - 1 star'></label>
           </fieldset>
         </div>
 

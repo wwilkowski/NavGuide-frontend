@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next';
 
 const TripInfo = (props: ITripInfoProps) => {
   const { t } = useTranslation();
-  const { tripInformations } = props;
 
   const [informationsMode, setInformationsMode] = useState<string>('trip');
 
