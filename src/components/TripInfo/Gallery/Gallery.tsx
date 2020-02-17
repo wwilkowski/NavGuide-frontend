@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { IGalleryProps } from './types';
 import styles from '../TripInfo.module.scss';
+import leftArrow from '../../../assets/icons/leftArrow.png';
+import rightArrow from '../../../assets/icons/rightArrow.png';
 
 const Gallery = ({ photos }: IGalleryProps) => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
@@ -14,12 +16,14 @@ const Gallery = ({ photos }: IGalleryProps) => {
           else setActiveIndex((activeIndex - 1) % photos.length);
         }}
       >
-        <img src='../../assets/icons/leftArrow.png' />
+        <img src={leftArrow} />
       </div>
       <div className={styles.gallery__content}>
         <img src={photos[activeIndex]} />
       </div>
-      <div className={styles.gallery__switchRight} onClick={() => setActiveIndex((activeIndex + 1) % photos.length)}></div>
+      <div className={styles.gallery__switchRight} onClick={() => setActiveIndex((activeIndex + 1) % photos.length)}>
+        <img src={rightArrow} />
+      </div>
       <div className={styles.gallery__footer}>
         {photos.map((photo: string, index: number) =>
           index === activeIndex ? (

@@ -50,7 +50,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
   useEffect(() => {
     setLocation(props.formValue);
     values.location = props.formValue;
-  }, [props.formValue])
+  }, [props.formValue]);
 
   return (
     <Form autoComplete='off' className={styles.searchForm}>
@@ -91,6 +91,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
               onCityHover={props.onCityHover}
               suggestedTrips={suggestedCities}
               activeTags={values.activeTags}
+              changeVisible={() => setSuggestedListVisible(false)}
             />
           )}
         </div>

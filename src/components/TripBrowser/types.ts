@@ -35,4 +35,5 @@ export interface IListSuggestedTripsProps {
   onCityHover: (location: ISuggestedPlace) => void;
   suggestedTrips: ISuggestedPlace[];
   activeTags: string[];
+  changeVisible: () => void;
 }
