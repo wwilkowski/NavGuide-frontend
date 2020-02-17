@@ -112,6 +112,14 @@
     "Max people": "Maksymalna liczba osób",
     "Price type": "Typ ceny",
     "Please enter values first!": "Wypełnij wszystkie pola!",
-    "Message": "Wiadomość"
+    "Message": "Wiadomość",
+    "trip": "wycieczka",
+    "guide": "przewodnik",
+    "Availability": "Dostępność",
+    "Informations": "informacje",
+    "From": "Od",
+    "To": "Do",
+    "Description": "Opis",
+    "Number of visits": "Liczba odwiedzin"
   }
 }
