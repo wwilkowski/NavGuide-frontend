@@ -36,12 +36,12 @@ const Informations = (props: IInformationsProps) => {
           </p>
           <div style={{ width: '50%' }}>
             <p>
-              <b>From: </b> 1.01.2020
+              <b>{t('From')}: </b> 1.01.2020
             </p>
           </div>
           <div>
             <p>
-              <b>To: </b> 1.03.2020
+              <b>{t('To')}: </b> 1.03.2020
             </p>
           </div>
         </div>

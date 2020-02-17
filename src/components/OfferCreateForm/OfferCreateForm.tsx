@@ -69,6 +69,7 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
               onCityHover={(location: ISuggestedPlace) => {}}
               suggestedTrips={suggestedCities}
               activeTags={[]}
+              changeVisible={() => null}
             />
           </div>
         )}
