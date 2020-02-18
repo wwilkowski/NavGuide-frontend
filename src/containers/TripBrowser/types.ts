@@ -30,6 +30,7 @@ export interface IPosition {
 
 export interface ISingleTripType {
   city: string;
+  description: string;
   id: number;
   lat: number;
   lon: number;
@@ -37,6 +38,7 @@ export interface ISingleTripType {
   name: string;
   owner: {
     firstName: string;
+    id: number;
     languages: string[];
     lastName: string;
   };

@@ -8,14 +8,14 @@
   display: flex;
   justify-content: space-around;
 
-  .infoContainer__header {
+  &__header {
     text-align: center;
     font-size: 2rem;
     width: 100%;
     height: 10%;
   }
 
-  .infoContainer__content {
+  &__content {
     z-index: 10;
     background-color: rgb(248, 244, 244);
     width: 50%;
@@ -46,15 +46,26 @@
   display: flex;
   flex-wrap: wrap;
   position: relative;
-
-  .gallery__switchLeft {
+  transition-property: all 0.25s ease;
+  &__switchLeft {
+    cursor: pointer;
     height: 100%;
     width: 5%;
     background-color: rgba(170, 170, 170, 0.329);
     position: absolute;
+    display: flex;
+    flex-direction: row;
+
+    img {
+      margin: auto;
+    }
   }
 
-  .gallery__content {
+  &__switchLeft:hover {
+    background-color: rgba(251, 255, 251, 0.431);
+  }
+
+  &__content {
     width: 100%;
     height: 100%;
 
@@ -64,15 +75,25 @@
     }
   }
 
-  .gallery__switchRight {
+  &__switchRight {
+    cursor: pointer;
     height: 100%;
     width: 5%;
     right: 0rem;
     background-color: rgba(170, 170, 170, 0.329);
     position: absolute;
+    display: flex;
+
+    img {
+      margin: auto;
+    }
   }
 
-  .gallery__footer {
+  &__switchRight:hover {
+    background-color: rgba(251, 255, 251, 0.431);
+  }
+
+  &__footer {
     min-width: 15%;
     height: 5%;
     bottom: 0rem;
@@ -81,8 +102,9 @@
     position: absolute;
     display: flex;
     justify-content: space-around;
-
+    transition: all 0.25 ease;
     .dot {
+      cursor: pointer;
       padding: 0.5rem;
       left: 0.5rem;
       width: 15%;
@@ -91,7 +113,12 @@
       background-color: rgba(155, 152, 152, 0.596);
     }
 
+    .dot:hover {
+      background-color: rgba(251, 255, 251, 0.431);
+    }
+
     .dotActive {
+      cursor: pointer;
       padding: 0.5rem;
       left: 0.5rem;
       width: 15%;
@@ -106,14 +133,15 @@
   background-color: rgb(241, 235, 235);
   width: 38%;
   height: 65%;
-  .informations__header {
+  &__header {
     button {
       width: 30%;
       text-align: center;
+      cursor: pointer;
     }
   }
 
-  .informations__content {
+  &__content {
     height: 100%;
     width: 100%;
     padding: 0.5rem 1rem;
@@ -131,14 +159,14 @@
 
     .content3 {
       margin-top: 1rem;
-      .content3__tags {
+      &__tags {
         display: flex;
         justify-content: space-around;
         flex-wrap: wrap;
 
         .tag {
           text-align: center;
-          width: 20%;
+          min-width: 20%;
           background-color: rgb(248, 244, 244);
         }
       }
@@ -163,15 +191,6 @@
       width: 100%;
       font-size: 1.2em;
       text-align: center;
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-    table {
-      width: 100%;
-
-      th {
-        width: 50%;
-      }
     }
 
     h1 {
