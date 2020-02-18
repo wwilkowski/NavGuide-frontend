@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './TripInfo.module.scss';
 import { ITripInfoProps } from './types';
 import Gallery from './Gallery/Gallery';
@@ -17,10 +17,12 @@ const TripInfo = (props: ITripInfoProps) => {
   const { t } = useTranslation();
   const dispatcher = useDispatch();
   const isLogged = useSelector((state: StoreType) => state.profile.isLoggedIn);
+  const node: any = useRef();
 
   const [informationsMode, setInformationsMode] = useState<string>('trip');
   const [tripData, setTripData] = useState<ISingleTripType>({
     city: '',
+    description: '',
     id: -1,
     lat: 0,
     lon: 0,
@@ -28,6 +30,7 @@ const TripInfo = (props: ITripInfoProps) => {
     name: '',
     owner: {
       firstName: '',
+      id: 0,
       languages: [],
       lastName: ''
     },
@@ -36,12 +39,29 @@ const TripInfo = (props: ITripInfoProps) => {
     priceType: '',
     radius: 0,
     tags: []
-  }); //naprawic + dodac pobieranie info o przewodniku
-  const [guideData, setGuideData] = useState<IUserData>();
+  });
+
+  useEffect(() => {
+    // add when mounted
+    document.addEventListener('mousedown', handleClick);
+    // return function to be called when unmounted
+    return () => {
+      document.removeEventListener('mousedown', handleClick);
+    };
+  }, []);
 
   useEffect(() => {
     setTripData(props.tripInformations);
   }, [props.tripInformations]);
+
+  const handleClick = (e: MouseEvent) => {
+    if (node.current.contains(e.target)) {
+      // inside click
+      return;
+    }
+    // outside click
+    props.changeTripInfoVisible(0);
+  };
 
   const signUpWithUserCode = (code: string) => {
     dispatcher(signUpGoogleRequest(code));
@@ -58,8 +78,8 @@ const TripInfo = (props: ITripInfoProps) => {
 
   return isLogged ? (
     <div className={styles.infoContainer}>
-      <div className={styles.infoContainer__content}>
-        <div className={styles.infoContainer__header}>Nazwa wycieczki</div>
+      <div className={styles.infoContainer__content} ref={node}>
+        <div className={styles.infoContainer__header}>{props.tripInformations.name}</div>
         <div className={styles.gallery}>
           <Gallery photos={props.tripInformations.photos} />
         </div>
@@ -69,8 +89,8 @@ const TripInfo = (props: ITripInfoProps) => {
         <div>
           <p style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '1.2rem' }}>{t('Description')}</p>
         </div>
-        <div className={styles.description} onClick={() => props.changeTripInfoVisible(1)}>
-          <Description />
+        <div className={styles.description}>
+          <Description text={props.tripInformations.description} />
         </div>
       </div>
     </div>
