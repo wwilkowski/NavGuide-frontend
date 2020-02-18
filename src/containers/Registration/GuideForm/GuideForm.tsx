@@ -39,7 +39,7 @@ const GuideForm = () => {
   else {
     return (
       <div>
-        {!blockForm && requests.length > 0 && (
+        {!blockForm && lastRequestId > 0 && (
           <div>
             <p>Wiadomość z ostatniej próby</p>
             <p>
