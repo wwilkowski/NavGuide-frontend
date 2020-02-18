@@ -16,6 +16,7 @@ const GuideForm = () => {
   const [blockForm, setBlockForm] = useState(false);
   const requests = useSelector((state: StoreType) => state.registration.guideRequests);
   const userRole = useSelector((state: StoreType) => state.profile.user.role);
+
   const { t } = useTranslation();
   useEffect(() => {
     dispatcher(actions.getGuideInfoRequest());
@@ -34,16 +35,17 @@ const GuideForm = () => {
     dispatcher(actions.sendRegisterGuideRequest(guideValues));
   };
 
-  const lastRequestId = requests.length > 1 ? requests.length - 1 : -1;
+  const lastRequestid = requests.length - 1;
+
   if (userRole === 'GUIDE') return <p>{t(`You are already a guide!`)}</p>;
   else {
     return (
       <div>
-        {!blockForm && lastRequestId > 0 && (
+        {!blockForm && lastRequestid >= 0 && (
           <div>
             <p>Wiadomość z ostatniej próby</p>
             <p>
-              {t(requests[lastRequestId].status.toLowerCase())} : {requests[lastRequestId].message}
+              {t(requests[lastRequestid].status.toLowerCase())} : {requests[lastRequestid].message}
             </p>
           </div>
         )}
@@ -51,10 +53,10 @@ const GuideForm = () => {
           <div>
             <p>{t(`You applied for being the guide`)}</p>
             <p>
-              {t(`Request status`)}: {t(`${requests[lastRequestId].status.toLowerCase()}`)}
+              {t(`Request status`)}: {t(`${requests[lastRequestid].status.toLowerCase()}`)}
             </p>
             <p>
-              {t(`Feedback`)}: {requests[lastRequestId].message ? requests[lastRequestId].message : t(`No message`)}
+              {t(`Feedback`)}: {requests[lastRequestid].message ? requests[lastRequestid].message : t(`No message`)}
             </p>
           </div>
         ) : (
