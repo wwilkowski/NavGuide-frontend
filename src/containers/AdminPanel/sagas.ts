@@ -27,7 +27,7 @@ function* settleGuideRequest(action: types.ISettleGuideRequest) {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json',
-        Authorisation: `Bearer ${getToken()}`
+        Authorization: `Bearer ${getToken()}`
       },
       body: JSON.stringify({
         message: action.data.message,

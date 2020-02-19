@@ -46,9 +46,6 @@ const Informations = (props: IInformationsProps) => {
           </div>
         </div>
         <div className={styles.content3}>
-          <p>
-            <b>{t('Tags')}:</b>
-          </p>
           <div className={styles.content3__tags}>
             {tripData.tags.map((tag: ITag, index: number) => (
               <div key={index} className={styles.tag}>

@@ -86,8 +86,8 @@ const TripInfo = (props: ITripInfoProps) => {
         <div className={styles.informations}>
           <Informations mode={informationsMode} changeInformationsMode={changeInformationsMode} tripData={tripData} />
         </div>
-        <div>
-          <p style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '1.2rem' }}>{t('Description')}</p>
+        <div style={{ width: '80%' }}>
+          <p style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '1.2rem', padding: '0.3rem' }}>{t('Description')}</p>
         </div>
         <div className={styles.description}>
           <Description text={props.tripInformations.description} />
