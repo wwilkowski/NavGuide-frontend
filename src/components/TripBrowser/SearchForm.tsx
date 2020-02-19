@@ -50,7 +50,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
   useEffect(() => {
     setLocation(props.formValue);
     values.location = props.formValue;
-  }, [props.formValue]);
+  }, [props.formValue, values.location]);
 
   return (
     <Form autoComplete='off' className={styles.searchForm}>
@@ -63,15 +63,14 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
             id='location'
             type='text'
             name='location'
-            value={location}
+            value={props.formValue}
             className={styles.searchForm__input}
-            onClick={() => {
-              if (location !== 'UMK Wydział Matematyki i Informatyki') setSuggestedListVisible(!suggestedListVisible);
-            }}
-            //onBlur={() => setSuggestedListVisible(false)}
+            // onClick={() => {
+            //   if (location !== 'UMK Wydział Matematyki i Informatyki') setSuggestedListVisible(!suggestedListVisible);
+            // }}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               props.handleChange(event);
-              setLocation(event.target.value);
+              // setLocation(event.target.value);
               props.onChange(event.target.value);
             }}
           />
@@ -112,23 +111,13 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
             step='.1'
             value={props.positionValue.radius}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              if (event.target.value.length) {
-                props.handleChange(event);
-                const position = {
-                  latitude: props.positionValue.latitude,
-                  longitude: props.positionValue.longitude,
-                  radius: parseFloat(event.target.value)
-                };
-                props.setPosition(position);
-              } else {
-                props.handleChange(event);
-                const position = {
-                  latitude: props.positionValue.latitude,
-                  longitude: props.positionValue.longitude,
-                  radius: 0
-                };
-                props.setPosition(position);
-              }
+              props.handleChange(event);
+              const position = {
+                latitude: props.positionValue.latitude,
+                longitude: props.positionValue.longitude,
+                radius: parseFloat(event.target.value) || 0.0
+              };
+              props.setPosition(position);
             }}
           />
         </div>
