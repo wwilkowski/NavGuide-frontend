@@ -5,7 +5,7 @@ import {
   FETCH_GEO_TRIPS_REQUESTED,
   FETCH_SUGGESTED_CITIES_REQUESTED
 } from './constants';
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest, cancelled } from 'redux-saga/effects';
 import * as actions from './actions';
 import * as types from './types';
 
