@@ -69,6 +69,7 @@ const TripBrowser: React.FC = () => {
   };
 
   const onSearchFormChange = (location: string) => {
+    setFormValue(location);
     if (location.length === 0) {
       dispatcher(actions.fetchSuggestedCitiesRequested(location, 0));
     } else {
@@ -84,7 +85,7 @@ const TripBrowser: React.FC = () => {
       setFormValue(suggestedCities[0].name);
     }
 
-    dispatcher(actions.fetchSuggestedCitiesRequested('', 0));
+    // dispatcher(actions.fetchSuggestedCitiesRequested('', 0));
 
     if (location.name.length) {
       setPositionValue({
