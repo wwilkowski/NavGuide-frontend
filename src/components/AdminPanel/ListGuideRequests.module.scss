@@ -1,0 +1,38 @@
+.requestsContainer {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+
+  .request {
+    width: 100%;
+    margin-top: 2rem;
+    display: flex;
+    box-shadow: 0px 7px 5px 0px rgb(195, 193, 193);
+    border: solid rgba(46, 44, 44, 0.466);
+
+    &__content {
+      width: 80%;
+      display: flex;
+      flex-direction: column;
+      background-color: rgba(230, 238, 230, 0.246);
+
+      .row {
+        padding: 0.5rem;
+        box-shadow: 0px 7px 5px 0px rgb(236, 228, 228);
+      }
+
+      .description {
+        margin-top: 0.5rem;
+        padding: 0.7rem;
+        background-color: white;
+      }
+    }
+
+    &__menu {
+      width: 20%;
+      border-left: solid rgb(190, 183, 183);
+      background-color: white;
+    }
+  }
+}

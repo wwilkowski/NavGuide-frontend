@@ -46,7 +46,7 @@
       height: 100%;
     }
 
-    @media (min-width: 801px) and (max-width: 1300px) {
+    @media (min-width: 801px) and (max-width: 1400px) {
       overflow-y: auto;
     }
   }
@@ -75,10 +75,10 @@
     height: 30%;
   }
 
-  @media (min-width: 801px) and (max-width: 1300px) {
-    margin-top: 1rem;
+  @media (min-width: 801px) and (max-width: 1400px) {
+    margin-top: 2rem;
     width: 90%;
-    height: 80%;
+    height: 60%;
   }
 
   &__switchLeft {
@@ -178,7 +178,7 @@
     height: auto;
   }
 
-  @media (min-width: 801px) and (max-width: 1300px) {
+  @media (min-width: 801px) and (max-width: 1400px) {
     width: 90%;
     height: auto;
   }
@@ -194,7 +194,7 @@
         width: 50%;
       }
 
-      @media (min-width: 801px) and (max-width: 1300px) {
+      @media (min-width: 801px) and (max-width: 1400px) {
         margin-top: 3rem;
         width: 50%;
       }
@@ -252,7 +252,7 @@
         height: 15%;
       }
 
-      @media (min-width: 801px) and (max-width: 1300px) {
+      @media (min-width: 801px) and (max-width: 1400px) {
         width: 20%;
         height: 20%;
       }
@@ -285,7 +285,7 @@
     height: auto;
   }
 
-  @media (min-width: 801px) and (max-width: 1300px) {
+  @media (min-width: 801px) and (max-width: 1400px) {
     width: 90%;
     height: auto;
   }
