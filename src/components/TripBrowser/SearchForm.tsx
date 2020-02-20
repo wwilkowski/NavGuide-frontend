@@ -15,6 +15,7 @@ import ListTrips from './ListTrips';
 import styles from './SearchForm.module.scss';
 import MapIcon from '../../assets/icons/map.png';
 import ListIcon from '../../assets/icons/list.png';
+import CloseIcon from '../../assets/icons/close.png';
 
 const SearchFormSchema = Yup.object().shape({});
 
@@ -222,8 +223,19 @@ const SearchForm = (props: ISearchFormProps) => {
 
   return (
     <div className={styles.container}>
-      <button onClick={() => setFormView(() => !formView)} className={styles.viewToggler}>
+      <button
+        onClick={() => setFormView(() => !formView)}
+        className={styles.viewToggler}
+        style={props.tripInfoVisible ? { display: 'none' } : {}}
+      >
         <img src={formView ? MapIcon : ListIcon} alt='' />
+      </button>
+      <button
+        onClick={() => props.changeTripInfoVisible(1)}
+        className={styles.viewToggler}
+        style={!props.tripInfoVisible ? { display: 'none' } : {}}
+      >
+        <img src={CloseIcon} alt='' />
       </button>
       <div className={styles.container__el}>
         <ControlledSearchForm
@@ -235,6 +247,7 @@ const SearchForm = (props: ISearchFormProps) => {
           setPosition={props.setPosition}
           trips={props.trips}
           onCityHover={props.onCityHover}
+          tripInfoVisible={props.tripInfoVisible}
           changeTripInfoVisible={props.changeTripInfoVisible}
         />
         <div className={formView ? '' : styles.hidden}>

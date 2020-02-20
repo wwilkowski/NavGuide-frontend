@@ -119,6 +119,7 @@ const TripBrowser: React.FC = () => {
         trips={searchedTrips}
         setPosition={setPositionValue}
         onCityHover={handleCityHover}
+        tripInfoVisible={tripInfoVisible}
         changeTripInfoVisible={changeTripInfoVisible}
       />
       {tripInfoVisible ? <TripInfo tripInformations={tripsData[tripInfoId]} changeTripInfoVisible={changeTripInfoVisible} /> : null}

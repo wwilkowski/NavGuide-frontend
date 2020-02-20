@@ -10,7 +10,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { logInGoogleRequest } from '../../containers/Profile/actions';
 import { getInterestsRequest, signUpGoogleRequest } from '../../containers/Registration/actions';
 import GoogleButton from '../../components/GoogleButton/GoogleButton';
-import { IUserData } from '../../shared/types';
 import { ISingleTripType } from '../../containers/TripBrowser/types';
 
 const TripInfo = (props: ITripInfoProps) => {
@@ -59,6 +58,7 @@ const TripInfo = (props: ITripInfoProps) => {
       // inside click
       return;
     }
+
     // outside click
     props.changeTripInfoVisible(0);
   };
@@ -87,7 +87,7 @@ const TripInfo = (props: ITripInfoProps) => {
           <Informations mode={informationsMode} changeInformationsMode={changeInformationsMode} tripData={tripData} />
         </div>
         <div style={{ width: '80%' }}>
-          <p style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '1.2rem', padding: '0.3rem' }}>{t('Description')}</p>
+          <p style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '2vh', padding: '0.3rem' }}>{t('Description')}</p>
         </div>
         <div className={styles.description}>
           <Description text={props.tripInformations.description} />

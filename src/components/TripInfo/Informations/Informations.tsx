@@ -10,8 +10,12 @@ const Informations = (props: IInformationsProps) => {
   return props.mode === 'trip' ? (
     <div>
       <div className={styles.informations__header}>
-        <button onClick={() => props.changeInformationsMode('trip')}>{t('trip')}</button>
-        <button onClick={() => props.changeInformationsMode('guide')}>{t('guide')}</button>
+        <button className={styles.button} onClick={() => props.changeInformationsMode('trip')}>
+          {t('trip')}
+        </button>
+        <button className={styles.button} onClick={() => props.changeInformationsMode('guide')}>
+          {t('guide')}
+        </button>
       </div>
       <div className={styles.informations__content}>
         <h1>
@@ -65,12 +69,19 @@ const Informations = (props: IInformationsProps) => {
   ) : (
     <div>
       <div className={styles.informations__header}>
-        <button onClick={() => props.changeInformationsMode('trip')}>{t('trip')}</button>
-        <button onClick={() => props.changeInformationsMode('guide')}>{t('guide')}</button>
+        <button className={styles.button} onClick={() => props.changeInformationsMode('trip')}>
+          {t('trip')}
+        </button>
+        <button className={styles.button} onClick={() => props.changeInformationsMode('guide')}>
+          {t('guide')}
+        </button>
       </div>
       <div className={styles.informations__content}>
         <div className={styles.avatar}>
-          <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/512px-User_font_awesome.svg.png'></img>
+          <img
+            src='https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/512px-User_font_awesome.svg.png'
+            alt='avatar'
+          ></img>
         </div>
         <div className={styles.guideContent1}>
           <p>
