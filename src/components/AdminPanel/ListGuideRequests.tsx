@@ -1,40 +1,40 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { IListGuideRequestProps } from './types';
 import * as types from '../../containers/AdminPanel/types';
-import { useTranslation } from 'react-i18next';
 import styles from './ListGuideRequests.module.scss';
-
-//naprawic doswiadczenie
+import { useSelector } from 'react-redux';
+import { StoreType } from '../../store';
+import GuideRequest from './GuideRequest';
+import { IUserProfile } from '../../containers/User/types';
 
 const ListGuideRequests = (props: IListGuideRequestProps) => {
   const { guideRequests } = props;
-  const { t } = useTranslation();
+
+  const userProfilesData = useSelector((state: StoreType) => state.user.users);
+
+  const [userProfiles, setUserProfiles] = useState<IUserProfile[]>([]);
+
+  useEffect(() => {
+    setUserProfiles(userProfilesData);
+  }, []);
 
   return (
     <div className={styles.requestsContainer}>
-      {guideRequests.map((req: types.IGuideRequest, index: number) => (
-        <div className={styles.request} key={req.id}>
-          <div className={styles.request__content}>
-            <div className={styles.row}>
-              <b>{t('ID')}:</b> {req.id}
-            </div>
-            <div className={styles.row}>
-              <b>{t('Created at')}:</b> {req.date}
-            </div>
-            <div className={styles.row}>
-              <b>{t('Name and surname')}:</b> Krzysztof Sieg
-            </div>
-            <div className={styles.row}>
-              <b>{t('Experience')}:</b> ****
-            </div>
-            <div className={styles.row}>
-              <b>{t('Languages')}:</b> {req.languages.map((lng: string) => `${lng} `)}
-            </div>
-            <div className={styles.description}>{req.description}</div>
+      {guideRequests.map((req: types.IGuideRequest) => {
+        var userProfile: IUserProfile = userProfiles[0];
+        userProfiles.forEach((user: IUserProfile) => {
+          if (user.id === req.userId) {
+            userProfile = user;
+            return;
+          }
+        });
+
+        return (
+          <div key={req.id}>
+            <GuideRequest guideRequest={req} userProfile={userProfile} />
           </div>
-          <div className={styles.request__menu}></div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 };

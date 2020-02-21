@@ -15,18 +15,22 @@ import adminPanel from './containers/AdminPanel/reducer';
 import adminPanelSaga from './containers/AdminPanel/sagas';
 import tripBrowserSaga from './containers/TripBrowser/sagas';
 import offerSaga from './containers/Offers/sagas';
+import userSaga from './containers/User/sagas';
+import user from './containers/User/reducer';
 import { IMultiTripsAndTagsType } from './containers/TripBrowser/types';
 import { IMultiGuideRequests } from './containers/AdminPanel/types';
+import { IUserProfiles } from './containers/User/types';
 
 export interface StoreType {
   registration: IRegisterStore;
   profile: IProfileData;
+  user: IUserProfiles;
   tripBrowser: IMultiTripsAndTagsType;
   adminPanel: IMultiGuideRequests;
 }
 
 function* rootSaga() {
-  yield all([SignUpUserSaga(), logInUserSaga(), tripBrowserSaga(), adminPanelSaga(), offerSaga()]);
+  yield all([SignUpUserSaga(), logInUserSaga(), tripBrowserSaga(), adminPanelSaga(), offerSaga(), userSaga()]);
 }
 
 const persistConfig = {
@@ -38,7 +42,7 @@ const persistConfig = {
 export let persistor: Persistor;
 export const configureStore = () => {
   const sagaMiddleware = createSagaMiddleware();
-  const rootReducer = combineReducers({ registration, profile, tripBrowser, adminPanel });
+  const rootReducer = combineReducers({ registration, profile, user, tripBrowser, adminPanel });
   let persistedReducer = persistReducer(persistConfig, rootReducer);
   const store = createStore(persistedReducer, composeWithDevTools(applyMiddleware(sagaMiddleware)));
   persistor = persistStore(store);

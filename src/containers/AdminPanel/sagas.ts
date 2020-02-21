@@ -13,7 +13,6 @@ function* fetchGuideRequestsFromAPI() {
   try {
     const response = yield call(fetch, fetchGuideRequestsEndpoint);
     const guideRequests = yield response.json();
-    //nie trzeba filtrowac, API zwraca tylko status PENDINGs
     yield put(actions.getGuideRequestsSuccessed(guideRequests));
   } catch {
     yield put(actions.getGuideRequestsFailed('Error while fetching guide requests from API!'));

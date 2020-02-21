@@ -8,6 +8,8 @@ export interface IGuideRequest {
   languages: string[];
   message: string;
   status: string;
+  experience: string;
+  userId: number;
 }
 
 export interface IMultiGuideRequests {

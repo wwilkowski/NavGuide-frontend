@@ -1,0 +1,35 @@
+.formContainer {
+  width: 100%;
+  z-index: 10;
+  display: flex;
+  position: absolute;
+
+  .form {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 0.5rem;
+    border: solid rgba(46, 44, 44, 0.466);
+    .formField {
+      background-color: rgba(228, 235, 228, 0.301);
+      width: 33.3%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      padding: 0.2rem;
+
+      &__input {
+        width: 80%;
+      }
+
+      label {
+        width: 80%;
+        text-align: center;
+        padding: 0.5rem;
+        font-weight: bold;
+        background-color: rgb(255, 248, 248);
+      }
+    }
+  }
+}
