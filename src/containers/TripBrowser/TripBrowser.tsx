@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { ISingleTripType, IPosition, ISuggestedPlace } from './types';
+import { ISingleTripType, IPosition, ISuggestedPlace, IGuideProfile } from './types';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from './actions';
+import * as actionsUser from '../User/actions';
 import { StoreType } from '../../store';
 import SearchForm from '../../components/TripBrowser/SearchForm';
 import TripInfo from '../../components/TripInfo/TripInfo';
@@ -10,6 +11,8 @@ const TripBrowser: React.FC = () => {
   const isLogged = useSelector((state: StoreType) => state.profile.isLoggedIn);
   const tripsData = useSelector((state: StoreType) => state.tripBrowser.trips);
   const suggestedCities = useSelector((state: StoreType) => state.tripBrowser.places);
+  const guideProfileData = useSelector((state: StoreType) => state.guideProfile.guideProfileData);
+  const guideProfile = useSelector((state: StoreType) => state.guideProfile.guideProfile);
 
   const dispatcher = useDispatch();
 
@@ -107,6 +110,11 @@ const TripBrowser: React.FC = () => {
       if (trip.id === tripId) setTripInfoId(i);
       i++;
     });
+
+    if (!tripInfoVisible && isLogged) {
+      dispatcher(actions.fetchGuideProfileRequested(tripsData[tripInfoId].owner.id));
+      dispatcher(actions.fetchGuideProfileDataRequest(tripsData[tripInfoId].owner.id));
+    }
   };
 
   return (
@@ -120,13 +128,19 @@ const TripBrowser: React.FC = () => {
         trips={searchedTrips}
         setPosition={setPositionValue}
         onCityHover={handleCityHover}
+        tripInfoVisible={tripInfoVisible}
         changeTripInfoVisible={changeTripInfoVisible}
       />
-      {tripInfoVisible ? <TripInfo tripInformations={tripsData[tripInfoId]} changeTripInfoVisible={changeTripInfoVisible} /> : null}
+      {tripInfoVisible ? (
+        <TripInfo
+          tripInformations={tripsData[tripInfoId]}
+          guideProfile={guideProfile}
+          guideProfileData={guideProfileData}
+          changeTripInfoVisible={changeTripInfoVisible}
+        />
+      ) : null}
     </div>
   );
 };
 
 export default TripBrowser;
-
-//       {tripInfoVisible ? <TripInfo tripInformations={tripsData[tripInfoId]} changeTripInfoVisible={changeTripInfoVisible} /> : null}{' '}

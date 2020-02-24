@@ -10,7 +10,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { logInGoogleRequest } from '../../containers/Profile/actions';
 import { getInterestsRequest, signUpGoogleRequest } from '../../containers/Registration/actions';
 import GoogleButton from '../../components/GoogleButton/GoogleButton';
-import { IUserData } from '../../shared/types';
 import { ISingleTripType } from '../../containers/TripBrowser/types';
 
 const TripInfo = (props: ITripInfoProps) => {
@@ -59,6 +58,7 @@ const TripInfo = (props: ITripInfoProps) => {
       // inside click
       return;
     }
+
     // outside click
     props.changeTripInfoVisible(0);
   };
@@ -84,10 +84,16 @@ const TripInfo = (props: ITripInfoProps) => {
           <Gallery photos={props.tripInformations.photos} />
         </div>
         <div className={styles.informations}>
-          <Informations mode={informationsMode} changeInformationsMode={changeInformationsMode} tripData={tripData} />
+          <Informations
+            mode={informationsMode}
+            changeInformationsMode={changeInformationsMode}
+            tripData={tripData}
+            guideProfile={props.guideProfile}
+            guideProfileData={props.guideProfileData}
+          />
         </div>
-        <div>
-          <p style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '1.2rem' }}>{t('Description')}</p>
+        <div style={{ width: '80%' }}>
+          <p style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '1.8vh', padding: '0.3rem' }}>{t('Description')}</p>
         </div>
         <div className={styles.description}>
           <Description text={props.tripInformations.description} />
@@ -96,8 +102,10 @@ const TripInfo = (props: ITripInfoProps) => {
     </div>
   ) : (
     <div className={styles.infoContainer}>
-      <div className={styles.infoContainer__content}>Aby zobaczyć więcej:</div>
-      <div className={styles.googleButtons}>
+      <div className={styles.infoContainer__content} ref={node}>
+        Aby zobaczyć więcej:
+      </div>
+      <div className={styles.googleButtons} ref={node}>
         <p style={{ width: '50%' }}>
           <GoogleButton text='Sign up with Google' onSuccess={signUpWithUserCode} onFailure={signUpWithUserCode} />
         </p>

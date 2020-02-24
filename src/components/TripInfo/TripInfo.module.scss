@@ -1,32 +1,55 @@
 .infoContainer {
   background-color: rgba(15, 22, 9, 0.185);
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   position: absolute;
   z-index: 5;
   top: 0%;
+  left: 0%;
   display: flex;
+  font-size: 1.5vh;
   justify-content: space-around;
+  @media (max-width: 800px) {
+    background-color: white;
+    overflow-y: auto;
+  }
 
   &__header {
     text-align: center;
-    font-size: 2rem;
+    font-size: 3vh;
+    font-weight: bold;
     width: 100%;
     height: 10%;
+
+    @media (max-width: 800px) {
+      width: 60%;
+      min-height: 5%;
+    }
   }
 
   &__content {
     z-index: 10;
     background-color: rgb(248, 244, 244);
     width: 50%;
-    height: 60%;
+    height: 65%;
     position: absolute;
     padding: 1rem;
-    margin-top: 10rem;
+    margin-top: 8rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     border-radius: 1%;
+
+    @media (max-width: 800px) {
+      margin-top: 0%;
+      width: 100%;
+      height: 100%;
+      position: fixed;
+    }
+
+    @media (min-width: 801px) and (max-width: 1400px) {
+      overflow-y: auto;
+    }
   }
 }
 
@@ -42,11 +65,23 @@
 .gallery {
   background-color: rgba(15, 22, 9, 0.185);
   width: 58%;
-  height: 65%;
+  height: 60%;
   display: flex;
   flex-wrap: wrap;
   position: relative;
   transition-property: all 0.25s ease;
+
+  @media (max-width: 800px) {
+    width: 60%;
+    height: 30%;
+  }
+
+  @media (min-width: 801px) and (max-width: 1400px) {
+    margin-top: 2rem;
+    width: 90%;
+    height: 60%;
+  }
+
   &__switchLeft {
     cursor: pointer;
     height: 100%;
@@ -102,7 +137,11 @@
     position: absolute;
     display: flex;
     justify-content: space-around;
-    transition: all 0.25 ease;
+
+    @media (max-width: 800px) {
+      bottom: 0.1rem;
+    }
+
     .dot {
       cursor: pointer;
       padding: 0.5rem;
@@ -130,23 +169,83 @@
 }
 
 .informations {
+  overflow-y: auto;
   background-color: rgb(241, 235, 235);
   width: 38%;
-  height: 65%;
+  height: 60%;
+
+  @media (max-width: 800px) {
+    width: 60%;
+    height: auto;
+  }
+
+  @media (min-width: 801px) and (max-width: 1400px) {
+    width: 90%;
+    height: auto;
+  }
+
   &__header {
-    button {
-      width: 30%;
+    display: flex;
+    .button {
       text-align: center;
+      font-family: 'Open sans';
+      font-size: 0.9em;
+      width: 100px;
+      border: 1px solid #94531e;
+      color: #957a21;
+      background: none;
+      border-radius: 5px;
+      padding: 0.4rem;
       cursor: pointer;
+
+      @media (max-width: 800px) {
+        width: 50%;
+      }
+
+      @media (min-width: 801px) and (max-width: 1400px) {
+        margin-top: 3rem;
+        width: 50%;
+      }
+    }
+
+    .button:hover {
+      background-color: white;
+    }
+
+    .buttonActive {
+      text-align: center;
+      font-family: 'Open sans';
+      font-size: 0.9em;
+      width: 100px;
+      border: 1px solid #94531e;
+      color: #957a21;
+      background-color: white;
+      border-radius: 5px;
+      padding: 0.4rem;
+      cursor: pointer;
+
+      @media (max-width: 800px) {
+        width: 50%;
+      }
+
+      @media (min-width: 801px) and (max-width: 1400px) {
+        margin-top: 3rem;
+        width: 50%;
+      }
+    }
+
+    .buttonActive:hover {
+      background-color: white;
     }
   }
 
   &__content {
     height: 100%;
     width: 100%;
-    padding: 0.5rem 1rem;
+    padding: 1rem 1rem;
     display: flex;
     flex-direction: column;
+
     .content1 {
       margin-top: 0.5rem;
     }
@@ -181,9 +280,25 @@
     .avatar {
       width: 35%;
       height: 35%;
-      border-radius: 50%;
       margin: auto;
-      background-color: rgb(236, 141, 32);
+      margin-top: 0.5rem;
+
+      img {
+        width: 100%;
+        height: 100%;
+        border: solid;
+        border-radius: 50%;
+      }
+
+      @media (max-width: 800px) {
+        width: 15%;
+        height: 15%;
+      }
+
+      @media (min-width: 801px) and (max-width: 1400px) {
+        width: 20%;
+        height: 20%;
+      }
     }
 
     .guideContent1 {
@@ -202,9 +317,19 @@
 .description {
   background-color: rgb(241, 235, 235);
   width: 100%;
-  height: 22%;
+  height: 23%;
   margin-bottom: 3rem;
   padding: 1rem;
-  font-size: 1rem;
+  font-size: 1.5vh;
   overflow-y: auto;
+
+  @media (max-width: 800px) {
+    width: 60%;
+    height: auto;
+  }
+
+  @media (min-width: 801px) and (max-width: 1400px) {
+    width: 90%;
+    height: auto;
+  }
 }

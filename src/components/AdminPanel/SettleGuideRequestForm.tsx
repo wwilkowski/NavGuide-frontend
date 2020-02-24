@@ -3,6 +3,7 @@ import { FormikProps, withFormik, Form, Field } from 'formik';
 import i18n from '../../locales/i18n';
 import { ISettleGuideRequestFormValues, ISettleGuideRequestFormProps } from './types';
 import { showNotification } from '../../helpers/notification';
+import styles from './SettleGuideRequestForm.module.scss';
 
 const InnerForm = (props: FormikProps<ISettleGuideRequestFormValues> & ISettleGuideRequestFormProps) => {
   const options = ['REJECT', 'ACCEPT'];
@@ -10,11 +11,11 @@ const InnerForm = (props: FormikProps<ISettleGuideRequestFormValues> & ISettleGu
   const disabled = props.availableIDs.length ? false : true;
 
   return (
-    <div style={{ boxShadow: '0 2px 2px 0 rgba(0, 0, 0, 0.15), 0 1px 5px 0 rgba(0, 0, 0, 0.14)' }}>
-      <Form autoComplete='off' style={{ display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap' }}>
-        <div style={{ width: '33%', padding: '1rem' }}>
+    <div className={styles.formContainer}>
+      <Form className={styles.form} autoComplete='off'>
+        <div className={styles.formField}>
           <label htmlFor='id'>{i18n.t('ID')}: </label>
-          <Field style={{ width: '75%' }} id='id' name='id' as='select' disabled={disabled}>
+          <Field className={styles.formField__input} id='id' name='id' as='select' disabled={disabled}>
             {props.availableIDs.map((id: number) => (
               <option key={id} value={id}>
                 {id}
@@ -22,9 +23,9 @@ const InnerForm = (props: FormikProps<ISettleGuideRequestFormValues> & ISettleGu
             ))}
           </Field>
         </div>
-        <div style={{ width: '33%', padding: '1rem' }}>
+        <div className={styles.formField}>
           <label htmlFor='status'>{i18n.t('Status')}: </label>
-          <Field style={{ width: '75%' }} as='select' id='status' name='status' disabled={disabled}>
+          <Field className={styles.formField__input} as='select' id='status' name='status' disabled={disabled}>
             <option></option>
             {options.map((option: string) => (
               <option key={option} value={option}>
@@ -33,13 +34,13 @@ const InnerForm = (props: FormikProps<ISettleGuideRequestFormValues> & ISettleGu
             ))}
           </Field>
         </div>
-        <div style={{ width: '33%', padding: '1rem' }}>
+        <div className={styles.formField}>
           <label htmlFor='message'>{i18n.t('Message')}: </label>
-          <Field id='message' name='message' type='textarea' disabled={disabled} />
+          <Field className={styles.formField__input} id='message' name='message' type='textarea' disabled={disabled} />
         </div>
-        <button style={{ width: '25%', margin: '0.5rem' }} type='submit'>
-          OK
-        </button>
+        <div className={styles.formField}>
+          <button type='submit'>OK</button>
+        </div>
       </Form>
     </div>
   );
