@@ -13,9 +13,15 @@ import {
   FETCH_TAGS_FAILED,
   FETCH_SUGGESTED_CITIES_REQUESTED,
   FETCH_SUGGESTED_CITIES_SUCCESED,
-  FETCH_SUGGESTED_CITIES_FAILED
+  FETCH_SUGGESTED_CITIES_FAILED,
+  FETCH_GUIDE_PROFILE_REQUESTED,
+  FETCH_GUIDE_PROFILE_FAILED,
+  FETCH_GUIDE_PROFILE_DATA_REQUESTED,
+  FETCH_GUIDE_PROFILE_DATA_SUCCESSED,
+  FETCH_GUIDE_PROFILE_DATA_FAILED
 } from './constants';
-import { IMultiTripsType, ITag, ISuggestedPlace } from './types';
+import { IMultiTripsType, ITag, ISuggestedPlace, IGuideProfile } from './types';
+import { IUserProfile } from '../User/types';
 
 //RANDOM TRIPS
 export const fetchRandomTripsRequested = (isLogged: boolean) => ({
@@ -97,5 +103,37 @@ export const fetchSuggestedCitiesSuccesed = (places: ISuggestedPlace) => ({
 
 export const fetchSuggestedCitiesFailed = (message: string) => ({
   type: FETCH_SUGGESTED_CITIES_FAILED,
+  message
+});
+
+//GUIDE PROFILE
+export const fetchGuideProfileRequested = (id: number) => ({
+  type: FETCH_GUIDE_PROFILE_REQUESTED,
+  id
+});
+
+export const fetchGuideProfileSuccessed = (guideProfile: IGuideProfile) => ({
+  type: FETCH_RANDOM_TRIPS_SUCCESED,
+  guideProfile
+});
+
+export const fetchGuideProfileFailed = (message: string) => ({
+  type: FETCH_GUIDE_PROFILE_FAILED,
+  message
+});
+
+//GUIDE PROFILE DATA
+export const fetchGuideProfileDataRequest = (id: number) => ({
+  type: FETCH_GUIDE_PROFILE_DATA_REQUESTED,
+  id
+});
+
+export const fetchGuideProfileDataSuccessed = (guideProfileData: IUserProfile) => ({
+  type: FETCH_GUIDE_PROFILE_DATA_SUCCESSED,
+  guideProfileData
+});
+
+export const fetchGuideProfileDataFailed = (message: string) => ({
+  type: FETCH_GUIDE_PROFILE_DATA_FAILED,
   message
 });
