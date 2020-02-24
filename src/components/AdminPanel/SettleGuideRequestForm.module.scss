@@ -3,6 +3,7 @@
   z-index: 10;
   display: flex;
   position: absolute;
+  font-size: 1.5vh;
 
   .form {
     width: 100%;
@@ -10,6 +11,7 @@
     justify-content: space-around;
     flex-wrap: wrap;
     margin: 0.5rem;
+    margin-top: 2rem;
     border: solid rgba(46, 44, 44, 0.466);
     .formField {
       background-color: rgba(228, 235, 228, 0.301);

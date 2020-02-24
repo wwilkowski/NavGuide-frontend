@@ -16,7 +16,7 @@ const GuideRequest = ({ guideRequest, userProfile }: IGuideRequestProps) => {
   }, [userProfile]);
 
   return (
-    <div className={styles.request} key={req.id}>
+    <>
       <div className={styles.request__content}>
         <div className={styles.row}>
           <div style={{ width: '30%' }}>
@@ -39,7 +39,7 @@ const GuideRequest = ({ guideRequest, userProfile }: IGuideRequestProps) => {
             <b>{t('Country')}: </b>
             {user ? user.country : null}
           </div>
-          <div style={{ width: '50%' }}>
+          <div style={{ marginLeft: '0.5rem' }}>
             <b>{t('Languages')}:</b> {req.languages.map((lng: string) => `${lng} `)}
           </div>
         </div>
@@ -68,7 +68,7 @@ const GuideRequest = ({ guideRequest, userProfile }: IGuideRequestProps) => {
           <b>{t('Age')}:</b> {user ? user.age : null}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -84,10 +84,16 @@ const TripInfo = (props: ITripInfoProps) => {
           <Gallery photos={props.tripInformations.photos} />
         </div>
         <div className={styles.informations}>
-          <Informations mode={informationsMode} changeInformationsMode={changeInformationsMode} tripData={tripData} />
+          <Informations
+            mode={informationsMode}
+            changeInformationsMode={changeInformationsMode}
+            tripData={tripData}
+            guideProfile={props.guideProfile}
+            guideProfileData={props.guideProfileData}
+          />
         </div>
         <div style={{ width: '80%' }}>
-          <p style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '2vh', padding: '0.3rem' }}>{t('Description')}</p>
+          <p style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '1.8vh', padding: '0.3rem' }}>{t('Description')}</p>
         </div>
         <div className={styles.description}>
           <Description text={props.tripInformations.description} />

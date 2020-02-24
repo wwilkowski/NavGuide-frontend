@@ -186,9 +186,16 @@
 
   &__header {
     display: flex;
-    button {
-      width: 30%;
+    .button {
       text-align: center;
+      font-family: 'Open sans';
+      font-size: 0.9em;
+      width: 100px;
+      border: 1px solid #94531e;
+      color: #957a21;
+      background: none;
+      border-radius: 5px;
+      padding: 0.4rem;
       cursor: pointer;
 
       @media (max-width: 800px) {
@@ -199,6 +206,36 @@
         margin-top: 3rem;
         width: 50%;
       }
+    }
+
+    .button:hover {
+      background-color: white;
+    }
+
+    .buttonActive {
+      text-align: center;
+      font-family: 'Open sans';
+      font-size: 0.9em;
+      width: 100px;
+      border: 1px solid #94531e;
+      color: #957a21;
+      background-color: white;
+      border-radius: 5px;
+      padding: 0.4rem;
+      cursor: pointer;
+
+      @media (max-width: 800px) {
+        width: 50%;
+      }
+
+      @media (min-width: 801px) and (max-width: 1400px) {
+        margin-top: 3rem;
+        width: 50%;
+      }
+    }
+
+    .buttonActive:hover {
+      background-color: white;
     }
   }
 

@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import {
   FETCH_TAGS_SUCCESED,
   FETCH_TAGS_REQUESTED,
@@ -14,7 +13,10 @@ import {
   FETCH_GEO_TRIPS_FAILED,
   FETCH_SUGGESTED_CITIES_REQUESTED,
   FETCH_SUGGESTED_CITIES_SUCCESED,
-  FETCH_SUGGESTED_CITIES_FAILED
+  FETCH_SUGGESTED_CITIES_FAILED,
+  FETCH_GUIDE_PROFILE_REQUESTED,
+  FETCH_GUIDE_PROFILE_SUCCESSED,
+  FETCH_GUIDE_PROFILE_FAILED
 } from './constants';
 
 export interface ITag {
@@ -57,6 +59,13 @@ export interface IMultiTripsAndTagsType {
   trips: ISingleTripType[];
   tags: ITag[];
   places: ISuggestedPlace[];
+}
+
+export interface IGuideProfile {
+  firstName: string;
+  id: number;
+  languages: string[];
+  lastName: string;
 }
 
 export interface IFetchRandomTripsSuccesedAction {
@@ -109,6 +118,16 @@ export interface IFetchSuggestedCitiesFailedAction {
   message: string;
 }
 
+export interface IFetchGuideProfileSuccessed {
+  type: typeof FETCH_GUIDE_PROFILE_SUCCESSED;
+  guideProfile: IGuideProfile;
+}
+
+export interface IFetchGuideProfileFailed {
+  type: typeof FETCH_GUIDE_PROFILE_FAILED;
+  message: string;
+}
+
 export type TripBrowserAction =
   | IFetchRandomTripsRequest
   | IFetchRandomTripsSuccesedAction
@@ -121,6 +140,8 @@ export type TripBrowserAction =
   | IFetchRandomTripsFailedAction
   | IFetchSuggestedCitiesSuccesedAction
   | IFetchSuggestedCitiesFailedAction;
+
+export type GuideProfileAction = IFetchGuideProfileSuccessed | IFetchGuideProfileFailed;
 
 export interface IFetchRandomTripsRequest {
   type: typeof FETCH_RANDOM_TRIPS_REQUESTED;
@@ -148,6 +169,11 @@ export interface IFetchSuggestedCitiesRequest {
   type: typeof FETCH_SUGGESTED_CITIES_REQUESTED;
   location: string;
   number: number;
+}
+
+export interface IFetchGuideProfileRequest {
+  type: typeof FETCH_GUIDE_PROFILE_REQUESTED;
+  id: number;
 }
 
 export interface ISuggestedPlace {

@@ -3,7 +3,8 @@ import {
   FETCH_TAGS_REQUESTED,
   FETCH_CITY_TRIPS_REQUESTED,
   FETCH_GEO_TRIPS_REQUESTED,
-  FETCH_SUGGESTED_CITIES_REQUESTED
+  FETCH_SUGGESTED_CITIES_REQUESTED,
+  FETCH_GUIDE_PROFILE_REQUESTED
 } from './constants';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import * as actions from './actions';
@@ -119,12 +120,17 @@ function* fetchSuggestedCitiesFromPhotonAPI(action: types.IFetchSuggestedCitiesR
   }
 }
 
+function* fetchGuideProfileFromAPI(action: types.IFetchGuideProfileRequest) {
+  //dokonczyc
+}
+
 function* mainSaga() {
   yield takeLatest(FETCH_RANDOM_TRIPS_REQUESTED, fetchRandomTripsFromAPI);
   yield takeLatest(FETCH_CITY_TRIPS_REQUESTED, fetchCityTripsFromAPI);
   yield takeLatest(FETCH_GEO_TRIPS_REQUESTED, fetchGeoTripsFromAPI);
   yield takeLatest(FETCH_TAGS_REQUESTED, fetchTagsFromAPI);
   yield takeLatest(FETCH_SUGGESTED_CITIES_REQUESTED, fetchSuggestedCitiesFromPhotonAPI);
+  yield takeLatest(FETCH_GUIDE_PROFILE_REQUESTED, fetchGuideProfileFromAPI);
 }
 
 export default mainSaga;

@@ -11,26 +11,19 @@ const ListGuideRequests = (props: IListGuideRequestProps) => {
   const { guideRequests } = props;
 
   const userProfilesData = useSelector((state: StoreType) => state.user.users);
-
-  const [userProfiles, setUserProfiles] = useState<IUserProfile[]>([]);
-
-  useEffect(() => {
-    setUserProfiles(userProfilesData);
-  }, []);
-
+  console.log(userProfilesData);
   return (
     <div className={styles.requestsContainer}>
       {guideRequests.map((req: types.IGuideRequest) => {
-        var userProfile: IUserProfile = userProfiles[0];
-        userProfiles.forEach((user: IUserProfile) => {
+        var userProfile: IUserProfile = userProfilesData[0];
+        userProfilesData.forEach((user: IUserProfile) => {
           if (user.id === req.userId) {
             userProfile = user;
             return;
           }
         });
-
         return (
-          <div key={req.id}>
+          <div className={styles.request} key={req.id}>
             <GuideRequest guideRequest={req} userProfile={userProfile} />
           </div>
         );

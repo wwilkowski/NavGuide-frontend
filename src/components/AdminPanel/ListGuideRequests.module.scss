@@ -3,6 +3,11 @@
   height: auto;
   display: flex;
   flex-wrap: wrap;
+  font-size: 1.5vh;
+
+  @media (min-width: 1520px) {
+    overflow-y: auto;
+  }
 
   .request {
     width: 100%;
@@ -10,6 +15,11 @@
     display: flex;
     box-shadow: 0px 7px 5px 0px rgb(195, 193, 193);
     border: solid rgba(46, 44, 44, 0.466);
+
+    @media (min-width: 1520px) {
+      width: 48%;
+      margin-right: 1rem;
+    }
 
     &__content {
       width: 70%;
@@ -55,6 +65,7 @@
         padding: 0.2rem;
         b {
           margin-left: 0.5rem;
+          padding-right: 0.2rem;
         }
       }
     }
