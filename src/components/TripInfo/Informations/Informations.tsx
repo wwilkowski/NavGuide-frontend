@@ -63,7 +63,6 @@ const Informations = (props: IInformationsProps) => {
       </div>
       {props.mode === 'trip' ? (
         <div>
-          <div className={styles.informations__header}></div>
           <div className={styles.informations__content}>
             <h1>
               <b>{t('Informations')}</b>
@@ -117,7 +116,7 @@ const Informations = (props: IInformationsProps) => {
         <div>
           <div className={styles.informations__content}>
             <div className={styles.avatar}>
-              <img src={props.guideProfileData.avatar} alt='avatar'></img>
+              <img src={props.guideProfileData.avatar} alt='avatar' />
             </div>
             <div className={styles.guideContent1}>
               <p>

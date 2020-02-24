@@ -16,8 +16,12 @@ import {
   FETCH_SUGGESTED_CITIES_FAILED,
   FETCH_GUIDE_PROFILE_REQUESTED,
   FETCH_GUIDE_PROFILE_SUCCESSED,
-  FETCH_GUIDE_PROFILE_FAILED
+  FETCH_GUIDE_PROFILE_FAILED,
+  FETCH_GUIDE_PROFILE_DATA_REQUESTED,
+  FETCH_GUIDE_PROFILE_DATA_FAILED,
+  FETCH_GUIDE_PROFILE_DATA_SUCCESSED
 } from './constants';
+import { IUserProfile, IUserProfiles } from '../User/types';
 
 export interface ITag {
   id: number;
@@ -66,6 +70,11 @@ export interface IGuideProfile {
   id: number;
   languages: string[];
   lastName: string;
+}
+
+export interface IGuideProfileComplete {
+  guideProfile: IGuideProfile;
+  guideProfileData: IUserProfile;
 }
 
 export interface IFetchRandomTripsSuccesedAction {
@@ -128,6 +137,16 @@ export interface IFetchGuideProfileFailed {
   message: string;
 }
 
+export interface IFetchGuideProfileDataSuccessed {
+  type: typeof FETCH_GUIDE_PROFILE_DATA_SUCCESSED;
+  guideProfileData: IUserProfile;
+}
+
+export interface IFetchGuideProfileDataFailed {
+  type: typeof FETCH_GUIDE_PROFILE_DATA_FAILED;
+  message: string;
+}
+
 export type TripBrowserAction =
   | IFetchRandomTripsRequest
   | IFetchRandomTripsSuccesedAction
@@ -141,7 +160,11 @@ export type TripBrowserAction =
   | IFetchSuggestedCitiesSuccesedAction
   | IFetchSuggestedCitiesFailedAction;
 
-export type GuideProfileAction = IFetchGuideProfileSuccessed | IFetchGuideProfileFailed;
+export type GuideProfileAction =
+  | IFetchGuideProfileSuccessed
+  | IFetchGuideProfileFailed
+  | IFetchGuideProfileDataSuccessed
+  | IFetchGuideProfileDataFailed;
 
 export interface IFetchRandomTripsRequest {
   type: typeof FETCH_RANDOM_TRIPS_REQUESTED;
@@ -173,6 +196,11 @@ export interface IFetchSuggestedCitiesRequest {
 
 export interface IFetchGuideProfileRequest {
   type: typeof FETCH_GUIDE_PROFILE_REQUESTED;
+  id: number;
+}
+
+export interface IFetchGuideProfileDataRequest {
+  type: typeof FETCH_GUIDE_PROFILE_DATA_REQUESTED;
   id: number;
 }
 

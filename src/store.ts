@@ -17,14 +17,14 @@ import tripBrowserSaga from './containers/TripBrowser/sagas';
 import offerSaga from './containers/Offers/sagas';
 import userSaga from './containers/User/sagas';
 import user from './containers/User/reducer';
-import { IMultiTripsAndTagsType, IGuideProfile } from './containers/TripBrowser/types';
+import { IMultiTripsAndTagsType, IGuideProfile, IGuideProfileComplete } from './containers/TripBrowser/types';
 import { IMultiGuideRequests } from './containers/AdminPanel/types';
 import { IUserProfiles } from './containers/User/types';
 
 export interface StoreType {
   registration: IRegisterStore;
   profile: IProfileData;
-  guideProfile: IGuideProfile;
+  guideProfile: IGuideProfileComplete;
   user: IUserProfiles;
   tripBrowser: IMultiTripsAndTagsType;
   adminPanel: IMultiGuideRequests;

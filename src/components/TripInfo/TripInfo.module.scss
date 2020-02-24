@@ -280,10 +280,15 @@
     .avatar {
       width: 35%;
       height: 35%;
-      border-radius: 50%;
       margin: auto;
       margin-top: 0.5rem;
-      background-color: rgb(236, 141, 32);
+
+      img {
+        width: 100%;
+        height: 100%;
+        border: solid;
+        border-radius: 50%;
+      }
 
       @media (max-width: 800px) {
         width: 15%;

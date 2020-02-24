@@ -11,8 +11,8 @@ const TripBrowser: React.FC = () => {
   const isLogged = useSelector((state: StoreType) => state.profile.isLoggedIn);
   const tripsData = useSelector((state: StoreType) => state.tripBrowser.trips);
   const suggestedCities = useSelector((state: StoreType) => state.tripBrowser.places);
-  const guideProfileData = useSelector((state: StoreType) => state.user.users[0]);
-  const guideProfile = useSelector((state: StoreType) => state.guideProfile);
+  const guideProfileData = useSelector((state: StoreType) => state.guideProfile.guideProfileData);
+  const guideProfile = useSelector((state: StoreType) => state.guideProfile.guideProfile);
 
   const dispatcher = useDispatch();
 
@@ -112,8 +112,7 @@ const TripBrowser: React.FC = () => {
 
     if (!tripInfoVisible && isLogged) {
       dispatcher(actions.fetchGuideProfileRequested(tripsData[tripInfoId].owner.id));
-      dispatcher(actionsUser.cleanUserProfiles());
-      dispatcher(actionsUser.getUserProfileRequest(tripsData[tripInfoId].owner.id));
+      dispatcher(actions.fetchGuideProfileDataRequest(tripsData[tripInfoId].owner.id));
     }
   };
 

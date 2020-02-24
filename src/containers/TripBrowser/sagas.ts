@@ -4,11 +4,14 @@ import {
   FETCH_CITY_TRIPS_REQUESTED,
   FETCH_GEO_TRIPS_REQUESTED,
   FETCH_SUGGESTED_CITIES_REQUESTED,
-  FETCH_GUIDE_PROFILE_REQUESTED
+  FETCH_GUIDE_PROFILE_REQUESTED,
+  FETCH_GUIDE_PROFILE_DATA_REQUESTED
 } from './constants';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import * as actions from './actions';
 import * as types from './types';
+import { showNotification } from '../../helpers/notification';
+import i18n from '../../locales/i18n';
 
 const randomTripsEndpoint = 'https://235.ip-51-91-9.eu/guests/offers';
 const cityTripsEdnpoint = 'https://235.ip-51-91-9.eu/guests/offers/city?name=';
@@ -122,6 +125,24 @@ function* fetchSuggestedCitiesFromPhotonAPI(action: types.IFetchSuggestedCitiesR
 
 function* fetchGuideProfileFromAPI(action: types.IFetchGuideProfileRequest) {
   //dokonczyc
+  console.log('guide');
+}
+
+function* fetchGuideProfileDataFromAPI(action: types.IFetchGuideProfileRequest) {
+  const endpoint = `https://235.ip-51-91-9.eu/users/${action.id}`;
+
+  try {
+    const response = yield call(fetch, endpoint);
+    const user = yield response.json();
+    if (response.status >= 200 && response.status <= 300) {
+      yield put(actions.fetchGuideProfileDataSuccessed(user));
+    } else {
+      throw new Error();
+    }
+  } catch (error) {
+    yield put(actions.fetchGuideProfileDataFailed('Error while settle guide request'));
+    showNotification('danger', i18n.t('Something goes wrong'), i18n.t('Try again later!'));
+  }
 }
 
 function* mainSaga() {
@@ -131,6 +152,7 @@ function* mainSaga() {
   yield takeLatest(FETCH_TAGS_REQUESTED, fetchTagsFromAPI);
   yield takeLatest(FETCH_SUGGESTED_CITIES_REQUESTED, fetchSuggestedCitiesFromPhotonAPI);
   yield takeLatest(FETCH_GUIDE_PROFILE_REQUESTED, fetchGuideProfileFromAPI);
+  yield takeLatest(FETCH_GUIDE_PROFILE_DATA_REQUESTED, fetchGuideProfileDataFromAPI);
 }
 
 export default mainSaga;
