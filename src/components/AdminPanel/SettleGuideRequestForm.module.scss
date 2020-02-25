@@ -1,12 +1,11 @@
 .formContainer {
   width: 100%;
-  z-index: 10;
   display: flex;
-  position: absolute;
   font-size: 1.5vh;
+  font-family: 'Open Sans';
 
   .form {
-    width: 100%;
+    width: 96%;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
@@ -31,6 +30,23 @@
         padding: 0.5rem;
         font-weight: bold;
         background-color: rgb(255, 248, 248);
+      }
+
+      button {
+        margin: 1rem 0;
+        font-family: 'Open sans';
+        font-size: 0.9em;
+        width: 100px;
+        border: 1px solid #05ad05;
+        color: #05ad05;
+        background-color: white;
+        border-radius: 5px;
+        padding: 0.4rem;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: rgba(0, 255, 0, 0.424);
       }
     }
   }
