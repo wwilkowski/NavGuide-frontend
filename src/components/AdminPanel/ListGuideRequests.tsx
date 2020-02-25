@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { IListGuideRequestProps } from './types';
 import * as types from '../../containers/AdminPanel/types';
 import styles from './ListGuideRequests.module.scss';
@@ -12,7 +12,7 @@ const ListGuideRequests = (props: IListGuideRequestProps) => {
 
   const userProfilesData = useSelector((state: StoreType) => state.user.users);
 
-  const [userProfile, setUserProfile] = useState<IUserProfile>({
+  /*const [userProfile, setUserProfile] = useState<IUserProfile>({
     age: -1,
     avatar: '',
     country: '',
@@ -25,7 +25,7 @@ const ListGuideRequests = (props: IListGuideRequestProps) => {
     lastName: '',
     role: '',
     telephone: ''
-  });
+  });*/
 
   return (
     <div className={styles.requestsContainer}>

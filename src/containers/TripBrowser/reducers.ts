@@ -1,4 +1,4 @@
-import { TripBrowserAction, IMultiTripsAndTagsType, IGuideProfile, GuideProfileAction, IGuideProfileComplete } from './types';
+import { TripBrowserAction, IMultiTripsAndTagsType, GuideProfileAction, IGuideProfileComplete } from './types';
 import {
   FETCH_RANDOM_TRIPS_SUCCESED,
   FETCH_TAGS_SUCCESED,
@@ -67,8 +67,10 @@ const GuideProfileReducer = (state = initialGuideState, action: GuideProfileActi
       return { ...state, guideProfileData: action.guideProfileData };
     case FETCH_GUIDE_PROFILE_DATA_FAILED:
       console.log(action.message);
+      break;
     case FETCH_GUIDE_PROFILE_FAILED:
       console.log(action.message);
+      break;
     default:
       return state;
   }

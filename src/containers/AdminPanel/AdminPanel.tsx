@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import * as actions from './actions';
 import * as userActions from '../User/actions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,7 +7,6 @@ import { StoreType } from '../../store';
 import SettleGuideRequestForm from '../../components/AdminPanel/SettleGuideRequestForm';
 import { ISettleGuideRequestFormValues } from '../../components/AdminPanel/types';
 import { IGuideRequest } from './types';
-import { IUserProfile } from '../User/types';
 
 const AdminPanel: React.FC = () => {
   const dispatcher = useDispatch();
@@ -18,12 +17,12 @@ const AdminPanel: React.FC = () => {
 
   useEffect(() => {
     dispatcher(actions.getGuideRequestsRequest());
-  }, []);
+  }, [dispatcher]);
 
   useEffect(() => {
     dispatcher(userActions.cleanUserProfiles());
     userIds.forEach((id: number) => dispatcher(userActions.getUserProfileRequest(id)));
-  }, [userIds]);
+  }, [userIds, dispatcher]);
 
   const onSubmitForm = (data: ISettleGuideRequestFormValues) => {
     dispatcher(actions.settleGuideRequest(data));

@@ -13,7 +13,7 @@ const GuideRequest = ({ guideRequest, userProfile }: IGuideRequestProps) => {
 
   useEffect(() => {
     if (!user) setUser(userProfile);
-  }, [userProfile]);
+  }, [userProfile, user]);
 
   return (
     <>
