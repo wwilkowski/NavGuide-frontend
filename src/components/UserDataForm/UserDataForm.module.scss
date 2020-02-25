@@ -1,0 +1,87 @@
+.userForm {
+  padding: 1rem 0;
+  &__case {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid #c3c3c3;
+  }
+  &__label {
+    font-weight: 600;
+  }
+  &__input {
+    text-align: right;
+    font-family: 'Open Sans';
+    border: 0;
+    font-size: 1em;
+    width: 50%;
+    max-width: 300px;
+  }
+  select {
+    background: none;
+  }
+  &__option {
+    font-size: 1em;
+  }
+  &__tagList {
+    display: flex;
+    padding: 1rem 0;
+    overflow-x: auto;
+  }
+  &__submitButton {
+    margin: 1rem 1rem 1rem 0;
+    font-family: 'Open sans';
+    font-size: 0.9em;
+    width: 100px;
+    border: 1px solid #19cc95;
+    color: #19cc95;
+    background: none;
+    border-radius: 5px;
+    padding: 0.4rem;
+    cursor: pointer;
+    @media (min-width: 900px) {
+      font-size: 0.8em;
+    }
+  }
+}
+
+.rate {
+  padding: 0 10px;
+}
+.rate:not(:checked) > input {
+  // position: absolute;
+  // top: -9999px;
+  display: none;
+}
+
+.rate:not(:checked) > label {
+  float: right;
+  width: 1em;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 20px;
+  color: #ccc;
+}
+.rate:not(:checked) > label:before {
+  content: '★ ';
+}
+.rate > input:checked ~ label {
+  color: #ffc700;
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+  color: #deb217;
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+  color: #c59b08;
+}
+
+.full {
+  color: red;
+}

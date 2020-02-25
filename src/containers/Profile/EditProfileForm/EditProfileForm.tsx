@@ -19,7 +19,6 @@ const EditProfileForm = () => {
 
   return (
     <>
-      <h1 className='title'>{t('Edit profile Form')}</h1>
       <AvatarForm />
       <UserDataForm onSubmit={onEditProfileFormSubmit} templateUser={user} />
     </>

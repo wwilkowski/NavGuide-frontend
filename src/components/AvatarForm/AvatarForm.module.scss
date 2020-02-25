@@ -1,0 +1,30 @@
+.avatarForm {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  &__img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    box-shadow: 10px 10px 51px 0px rgba(0, 0, 0, 0.35);
+  }
+  &__fileInputLabel {
+    cursor: pointer;
+    position: absolute;
+    bottom: -1rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  &__fileInput {
+    position: absolute;
+    left: -10000px;
+    top: -10000px;
+    display: none;
+  }
+  &__icon {
+    background: #19cc95;
+    padding: 0.4rem;
+    width: 35px;
+    border-radius: 50%;
+  }
+}
