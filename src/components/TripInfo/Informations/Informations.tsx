@@ -116,7 +116,7 @@ const Informations = (props: IInformationsProps) => {
         <div>
           <div className={styles.informations__content}>
             <div className={styles.avatar}>
-              <img src={props.guideProfileData.avatar} alt='avatar' />
+              <img src={props.guideProfileData.avatar} alt='' />
             </div>
             <div className={styles.guideContent1}>
               <p>

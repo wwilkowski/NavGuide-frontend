@@ -125,7 +125,7 @@ function* fetchSuggestedCitiesFromPhotonAPI(action: types.IFetchSuggestedCitiesR
 
 function* fetchGuideProfileFromAPI(action: types.IFetchGuideProfileRequest) {
   //dokonczyc
-  console.log('guide');
+  yield console.log('guide');
 }
 
 function* fetchGuideProfileDataFromAPI(action: types.IFetchGuideProfileRequest) {

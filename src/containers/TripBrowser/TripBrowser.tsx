@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { ISingleTripType, IPosition, ISuggestedPlace, IGuideProfile } from './types';
+import { ISingleTripType, IPosition, ISuggestedPlace } from './types';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from './actions';
-import * as actionsUser from '../User/actions';
 import { StoreType } from '../../store';
 import SearchForm from '../../components/TripBrowser/SearchForm';
 import TripInfo from '../../components/TripInfo/TripInfo';

@@ -51,7 +51,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
   useEffect(() => {
     setLocation(props.formValue);
     values.location = props.formValue;
-  }, [props.formValue]);
+  }, [props.formValue, values.location]);
 
   return (
     <Form autoComplete='off' className={styles.searchForm}>
