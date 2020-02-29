@@ -13,7 +13,7 @@ const ProfileReducer = (state = initialState, action: types.ProfileAction) => {
       return { users: state.users.concat(action.user) };
     case constants.FETCH_USER_PROFILE_FAILED:
       console.log(action.message);
-      break;
+      return state;
     default:
       return state;
   }

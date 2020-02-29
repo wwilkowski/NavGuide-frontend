@@ -67,10 +67,10 @@ const GuideProfileReducer = (state = initialGuideState, action: GuideProfileActi
       return { ...state, guideProfileData: action.guideProfileData };
     case FETCH_GUIDE_PROFILE_DATA_FAILED:
       console.log(action.message);
-      break;
+      return state;
     case FETCH_GUIDE_PROFILE_FAILED:
       console.log(action.message);
-      break;
+      return state;
     default:
       return state;
   }

@@ -29,8 +29,21 @@ const TripBrowser: React.FC = () => {
 
   useEffect(() => {
     const location = {
-      name: formValue,
-      coords: [positionValue.longitude, positionValue.latitude]
+      displayName: formValue,
+      coords: [positionValue.longitude, positionValue.latitude],
+      class: '',
+      type: '',
+      address: {
+        type: '',
+        cityDistrict: '',
+        country: '',
+        countryCode: '',
+        footway: '',
+        neighbourhood: '',
+        postcode: '',
+        state: '',
+        suburb: ''
+      }
     };
     onSearchFormSubmit(location, positionValue.radius, 'normal');
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -38,8 +51,21 @@ const TripBrowser: React.FC = () => {
 
   useEffect(() => {
     const location = {
-      name: formValue,
-      coords: [positionValue.longitude, positionValue.latitude]
+      displayName: formValue,
+      coords: [positionValue.longitude, positionValue.latitude],
+      class: '',
+      type: '',
+      address: {
+        type: '',
+        cityDistrict: '',
+        country: '',
+        countryCode: '',
+        footway: '',
+        neighbourhood: '',
+        postcode: '',
+        state: '',
+        suburb: ''
+      }
     };
     onSearchFormSubmit(location, positionValue.radius, 'normal');
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -80,16 +106,16 @@ const TripBrowser: React.FC = () => {
   };
 
   const onSearchFormSubmit = (location: ISuggestedPlace, radius: number, mode: string) => {
-    if (mode === 'normal' && suggestedCities.length > 0 && location.name !== prevFormValue) {
+    if (mode === 'normal' && suggestedCities.length > 0 && location.displayName !== prevFormValue) {
       //ABY ZADZIAŁAŁO TRZEBA POCZEKAĆ AŻ Z API SIE POBIORA WARTOŚCI
       location.coords[0] = suggestedCities[0].coords[0];
       location.coords[1] = suggestedCities[0].coords[1];
-      setFormValue(suggestedCities[0].name);
+      setFormValue(suggestedCities[0].displayName);
     }
 
     // dispatcher(actions.fetchSuggestedCitiesRequested('', 0));
 
-    if (location.name.length) {
+    if (location.displayName.length) {
       setPositionValue({
         latitude: location.coords[1],
         longitude: location.coords[0],
@@ -99,7 +125,7 @@ const TripBrowser: React.FC = () => {
     } else {
       dispatcher(actions.fetchRandomTripsRequested(isLogged));
     }
-    setPrevFormValue(location.name);
+    setPrevFormValue(location.displayName);
   };
 
   const changeTripInfoVisible = (tripId: number) => {
@@ -111,8 +137,8 @@ const TripBrowser: React.FC = () => {
     });
 
     if (!tripInfoVisible && isLogged) {
-      dispatcher(actions.fetchGuideProfileRequested(tripsData[tripInfoId].owner.id));
-      dispatcher(actions.fetchGuideProfileDataRequest(tripsData[tripInfoId].owner.id));
+      dispatcher(actions.fetchGuideProfileRequested(tripsData[tripInfoId].owner.guideId));
+      dispatcher(actions.fetchGuideProfileDataRequest(tripsData[tripInfoId].owner.userId));
     }
   };
 

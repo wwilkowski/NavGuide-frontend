@@ -58,7 +58,7 @@ const ListTrips = ({ trips, mode, chosenOfferId, setChosenOfferId, changeTripInf
                   <p className={styles.offer__p}>{t('Languages')}: </p>
                   <ul>
                     {trip.owner.languages.map((lang: string) => (
-                      <li>
+                      <li key={lang}>
                         <span>{lang}</span>
                       </li>
                     ))}
