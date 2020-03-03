@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ISingleTripType, IPosition, ISuggestedPlace } from './types';
+import { ISingleTripType, IPosition, ISuggestedPlace, IGuideProfileComplete } from './types';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from './actions';
 import { StoreType } from '../../store';
@@ -107,7 +107,6 @@ const TripBrowser: React.FC = () => {
 
   const onSearchFormSubmit = (location: ISuggestedPlace, radius: number, mode: string) => {
     if (mode === 'normal' && suggestedCities.length > 0 && location.displayName !== prevFormValue) {
-      //ABY ZADZIAŁAŁO TRZEBA POCZEKAĆ AŻ Z API SIE POBIORA WARTOŚCI
       location.coords[0] = suggestedCities[0].coords[0];
       location.coords[1] = suggestedCities[0].coords[1];
       setFormValue(suggestedCities[0].displayName);
@@ -130,15 +129,19 @@ const TripBrowser: React.FC = () => {
 
   const changeTripInfoVisible = (tripId: number) => {
     setTripInfoVisible(!tripInfoVisible);
-    var i = 0;
+    let id = 0;
+    let i = 0;
     tripsData.forEach((trip: ISingleTripType) => {
-      if (trip.id === tripId) setTripInfoId(i);
+      if (trip.id === tripId) {
+        setTripInfoId(i);
+        id = i;
+      }
       i++;
     });
 
     if (!tripInfoVisible && isLogged) {
-      dispatcher(actions.fetchGuideProfileRequested(tripsData[tripInfoId].owner.guideId));
-      dispatcher(actions.fetchGuideProfileDataRequest(tripsData[tripInfoId].owner.userId));
+      dispatcher(actions.fetchGuideProfileRequested(tripsData[id].owner.guideId));
+      dispatcher(actions.fetchGuideProfileDataRequest(tripsData[id].owner.userId));
     }
   };
 

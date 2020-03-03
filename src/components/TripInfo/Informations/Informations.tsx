@@ -1,15 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from '../TripInfo.module.scss';
 import { IInformationsProps } from './types';
 import { ITag } from '../../../containers/TripBrowser/types';
+import { IUserProfile } from '../../../containers/User/types';
 
 const Informations = (props: IInformationsProps) => {
   const { t } = useTranslation();
-  const { tripData } = props;
+  const { tripData, guideProfileData } = props;
 
   const [activeTripButton, setActiveTripButton] = useState<boolean>(true);
   const [activeGuideButton, setActiveGuideButton] = useState<boolean>(false);
+
+  const [experience, setExperience] = useState<String>('');
+
+  useEffect(() => {
+    let tmp = '';
+    for (let i = 0; i < guideProfileData.experience; i++) {
+      tmp += '★';
+    }
+    for (let i = guideProfileData.experience; i < 5; i++) {
+      tmp += '☆';
+    }
+    setExperience(tmp);
+  }, [guideProfileData]);
 
   return (
     <>
@@ -142,9 +156,8 @@ const Informations = (props: IInformationsProps) => {
             </div>
             <div className={styles.content3}>
               <p>
-                <b>{t('Experience')}:</b>
+                <b>{t('Experience')}:</b> {experience}
               </p>
-              <p style={{ fontSize: '1.1em' }}>★★★☆☆</p>
             </div>
           </div>
         </div>

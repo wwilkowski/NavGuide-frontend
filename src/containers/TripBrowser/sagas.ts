@@ -133,24 +133,16 @@ function* fetchSuggestedCitiesFromNominatimAPI(action: types.IFetchSuggestedCiti
       }
     }));
 
-    /*filteredSuggestedCities = filteredSuggestedCities.filter((el: types.ISuggestedPlace, index: number) => {
-      if (el.address.country === 'Polska') {
-        var alreadyExist = false;
-        filteredSuggestedCities.forEach((el2: types.ISuggestedPlace, index2: number) => {
-          if (index !== index2 && el2.displayName === el.displayName) {
-            alreadyExist = true;
-          }
-        });
-
-        if (!alreadyExist) return el;
-      }
-    });*/
-
     filteredSuggestedCities = filteredSuggestedCities.filter((el: types.ISuggestedPlace) => {
       if (el.address.country === 'Polska') return el;
     });
 
-    console.log(filteredSuggestedCities);
+    const seen = new Set();
+    filteredSuggestedCities = filteredSuggestedCities.filter((el: types.ISuggestedPlace) => {
+      const duplicate = seen.has(el.displayName);
+      seen.add(el.displayName);
+      return !duplicate;
+    });
 
     yield put(actions.fetchSuggestedCitiesSuccesed(filteredSuggestedCities));
   } catch {

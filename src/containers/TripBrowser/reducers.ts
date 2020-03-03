@@ -35,7 +35,6 @@ const TripBrowserReducer = (state = initialState, action: TripBrowserAction) => 
 };
 
 //GUIDE PROFILE
-
 const initialGuideState: IGuideProfileComplete = {
   guideProfile: { firstName: '', id: -1, languages: [], lastName: '' },
   guideProfileData: {
