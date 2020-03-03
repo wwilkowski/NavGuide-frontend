@@ -21,7 +21,7 @@ import {
   FETCH_GUIDE_PROFILE_DATA_FAILED,
   FETCH_GUIDE_PROFILE_DATA_SUCCESSED
 } from './constants';
-import { IUserProfile, IUserProfiles } from '../User/types';
+import { IUserProfile } from '../User/types';
 
 export interface ITag {
   id: number;
@@ -43,10 +43,12 @@ export interface ISingleTripType {
   maxPeople: number;
   name: string;
   owner: {
+    experience: number;
     firstName: string;
-    id: number;
+    guideId: number;
     languages: string[];
     lastName: string;
+    userId: number;
   };
   photos: string[];
   price: number;
@@ -115,6 +117,24 @@ export interface IFetchTagsSuccesedAction {
 export interface IFetchTagsFailedAction {
   type: typeof FETCH_TAGS_FAILED;
   message: string;
+}
+
+export interface ISuggestedPlace {
+  displayName: string;
+  coords: number[];
+  class: string;
+  type: string;
+  address: {
+    type: string;
+    cityDistrict: string;
+    country: string;
+    countryCode: string;
+    footway: string;
+    neighbourhood: string;
+    postcode: string;
+    state: string;
+    suburb: string;
+  };
 }
 
 export interface IFetchSuggestedCitiesSuccesedAction {
@@ -202,9 +222,4 @@ export interface IFetchGuideProfileRequest {
 export interface IFetchGuideProfileDataRequest {
   type: typeof FETCH_GUIDE_PROFILE_DATA_REQUESTED;
   id: number;
-}
-
-export interface ISuggestedPlace {
-  name: string;
-  coords: number[];
 }

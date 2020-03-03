@@ -11,7 +11,7 @@ const AdminPanelReducer = (state = initialState, action: types.AdminPanelAction)
       return { guideRequests: action.guideRequests };
     case constants.GET_GUIDE_REQUESTS_FAILED:
       console.log(action.message);
-      break;
+      return state;
     default:
       return state;
   }

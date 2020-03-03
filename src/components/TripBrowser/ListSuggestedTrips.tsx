@@ -31,7 +31,7 @@ const ListSuggestedTrips = ({ onCityClick, onCityHover, suggestedTrips, changeVi
     <ul className={styles.suggestedTripsList} ref={node}>
       {suggestedTrips.map((trip: ISuggestedPlace, index: number) => (
         <li key={index} onClick={() => onCityClick(trip)} onMouseEnter={() => onCityHover(trip)}>
-          <p>{trip.name}</p>
+          <p>{trip.displayName}</p>
         </li>
       ))}
     </ul>
