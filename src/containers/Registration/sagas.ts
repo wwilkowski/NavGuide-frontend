@@ -38,7 +38,7 @@ function* signUpGoogleUser(action: types.ISignUpGoogleRequest) {
         email: json.email,
         telephone: '',
         gender: 'Female',
-        experience: 'NOVICE',
+        experience: 1,
         interests: []
       };
       yield put(

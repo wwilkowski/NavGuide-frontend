@@ -15,6 +15,10 @@
     display: flex;
     align-items: center;
     margin: 1rem 0;
+    font-size: 0.8em;
+    @media (min-width: 800px) {
+      font-size: 1em;
+    }
   }
   &__titleCase {
     padding: 0 1rem;
@@ -29,14 +33,17 @@
     font-weight: 300;
   }
   &__logo {
-    width: 60px;
+    width: 40px;
+    @media (min-width: 800px) {
+      width: 60px;
+    }
   }
   &__menuButton {
     background: none;
     border: none;
     cursor: pointer;
     position: absolute;
-    top: 2.7rem;
+    top: 2.4rem;
     right: 1.5rem;
     @media (min-width: 800px) {
       display: none;
@@ -55,7 +62,7 @@
     transform: scaleY(1);
     transform-origin: top;
     transition: all 0.26s ease;
-    height: 200px;
+    height: auto;
     @media (min-width: 800px) {
       width: auto;
       flex-direction: row;

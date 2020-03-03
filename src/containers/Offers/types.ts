@@ -12,6 +12,7 @@ export interface IOfferFormValues {
   priceType: string;
   radius: Number;
   tags: number[];
+  description: string;
 }
 
 export interface ICreateOfferAction {

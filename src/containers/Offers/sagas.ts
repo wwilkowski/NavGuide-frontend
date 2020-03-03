@@ -11,10 +11,10 @@ const offerEndpoint = 'https://235.ip-51-91-9.eu/offers';
 
 function* createOffer(action: types.ICreateOfferAction) {
   const formData = new FormData();
-  const { file, begin, end, city, lat, lon, maxPeople, name, price, priceType, radius } = action.formData;
-  formData.append('file', file[0]);
-  formData.append('begin', begin.toString());
-  formData.append('end', end.toString());
+  const { file, begin, end, city, lat, lon, maxPeople, name, price, priceType, radius, tags, description } = action.formData;
+  formData.append('file', file.toString());
+  formData.append('begin', begin.toUTCString());
+  formData.append('end', end.toUTCString());
   formData.append('city', city.toString());
   formData.append('lat', lat.toString());
   formData.append('lon', lon.toString());
@@ -23,7 +23,8 @@ function* createOffer(action: types.ICreateOfferAction) {
   formData.append('price', price.toString());
   formData.append('priceType', priceType.toString());
   formData.append('radius', radius.toString());
-  formData.append('tags', [1].toString());
+  formData.append('tags', tags.toString());
+  formData.append('description', description.toString());
 
   try {
     const response = yield call(fetch, offerEndpoint, {

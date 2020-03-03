@@ -60,15 +60,16 @@ const Header: React.FC = () => {
               <img src={profile.user.avatar} alt='avatar' className={styles.profile__avatar} />
               <p>{profile.user.firstName}</p>
             </button>
-            <ul className={`${styles.profile__menu} ${!openProfileMenu ? styles.profile__hiddenMenu : ''}`}>
+            <ul
+              className={`${styles.profile__menu} ${!openProfileMenu ? styles.profile__hiddenMenu : ''}`}
+              onClick={() => {
+                setOpenMenu(false);
+                setOpenProfileMenu(false);
+              }}
+            >
               <li>
                 <Link to='/profile' className={styles.profile__link}>
                   {t('Profile')}
-                </Link>
-              </li>
-              <li>
-                <Link to='/profile/edit' className={styles.profile__link}>
-                  {t('Edit profile')}
                 </Link>
               </li>
               {profile.user.role === 'ADMIN' ? (

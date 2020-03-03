@@ -66,17 +66,13 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
             name='location'
             value={props.formValue}
             className={styles.searchForm__input}
-            // onClick={() => {
-            //   if (location !== 'UMK Wydział Matematyki i Informatyki') setSuggestedListVisible(!suggestedListVisible);
-            // }}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               props.handleChange(event);
-              // setLocation(event.target.value);
               props.onChange(event.target.value);
             }}
           />
           {errors.location && touched.location && <div>{t(errors.location)}</div>}
-          {suggestedListVisible && (
+          {suggestedListVisible && suggestedCities.length > 0 && (
             <ListSuggestedTrips
               onCityClick={(location: ISuggestedPlace) => {
                 setFieldValue('lat', location.coords[1]);
@@ -124,7 +120,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
         </div>
       </div>
       <div>
-        <label className={styles.searchForm__label}>{t('Interests')}:</label>
+        <label className={styles.searchForm__label}>{t('Tags')}:</label>
       </div>
       <ul className={styles.searchForm__tagList}>
         {tags.map((tag: ITag) => (
@@ -250,7 +246,7 @@ const SearchForm = (props: ISearchFormProps) => {
         </div>
       </div>
       <div className={`${styles.container__el} ${formView ? styles.hidden : ''}`}>
-        <LeafletMap position={props.positionValue} trips={props.trips} chosenOfferId={chosenOfferId} setChosenOfferId={setChosenOfferId} />
+        <LeafletMap position={props.positionValue} height='85vh' trips={props.trips} chosenOfferId={chosenOfferId} setChosenOfferId={setChosenOfferId} />
       </div>
     </div>
   );

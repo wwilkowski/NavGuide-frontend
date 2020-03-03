@@ -8,7 +8,7 @@ export interface IGuideRequest {
   languages: string[];
   message: string;
   status: string;
-  experience: string;
+  experience: number;
   userId: number;
 }
 

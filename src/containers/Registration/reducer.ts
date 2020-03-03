@@ -11,7 +11,7 @@ const initialState: types.IRegisterStore = {
     email: '',
     telephone: '',
     gender: '',
-    experience: '',
+    experience: 1,
     interests: []
   },
   registrationInProgress: false,

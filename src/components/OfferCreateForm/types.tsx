@@ -21,6 +21,7 @@ export interface FullFormValues {
   name: string;
   price: Number;
   priceType: string;
-  radius: Number;
+  radius: number;
   tags: number[];
+  description: string;
 }

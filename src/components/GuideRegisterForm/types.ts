@@ -1,6 +1,6 @@
 export interface FormValues {
   languages: string[];
-  experience: string;
+  experience: number;
   description: string;
 }
 
