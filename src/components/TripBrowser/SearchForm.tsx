@@ -197,7 +197,27 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
     } else if (values.location === '' && values.searchMode === 'location') {
       showNotification('warning', i18n.t('Warning'), i18n.t('Please enter city first'));
     } else {
-      props.onSubmit({ name: values.location, coords: [values.lon, values.lat] }, values.radius, 'normal');
+      props.onSubmit(
+        {
+          displayName: values.location,
+          coords: [values.lon, values.lat],
+          class: '',
+          type: '',
+          address: {
+            type: '',
+            cityDistrict: '',
+            country: '',
+            countryCode: '',
+            footway: '',
+            neighbourhood: '',
+            postcode: '',
+            state: '',
+            suburb: ''
+          }
+        },
+        values.radius,
+        'normal'
+      );
     }
   }
 })(InnerForm);

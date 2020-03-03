@@ -28,10 +28,12 @@ const TripInfo = (props: ITripInfoProps) => {
     maxPeople: 0,
     name: '',
     owner: {
+      experience: -1,
       firstName: '',
-      id: 0,
+      userId: 0,
       languages: [],
-      lastName: ''
+      lastName: '',
+      guideId: -1
     },
     photos: [],
     price: 0,

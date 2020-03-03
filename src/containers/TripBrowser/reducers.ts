@@ -35,7 +35,6 @@ const TripBrowserReducer = (state = initialState, action: TripBrowserAction) => 
 };
 
 //GUIDE PROFILE
-
 const initialGuideState: IGuideProfileComplete = {
   guideProfile: { firstName: '', id: -1, languages: [], lastName: '' },
   guideProfileData: {
@@ -67,10 +66,10 @@ const GuideProfileReducer = (state = initialGuideState, action: GuideProfileActi
       return { ...state, guideProfileData: action.guideProfileData };
     case FETCH_GUIDE_PROFILE_DATA_FAILED:
       console.log(action.message);
-      break;
+      return state;
     case FETCH_GUIDE_PROFILE_FAILED:
       console.log(action.message);
-      break;
+      return state;
     default:
       return state;
   }

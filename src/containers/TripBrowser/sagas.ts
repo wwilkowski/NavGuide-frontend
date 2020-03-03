@@ -12,6 +12,7 @@ import * as actions from './actions';
 import * as types from './types';
 import { showNotification } from '../../helpers/notification';
 import i18n from '../../locales/i18n';
+import { getToken } from '../../helpers/tokenCookie';
 
 const randomTripsEndpoint = 'https://235.ip-51-91-9.eu/guests/offers';
 const cityTripsEdnpoint = 'https://235.ip-51-91-9.eu/guests/offers/city?name=';
@@ -107,17 +108,43 @@ function* fetchTagsFromAPI() {
   }
 }
 
-function* fetchSuggestedCitiesFromPhotonAPI(action: types.IFetchSuggestedCitiesRequest) {
+function* fetchSuggestedCitiesFromNominatimAPI(action: types.IFetchSuggestedCitiesRequest) {
   try {
-    const response = yield call(fetch, `https://photon.komoot.de/api/?q=${action.location}&limit=${action.number}`);
+    const location = action.location.replace(' ', '+');
+
+    const response = yield call(fetch, `https://nominatim.openstreetmap.org/?addressdetails=1&q=${location}&format=json&limit=10`);
     const suggestedCities = yield response.json();
-    const places = suggestedCities.features.map((el: any) => {
-      return {
-        name: el.properties.name,
-        coords: el.geometry.coordinates
-      };
+
+    var filteredSuggestedCities = suggestedCities.map((el: any) => ({
+      displayName: el.display_name,
+      coords: [el.lon, el.lat],
+      class: el.class,
+      type: el.type,
+      address: {
+        type: el.address.bakery,
+        cityDistrict: el.address.city_district,
+        country: el.address.country,
+        countryCode: el.address.country_code,
+        footway: el.address.footway,
+        neighbourhood: el.address.neighbourhood,
+        postcode: el.address.postcode,
+        state: el.address.state,
+        suburb: el.address.suburb
+      }
+    }));
+
+    filteredSuggestedCities = filteredSuggestedCities.filter((el: types.ISuggestedPlace) => {
+      if (el.address.country === 'Polska') return el;
     });
-    yield put(actions.fetchSuggestedCitiesSuccesed(places));
+
+    const seen = new Set();
+    filteredSuggestedCities = filteredSuggestedCities.filter((el: types.ISuggestedPlace) => {
+      const duplicate = seen.has(el.displayName);
+      seen.add(el.displayName);
+      return !duplicate;
+    });
+
+    yield put(actions.fetchSuggestedCitiesSuccesed(filteredSuggestedCities));
   } catch {
     yield put(actions.fetchSuggestedCitiesFailed("Error: can't fetch suggested cities from Photon API"));
   }
@@ -132,7 +159,13 @@ function* fetchGuideProfileDataFromAPI(action: types.IFetchGuideProfileRequest) 
   const endpoint = `https://235.ip-51-91-9.eu/users/${action.id}`;
 
   try {
-    const response = yield call(fetch, endpoint);
+    const response = yield call(fetch, endpoint, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getToken()}`
+      }
+    });
     const user = yield response.json();
     if (response.status >= 200 && response.status <= 300) {
       yield put(actions.fetchGuideProfileDataSuccessed(user));
@@ -140,7 +173,7 @@ function* fetchGuideProfileDataFromAPI(action: types.IFetchGuideProfileRequest) 
       throw new Error();
     }
   } catch (error) {
-    yield put(actions.fetchGuideProfileDataFailed('Error while settle guide request'));
+    yield put(actions.fetchGuideProfileDataFailed('Error while User Profile request'));
     showNotification('danger', i18n.t('Something goes wrong'), i18n.t('Try again later!'));
   }
 }
@@ -150,7 +183,7 @@ function* mainSaga() {
   yield takeLatest(FETCH_CITY_TRIPS_REQUESTED, fetchCityTripsFromAPI);
   yield takeLatest(FETCH_GEO_TRIPS_REQUESTED, fetchGeoTripsFromAPI);
   yield takeLatest(FETCH_TAGS_REQUESTED, fetchTagsFromAPI);
-  yield takeLatest(FETCH_SUGGESTED_CITIES_REQUESTED, fetchSuggestedCitiesFromPhotonAPI);
+  yield takeLatest(FETCH_SUGGESTED_CITIES_REQUESTED, fetchSuggestedCitiesFromNominatimAPI);
   yield takeLatest(FETCH_GUIDE_PROFILE_REQUESTED, fetchGuideProfileFromAPI);
   yield takeLatest(FETCH_GUIDE_PROFILE_DATA_REQUESTED, fetchGuideProfileDataFromAPI);
 }
