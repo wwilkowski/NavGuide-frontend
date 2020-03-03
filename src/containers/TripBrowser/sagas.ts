@@ -112,7 +112,10 @@ function* fetchSuggestedCitiesFromNominatimAPI(action: types.IFetchSuggestedCiti
   try {
     const location = action.location.replace(' ', '+');
 
-    const response = yield call(fetch, `https://nominatim.openstreetmap.org/?addressdetails=1&q=${location}&format=json&limit=10`);
+    const response = yield call(
+      fetch,
+      `https://nominatim.openstreetmap.org/?addressdetails=1&q=${location}&format=json&limit=10&countrycodes=pl`
+    );
     const suggestedCities = yield response.json();
 
     var filteredSuggestedCities = suggestedCities.map((el: any) => ({
@@ -133,9 +136,10 @@ function* fetchSuggestedCitiesFromNominatimAPI(action: types.IFetchSuggestedCiti
       }
     }));
 
-    filteredSuggestedCities = filteredSuggestedCities.filter((el: types.ISuggestedPlace) => {
-      if (el.address.country === 'Polska') return el;
-    });
+    console.log(filteredSuggestedCities);
+    // filteredSuggestedCities = filteredSuggestedCities.filter((el: types.ISuggestedPlace) => {
+    //   if (el.address.countryCode === 'pl') return el;
+    // });
 
     const seen = new Set();
     filteredSuggestedCities = filteredSuggestedCities.filter((el: types.ISuggestedPlace) => {
@@ -143,7 +147,6 @@ function* fetchSuggestedCitiesFromNominatimAPI(action: types.IFetchSuggestedCiti
       seen.add(el.displayName);
       return !duplicate;
     });
-
     yield put(actions.fetchSuggestedCitiesSuccesed(filteredSuggestedCities));
   } catch {
     yield put(actions.fetchSuggestedCitiesFailed("Error: can't fetch suggested cities from Photon API"));

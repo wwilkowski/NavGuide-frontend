@@ -266,7 +266,13 @@ const SearchForm = (props: ISearchFormProps) => {
         </div>
       </div>
       <div className={`${styles.container__el} ${formView ? styles.hidden : ''}`}>
-        <LeafletMap position={props.positionValue} height='85vh' trips={props.trips} chosenOfferId={chosenOfferId} setChosenOfferId={setChosenOfferId} />
+        <LeafletMap
+          position={props.positionValue}
+          height='85vh'
+          trips={props.trips}
+          chosenOfferId={chosenOfferId}
+          setChosenOfferId={setChosenOfferId}
+        />
       </div>
     </div>
   );
