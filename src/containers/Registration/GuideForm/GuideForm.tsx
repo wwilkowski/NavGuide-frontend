@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 interface FormValues {
   languages: string[];
-  experience: string;
+  experience: number;
   description: string;
 }
 

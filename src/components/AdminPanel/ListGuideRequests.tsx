@@ -12,21 +12,6 @@ const ListGuideRequests = (props: IListGuideRequestProps) => {
 
   const userProfilesData = useSelector((state: StoreType) => state.user.users);
 
-  /*const [userProfile, setUserProfile] = useState<IUserProfile>({
-    age: -1,
-    avatar: '',
-    country: '',
-    email: '',
-    experience: -1,
-    firstName: '',
-    gender: '',
-    id: -1,
-    interests: [{ id: -1, name: '' }],
-    lastName: '',
-    role: '',
-    telephone: ''
-  });*/
-
   return (
     <div className={styles.requestsContainer}>
       {guideRequests.map((req: types.IGuideRequest) => {

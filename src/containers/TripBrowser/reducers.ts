@@ -43,7 +43,7 @@ const initialGuideState: IGuideProfileComplete = {
     avatar: '',
     country: '',
     email: '',
-    experience: -1,
+    experience: 1,
     firstName: '',
     gender: '',
     id: -1,

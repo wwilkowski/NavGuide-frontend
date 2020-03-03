@@ -7,6 +7,7 @@ import { showNotification } from '../../helpers/notification';
 import i18n from '../../locales/i18n';
 import Checkbox from '../../shared/Checkbox';
 import { MyFormProps, FullFormValues, IInterest } from './types';
+import styles from './UserDataForm.module.scss';
 
 const SignupSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -24,7 +25,8 @@ const InnerForm = (props: FormikProps<FullFormValues>) => {
   const { t } = useTranslation();
   const [interests, setInterests] = useState([]);
 
-  const { touched, errors, isSubmitting } = props;
+  const { touched, errors, isSubmitting, values } = props;
+  const { experience } = values;
 
   useEffect(() => {
     if (Object.keys(errors).length !== 0 && isSubmitting) {
@@ -44,94 +46,121 @@ const InnerForm = (props: FormikProps<FullFormValues>) => {
   }, []);
 
   return (
-    <div className='section'>
-      <Form>
-        <div className='field'>
-          <label className='label' htmlFor='firstName'>
+    <div>
+      <Form className={styles.userForm}>
+        <div className={styles.userForm__case}>
+          <label htmlFor='firstName' className={styles.userForm__label}>
             {t('First name')}
           </label>
-          <Field className='input' id='firstName' type='text' name='firstName' />
+          <Field id='firstName' type='text' name='firstName' className={styles.userForm__input} />
           {errors.firstName && touched.firstName && <div>{t(errors.firstName)}</div>}
         </div>
 
-        <div className='field'>
-          <label className='label' htmlFor='lastName'>
+        <div className={styles.userForm__case}>
+          <label htmlFor='lastName' className={styles.userForm__label}>
             {t('Last name')}
           </label>
-          <Field className='input' id='lastName' type='text' name='lastName' />
+          <Field id='lastName' type='text' name='lastName' className={styles.userForm__input} />
           {errors.lastName && touched.lastName && <div>{t(errors.lastName)}</div>}
         </div>
-        <div className='select is-multiple'>
-          <label className='label' htmlFor='country'>
+        <div className={styles.userForm__case}>
+          <label htmlFor='country' className={styles.userForm__label}>
             {t('Country')}
           </label>
-          <Field as='select' id='country' name='country'>
+          <select id='country' name='country' value={values.country} onChange={() => {}} className={styles.userForm__input}>
             {countryCodes.map(country => (
-              <option key={country.code} value={country.code}>
+              <option key={country.code} value={country.code} className={styles.userForm__option}>
                 {t(country.name)}
               </option>
             ))}
-          </Field>
+          </select>
         </div>
 
-        <div className='field'>
-          <label className='label' htmlFor='tel'>
+        <div className={styles.userForm__case}>
+          <label htmlFor='tel' className={styles.userForm__label}>
             {t('Telephone')}
           </label>
-          <p className='control has-icons-left'>
-            <span className='icon is-small is-left'>+</span>
-            <Field className='input telephoneInput' id='telephone' type='text' name='telephone' />
-            {errors.telephone && touched.telephone && <div>{t(errors.telephone)}</div>}
-          </p>
+          <Field id='telephone' type='text' name='telephone' className={styles.userForm__input} />
+          {errors.telephone && touched.telephone && <div>{t(errors.telephone)}</div>}
         </div>
 
-        <div className='field'>
-          <label className='label' htmlFor='gender'>
+        <div className={styles.userForm__case}>
+          <label htmlFor='gender' className={styles.userForm__label}>
             {t('Gender')}
           </label>
-          <div className='select'>
-            <Field as='select' id='gender' name='gender'>
-              <option value='MALE'>{t('Male')}</option>
-              <option value='FEMALE'>{t('Female')}</option>
-            </Field>
-          </div>
+          <select id='gender' name='gender' className={styles.userForm__input}>
+            <option value='MALE' className={styles.userForm__option}>
+              {t('Male')}
+            </option>
+            <option value='FEMALE' className={styles.userForm__option}>
+              {t('Female')}
+            </option>
+          </select>
         </div>
 
-        <div className='field'>
-          <label className='label' htmlFor='experience'>
+        <div className={styles.userForm__case}>
+          <label htmlFor='experience' className={styles.userForm__label}>
             {t('Experience')}
           </label>
-          <fieldset name='experience'>
-            <input type='radio' id='5' name='rating' value='5' onClick={() => props.setFieldValue('experience', 5)} />
+          <fieldset name='experience' className={styles.rate}>
+            <input
+              type='radio'
+              checked={experience === 5}
+              id='5'
+              name='rating'
+              value='5'
+              onChange={() => props.setFieldValue('experience', 5)}
+            />
             <label htmlFor='5' title='Awesome - 5 stars'></label>
             <input
               type='radio'
+              checked={experience === 4}
               id='4'
               name='rating'
               value='4'
-              onClick={(e: React.MouseEvent) => {
-                props.setFieldValue('experience', 4);
-              }}
+              onChange={() => props.setFieldValue('experience', 4)}
             />
             <label htmlFor='4' title='Pretty good - 4 stars'></label>
-            <input type='radio' id='3' name='rating' value='3' onClick={() => props.setFieldValue('experience', 3)} />
+            <input
+              type='radio'
+              checked={experience === 3}
+              id='3'
+              name='rating'
+              value='3'
+              onChange={() => props.setFieldValue('experience', 3)}
+            />
             <label htmlFor='3' title='Meh - 3 stars'></label>
-            <input type='radio' id='2' name='rating' value='2' onClick={() => props.setFieldValue('experience', 2)} />
+            <input
+              type='radio'
+              checked={experience === 2}
+              id='2'
+              name='rating'
+              value='2'
+              onChange={() => props.setFieldValue('experience', 2)}
+            />
             <label htmlFor='2' title='Kinda bad - 2 stars'></label>
-            <input type='radio' id='1' name='rating' value='1' onClick={() => props.setFieldValue('experience', 1)} />
+            <input
+              type='radio'
+              checked={experience === 1}
+              id='1'
+              name='rating'
+              value='1'
+              onChange={() => props.setFieldValue('experience', 1)}
+            />
             <label htmlFor='1' title='Really bad - 1 star'></label>
           </fieldset>
         </div>
-
-        <div className='field'>
+        <ul className={styles.userForm__tagList}>
           {interests.map((interest: IInterest) => (
-            <label key={interest.id} className='checkbox' htmlFor={interest.name}>
-              <Checkbox id='interests' name='interests' value={interest.name} valueKey={interest.id} />
-            </label>
+            <li key={interest.id} className={styles.userForm__tagElement}>
+              <label htmlFor={interest.name}>
+                <Checkbox id='interests' name='interests' value={interest.name} valueKey={interest.id} />
+              </label>
+            </li>
           ))}
-        </div>
-        <button className='button is-primary' type='submit' disabled={isSubmitting}>
-          {t('Submit')}
+        </ul>
+        <button className={styles.userForm__submitButton} type='submit'>
+          {t('Update')}
         </button>
       </Form>
     </div>
@@ -149,7 +178,7 @@ const MyForm = withFormik<MyFormProps, FullFormValues>({
       email: email || '',
       telephone: telephone || '',
       gender: gender || 'FEMALE',
-      experience: experience || '1',
+      experience: experience || 1,
       interests: interests.length ? interests.map(i => i.id) : [],
       avatar: '',
       role: ''
