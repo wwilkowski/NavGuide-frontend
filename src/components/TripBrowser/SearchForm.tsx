@@ -66,12 +66,8 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
             name='location'
             value={props.formValue}
             className={styles.searchForm__input}
-            // onClick={() => {
-            //   if (location !== 'UMK Wydział Matematyki i Informatyki') setSuggestedListVisible(!suggestedListVisible);
-            // }}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               props.handleChange(event);
-              // setLocation(event.target.value);
               props.onChange(event.target.value);
             }}
           />
@@ -250,7 +246,7 @@ const SearchForm = (props: ISearchFormProps) => {
         </div>
       </div>
       <div className={`${styles.container__el} ${formView ? styles.hidden : ''}`}>
-        <LeafletMap position={props.positionValue} trips={props.trips} chosenOfferId={chosenOfferId} setChosenOfferId={setChosenOfferId} />
+        <LeafletMap position={props.positionValue} height='85vh' trips={props.trips} chosenOfferId={chosenOfferId} setChosenOfferId={setChosenOfferId} />
       </div>
     </div>
   );

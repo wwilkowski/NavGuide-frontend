@@ -1,5 +1,9 @@
 .userForm {
   padding: 1rem 0;
+  @media (min-width: 700px) {
+    max-width: 500px;
+    margin: 0 auto;
+  }
   &__case {
     display: flex;
     justify-content: space-between;
@@ -15,14 +19,15 @@
     font-family: 'Open Sans';
     border: 0;
     font-size: 1em;
-    width: 50%;
-    max-width: 300px;
+    width: auto;
+    max-width: 120px;
   }
   select {
     background: none;
   }
   &__option {
     font-size: 1em;
+    max-width: 120px !important;
   }
   &__tagList {
     display: flex;

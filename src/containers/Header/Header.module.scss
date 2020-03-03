@@ -62,7 +62,7 @@
     transform: scaleY(1);
     transform-origin: top;
     transition: all 0.26s ease;
-    height: 200px;
+    height: auto;
     @media (min-width: 800px) {
       width: auto;
       flex-direction: row;

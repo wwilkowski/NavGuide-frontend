@@ -9,6 +9,10 @@ import { ITag } from '../../containers/TripBrowser/types';
 import Checkbox from '../../shared/Checkbox';
 import ListSuggestedTrips from '../TripBrowser/ListSuggestedTrips';
 import { ISuggestedPlace } from '../../containers/TripBrowser/types';
+import styles from './OfferCreateForm.module.scss';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import ImagePlaceholder from '../../assets/imagePlaceholder.jpg';
 
 const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>) => {
   const { touched, errors, setFieldValue, values } = props;
@@ -23,17 +27,21 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
 
   const [location, setLocation] = useState<string>('');
   const [suggestedListVisible, setSuggestedListVisible] = useState<boolean>(false);
+  const [test, setTest] = useState<string[]>([ImagePlaceholder, ImagePlaceholder, ImagePlaceholder]);
 
-  const handlePhotoChange = (selectorFiles: FileList | null) => {
+  const handlePhotoChange = (selectorFiles: FileList | null, id: number) => {
     if (selectorFiles != null) {
-      values.file.push(selectorFiles[0]);
+      values.file[id] = selectorFiles[0];
+      setTest(test.map((img, i) => (i === id ? URL.createObjectURL(selectorFiles[0]) : img)));
     }
   };
 
+  useEffect(() => {}, [values.file]);
+
   return (
-    <div>
-      <Form>
-        <label className='label' htmlFor='location'>
+    <Form>
+      <div className={`${styles.offerForm__locationInput} ${styles.offerForm__case}`}>
+        <label className={styles.offerForm__label} htmlFor='location'>
           {t('Find place')}
         </label>
         <Field
@@ -41,8 +49,7 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
           type='text'
           name='location'
           value={location}
-          className={`input`}
-          style={{ width: '300px' }}
+          className={styles.offerForm__input}
           onClick={() => {
             setSuggestedListVisible(true);
           }}
@@ -73,106 +80,128 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
             />
           </div>
         )}
-        <div className='field'>
-          <label className='label' htmlFor='name'>
-            {t('Offer name')}
+      </div>
+      <div className={styles.offerForm__case}>
+        <label htmlFor='name' className={styles.offerForm__label}>
+          {t('Offer name')}
+        </label>
+        <Field id='name' type='text' name='name' className={styles.offerForm__input} />
+        {errors.name && touched.name && <div>{t(errors.name)}</div>}
+      </div>
+      <div className={styles.offerForm__case}>
+        <div className={styles.offerForm__labelList}>
+          <label htmlFor='file1' className={styles.offerForm__imageLabel}>
+            <img src={test[0]} alt='' className={styles.offerForm__imageIcon} />
           </label>
-          <Field className='input' id='name' type='text' name='name' />
-          {errors.name && touched.name && <div>{t(errors.name)}</div>}
-        </div>
-        <input type='file' onChange={e => handlePhotoChange(e.target.files)} />
-        <div className='field'>
-          <label className='label' htmlFor='begin'>
-            {t('Begin')}
+          <label htmlFor='file2' className={styles.offerForm__imageLabel}>
+            <img src={test[1]} alt='' className={styles.offerForm__imageIcon} />
           </label>
-          <Field className='input' id='begin' type='date' name='begin' />
-          {errors.begin && touched.begin && <div>{t(`Incorrect date`)}</div>}
-        </div>
-        <div className='field'>
-          <label className='label' htmlFor='end'>
-            {t('End')}
+          <label htmlFor='file3' className={styles.offerForm__imageLabel}>
+            <img src={test[2]} alt='' className={styles.offerForm__imageIcon} />
           </label>
-          <Field className='input' id='end' type='date' name='end' />
-          {errors.end && touched.end && <div>{t(`Incorrect date`)}</div>}
         </div>
-        <div className='field'>
-          <label className='label' htmlFor='city'>
-            {t('City')}
-          </label>
-          <Field className='input' id='city' type='text' name='city' />
-          {errors.city && touched.city && <div>{t(errors.city)}</div>}
+        <input type='file' id='file1' onChange={e => handlePhotoChange(e.target.files, 0)} className={styles.offerForm__imageInput} />
+        <input type='file' id='file2' onChange={e => handlePhotoChange(e.target.files, 1)} className={styles.offerForm__imageInput} />
+        <input type='file' id='file3' onChange={e => handlePhotoChange(e.target.files, 2)} className={styles.offerForm__imageInput} />
+      </div>
+
+      <div className={`${styles.offerForm__date} ${styles.offerForm__case}`}>
+        <label htmlFor='begin' className={styles.offerForm__label}>
+          {t('Begin')}
+        </label>
+        <DatePicker dateFormat='yyyy/MM/dd' selected={values.begin} onChange={date => setFieldValue('begin', date)} />
+        {errors.begin && touched.begin && <div>{t(`Incorrect date`)}</div>}
+      </div>
+      <div className={`${styles.offerForm__date} ${styles.offerForm__case}`}>
+        <label htmlFor='end' className={styles.offerForm__label}>
+          {t('End')}
+        </label>
+        <DatePicker dateFormat='yyyy/MM/dd' selected={values.end} onChange={date => setFieldValue('end', date)} minDate={values.begin} />
+        {errors.end && touched.end && <div>{t(`Incorrect date`)}</div>}
+      </div>
+      <div className={styles.offerForm__case}>
+        <label htmlFor='city' className={styles.offerForm__label}>
+          {t('City')}
+        </label>
+        <Field id='city' type='text' name='city' className={styles.offerForm__input} />
+        {errors.city && touched.city && <div>{t(errors.city)}</div>}
+      </div>
+      <div className={styles.offerForm__case}>
+        <label htmlFor='maxPeople' className={styles.offerForm__label}>
+          {t('Max people')}
+        </label>
+        <Field id='maxPeople' type='number' name='maxPeople' className={styles.offerForm__input} />
+        {errors.maxPeople && touched.maxPeople && <div>{t(`Incorrect number`)}</div>}
+      </div>
+      <div className={styles.offerForm__case}>
+        <label htmlFor='price' className={styles.offerForm__label}>
+          {t('Price')}
+        </label>
+        <Field id='price' type='number' name='price' className={styles.offerForm__input} />
+        {errors.price && touched.price && <div>{t(`Incorrect number`)}</div>}
+      </div>
+      <div className={styles.offerForm__case}>
+        <label htmlFor='priceType' className={styles.offerForm__label}>
+          {t('Price type')}
+        </label>
+        <div>
+          <select id='priceType' name='priceType'>
+            <option value='PER_PERSON'>{t('per person')}</option>
+            <option value='PER_Person'>{t('per group')}</option>
+          </select>
         </div>
-        <div className='field'>
-          <label className='label' htmlFor='maxPeople'>
-            {t('Max people')}
-          </label>
-          <Field className='input' id='maxPeople' type='number' name='maxPeople' />
-          {errors.maxPeople && touched.maxPeople && <div>{t(`Incorrect number`)}</div>}
-        </div>
-        <div className='field'>
-          <label className='label' htmlFor='price'>
-            {t('Price')}
-          </label>
-          <Field className='input' id='price' type='number' name='price' />
-          {errors.price && touched.price && <div>{t(`Incorrect number`)}</div>}
-        </div>
-        <div className='field'>
-          <label className='label' htmlFor='priceType'>
-            {t('Price type')}
-          </label>
-          <div className='select'>
-            <Field as='select' id='priceType' name='priceType'>
-              <option value='PER_PERSON'>{t('per person')}</option>
-              <option value='PER_Person'>{t('per group')}</option>
-            </Field>
-          </div>
-        </div>
-        <div className='field'>
-          <label className='label' htmlFor='radius'>
-            {t('Radius')}
-          </label>
-          <Field
-            className='input'
-            id='radius'
-            type='number'
-            name='radius'
-            required
-            min={0.1}
-            step='.1'
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              if (event.target.value.length) {
-                props.handleChange(event);
-                const position = {
-                  latitude: props.position.latitude,
-                  longitude: props.position.longitude,
-                  radius: parseFloat(event.target.value)
-                };
-                props.setPosition(position);
-              } else {
-                props.handleChange(event);
-                const position = {
-                  latitude: props.position.latitude,
-                  longitude: props.position.longitude,
-                  radius: 0
-                };
-                props.setPosition(position);
-              }
-            }}
-          />
-          {errors.radius && touched.radius && <div>{t(`Incorrect number`)}</div>}
-        </div>
-        <ul>
+      </div>
+      <div className={styles.offerForm__case}>
+        <label htmlFor='radius' className={styles.offerForm__label}>
+          {t('Radius')}
+        </label>
+        <Field
+          id='radius'
+          type='range'
+          name='radius'
+          required
+          className={styles.offerForm__input}
+          min={0.1}
+          max={5.0}
+          step='.1'
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            props.handleChange(event);
+            const position = {
+              latitude: props.position.latitude,
+              longitude: props.position.longitude,
+              radius: parseFloat(event.target.value) || 0.0
+            };
+            props.setPosition(position);
+          }}
+        />
+        {errors.radius && touched.radius && <div>{t(`Incorrect number`)}</div>}
+      </div>
+      <div className={styles.offerForm__case}>
+        <label htmlFor='description' className={styles.offerForm__label}>
+          {t('Description')}
+        </label>
+        <textarea
+          id='description'
+          name='description'
+          value={values.description}
+          className={styles.offerForm__input}
+          onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
+            setFieldValue('description', event.target.value);
+          }}
+        ></textarea>
+        {errors.radius && touched.radius && <div>{t(`Incorrect number`)}</div>}
+      </div>
+      <div className={styles.offerForm__case}>
+        <ul className={styles.offerForm__tagList}>
           {tags.map((tag: ITag) => (
             <li key={tag.id}>
-              <Checkbox name='tags' value={tag.name} valueKey={tag.name} />
+              <Checkbox name='tags' value={tag.name} valueKey={tag.id} />
             </li>
           ))}
         </ul>
-        <button className='button is-primary' type='submit'>
-          {t('Submit')}
-        </button>
-      </Form>
-    </div>
+      </div>
+      <button type='submit'>{t('Submit')}</button>
+    </Form>
   );
 };
 
@@ -182,21 +211,23 @@ const OfferCreateForm = withFormik<types.MyFormProps, types.FullFormValues>({
     return {
       place: props.place || '',
       begin: new Date(),
-      city: 'Torun',
+      city: '',
       end: new Date(),
-      file: [],
+      file: new Array(3),
       lat: latitude || 0.0,
       lon: longitude || 0.0,
       maxPeople: 0,
-      name: 'Trip name',
+      name: '',
       price: 0.0,
       priceType: 'PER_PERSON',
       radius: radius || 0.0,
-      tags: []
+      tags: [],
+      description: ''
     };
   },
 
   handleSubmit: (values: types.FullFormValues, { props }) => {
+    values.radius *= 1000;
     props.onSubmit(values);
   }
 })(InnerForm);

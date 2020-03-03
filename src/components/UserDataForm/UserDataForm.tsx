@@ -25,7 +25,8 @@ const InnerForm = (props: FormikProps<FullFormValues>) => {
   const { t } = useTranslation();
   const [interests, setInterests] = useState([]);
 
-  const { touched, errors, isSubmitting } = props;
+  const { touched, errors, isSubmitting, values } = props;
+  const { experience } = values;
 
   useEffect(() => {
     if (Object.keys(errors).length !== 0 && isSubmitting) {
@@ -66,13 +67,13 @@ const InnerForm = (props: FormikProps<FullFormValues>) => {
           <label htmlFor='country' className={styles.userForm__label}>
             {t('Country')}
           </label>
-          <Field as='select' id='country' name='country' className={styles.userForm__input}>
+          <select id='country' name='country' value={values.country} onChange={() => {}} className={styles.userForm__input}>
             {countryCodes.map(country => (
-              <option key={country.code} value={country.code}>
+              <option key={country.code} value={country.code} className={styles.userForm__option}>
                 {t(country.name)}
               </option>
             ))}
-          </Field>
+          </select>
         </div>
 
         <div className={styles.userForm__case}>
@@ -87,7 +88,7 @@ const InnerForm = (props: FormikProps<FullFormValues>) => {
           <label htmlFor='gender' className={styles.userForm__label}>
             {t('Gender')}
           </label>
-          <select name='gender' className={styles.userForm__input}>
+          <select id='gender' name='gender' className={styles.userForm__input}>
             <option value='MALE' className={styles.userForm__option}>
               {t('Male')}
             </option>
@@ -102,22 +103,57 @@ const InnerForm = (props: FormikProps<FullFormValues>) => {
             {t('Experience')}
           </label>
           <fieldset name='experience' className={styles.rate}>
-            <input type='radio' id='5' name='rating' value='5' onClick={() => props.setFieldValue('experience', 5)} />
+            <input
+              type='radio'
+              checked={experience === 5}
+              id='5'
+              name='rating'
+              value='5'
+              onChange={() => props.setFieldValue('experience', 5)}
+            />
             <label htmlFor='5' title='Awesome - 5 stars'></label>
-            <input type='radio' id='4' name='rating' value='4' onClick={() => props.setFieldValue('experience', 4)} />
+            <input
+              type='radio'
+              checked={experience === 4}
+              id='4'
+              name='rating'
+              value='4'
+              onChange={() => props.setFieldValue('experience', 4)}
+            />
             <label htmlFor='4' title='Pretty good - 4 stars'></label>
-            <input type='radio' id='3' name='rating' value='3' onClick={() => props.setFieldValue('experience', 3)} />
+            <input
+              type='radio'
+              checked={experience === 3}
+              id='3'
+              name='rating'
+              value='3'
+              onChange={() => props.setFieldValue('experience', 3)}
+            />
             <label htmlFor='3' title='Meh - 3 stars'></label>
-            <input type='radio' id='2' name='rating' value='2' onClick={() => props.setFieldValue('experience', 2)} />
+            <input
+              type='radio'
+              checked={experience === 2}
+              id='2'
+              name='rating'
+              value='2'
+              onChange={() => props.setFieldValue('experience', 2)}
+            />
             <label htmlFor='2' title='Kinda bad - 2 stars'></label>
-            <input type='radio' id='1' name='rating' value='1' onClick={() => props.setFieldValue('experience', 1)} />
+            <input
+              type='radio'
+              checked={experience === 1}
+              id='1'
+              name='rating'
+              value='1'
+              onChange={() => props.setFieldValue('experience', 1)}
+            />
             <label htmlFor='1' title='Really bad - 1 star'></label>
           </fieldset>
         </div>
         <ul className={styles.userForm__tagList}>
           {interests.map((interest: IInterest) => (
-            <li className={styles.userForm__tagElement}>
-              <label key={interest.id} htmlFor={interest.name}>
+            <li key={interest.id} className={styles.userForm__tagElement}>
+              <label htmlFor={interest.name}>
                 <Checkbox id='interests' name='interests' value={interest.name} valueKey={interest.id} />
               </label>
             </li>
@@ -142,7 +178,7 @@ const MyForm = withFormik<MyFormProps, FullFormValues>({
       email: email || '',
       telephone: telephone || '',
       gender: gender || 'FEMALE',
-      experience: experience || '1',
+      experience: experience || 1,
       interests: interests.length ? interests.map(i => i.id) : [],
       avatar: '',
       role: ''

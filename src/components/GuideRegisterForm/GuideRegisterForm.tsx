@@ -72,15 +72,11 @@ const MyForm = (props: FormikProps<types.FormValues>) => {
 const MyEnhancedForm = withFormik<types.MyFormProps, types.FormValues>({
   mapPropsToValues: () => ({
     languages: [],
-    experience: '1',
+    experience: 1,
     description: ''
   }),
   validationSchema: GuideFormSchema,
   handleSubmit: (values, { setSubmitting, props }) => {
-    // setTimeout(() => {
-    //   alert(JSON.stringify(values, null, 2));
-    //   setSubmitting(false);
-    // }, 1000);
     setSubmitting(false);
     props.onSubmit(values);
   }

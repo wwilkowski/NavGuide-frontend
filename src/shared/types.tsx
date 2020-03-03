@@ -7,7 +7,7 @@ export interface IUserData {
   email: string;
   telephone: string;
   gender: string;
-  experience: string;
+  experience: number;
   interests: IInterest[];
 }
 
@@ -25,14 +25,14 @@ export interface IUserFormValues {
   email: string;
   telephone: string;
   gender: string;
-  experience: string;
+  experience: number;
   interests: number[];
 }
 
 export interface IEditProfileValues {
   country: string;
   email: string;
-  experience: string;
+  experience: number;
   firstName: string;
   interests: number[];
   lastName: string;

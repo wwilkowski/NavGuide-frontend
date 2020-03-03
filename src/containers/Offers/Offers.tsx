@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { StoreType } from '../../store';
 import PrivateRoute from '../../shared/PrivateRoute';
-import { Switch, Route } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import OfferCreateForm from '../../components/OfferCreateForm/OfferCreateForm';
 import LeafletMap from '../../components/LeafletMap/LeafletMap';
 import { IPosition } from '../TripBrowser/types';
 import { fetchSuggestedCitiesRequested } from '../../containers/TripBrowser/actions';
 import * as types from './types';
 import * as actions from './actions';
+import styles from './Offers.module.scss';
 
 const Offers = () => {
   const dispatcher = useDispatch();
@@ -37,11 +38,8 @@ const Offers = () => {
 
   return (
     <Switch>
-      <Route exact path='/offers'>
-        <p> Offers </p>
-      </Route>
       <PrivateRoute exact path='/offers/create' isLoggedIn={user.role === 'GUIDE'}>
-        <div style={{ width: '100%', display: 'inline-flex', justifyContent: 'center' }}>
+        <div className={styles.container}>
           <OfferCreateForm
             onSubmit={onSubmit}
             onChange={onFormChange}
@@ -50,7 +48,9 @@ const Offers = () => {
             place={place}
             setPlace={setPlace}
           />
-          <LeafletMap position={position} trips={[]} chosenOfferId={0} setChosenOfferId={(offerId: number) => {}} />
+          <div className={styles.mapContainer}>
+            <LeafletMap height='80vh' position={position} trips={[]} chosenOfferId={0} setChosenOfferId={() => {}} />
+          </div>
         </div>
       </PrivateRoute>
     </Switch>
