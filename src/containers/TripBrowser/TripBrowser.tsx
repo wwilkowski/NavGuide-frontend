@@ -112,6 +112,7 @@ const TripBrowser: React.FC = () => {
       setFormValue(suggestedCities[0].displayName);
     }
 
+    setFormValue(location.displayName);
     // dispatcher(actions.fetchSuggestedCitiesRequested('', 0));
 
     if (location.displayName.length) {

@@ -11,6 +11,7 @@ import { logInGoogleRequest } from '../../containers/Profile/actions';
 import { getInterestsRequest, signUpGoogleRequest } from '../../containers/Registration/actions';
 import GoogleButton from '../../components/GoogleButton/GoogleButton';
 import { ISingleTripType } from '../../containers/TripBrowser/types';
+import { Link } from 'react-router-dom';
 
 const TripInfo = (props: ITripInfoProps) => {
   const { t } = useTranslation();
@@ -94,11 +95,16 @@ const TripInfo = (props: ITripInfoProps) => {
             guideProfileData={props.guideProfileData}
           />
         </div>
-        <div style={{ width: '80%' }}>
-          <p style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '1.8vh', padding: '0.3rem' }}>{t('Description')}</p>
-        </div>
+        <div style={{ width: '80%' }}></div>
         <div className={styles.description}>
-          <Description text={props.tripInformations.description} />
+          <p className={styles.description__title}>{t('Description')}</p>
+
+          <div className={styles.description__content}>
+            <Description text={props.tripInformations.description} />
+            <div className={styles.orderButton}>
+              <Link to='/kupowanie/wycieczki'>{t('Buy')}!</Link>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -108,7 +114,7 @@ const TripInfo = (props: ITripInfoProps) => {
         Aby zobaczyć więcej:
       </div>
       <div className={styles.googleButtons} ref={node}>
-        <p style={{ width: '50%' }}>
+        <p style={{ width: '100%' }}>
           <GoogleButton text='Sign up with Google' onSuccess={signUpWithUserCode} onFailure={signUpWithUserCode} />
         </p>
         <p>

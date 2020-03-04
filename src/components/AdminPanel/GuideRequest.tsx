@@ -10,62 +10,70 @@ const GuideRequest = ({ guideRequest, userProfile }: IGuideRequestProps) => {
   const req = guideRequest;
 
   const [user, setUser] = useState<IUserProfile>();
+  const [reducedDate, setReducedDate] = useState<string>('');
+  const [experience, setExperience] = useState<string>('');
 
   useEffect(() => {
     if (!user) setUser(userProfile);
   }, [userProfile, user]);
 
+  useEffect(() => {
+    const index = req.date.indexOf('.');
+    setReducedDate(req.date.substr(0, index).replace('T', ' '));
+  }, [guideRequest]);
+
+  useEffect(() => {
+    let tmp = '';
+    for (let i = 0; i < guideRequest.experience; i++) {
+      tmp += '★';
+    }
+    for (let i = guideRequest.experience; i < 5; i++) {
+      tmp += '☆';
+    }
+    setExperience(tmp);
+  }, [guideRequest.experience]);
+
   return (
     <>
       <div className={styles.request__content}>
         <div className={styles.row}>
-          <div style={{ width: '30%' }}>
-            <b>{t('ID')}:</b> {req.id}
-          </div>
-          <div style={{ width: '70%' }}>
-            <b>{t('Created at')}:</b> {req.date}
-          </div>
+          <p className={styles.left}>{t('Date')}:</p>
+          <p className={styles.right}>{reducedDate}</p>
         </div>
         <div className={styles.row}>
-          <div style={{ minWidth: '50%' }}>
-            <b>{t('Email')}:</b> {user ? user.email : null}
-          </div>
-          <div style={{ marginLeft: '0.5rem' }}>
-            <b>{t('Tel')}.:</b> {user ? user.telephone : null}
-          </div>
+          <p className={styles.left}>{t('Email')}:</p> <p className={styles.right}>{user ? user.email : null}</p>
         </div>
         <div className={styles.row}>
-          <div style={{ width: '50%' }}>
-            <b>{t('Country')}: </b>
-            {user ? user.country : null}
-          </div>
-          <div style={{ marginLeft: '0.5rem' }}>
-            <b>{t('Languages')}:</b> {req.languages.map((lng: string) => `${lng} `)}
-          </div>
+          <p className={styles.left}>{t('Tel')}.:</p> <p className={styles.right}>{user ? user.telephone : null}</p>
         </div>
         <div className={styles.row}>
-          <div>
-            <b>{t('Experience')}:</b> {req.experience}
-          </div>
+          <p className={styles.left}>{t('Country')}:</p>
+          <p className={styles.right}>{user ? user.country : null}</p>
+        </div>
+        <div className={styles.row}>
+          <p className={styles.left}>{t('Languages')}:</p> <p className={styles.right}>{req.languages.map((lng: string) => `${lng} `)}</p>
+        </div>
+        <div className={styles.row}>
+          <p className={styles.left}>{t('Experience')}:</p> <p className={styles.right}>{experience} </p>
         </div>
         <div className={styles.description}>{req.description}</div>
       </div>
       <div className={styles.request__menu}>
+        <div className={styles.title}>
+          {t('ID')}: {req.id}
+        </div>
         <div className={styles.avatar}>
           <img src={user ? user.avatar : ''} alt='' />
         </div>
         <div className={styles.row}>
-          <div style={{ width: '100%', textAlign: 'center', marginTop: '0.2rem' }}>
-            <b>
-              {user ? user.firstName : null} {user ? user.lastName : null}
-            </b>
-          </div>
+          <p className={styles.title}>
+            {user ? user.firstName : null} {user ? user.lastName : null}{' '}
+          </p>
         </div>
         <div className={styles.row}>
-          <b>{t('Gender')}:</b> {user ? user.gender : null}
-        </div>
-        <div className={styles.row}>
-          <b>{t('Age')}:</b> {user ? user.age : null}
+          <p style={{ width: '100%', textAlign: 'center' }}>
+            {user ? user.gender : null}, {user ? user.age : null}
+          </p>
         </div>
       </div>
     </>

@@ -78,35 +78,26 @@ const Informations = (props: IInformationsProps) => {
       {props.mode === 'trip' ? (
         <div>
           <div className={styles.informations__content}>
-            <h1>
-              <b>{t('Informations')}</b>
-            </h1>
             <div className={styles.content1}>
-              <p>
-                <b>{t('City')}:</b> {tripData.city}
+              <p className={styles.title}>{t('Informations')}</p>
+              <p className={styles.left}>{t('City')}:</p>
+              <p className={styles.right}>{tripData.city}</p>
+              <p className={styles.left}>{t('Price')}:</p>
+              <p className={styles.right}>
+                {tripData.price} ({/*tripData.priceType*/}osoba)
               </p>
-              <p>
-                <b>{t('Price')}: </b>
-                {tripData.price} ({tripData.priceType})
-              </p>
-              <p>
-                <b>{t('Number of people (max)')}: </b>
-                {tripData.maxPeople}
-              </p>
+              <p className={styles.left}>{t('Max people')}:</p>
+              <p className={styles.right}> {tripData.maxPeople}</p>
             </div>
             <div className={styles.content2}>
-              <p style={{ width: '100%' }}>
-                <b>{t('Availability')}:</b>
-              </p>
+              <p className={styles.title}>{t('Availability')}</p>
               <div style={{ width: '50%' }}>
-                <p>
-                  <b>{t('From')}: </b> 1.01.2020
-                </p>
+                <p className={styles.left}>{t('From')}:</p>
+                <p className={styles.right}>1.01.2020</p>
               </div>
               <div>
-                <p>
-                  <b>{t('To')}: </b> 1.03.2020
-                </p>
+                <p className={styles.left}>{t('To')}:</p>
+                <p className={styles.right}>1.01.2020</p>
               </div>
             </div>
             <div className={styles.content3}>
@@ -119,9 +110,7 @@ const Informations = (props: IInformationsProps) => {
               </div>
             </div>
             <div className={styles.content4}>
-              <p>
-                <b>{t('Number of visits')}</b>
-              </p>
+              <p className={styles.title}>{t('Number of visits')}</p>
               <p>23</p>
             </div>
           </div>
@@ -141,23 +130,16 @@ const Informations = (props: IInformationsProps) => {
               </p>
             </div>
             <div className={styles.content1}>
-              <p>
-                <b>{t('Tel')}.:</b> {props.guideProfileData.telephone}
-              </p>
-              <p>
-                <b>{t('Email')}:</b> {props.guideProfileData.email}
-              </p>
-              <p>
-                <b>{t('Country')}:</b> {props.guideProfileData.country}
-              </p>
-              <p>
-                <b>{t('Languages')}:</b> {tripData.owner.languages.map((lng: string) => `${lng} `)}
-              </p>
-            </div>
-            <div className={styles.content3}>
-              <p>
-                <b>{t('Experience')}:</b> {experience}
-              </p>
+              <p className={styles.left}>{t('Experience')}:</p>
+              <p className={styles.right}>{experience}</p>
+              <p className={styles.left}>{t('Tel')}.:</p>
+              <p className={styles.right}>{props.guideProfileData.telephone}</p>
+              <p className={styles.left}>{t('Email')}:</p>
+              <p className={styles.right}>{props.guideProfileData.email}</p>
+              <p className={styles.left}>{t('Country')}:</p>
+              <p className={styles.right}>{props.guideProfileData.country}</p>
+              <p className={styles.left}>{t('Languages')}:</p>
+              <p className={styles.right}>{tripData.owner.languages.map((lng: string) => `${lng} `)}</p>
             </div>
           </div>
         </div>
