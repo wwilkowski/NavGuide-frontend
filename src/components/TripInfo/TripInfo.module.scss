@@ -29,7 +29,6 @@
   }
 
   &__content {
-    z-index: 10;
     background-color: rgb(248, 244, 244);
     width: 50%;
     height: 65%;
@@ -44,7 +43,8 @@
     @media (max-width: 800px) {
       margin-top: 0%;
       width: 100%;
-      height: 100%;
+      height: auto;
+      font-size: 1.5em;
     }
 
     @media (min-width: 801px) and (max-width: 1400px) {
@@ -53,28 +53,56 @@
   }
 }
 
+.orderButton {
+  position: absolute;
+  text-align: center;
+  font-family: 'Open sans';
+  font-size: 0.9em;
+  width: 100px;
+  border: 1px solid black;
+  color: black;
+  background-color: #3bd8b6;
+  border-radius: 5px;
+  padding: 0.4rem;
+  cursor: pointer;
+  margin-left: 41.2rem;
+  margin-top: -5rem;
+
+  @media (max-width: 800px) {
+    position: fixed;
+    width: 60px;
+    margin-left: 16rem;
+    margin-top: -51rem;
+  }
+}
+
 .googleButtons {
   width: 50%;
   height: 50%;
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
   margin-top: 15%;
   z-index: 15;
+  position: relative;
+
+  p {
+    margin-top: 3rem;
+  }
 }
 
 .gallery {
   background-color: rgba(15, 22, 9, 0.185);
   width: 58%;
-  height: 60%;
+  height: 62%;
   display: flex;
   flex-wrap: wrap;
   position: relative;
-  transition-property: all 0.25s ease;
 
   @media (max-width: 800px) {
-    width: 60%;
-    height: 30%;
-    margin-top: -0.5rem;
+    width: 90%;
+    height: 40%;
+    margin-top: 0.5rem;
   }
 
   @media (min-width: 801px) and (max-width: 1400px) {
@@ -131,7 +159,7 @@
 
   &__footer {
     min-width: 15%;
-    height: 5%;
+    height: 4.75%;
     bottom: 0rem;
     left: 42.5%;
     background-color: rgba(102, 98, 98, 0.527);
@@ -141,6 +169,7 @@
 
     @media (max-width: 800px) {
       bottom: 0.1rem;
+      height: 6.5%;
     }
 
     .dot {
@@ -173,12 +202,12 @@
   overflow-y: auto;
   background-color: rgb(241, 235, 235);
   width: 38%;
-  height: 60%;
+  height: 65%;
 
   @media (max-width: 800px) {
-    width: 60%;
+    width: 90%;
+    margin-top: 0.5rem;
     height: auto;
-    margin-top: -0.5rem;
   }
 
   @media (min-width: 801px) and (max-width: 1400px) {
@@ -193,9 +222,9 @@
       font-family: 'Open sans';
       font-size: 0.9em;
       width: 100px;
-      border: 1px solid #94531e;
-      color: #957a21;
-      background: none;
+      border: 1px solid black;
+      color: black;
+      background-color: #3bd8b6;
       border-radius: 5px;
       padding: 0.4rem;
       cursor: pointer;
@@ -219,8 +248,8 @@
       font-family: 'Open sans';
       font-size: 0.9em;
       width: 100px;
-      border: 1px solid #94531e;
-      color: #957a21;
+      border: 1px solid black;
+      color: black;
       background-color: white;
       border-radius: 5px;
       padding: 0.4rem;
@@ -244,12 +273,43 @@
   &__content {
     height: 100%;
     width: 100%;
-    padding: 1rem 1rem;
+    padding: 1.5rem;
+    padding-top: 0.5rem;
     display: flex;
     flex-direction: column;
 
+    @media (max-width: 800px) {
+      font-size: 0.9em;
+    }
+
+    p.title {
+      font-weight: bold;
+      text-align: center;
+      width: 55%;
+      margin: auto;
+      font-size: 1.1em;
+      border-bottom: 1px solid #c3c3c3;
+    }
+
+    p.left {
+      display: block;
+      font-weight: bold;
+      text-align: left;
+      width: 50%;
+      margin-top: 0.3rem;
+    }
+
+    p.right {
+      display: block;
+      text-align: right;
+      width: 50%;
+      margin-top: 0.3rem;
+    }
+
     .content1 {
-      margin-top: 0.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 0rem;
     }
 
     .content2 {
@@ -259,16 +319,20 @@
     }
 
     .content3 {
-      margin-top: 1rem;
+      margin-top: 1.5rem;
       &__tags {
         display: flex;
         justify-content: space-around;
-        flex-wrap: wrap;
+        overflow-x: auto;
 
         .tag {
-          text-align: center;
-          min-width: 20%;
-          background-color: rgb(248, 244, 244);
+          border: 1px solid #dbdbdb;
+          border-radius: 5px;
+          color: #333333;
+          padding: 0.3rem 0.8rem;
+          margin-right: 0.4rem;
+          font-size: 0.7em;
+          background-color: #e64740;
         }
       }
     }
@@ -276,8 +340,13 @@
     .content4 {
       margin-top: 2rem;
       text-align: center;
+      border: 1px solid #c3c3c3;
+      background-color: #dddbdb;
+
+      @media (min-width: 800px) {
+        margin-top: 1rem;
+      }
     }
-    ////////////////////////////////////////////////////////////////////////////
 
     .avatar {
       width: 30%;
@@ -318,17 +387,35 @@
 
 .description {
   background-color: rgb(241, 235, 235);
-  width: 100%;
-  height: 23%;
-  margin-bottom: 3rem;
-  padding: 1rem;
-  font-size: 1.5vh;
+  width: 98%;
+  height: 26%;
+  font-size: 1em;
   overflow-y: auto;
 
+  &__title {
+    font-weight: bold;
+    text-align: center;
+    width: 15%;
+    margin: auto;
+    font-size: 1.1em;
+    border-bottom: 1px solid #c3c3c3;
+
+    @media (max-width: 800px) {
+      width: 55%;
+    }
+  }
+
+  &__content {
+    width: 100%;
+    padding: 1rem;
+    margin-top: 0.3rem;
+    background-color: rgb(241, 235, 235);
+  }
+
   @media (max-width: 800px) {
-    width: 60%;
-    height: auto;
-    margin-top: -2rem;
+    width: 90%;
+    min-height: 50%;
+    margin-top: 1rem;
   }
 
   @media (min-width: 801px) and (max-width: 1400px) {
