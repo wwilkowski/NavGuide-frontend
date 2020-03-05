@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import styles from '../TripInfo.module.scss';
 import { IInformationsProps } from './types';
 import { ITag } from '../../../containers/TripBrowser/types';
-import { IUserProfile } from '../../../containers/User/types';
 
 const Informations = (props: IInformationsProps) => {
   const { t } = useTranslation();
