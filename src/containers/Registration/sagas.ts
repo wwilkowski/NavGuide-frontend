@@ -12,7 +12,7 @@ const signUpGoogleEndpoint = `https://235.ip-51-91-9.eu/auth/google/register`;
 const confirmGoogleEndpoint = `https://235.ip-51-91-9.eu/auth/google/register/confirm`;
 const interestsEndpoint = `https://235.ip-51-91-9.eu/interests`;
 const registerGuideEndpoint = 'https://235.ip-51-91-9.eu/guiderequests';
-const guideInfoEndpoint = 'https://235.ip-51-91-9.eu/profile/guiderequests';
+const guideInfoEndpoint = 'https://235.ip-51-91-9.eu/profile/guideRequests';
 
 function* signUpGoogleUser(action: types.ISignUpGoogleRequest) {
   try {
@@ -154,7 +154,7 @@ function* getGuideInfo() {
         Authorization: `Bearer ${getToken()}`
       }
     });
-
+    console.log(getToken());
     if (response.status >= 200 && response.status <= 300) {
       const json = yield response.json();
       yield put(actions.getGuideInfoSuccessed(json));

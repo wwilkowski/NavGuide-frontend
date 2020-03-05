@@ -136,11 +136,6 @@ function* fetchSuggestedCitiesFromNominatimAPI(action: types.IFetchSuggestedCiti
       }
     }));
 
-    console.log(filteredSuggestedCities);
-    // filteredSuggestedCities = filteredSuggestedCities.filter((el: types.ISuggestedPlace) => {
-    //   if (el.address.countryCode === 'pl') return el;
-    // });
-
     const seen = new Set();
     filteredSuggestedCities = filteredSuggestedCities.filter((el: types.ISuggestedPlace) => {
       const duplicate = seen.has(el.displayName);
