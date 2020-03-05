@@ -4,6 +4,7 @@ import * as actions from '../actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { StoreType } from '../../../store';
 import { useTranslation } from 'react-i18next';
+import styles from './GuideForm.module.scss';
 
 interface FormValues {
   languages: string[];
@@ -18,6 +19,7 @@ const GuideForm = () => {
   const userRole = useSelector((state: StoreType) => state.profile.user.role);
 
   const { t } = useTranslation();
+
   useEffect(() => {
     dispatcher(actions.getGuideInfoRequest());
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -50,7 +52,7 @@ const GuideForm = () => {
           </div>
         )}
         {blockForm ? (
-          <div>
+          <div className={styles.case}>
             <p>{t(`You applied for being the guide`)}</p>
             <p>
               {t(`Request status`)}: {t(`${requests[lastRequestid].status.toLowerCase()}`)}

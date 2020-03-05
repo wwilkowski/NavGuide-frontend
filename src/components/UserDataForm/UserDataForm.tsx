@@ -8,6 +8,7 @@ import i18n from '../../locales/i18n';
 import Checkbox from '../../shared/Checkbox';
 import { MyFormProps, FullFormValues, IInterest } from './types';
 import styles from './UserDataForm.module.scss';
+import experienceStyles from '../../shared/Experience.module.scss';
 
 const SignupSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -53,7 +54,7 @@ const InnerForm = (props: FormikProps<FullFormValues>) => {
             {t('First name')}
           </label>
           <Field id='firstName' type='text' name='firstName' className={styles.userForm__input} />
-          {errors.firstName && touched.firstName && <div>{t(errors.firstName)}</div>}
+          {errors.firstName && touched.firstName && <div className={styles.userForm__warning}>{t(errors.firstName)}</div>}
         </div>
 
         <div className={styles.userForm__case}>
@@ -61,7 +62,7 @@ const InnerForm = (props: FormikProps<FullFormValues>) => {
             {t('Last name')}
           </label>
           <Field id='lastName' type='text' name='lastName' className={styles.userForm__input} />
-          {errors.lastName && touched.lastName && <div>{t(errors.lastName)}</div>}
+          {errors.lastName && touched.lastName && <div className={styles.userForm__warning}>{t(errors.lastName)}</div>}
         </div>
         <div className={styles.userForm__case}>
           <label htmlFor='country' className={styles.userForm__label}>
@@ -80,8 +81,11 @@ const InnerForm = (props: FormikProps<FullFormValues>) => {
           <label htmlFor='tel' className={styles.userForm__label}>
             {t('Telephone')}
           </label>
-          <Field id='telephone' type='text' name='telephone' className={styles.userForm__input} />
-          {errors.telephone && touched.telephone && <div>{t(errors.telephone)}</div>}
+          <div>
+            <span>+</span>
+            <Field id='telephone' type='text' name='telephone' className={`${styles.userForm__input} ${styles.userForm__telephoneInput}`} />
+          </div>
+          {errors.telephone && touched.telephone && <div className={styles.userForm__warning}>{t(errors.telephone)}</div>}
         </div>
 
         <div className={styles.userForm__case}>
@@ -102,7 +106,7 @@ const InnerForm = (props: FormikProps<FullFormValues>) => {
           <label htmlFor='experience' className={styles.userForm__label}>
             {t('Experience')}
           </label>
-          <fieldset name='experience' className={styles.rate}>
+          <fieldset name='experience' className={experienceStyles.rate}>
             <input
               type='radio'
               checked={experience === 5}

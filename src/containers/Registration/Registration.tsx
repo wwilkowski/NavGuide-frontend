@@ -15,7 +15,8 @@ const Registration: React.FC = () => {
     <div>
       <Switch>
         <Route exact path={'/register'}>
-          {registrationData.registrationInProgress ? RegisterForm(UserDataForm) : <Redirect to='/' />}
+          {/* {registrationData.registrationInProgress ? RegisterForm(UserDataForm) : <Redirect to='/' />} */}
+          {RegisterForm(UserDataForm)}
         </Route>
         <PrivateRoute path={'/register/guide'} component={GuideForm} isLoggedIn={isLoggedIn} />
         <Route>

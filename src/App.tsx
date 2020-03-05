@@ -30,18 +30,16 @@ const App: React.FC = () => {
     <>
       <ReactNotification />
       <Header />
-      <div style={{ padding: '1rem' }}>
-        <Switch>
-          <Route exact path='/'>
-            <TripBrowser />
-          </Route>
-          <Route path='/register' component={Registration} />
-          <Route path='/profile' component={Profile} />
-          <Route path='/offers' component={Offers} />
-          <Route path='/admin' component={AdminPanel} />
-          <Route component={NotFound} />
-        </Switch>
-      </div>
+      <Switch>
+        <Route exact path='/'>
+          <TripBrowser />
+        </Route>
+        <Route path='/register' component={Registration} />
+        <Route path='/profile' component={Profile} />
+        <Route path='/offers' component={Offers} />
+        <Route path='/admin' component={AdminPanel} />
+        <Route component={NotFound} />
+      </Switch>
     </>
   );
 };

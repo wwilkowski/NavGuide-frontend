@@ -23,9 +23,9 @@ const RegisterForm = (Component: ComponentType<Props>) => {
   return (
     <>
       <h1 className='title'>{t('Register Form')}</h1>
-      <label className='label' htmlFor='toBeGuide'>
+      <label htmlFor='toBeGuide'>
         {t('I want to be a guide too')}
-        <input id='toBeGuide' className='checkbox' type='checkbox' checked={toBeGuide} onChange={() => setToBeGuide(prev => !prev)} />
+        <input id='toBeGuide' type='checkbox' checked={toBeGuide} onChange={() => setToBeGuide(prev => !prev)} />
       </label>
       <Component onSubmit={onRegisterFormSubmit} templateUser={registrationData.templateUser} />
     </>

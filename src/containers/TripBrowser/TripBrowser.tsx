@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ISingleTripType, IPosition, ISuggestedPlace, IGuideProfileComplete } from './types';
+import { ISingleTripType, IPosition, ISuggestedPlace } from './types';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from './actions';
 import { StoreType } from '../../store';
