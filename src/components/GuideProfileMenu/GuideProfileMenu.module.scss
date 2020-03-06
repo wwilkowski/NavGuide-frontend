@@ -1,0 +1,38 @@
+.nav {
+  display: block;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  color: #ffffff;
+  font-size: 0.8em;
+  @media (min-width: 800px) {
+    display: none;
+  }
+  &__menuList {
+    background: #37b498;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  &__menuItem {
+    display: flex;
+    justify-content: center;
+    width: 30%;
+    padding: 0.6rem;
+    cursor: pointer;
+  }
+  &__case {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  &__icon {
+    width: 20px;
+  }
+  &__p {
+    font-weight: 500;
+    padding: 0.2rem 0;
+  }
+}

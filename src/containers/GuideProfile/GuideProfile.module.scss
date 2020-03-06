@@ -1,0 +1,19 @@
+.container {
+  width: 100%;
+
+  &__section {
+    width: 100%;
+
+    @media (min-width: 800px) {
+      width: 33%;
+    }
+  }
+
+  &__sectionHidden {
+    display: none;
+
+    @media (min-width: 800px) {
+      display: block;
+    }
+  }
+}
