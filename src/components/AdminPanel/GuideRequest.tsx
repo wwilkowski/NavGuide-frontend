@@ -59,7 +59,7 @@ const GuideRequest = ({ guideRequest, userProfile }: IGuideRequestProps) => {
         <div className={styles.description}>{req.description}</div>
       </div>
       <div className={styles.request__menu}>
-        <div className={styles.title}>
+        <div className={styles.title} style={{ marginLeft: '0rem' }}>
           {t('ID')}: {req.id}
         </div>
         <div className={styles.avatar}>

@@ -54,7 +54,6 @@
 }
 
 .orderButton {
-  position: absolute;
   text-align: center;
   font-family: 'Open sans';
   font-size: 0.9em;
@@ -62,17 +61,22 @@
   border: 1px solid black;
   color: black;
   background-color: #3bd8b6;
+  position: absolute;
+  margin-top: -3%;
   border-radius: 5px;
   padding: 0.4rem;
   cursor: pointer;
-  margin-left: 41.2rem;
-  margin-top: -5rem;
 
   @media (max-width: 800px) {
-    position: fixed;
-    width: 60px;
-    margin-left: 16rem;
-    margin-top: -51rem;
+    width: 40%;
+    margin: 1rem;
+    position: static;
+  }
+
+  @media (min-width: 801px) and (max-width: 1400px) {
+    width: 40%;
+    margin: 1rem;
+    position: static;
   }
 }
 
@@ -101,12 +105,12 @@
 
   @media (max-width: 800px) {
     width: 90%;
-    height: 40%;
+    height: 280px;
     margin-top: 0.5rem;
   }
 
   @media (min-width: 801px) and (max-width: 1400px) {
-    margin-top: 2rem;
+    margin-top: 1rem;
     width: 90%;
     height: 60%;
   }
@@ -159,7 +163,7 @@
 
   &__footer {
     min-width: 15%;
-    height: 4.75%;
+    padding: 0.1rem;
     bottom: 0rem;
     left: 42.5%;
     background-color: rgba(102, 98, 98, 0.527);
@@ -168,7 +172,6 @@
     justify-content: space-around;
 
     @media (max-width: 800px) {
-      bottom: 0.1rem;
       height: 6.5%;
     }
 
@@ -289,6 +292,7 @@
       margin: auto;
       font-size: 1.1em;
       border-bottom: 1px solid #c3c3c3;
+      padding: 0.5rem;
     }
 
     p.left {
@@ -296,7 +300,7 @@
       font-weight: bold;
       text-align: left;
       width: 50%;
-      margin-top: 0.3rem;
+      padding: 0.5rem;
     }
 
     p.right {
@@ -415,7 +419,6 @@
   @media (max-width: 800px) {
     width: 90%;
     min-height: 50%;
-    margin-top: 1rem;
   }
 
   @media (min-width: 801px) and (max-width: 1400px) {
