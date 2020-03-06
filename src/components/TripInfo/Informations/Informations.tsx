@@ -109,7 +109,9 @@ const Informations = (props: IInformationsProps) => {
               </div>
             </div>
             <div className={styles.content4}>
-              <p className={styles.title}>{t('Number of visits')}</p>
+              <p className={styles.title} style={{ width: '65%' }}>
+                {t('Number of visits')}
+              </p>
               <p>23</p>
             </div>
           </div>
@@ -131,10 +133,12 @@ const Informations = (props: IInformationsProps) => {
             <div className={styles.content1}>
               <p className={styles.left}>{t('Experience')}:</p>
               <p className={styles.right}>{experience}</p>
+              <p className={styles.title}>{t('Contact')}</p>
               <p className={styles.left}>{t('Tel')}.:</p>
               <p className={styles.right}>{props.guideProfileData.telephone}</p>
               <p className={styles.left}>{t('Email')}:</p>
               <p className={styles.right}>{props.guideProfileData.email}</p>
+              <p className={styles.title}>{t('Speech')}</p>
               <p className={styles.left}>{t('Country')}:</p>
               <p className={styles.right}>{props.guideProfileData.country}</p>
               <p className={styles.left}>{t('Languages')}:</p>
