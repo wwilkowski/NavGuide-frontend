@@ -16,6 +16,7 @@ import styles from './SearchForm.module.scss';
 import MapIcon from '../../assets/icons/map.png';
 import ListIcon from '../../assets/icons/list.png';
 import CloseIcon from '../../assets/icons/close.png';
+import Slider from '@material-ui/core/Slider';
 
 const SearchFormSchema = Yup.object().shape({});
 
@@ -52,6 +53,10 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
     setLocation(props.formValue);
     values.location = props.formValue;
   }, [props.formValue, values.location]);
+
+  function valuetext(value: number) {
+    return `${value}km`;
+  }
 
   return (
     <Form autoComplete='off' className={styles.searchForm}>
@@ -97,7 +102,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
               {t('Radius')}:
             </label>
           </div>
-          <Field
+          {/* <Field
             id='radius'
             type='range'
             name='radius'
@@ -113,6 +118,26 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                 latitude: props.positionValue.latitude,
                 longitude: props.positionValue.longitude,
                 radius: parseFloat(event.target.value) || 0.0
+              };
+              props.setPosition(position);
+            }}
+          /> */}
+          <Slider
+            defaultValue={0.0}
+            getAriaValueText={valuetext}
+            aria-labelledby='discrete-slider-small-steps'
+            value={props.positionValue.radius}
+            step={0.1}
+            marks
+            min={0.0}
+            max={5.0}
+            valueLabelDisplay='auto'
+            onChange={(event: React.ChangeEvent<{}>, value: number | number[]) => {
+              props.handleChange(event);
+              const position = {
+                latitude: props.positionValue.latitude,
+                longitude: props.positionValue.longitude,
+                radius: Number(value) || 0.0
               };
               props.setPosition(position);
             }}
@@ -167,7 +192,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
             );
           }}
         >
-          {t('geolocation')}
+          {t('Geolocation')}
         </button>
       </div>
     </Form>

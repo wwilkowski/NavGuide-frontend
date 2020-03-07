@@ -22,7 +22,7 @@ var customIcon = new L.Icon({
 const LeafletMap = ({ position, trips = [], chosenOfferId = null, setChosenOfferId, height }: Props) => {
   const { latitude, longitude, radius } = position;
   return (
-    <Map center={{ lat: latitude, lng: longitude }} zoom={10} style={{ zIndex: 1, height: window.innerWidth > 800 ? height : '100vh', width: 'auto', position: 'relative' }}>
+    <Map center={{ lat: latitude, lng: longitude }} zoom={14} style={{ zIndex: 1, height: window.innerWidth > 800 ? height : '100vh', width: 'auto', position: 'relative' }}>
       <TileLayer
         url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
