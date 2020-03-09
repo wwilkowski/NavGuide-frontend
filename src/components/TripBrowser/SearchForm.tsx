@@ -30,7 +30,23 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
   const tags = useSelector((state: StoreType) => state.tripBrowser.tags);
 
   const [location, setLocation] = useState<string>('');
+  const [fixedRadiusView, setFixedRadiusView] = useState<Boolean>(false);
   const [suggestedListVisible, setSuggestedListVisible] = useState<boolean>(true);
+
+  const checkScroll = (e: Event) => {
+    if (window.scrollY > 0) {
+      setFixedRadiusView(true);
+    } else {
+      setFixedRadiusView(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', checkScroll);
+    return () => {
+      window.removeEventListener('scroll', checkScroll);
+    };
+  }, []);
 
   useEffect(() => {
     setSuggestedListVisible(true);
@@ -96,32 +112,12 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
             />
           )}
         </div>
-        <div>
+        <div className={fixedRadiusView ? styles.fixedRadius : ''}>
           <div>
             <label htmlFor='radius' className={styles.searchForm__label}>
               {t('Radius')}:
             </label>
           </div>
-          {/* <Field
-            id='radius'
-            type='range'
-            name='radius'
-            required
-            className={styles.searchForm__input}
-            min={0.1}
-            max={5.0}
-            step='.1'
-            value={props.positionValue.radius}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              props.handleChange(event);
-              const position = {
-                latitude: props.positionValue.latitude,
-                longitude: props.positionValue.longitude,
-                radius: parseFloat(event.target.value) || 0.0
-              };
-              props.setPosition(position);
-            }}
-          /> */}
           <Slider
             defaultValue={0.0}
             getAriaValueText={valuetext}
@@ -297,6 +293,7 @@ const SearchForm = (props: ISearchFormProps) => {
           trips={props.trips}
           chosenOfferId={chosenOfferId}
           setChosenOfferId={setChosenOfferId}
+          changeTripInfoVisible={props.changeTripInfoVisible}
         />
       </div>
     </div>

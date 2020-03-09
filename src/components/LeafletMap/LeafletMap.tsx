@@ -9,7 +9,8 @@ export interface Props {
   trips: ISingleTripType[];
   chosenOfferId: number | null;
   setChosenOfferId: (offerId: number) => void;
-  height: string
+  height: string;
+  changeTripInfoVisible: (id: number) => void;
 }
 
 var customIcon = new L.Icon({
@@ -19,10 +20,15 @@ var customIcon = new L.Icon({
   popupAnchor: [0, -51]
 });
 
-const LeafletMap = ({ position, trips = [], chosenOfferId = null, setChosenOfferId, height }: Props) => {
+const LeafletMap = ({ position, trips = [], chosenOfferId = null, setChosenOfferId, height, changeTripInfoVisible }: Props) => {
   const { latitude, longitude, radius } = position;
+
   return (
-    <Map center={{ lat: latitude, lng: longitude }} zoom={14} style={{ zIndex: 1, height: window.innerWidth > 800 ? height : '100vh', width: 'auto', position: 'relative' }}>
+    <Map
+      center={{ lat: latitude, lng: longitude }}
+      zoom={14}
+      style={{ zIndex: 1, height: window.innerWidth > 800 ? height : '100vh', width: 'auto', position: 'relative' }}
+    >
       <TileLayer
         url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -36,6 +42,7 @@ const LeafletMap = ({ position, trips = [], chosenOfferId = null, setChosenOffer
           position={{ lat: trip.lat, lng: trip.lon }}
           opacity={trip.id === chosenOfferId ? 1 : 0.5}
           onMouseOver={() => setChosenOfferId(trip.id)}
+          onClick={() => changeTripInfoVisible(trip.id)}
         >
           <Popup>{trip.name}</Popup>
           <Circle

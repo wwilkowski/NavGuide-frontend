@@ -30,12 +30,12 @@ const MyForm = (props: FormikProps<types.FormValues>) => {
     },
     {
       name: 'German',
-      code: 'GE'
+      code: 'DE'
     }
   ];
   const { touched, errors } = props;
   return (
-    <div>
+    <div className={styles.container}>
       <h2 className={styles.title}>{t('Become a guide')}</h2>
       <form onSubmit={handleSubmit}>
         <div className={userStyles.userForm__case}>
