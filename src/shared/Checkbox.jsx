@@ -1,8 +1,10 @@
 import React from 'react';
 import { Field } from 'formik';
 import styles from './Checkbox.module.scss';
+import { useTranslation } from 'react-i18next';
 
 const CheckboxComponent = props => {
+  const { t } = useTranslation();
   return (
     <Field name={props.name}>
       {({ field, form }) => (
@@ -25,7 +27,7 @@ const CheckboxComponent = props => {
             }}
           />
           <label htmlFor={props.value} className={styles.checkboxLabel}>
-            {props.value}
+            {t(props.value)}
           </label>
         </>
       )}

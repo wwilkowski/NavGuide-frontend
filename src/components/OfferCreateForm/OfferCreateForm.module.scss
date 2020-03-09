@@ -4,6 +4,11 @@
   padding: 0.5rem;
   width: 100%;
   margin-bottom: 1rem;
+  &__title {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin: 1rem 0;
+  }
   @media (min-width: 800px) {
     flex-direction: row;
   }

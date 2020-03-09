@@ -1,9 +1,11 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import pl from './pl/translate.json';
+import en from './en/translate.json';
 
 const resources = {
-  pl
+  pl,
+  en
 };
 
 i18n.use(initReactI18next).init({

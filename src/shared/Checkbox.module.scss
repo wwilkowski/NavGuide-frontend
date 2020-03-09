@@ -12,6 +12,7 @@
   cursor: pointer;
   background: #ffffff;
   transition: color 0.2s, background-color 0.2s;
+  white-space: nowrap;
 }
 
 .checkboxField:checked + .checkboxLabel {

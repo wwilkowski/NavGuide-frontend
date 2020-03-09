@@ -39,16 +39,15 @@ const GuideForm = () => {
 
   const lastRequestid = requests.length - 1;
 
-  if (userRole === 'GUIDE') return <p>{t(`You are already a guide!`)}</p>;
+  if (userRole === 'GUIDE') return <p className={styles.case}>{t(`You are already a guide!`)}</p>;
   else {
     return (
       <div>
         {!blockForm && lastRequestid >= 0 && (
-          <div>
-            <p>Wiadomość z ostatniej próby</p>
-            <p>
-              {t(requests[lastRequestid].status.toLowerCase())} : {requests[lastRequestid].message}
-            </p>
+          <div className={styles.case}>
+            <p>Wiadomość z ostatniej próby:</p>
+            <p>{t(requests[lastRequestid].status.toLowerCase())}</p>
+            <p>{requests[lastRequestid].message}</p>
           </div>
         )}
         {blockForm ? (
