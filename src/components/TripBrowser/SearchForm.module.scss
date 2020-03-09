@@ -8,7 +8,7 @@
   border-radius: 50%;
   border: none;
   cursor: pointer;
-  z-index: 1000;
+  z-index: 3000;
   background: #37b498;
   border: 2px solid #000000;
   @media (min-width: 900px) {
@@ -25,7 +25,7 @@
 .searchForm {
   display: flex;
   flex-direction: column;
-  padding: 0.5rem;
+  padding: 1rem 0.5rem;
   width: 100%;
   margin-bottom: 1rem;
 
@@ -79,7 +79,7 @@
     margin: 1rem 0;
     font-family: 'Open sans';
     font-size: 0.9em;
-    width: 100px;
+    min-width: 100px;
     border: 1px solid #1496ed;
     color: #1496ed;
     background: none;
@@ -106,4 +106,14 @@
       overflow-y: scroll;
     }
   }
+}
+
+.fixedRadius {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+  width: 100%;
+  background: #ffffff;
+  padding: 1rem 2rem;
 }

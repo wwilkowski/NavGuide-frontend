@@ -12,7 +12,6 @@ import { useDispatch } from 'react-redux';
 import { getProfileRequest } from './containers/Profile/actions';
 import AdminPanel from './containers/AdminPanel/AdminPanel';
 import 'bulma/css/bulma.css';
-// templates
 
 const NotFound = () => {
   const { t } = useTranslation();
@@ -24,8 +23,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     dispatcher(getProfileRequest());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatcher]);
   return (
     <>
       <ReactNotification />

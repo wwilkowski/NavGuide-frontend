@@ -20,6 +20,7 @@ const GuideRequest = ({ guideRequest, userProfile }: IGuideRequestProps) => {
   useEffect(() => {
     const index = req.date.indexOf('.');
     setReducedDate(req.date.substr(0, index).replace('T', ' '));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [guideRequest]);
 
   useEffect(() => {

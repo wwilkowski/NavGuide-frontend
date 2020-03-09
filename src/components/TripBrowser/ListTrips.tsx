@@ -25,18 +25,18 @@ const ListTrips = ({ trips, mode, chosenOfferId, setChosenOfferId, changeTripInf
         {trips.map((trip: ISingleTripType) => (
           <li
             key={trip.id}
-            onMouseOver={() => {
-              setChosenOfferId(trip.id);
-            }}
-            onMouseOut={() => {
-              setChosenOfferId(null);
-            }}
+            // onMouseOver={() => {
+            //   setChosenOfferId(trip.id);
+            // }}
+            // onMouseOut={() => {
+            //   setChosenOfferId(null);
+            // }}
             onClick={() => changeTripInfoVisible(trip.id)}
             className={styles.offer}
           >
             <img
               src={trip.photos ? trip.photos[0] : 'https://pwik.krzanowice.pl/uploads/default-image.png'}
-              alt='zdjęcie oferty'
+              alt='offer view'
               className={styles.offer__photo}
             />
             <div className={styles.offer__desc}>

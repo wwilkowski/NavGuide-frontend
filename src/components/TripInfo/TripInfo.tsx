@@ -78,7 +78,6 @@ const TripInfo = (props: ITripInfoProps) => {
     setInformationsMode(mode);
     if (informationsMode === 'trip') setTripData(props.tripInformations);
   };
-
   return isLogged ? (
     <div className={styles.infoContainer}>
       <div className={styles.infoContainer__content} ref={node}>
