@@ -47,10 +47,10 @@ const Header: React.FC = () => {
       <ul className={`${styles.header__menuList} ${!openMenu ? styles.header__hiddenMenu : ''}`}>
         {!profile.isLoggedIn ? (
           <>
-            <li>
+            <li className={styles.header__menuListElement}>
               <GoogleButton text='Sign up with Google' onSuccess={signUpWithUserCode} onFailure={signUpWithUserCode} />
             </li>
-            <li>
+            <li className={styles.header__menuListElement}>
               <GoogleButton text='Sign in with Google' onSuccess={signInWithUserCode} onFailure={signInWithUserCode} />
             </li>
           </>

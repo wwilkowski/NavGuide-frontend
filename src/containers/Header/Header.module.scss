@@ -57,6 +57,7 @@
     z-index: 100;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     flex-direction: column;
     background-color: #ffffff;
     transform: scaleY(1);
@@ -68,6 +69,9 @@
       flex-direction: row;
       align-items: center;
     }
+  }
+  &__menuListElement {
+    margin: 0.5rem 0;
   }
   &__hiddenMenu {
     transform: scaleY(0);
