@@ -18,7 +18,8 @@ import {
   FETCH_GUIDE_PROFILE_FAILED,
   FETCH_GUIDE_PROFILE_DATA_REQUESTED,
   FETCH_GUIDE_PROFILE_DATA_SUCCESSED,
-  FETCH_GUIDE_PROFILE_DATA_FAILED
+  FETCH_GUIDE_PROFILE_DATA_FAILED,
+  FETCH_GUIDE_PROFILE_SUCCESSED
 } from './constants';
 import { IMultiTripsType, ITag, ISuggestedPlace, IGuideProfile } from './types';
 import { IUserProfile } from '../User/types';
@@ -113,7 +114,7 @@ export const fetchGuideProfileRequested = (id: number) => ({
 });
 
 export const fetchGuideProfileSuccessed = (guideProfile: IGuideProfile) => ({
-  type: FETCH_RANDOM_TRIPS_SUCCESED,
+  type: FETCH_GUIDE_PROFILE_SUCCESSED,
   guideProfile
 });
 
