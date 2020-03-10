@@ -109,10 +109,10 @@ const TripInfo = (props: ITripInfoProps) => {
   ) : (
     <div className={styles.infoContainer}>
       <div className={styles.infoContainer__content} ref={node}>
-        Aby zobaczyć więcej:
+        <p style={{ margin: '2rem' }}>Aby zobaczyć więcej:</p>
       </div>
       <div className={styles.googleButtons} ref={node}>
-        <p style={{ width: '100%' }}>
+        <p>
           <GoogleButton text='Sign up with Google' onSuccess={signUpWithUserCode} onFailure={signUpWithUserCode} />
         </p>
         <p>

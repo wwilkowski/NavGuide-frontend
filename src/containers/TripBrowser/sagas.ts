@@ -149,14 +149,33 @@ function* fetchSuggestedCitiesFromNominatimAPI(action: types.IFetchSuggestedCiti
 }
 
 function* fetchGuideProfileFromAPI(action: types.IFetchGuideProfileRequest) {
-  //dokonczyc
-  yield console.log('guide');
+  try {
+    const endpoint = `https://235.ip-51-91-9.eu/guides/${action.id}`;
+    const response = yield call(fetch, endpoint, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getToken()}`
+      }
+    });
+    const guideProfile = response.json();
+
+    if (response.status >= 200 && response.status <= 300) {
+      yield put(actions.fetchGuideProfileSuccessed(guideProfile));
+    } else {
+      throw new Error();
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(actions.fetchGuideProfileFailed('Error while Guide Profile request'));
+    showNotification('danger', i18n.t('Something goes wrong'), i18n.t('Try again later!'));
+  }
 }
 
 function* fetchGuideProfileDataFromAPI(action: types.IFetchGuideProfileRequest) {
-  const endpoint = `https://235.ip-51-91-9.eu/users/${action.id}`;
-
   try {
+    const endpoint = `https://235.ip-51-91-9.eu/users/${action.id}`;
+
     const response = yield call(fetch, endpoint, {
       method: 'GET',
       headers: {

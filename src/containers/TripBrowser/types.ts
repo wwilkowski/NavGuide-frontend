@@ -68,6 +68,7 @@ export interface IMultiTripsAndTagsType {
 }
 
 export interface IGuideProfile {
+  experience: number;
   firstName: string;
   id: number;
   languages: string[];
