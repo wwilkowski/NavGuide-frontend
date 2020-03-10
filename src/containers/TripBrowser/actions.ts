@@ -19,9 +19,15 @@ import {
   FETCH_GUIDE_PROFILE_DATA_REQUESTED,
   FETCH_GUIDE_PROFILE_DATA_SUCCESSED,
   FETCH_GUIDE_PROFILE_DATA_FAILED,
-  FETCH_GUIDE_PROFILE_SUCCESSED
+  FETCH_GUIDE_PROFILE_SUCCESSED,
+  FETCH_GUIDE_ACTIVE_OFFERS_REQUESTED,
+  FETCH_GUIDE_ACTIVE_OFFERS_SUCCESSED,
+  FETCH_GUIDE_ACTIVE_OFFERS_FAILED,
+  FETCH_GUIDE_HISTORY_REQUESTED,
+  FETCH_GUIDE_HISTORY_SUCCESSED,
+  FETCH_GUIDE_HISTORY_FAILED
 } from './constants';
-import { IMultiTripsType, ITag, ISuggestedPlace, IGuideProfile } from './types';
+import { IMultiTripsType, ITag, ISuggestedPlace, IGuideProfile, ISingleTripType, IEndedSingleTripType } from './types';
 import { IUserProfile } from '../User/types';
 
 //RANDOM TRIPS
@@ -136,5 +142,37 @@ export const fetchGuideProfileDataSuccessed = (guideProfileData: IUserProfile) =
 
 export const fetchGuideProfileDataFailed = (message: string) => ({
   type: FETCH_GUIDE_PROFILE_DATA_FAILED,
+  message
+});
+
+//GUIDE ACTIVE OFFERS
+export const fetchGuideActiveOffersRequest = (id: number) => ({
+  type: FETCH_GUIDE_ACTIVE_OFFERS_REQUESTED,
+  id
+});
+
+export const fetchGuideActiveOffersSuccessed = (activeOffers: ISingleTripType[]) => ({
+  type: FETCH_GUIDE_ACTIVE_OFFERS_SUCCESSED,
+  activeOffers
+});
+
+export const fetchGuideActiveOffersFailed = (message: string) => ({
+  type: FETCH_GUIDE_ACTIVE_OFFERS_FAILED,
+  message
+});
+
+//GUIDE HISTORY OFFERS
+export const fetchGuideHistoryRequest = (id: number) => ({
+  type: FETCH_GUIDE_HISTORY_REQUESTED,
+  id
+});
+
+export const fetchGuideHistorySuccessed = (historyOffers: IEndedSingleTripType[]) => ({
+  type: FETCH_GUIDE_HISTORY_SUCCESSED,
+  historyOffers
+});
+
+export const fetchGuideHistoryFailed = (message: string) => ({
+  type: FETCH_GUIDE_HISTORY_FAILED,
   message
 });

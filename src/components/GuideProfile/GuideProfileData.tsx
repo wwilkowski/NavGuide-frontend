@@ -4,7 +4,7 @@ import { IGuideProfileDataProps } from '../../containers/GuideProfile/types';
 import { useTranslation } from 'react-i18next';
 
 const GuideProfileData = (props: IGuideProfileDataProps) => {
-  const { profileData } = props;
+  const { profileData, profile } = props;
 
   const { t } = useTranslation();
 
@@ -12,10 +12,10 @@ const GuideProfileData = (props: IGuideProfileDataProps) => {
 
   useEffect(() => {
     let tmp = '';
-    for (let i = 0; i < profileData.experience; i++) {
+    for (let i = 0; i < profile.experience; i++) {
       tmp += '★';
     }
-    for (let i = profileData.experience; i < 5; i++) {
+    for (let i = profile.experience; i < 5; i++) {
       tmp += '☆';
     }
     setExperience(tmp);
@@ -24,7 +24,7 @@ const GuideProfileData = (props: IGuideProfileDataProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.avatar}>
-        <img src='https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/avat-01-512.png' alt='' />
+        <img src={profileData.avatar} alt='' />
       </div>
       <div className={styles.data1}>
         <p>

@@ -21,6 +21,7 @@ const TripInfo = (props: ITripInfoProps) => {
 
   const [informationsMode, setInformationsMode] = useState<string>('trip');
   const [tripData, setTripData] = useState<ISingleTripType>({
+    averageMark: -1,
     city: '',
     description: '',
     id: -1,
@@ -40,6 +41,7 @@ const TripInfo = (props: ITripInfoProps) => {
     price: 0,
     priceType: '',
     radius: 0,
+    sold: 0,
     tags: []
   });
 

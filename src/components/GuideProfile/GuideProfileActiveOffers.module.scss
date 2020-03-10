@@ -19,6 +19,7 @@
     width: 100%;
     height: 60px;
     padding: 1rem 0;
+    margin: 0 0.2rem;
     display: flex;
 
     input {
@@ -52,6 +53,7 @@
       }
 
       &__gallery {
+        cursor: pointer;
         padding: 0 1rem;
         width: 100%;
         height: 100%;

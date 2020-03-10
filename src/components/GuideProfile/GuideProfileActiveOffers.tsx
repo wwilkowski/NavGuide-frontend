@@ -14,6 +14,19 @@ const GuideProfileActiveOffers = (props: IGuideProfileActiveOffersProps) => {
 
   const [value, setValue] = useState<string>('');
   const tripsData = useSelector((state: StoreType) => state.tripBrowser.trips);
+  const [filteredTrips, setFilteredTrips] = useState<ISingleTripType[]>(tripsData);
+
+  useEffect(() => {
+    setFilteredTrips(
+      tripsData.filter((trip: ISingleTripType) => {
+        if (trip.name.substr(0, value.length) === value) return trip;
+      })
+    );
+  }, [value]);
+
+  useEffect(() => {
+    setFilteredTrips(tripsData);
+  }, [tripsData]);
 
   ////// POBIERANIE WYCIECZEK
   const [formValue, setFormValue] = useState<string>('UMK Wydział Matematyki i Informatyki');
@@ -50,6 +63,8 @@ const GuideProfileActiveOffers = (props: IGuideProfileActiveOffersProps) => {
     setValue(e.target.value);
   };
 
+  const handleGalleryClick = () => {};
+
   return (
     <div className={styles.container}>
       <div className={styles.container__title}>{t('Active Offers')}</div>
@@ -57,18 +72,14 @@ const GuideProfileActiveOffers = (props: IGuideProfileActiveOffersProps) => {
         <input value={value} onChange={handleChange} />
       </div>
       <div className={styles.container__content}>
-        {tripsData.map((trip: ISingleTripType) => {
-          //wyszukiwarka
-
-          return (
-            <div key={trip.id} className={styles.trip}>
-              <div className={styles.trip__title}>{trip.name}</div>
-              <div className={styles.trip__gallery}>
-                <img src={trip.photos[0]} alt='' />
-              </div>
+        {filteredTrips.map((trip: ISingleTripType) => (
+          <div key={trip.id} className={styles.trip}>
+            <div className={styles.trip__title}>{trip.name}</div>
+            <div className={styles.trip__gallery} onClick={handleGalleryClick}>
+              <img src={trip.photos[0]} alt='' />
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
     </div>
   );

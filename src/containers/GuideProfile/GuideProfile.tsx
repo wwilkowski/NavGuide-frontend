@@ -5,7 +5,11 @@ import GuideProfileData from '../../components/GuideProfile/GuideProfileData';
 import { StoreType } from '../../store';
 import { useSelector, useDispatch } from 'react-redux';
 import GuideProfileActiveOffers from '../../components/GuideProfile/GuideProfileActiveOffers';
-import { fetchGuideProfileRequested } from '../../containers/TripBrowser/actions';
+import {
+  fetchGuideProfileDataRequest,
+  fetchGuideActiveOffersRequest,
+  fetchGuideHistoryRequest
+} from '../../containers/TripBrowser/actions';
 
 enum Scene {
   profile,
@@ -14,25 +18,33 @@ enum Scene {
 }
 
 const GuideProfile = () => {
-  const [sceneMode, setSceneMode] = useState<Scene>(Scene.activeOffers);
+  const [sceneMode, setSceneMode] = useState<Scene>(Scene.profile);
 
   const dispatcher = useDispatch();
+
+  /* w Informations jest onClick na Link, ktory pobiera guideProfile */
+  const guideProfile = useSelector((state: StoreType) => state.guideProfile.guideProfile);
   const guideProfileData = useSelector((state: StoreType) => state.guideProfile.guideProfileData);
+  const activeOffers = useSelector((state: StoreType) => state.guideProfile.activeOffers);
 
   useEffect(() => {
-    dispatcher(fetchGuideProfileRequested(3));
-  }, [dispatcher]);
+    dispatcher(fetchGuideProfileDataRequest(guideProfile.userId));
+    dispatcher(fetchGuideActiveOffersRequest(guideProfile.guideId));
+    dispatcher(fetchGuideHistoryRequest(guideProfile.guideId));
+  }, [guideProfile]);
 
   return (
     <div className={styles.container}>
       <div className={sceneMode === Scene.profile ? styles.container__section : styles.container__sectionHidden}>
         <div className={styles.container__title}>Profile</div>
-        <GuideProfileData profileData={guideProfileData} />
+        <GuideProfileData profileData={guideProfileData} profile={guideProfile} />
       </div>
       <div className={sceneMode === Scene.activeOffers ? styles.container__section : styles.container__sectionHidden}>
         <GuideProfileActiveOffers />
       </div>
-      <div className={sceneMode === Scene.ratedOffers ? styles.container__section : styles.container__sectionHidden}>Rated Offers</div>
+      <div className={sceneMode === Scene.ratedOffers ? styles.container__section : styles.container__sectionHidden}>
+        <GuideProfileActiveOffers />
+      </div>
       <GuideProfileMenu setScene={setSceneMode} />
     </div>
   );

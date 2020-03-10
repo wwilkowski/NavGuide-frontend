@@ -3,10 +3,16 @@ import { useTranslation } from 'react-i18next';
 import styles from '../TripInfo.module.scss';
 import { IInformationsProps } from './types';
 import { ITag } from '../../../containers/TripBrowser/types';
+import { Link } from 'react-router-dom';
+import { fetchGuideProfileRequested } from '../../../containers/TripBrowser/actions';
+import { useDispatch } from 'react-redux';
 
 const Informations = (props: IInformationsProps) => {
   const { t } = useTranslation();
-  const { tripData, guideProfileData } = props;
+
+  const { tripData, guideProfileData, guideProfile } = props;
+
+  const dispatcher = useDispatch();
 
   const [activeTripButton, setActiveTripButton] = useState<boolean>(true);
   const [activeGuideButton, setActiveGuideButton] = useState<boolean>(false);
@@ -15,10 +21,10 @@ const Informations = (props: IInformationsProps) => {
 
   useEffect(() => {
     let tmp = '';
-    for (let i = 0; i < guideProfileData.experience; i++) {
+    for (let i = 0; i < guideProfile.experience; i++) {
       tmp += '★';
     }
-    for (let i = guideProfileData.experience; i < 5; i++) {
+    for (let i = guideProfile.experience; i < 5; i++) {
       tmp += '☆';
     }
     setExperience(tmp);
@@ -120,7 +126,9 @@ const Informations = (props: IInformationsProps) => {
         <div>
           <div className={styles.informations__content}>
             <div className={styles.avatar}>
-              <img src={props.guideProfileData.avatar} alt='' />
+              <Link to='/guide_profile' onClick={() => dispatcher(fetchGuideProfileRequested(tripData.owner.guideId))}>
+                <img src={props.guideProfileData.avatar} alt='' />
+              </Link>
             </div>
             <div className={styles.guideContent1}>
               <p>
