@@ -45,14 +45,15 @@ const GuideProfileHistoryOffers = (props: IGuideProfileHistoryOffersProps) => {
         <input value={value} onChange={handleChange} />
       </div>
       <div className={styles.container__content}>
-        {filteredTrips.map((trip: IEndedSingleTripType) => (
-          <div key={trip.offer.id} className={styles.trip}>
-            <div className={styles.trip__title}>{trip.offer.name}</div>
-            <div className={styles.trip__gallery} onClick={handleGalleryClick}>
-              <img src={trip.offer.photos[0]} alt='' />
+        {filteredTrips.length &&
+          filteredTrips.map((trip: IEndedSingleTripType) => (
+            <div key={trip.offer.id} className={styles.trip}>
+              <div className={styles.trip__title}>{trip.offer.name}</div>
+              <div className={styles.trip__gallery} onClick={handleGalleryClick}>
+                <img src={trip.offer.photos[0]} alt='' />
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
   );

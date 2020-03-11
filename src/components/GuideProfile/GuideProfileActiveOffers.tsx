@@ -17,7 +17,6 @@ const GuideProfileActiveOffers = (props: IGuideProfileActiveOffersProps) => {
     setFilteredTrips(
       activeOffers.filter((trip: ISingleTripType) => {
         if (trip.name.substr(0, value.length) === value) return true;
-
         return false;
       })
     );
@@ -45,14 +44,15 @@ const GuideProfileActiveOffers = (props: IGuideProfileActiveOffersProps) => {
         <input value={value} onChange={handleChange} />
       </div>
       <div className={styles.container__content}>
-        {filteredTrips.map((trip: ISingleTripType) => (
-          <div key={trip.id} className={styles.trip}>
-            <div className={styles.trip__title}>{trip.name}</div>
-            <div className={styles.trip__gallery} onClick={handleGalleryClick}>
-              <img src={trip.photos[0]} alt='' />
+        {filteredTrips.length &&
+          filteredTrips.map((trip: ISingleTripType) => (
+            <div key={trip.id} className={styles.trip}>
+              <div className={styles.trip__title}>{trip.name}</div>
+              <div className={styles.trip__gallery} onClick={handleGalleryClick}>
+                <img src={trip.photos[0]} alt='' />
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
   );
