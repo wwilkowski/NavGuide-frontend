@@ -32,7 +32,7 @@ const GuideRequest = ({ guideRequest, userProfile }: IGuideRequestProps) => {
       tmp += '☆';
     }
     setExperience(tmp);
-  }, [guideRequest.experience]);
+  }, [guideRequest.experience, req.date]);
 
   return (
     <>

@@ -45,7 +45,7 @@
       margin-top: 0%;
       width: 100%;
       height: auto;
-      font-size: 1.5em;
+      font-size: 1.3em;
     }
 
     @media (min-width: 801px) and (max-width: 1400px) {
@@ -83,16 +83,22 @@
 
 .googleButtons {
   width: 50%;
-  height: 50%;
+  height: 30%;
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
   margin-top: 15%;
   z-index: 15;
-  position: relative;
+  margin: auto;
 
   p {
+    margin: auto;
+    width: 60%;
     margin-top: 3rem;
+
+    button {
+      margin: auto;
+    }
   }
 }
 
@@ -394,6 +400,7 @@
   background-color: rgb(241, 235, 235);
   width: 98%;
   height: 26%;
+  margin-bottom: 5rem;
   font-size: 1em;
   overflow-y: auto;
 

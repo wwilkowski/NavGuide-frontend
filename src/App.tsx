@@ -12,6 +12,8 @@ import { useDispatch } from 'react-redux';
 import { getProfileRequest } from './containers/Profile/actions';
 import AdminPanel from './containers/AdminPanel/AdminPanel';
 import 'bulma/css/bulma.css';
+import GuideProfile from './containers/GuideProfile/GuideProfile';
+// templates
 
 const NotFound = () => {
   const { t } = useTranslation();
@@ -36,6 +38,7 @@ const App: React.FC = () => {
         <Route path='/profile' component={Profile} />
         <Route path='/offers' component={Offers} />
         <Route path='/admin' component={AdminPanel} />
+        <Route path='/guide_profile' component={GuideProfile} />
         <Route component={NotFound} />
       </Switch>
     </>
