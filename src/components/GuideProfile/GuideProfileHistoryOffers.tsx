@@ -42,13 +42,15 @@ const GuideProfileHistoryOffers = (props: IGuideProfileHistoryOffersProps) => {
   ]);
 
   useEffect(() => {
-    setFilteredTrips(
-      historyOffers.filter((trip: IEndedSingleTripType) => {
-        if (trip.offer.name.substr(0, value.length) === value) return true;
+    if (historyOffers) {
+      setFilteredTrips(
+        historyOffers.filter((trip: IEndedSingleTripType) => {
+          if (trip.offer.name.substr(0, value.length) === value) return true;
 
-        return false;
-      })
-    );
+          return false;
+        })
+      );
+    }
   }, [value, historyOffers]);
 
   useEffect(() => {

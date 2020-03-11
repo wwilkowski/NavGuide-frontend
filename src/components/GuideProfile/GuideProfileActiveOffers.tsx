@@ -39,12 +39,14 @@ const GuideProfileActiveOffers = (props: IGuideProfileActiveOffersProps) => {
   ]);
 
   useEffect(() => {
-    setFilteredTrips(
-      activeOffers.filter((trip: ISingleTripType) => {
-        if (trip.name.substr(0, value.length) === value) return true;
-        return false;
-      })
-    );
+    if (activeOffers) {
+      setFilteredTrips(
+        activeOffers.filter((trip: ISingleTripType) => {
+          if (trip.name.substr(0, value.length) === value) return true;
+          return false;
+        })
+      );
+    }
   }, [value, activeOffers]);
 
   useEffect(() => {
