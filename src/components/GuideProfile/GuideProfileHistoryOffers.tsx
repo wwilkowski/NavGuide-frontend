@@ -11,7 +11,35 @@ const GuideProfileHistoryOffers = (props: IGuideProfileHistoryOffersProps) => {
   const { historyOffers, goBack } = props;
 
   const [value, setValue] = useState<string>('');
-  const [filteredTrips, setFilteredTrips] = useState<IEndedSingleTripType[]>(historyOffers);
+  const [filteredTrips, setFilteredTrips] = useState<IEndedSingleTripType[]>([
+    {
+      date: '',
+      offer: {
+        averageMark: -1,
+        city: '',
+        description: '',
+        id: -1,
+        lat: -1,
+        lon: -1,
+        maxPeople: -1,
+        name: '',
+        owner: {
+          experience: -1,
+          firstName: '',
+          guideId: -1,
+          languages: [''],
+          lastName: '',
+          userId: -1
+        },
+        photos: [''],
+        price: -1,
+        priceType: '',
+        radius: -1,
+        sold: -1,
+        tags: [{ id: -1, name: '' }]
+      }
+    }
+  ]);
 
   useEffect(() => {
     setFilteredTrips(
@@ -45,15 +73,14 @@ const GuideProfileHistoryOffers = (props: IGuideProfileHistoryOffersProps) => {
         <input value={value} onChange={handleChange} />
       </div>
       <div className={styles.container__content}>
-        {filteredTrips.length &&
-          filteredTrips.map((trip: IEndedSingleTripType) => (
-            <div key={trip.offer.id} className={styles.trip}>
-              <div className={styles.trip__title}>{trip.offer.name}</div>
-              <div className={styles.trip__gallery} onClick={handleGalleryClick}>
-                <img src={trip.offer.photos[0]} alt='' />
-              </div>
+        {filteredTrips.map((trip: IEndedSingleTripType) => (
+          <div key={trip.offer.id} className={styles.trip}>
+            <div className={styles.trip__title}>{trip.offer.name}</div>
+            <div className={styles.trip__gallery} onClick={handleGalleryClick}>
+              <img src={trip.offer.photos[0]} alt='' />
             </div>
-          ))}
+          </div>
+        ))}
       </div>
     </div>
   );
