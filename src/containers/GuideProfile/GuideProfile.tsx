@@ -20,7 +20,7 @@ enum Scene {
 }
 
 const GuideProfile = () => {
-  const [sceneMode, setSceneMode] = useState<Scene>(Scene.profile);
+  const [sceneMode, setSceneMode] = useState<Scene>(Scene.activeOffers);
 
   const dispatcher = useDispatch();
 
