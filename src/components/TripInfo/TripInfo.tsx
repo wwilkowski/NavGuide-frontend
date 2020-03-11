@@ -21,6 +21,7 @@ const TripInfo = (props: ITripInfoProps) => {
 
   const [informationsMode, setInformationsMode] = useState<string>('trip');
   const [tripData, setTripData] = useState<ISingleTripType>({
+    averageMark: -1,
     city: '',
     description: '',
     id: -1,
@@ -40,6 +41,7 @@ const TripInfo = (props: ITripInfoProps) => {
     price: 0,
     priceType: '',
     radius: 0,
+    sold: 0,
     tags: []
   });
 
@@ -108,10 +110,10 @@ const TripInfo = (props: ITripInfoProps) => {
   ) : (
     <div className={styles.infoContainer}>
       <div className={styles.infoContainer__content} ref={node}>
-        Aby zobaczyć więcej:
+        <p style={{ margin: '2rem' }}>Aby zobaczyć więcej:</p>
       </div>
       <div className={styles.googleButtons} ref={node}>
-        <p style={{ width: '100%' }}>
+        <p>
           <GoogleButton text='Sign up with Google' onSuccess={signUpWithUserCode} onFailure={signUpWithUserCode} />
         </p>
         <p>

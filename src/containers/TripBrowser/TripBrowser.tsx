@@ -28,6 +28,11 @@ const TripBrowser: React.FC = () => {
   });
 
   useEffect(() => {
+    if (sessionStorage.getItem('backFromGuideProfile')) setTripInfoVisible(true);
+    sessionStorage.removeItem('backFromGuideProfile');
+  }, []);
+
+  useEffect(() => {
     const location = {
       displayName: formValue,
       coords: [positionValue.longitude, positionValue.latitude],

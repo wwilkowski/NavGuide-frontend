@@ -15,8 +15,8 @@
   }
 
   .request {
-    width: 100%;
-    margin-top: 2rem;
+    width: 85%;
+    margin: 1.5rem;
     display: flex;
     box-shadow: 0px 7px 5px 0px rgb(195, 193, 193);
     border: solid rgba(46, 44, 44, 0.466);
@@ -24,7 +24,7 @@
 
     @media (min-width: 1520px) {
       width: 48%;
-      margin-right: 2rem;
+      margin-right: 0rem;
     }
 
     &__content {
