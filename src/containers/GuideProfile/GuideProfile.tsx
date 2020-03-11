@@ -10,6 +10,8 @@ import {
   fetchGuideActiveOffersRequest,
   fetchGuideHistoryRequest
 } from '../../containers/TripBrowser/actions';
+import GuideProfileHistoryOffers from '../../components/GuideProfile/GuideProfileHistoryOffers';
+import history from '../../history';
 
 enum Scene {
   profile,
@@ -26,24 +28,32 @@ const GuideProfile = () => {
   const guideProfile = useSelector((state: StoreType) => state.guideProfile.guideProfile);
   const guideProfileData = useSelector((state: StoreType) => state.guideProfile.guideProfileData);
   const activeOffers = useSelector((state: StoreType) => state.guideProfile.activeOffers);
+  const historyOffers = useSelector((state: StoreType) => state.guideProfile.historyOffers);
 
   useEffect(() => {
     dispatcher(fetchGuideProfileDataRequest(guideProfile.userId));
     dispatcher(fetchGuideActiveOffersRequest(guideProfile.guideId));
     dispatcher(fetchGuideHistoryRequest(guideProfile.guideId));
-  }, [guideProfile]);
+  }, [guideProfile, dispatcher]);
+
+  const backToMainPage = () => {
+    sessionStorage.setItem('backFromGuideProfile', 'true');
+    history.goBack();
+  };
 
   return (
     <div className={styles.container}>
       <div className={sceneMode === Scene.profile ? styles.container__section : styles.container__sectionHidden}>
-        <div className={styles.container__title}>Profile</div>
-        <GuideProfileData profileData={guideProfileData} profile={guideProfile} />
+        <GuideProfileData profileData={guideProfileData} profile={guideProfile} goBack={backToMainPage} />
       </div>
       <div className={sceneMode === Scene.activeOffers ? styles.container__section : styles.container__sectionHidden}>
-        <GuideProfileActiveOffers />
+        <GuideProfileActiveOffers activeOffers={activeOffers} goBack={backToMainPage} />
       </div>
-      <div className={sceneMode === Scene.ratedOffers ? styles.container__section : styles.container__sectionHidden}>
-        <GuideProfileActiveOffers />
+      <div
+        className={sceneMode === Scene.ratedOffers ? styles.container__section : styles.container__sectionHidden}
+        style={{ borderRight: 'none', paddingRight: '0' }}
+      >
+        <GuideProfileHistoryOffers historyOffers={historyOffers} goBack={backToMainPage} />
       </div>
       <GuideProfileMenu setScene={setSceneMode} />
     </div>

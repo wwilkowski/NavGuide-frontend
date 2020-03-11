@@ -28,7 +28,7 @@ const Informations = (props: IInformationsProps) => {
       tmp += '☆';
     }
     setExperience(tmp);
-  }, [guideProfileData]);
+  }, [guideProfileData, guideProfile.experience]);
 
   return (
     <>
@@ -150,7 +150,7 @@ const Informations = (props: IInformationsProps) => {
               <p className={styles.left}>{t('Country')}:</p>
               <p className={styles.right}>{props.guideProfileData.country}</p>
               <p className={styles.left}>{t('Languages')}:</p>
-              <p className={styles.right}>{tripData.owner.languages.map((lng: string) => `${lng} `)}</p>
+              <p className={styles.right}>{guideProfile.languages.map((lng: string) => `${lng} `)}</p>
             </div>
           </div>
         </div>

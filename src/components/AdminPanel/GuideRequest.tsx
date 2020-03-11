@@ -20,7 +20,7 @@ const GuideRequest = ({ guideRequest, userProfile }: IGuideRequestProps) => {
   useEffect(() => {
     const index = req.date.indexOf('.');
     setReducedDate(req.date.substr(0, index).replace('T', ' '));
-  }, [guideRequest]);
+  }, [guideRequest, req.date]);
 
   useEffect(() => {
     let tmp = '';
@@ -31,7 +31,7 @@ const GuideRequest = ({ guideRequest, userProfile }: IGuideRequestProps) => {
       tmp += '☆';
     }
     setExperience(tmp);
-  }, [guideRequest.experience]);
+  }, [guideRequest.experience, req.date]);
 
   return (
     <>

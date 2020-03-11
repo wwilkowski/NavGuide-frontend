@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import styles from './GuideProfileData.module.scss';
 import { IGuideProfileDataProps } from '../../containers/GuideProfile/types';
 import { useTranslation } from 'react-i18next';
+import back from '../../assets/icons/back.png';
 
 const GuideProfileData = (props: IGuideProfileDataProps) => {
-  const { profileData, profile } = props;
+  const { profileData, profile, goBack } = props;
 
   const { t } = useTranslation();
 
@@ -19,10 +20,16 @@ const GuideProfileData = (props: IGuideProfileDataProps) => {
       tmp += '☆';
     }
     setExperience(tmp);
-  }, [profileData]);
+  }, [profileData, profile.experience]);
 
   return (
     <div className={styles.container}>
+      <div className={styles.container__title}>
+        {t('Profile')}
+        <div className={styles.backButton} onClick={goBack}>
+          <img src={back} alt='' />
+        </div>
+      </div>
       <div className={styles.avatar}>
         <img src={profileData.avatar} alt='' />
       </div>
@@ -44,9 +51,9 @@ const GuideProfileData = (props: IGuideProfileDataProps) => {
         <p className={styles.right}>{profileData.email}</p>
         <p className={styles.title}>{t('Speech')}</p>
         <p className={styles.left}>{t('Country')}</p>
-        <p className={styles.right}>EN</p>
+        <p className={styles.right}>{profileData.country}</p>
         <p className={styles.left}>{t('Languages')}</p>
-        <p className={styles.right}>PL</p>
+        <p className={styles.right}>{profile.languages.map((lng: string) => `${lng} `)}</p>
         <p className={styles.title}>{t('Interests')}</p>
         <div className={styles.data2__interests}>
           {profileData.interests.map((el: { id: number; name: string }) => (

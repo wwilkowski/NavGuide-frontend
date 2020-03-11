@@ -16,7 +16,7 @@
     text-align: center;
     font-size: 1.5em;
     font-weight: bold;
-    color: #419f62;
+    color: #c29222;
 
     .backButton {
       position: absolute;
@@ -63,7 +63,8 @@
 
     .trip {
       width: 100%;
-      margin: 1rem 0;
+      margin: 0.5rem 0;
+      padding: 0.5rem 0;
       display: flex;
       flex-wrap: wrap;
       background-color: #b4fff442;
@@ -75,7 +76,6 @@
         text-align: center;
         font-size: 1.2em;
         font-weight: bold;
-        position: relative;
       }
 
       &__gallery {
