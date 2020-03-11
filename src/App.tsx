@@ -25,8 +25,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     dispatcher(getProfileRequest());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatcher]);
   return (
     <>
       <ReactNotification />

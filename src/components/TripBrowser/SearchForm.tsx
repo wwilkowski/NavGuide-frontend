@@ -16,6 +16,7 @@ import styles from './SearchForm.module.scss';
 import MapIcon from '../../assets/icons/map.png';
 import ListIcon from '../../assets/icons/list.png';
 import CloseIcon from '../../assets/icons/close.png';
+import Slider from '@material-ui/core/Slider';
 
 const SearchFormSchema = Yup.object().shape({});
 
@@ -29,7 +30,23 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
   const tags = useSelector((state: StoreType) => state.tripBrowser.tags);
 
   const [location, setLocation] = useState<string>('');
+  const [fixedRadiusView, setFixedRadiusView] = useState<Boolean>(false);
   const [suggestedListVisible, setSuggestedListVisible] = useState<boolean>(true);
+
+  const checkScroll = (e: Event) => {
+    if (window.scrollY > 0) {
+      setFixedRadiusView(true);
+    } else {
+      setFixedRadiusView(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', checkScroll);
+    return () => {
+      window.removeEventListener('scroll', checkScroll);
+    };
+  }, []);
 
   useEffect(() => {
     setSuggestedListVisible(true);
@@ -52,6 +69,10 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
     setLocation(props.formValue);
     values.location = props.formValue;
   }, [props.formValue, values.location]);
+
+  function valuetext(value: number) {
+    return `${value}km`;
+  }
 
   return (
     <Form autoComplete='off' className={styles.searchForm}>
@@ -91,28 +112,28 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
             />
           )}
         </div>
-        <div>
+        <div className={fixedRadiusView ? styles.fixedRadius : ''}>
           <div>
             <label htmlFor='radius' className={styles.searchForm__label}>
               {t('Radius')}:
             </label>
           </div>
-          <Field
-            id='radius'
-            type='range'
-            name='radius'
-            required
-            className={styles.searchForm__input}
-            min={0.1}
-            max={5.0}
-            step='.1'
+          <Slider
+            defaultValue={0.0}
+            getAriaValueText={valuetext}
+            aria-labelledby='discrete-slider-small-steps'
             value={props.positionValue.radius}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            step={0.1}
+            marks
+            min={0.0}
+            max={5.0}
+            valueLabelDisplay='auto'
+            onChange={(event: React.ChangeEvent<{}>, value: number | number[]) => {
               props.handleChange(event);
               const position = {
                 latitude: props.positionValue.latitude,
                 longitude: props.positionValue.longitude,
-                radius: parseFloat(event.target.value) || 0.0
+                radius: Number(value) || 0.0
               };
               props.setPosition(position);
             }}
@@ -167,7 +188,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
             );
           }}
         >
-          {t('geolocation')}
+          {t('Geolocation')}
         </button>
       </div>
     </Form>
@@ -272,6 +293,7 @@ const SearchForm = (props: ISearchFormProps) => {
           trips={props.trips}
           chosenOfferId={chosenOfferId}
           setChosenOfferId={setChosenOfferId}
+          changeTripInfoVisible={props.changeTripInfoVisible}
         />
       </div>
     </div>

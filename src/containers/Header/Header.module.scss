@@ -57,17 +57,23 @@
     z-index: 100;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     flex-direction: column;
     background-color: #ffffff;
     transform: scaleY(1);
     transform-origin: top;
     transition: all 0.26s ease;
     height: auto;
+    text-align: center;
     @media (min-width: 800px) {
       width: auto;
       flex-direction: row;
       align-items: center;
+      text-align: left;
     }
+  }
+  &__menuListElement {
+    margin: 0.5rem 0;
   }
   &__hiddenMenu {
     transform: scaleY(0);

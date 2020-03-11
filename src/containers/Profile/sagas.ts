@@ -128,7 +128,6 @@ function* getProfile() {
     });
     if (response.status >= 200 && response.status <= 300) {
       const { country, email, experience, firstName, interests, lastName, telephone, avatar, role, gender } = yield response.json();
-
       const user = {
         avatar,
         role,
@@ -144,7 +143,7 @@ function* getProfile() {
       yield put(actions.getProfileSuccessed(user));
     } else {
       if (response.status === 401) {
-        throw new Error('You are not logged in');
+        yield put(actions.getProfileFailed());
       } else {
         throw new Error('Something goes wrong');
       }

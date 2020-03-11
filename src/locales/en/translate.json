@@ -1,0 +1,27 @@
+{
+  "translation": {
+    "ALL": "All",
+    "ART_SCIENCE": "Art science",
+    "MONUMENTS": "Monuments",
+    "NATURE": "Nature",
+    "OTHER": "Other",
+    "PARTY": "Party",
+    "RELIGION": "Religion",
+    "SPORT": "Sport",
+
+    "ART": "Art",
+    "SCIENCE": "Science",
+    "ANIMAL": "Animal",
+    "CULTURE": "Culture",
+    "GAME": "Games",
+    "MOVIE": "Movies",
+    "BOOK": "Books",
+    "PHOTO": "Photos",
+    "HISTORY": "History",
+    "MUSIC": "Music",
+    "KITCHEN": "Kitchen",
+    "SOCIAL_MEDIA": "Social media",
+    "SERIES": "Series",
+    "DANCE": "Dance"
+  }
+}

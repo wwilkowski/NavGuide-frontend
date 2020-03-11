@@ -13,6 +13,7 @@ import styles from './OfferCreateForm.module.scss';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import ImagePlaceholder from '../../assets/imagePlaceholder.jpg';
+import Slider from '@material-ui/core/Slider';
 
 const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>) => {
   const { touched, errors, setFieldValue, values } = props;
@@ -24,6 +25,10 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
   useEffect(() => {
     dispatcher(fetchTagsRequested());
   }, [dispatcher]);
+
+  function valuetext(value: number) {
+    return `${value}km`;
+  }
 
   const [location, setLocation] = useState<string>('');
   const [suggestedListVisible, setSuggestedListVisible] = useState<boolean>(false);
@@ -40,6 +45,7 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
 
   return (
     <Form>
+      <h2 className={styles.offerForm__title}>{t('Create new offer')}</h2>
       <div className={`${styles.offerForm__locationInput} ${styles.offerForm__case}`}>
         <label className={styles.offerForm__label} htmlFor='location'>
           {t('Find place')}
@@ -155,21 +161,22 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
         <label htmlFor='radius' className={styles.offerForm__label}>
           {t('Radius')}
         </label>
-        <Field
-          id='radius'
-          type='range'
-          name='radius'
-          required
-          className={styles.offerForm__input}
-          min={0.1}
+        <Slider
+          defaultValue={0.0}
+          getAriaValueText={valuetext}
+          aria-labelledby='discrete-slider-small-steps'
+          value={props.position.radius}
+          step={0.1}
+          marks
+          min={0.0}
           max={5.0}
-          step='.1'
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          valueLabelDisplay='auto'
+          onChange={(event: React.ChangeEvent<{}>, value: number | number[]) => {
             props.handleChange(event);
             const position = {
               latitude: props.position.latitude,
               longitude: props.position.longitude,
-              radius: parseFloat(event.target.value) || 0.0
+              radius: Number(value) || 0.0
             };
             props.setPosition(position);
           }}
@@ -200,7 +207,9 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
           ))}
         </ul>
       </div>
-      <button type='submit'>{t('Submit')}</button>
+      <button className={styles.offerForm__submitButton} type='submit'>
+        {t('Submit')}
+      </button>
     </Form>
   );
 };

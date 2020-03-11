@@ -24,7 +24,7 @@ const TripBrowser: React.FC = () => {
   const [positionValue, setPositionValue] = useState<IPosition>({
     latitude: 53.01023065,
     longitude: 18.594376006630313,
-    radius: 3.0
+    radius: 1.0
   });
 
   useEffect(() => {
