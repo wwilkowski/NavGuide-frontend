@@ -13,3 +13,17 @@ export const createOfferSuccessed = () => ({
 export const createOfferFailed = () => ({
   type: constants.CREATE_OFFER_FAILED
 });
+
+export const getOfferByIdRequest = (id: string) => ({
+  type: constants.GET_OFFER_BY_ID_REQUESTED,
+  id
+});
+
+export const getOfferByIdSuccessed = (offer: types.ISingleTripType) => ({
+  type: constants.GET_OFFER_BY_ID_SUCCESSED,
+  offer
+});
+
+export const getOfferByIdFailed = () => ({
+  type: constants.GET_OFFER_BY_ID_FAILED
+});

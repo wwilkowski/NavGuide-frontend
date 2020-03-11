@@ -8,6 +8,7 @@ import Registration from './containers/Registration/Registration';
 import Profile from './containers/Profile/Profile';
 import TripBrowser from './containers/TripBrowser/TripBrowser';
 import Offers from './containers/Offers/Offers';
+import OfferSale from './containers/Offers/OfferSale/OfferSale';
 import { useDispatch } from 'react-redux';
 import { getProfileRequest } from './containers/Profile/actions';
 import AdminPanel from './containers/AdminPanel/AdminPanel';
@@ -24,6 +25,7 @@ const App: React.FC = () => {
   useEffect(() => {
     dispatcher(getProfileRequest());
   }, [dispatcher]);
+
   return (
     <>
       <ReactNotification />
@@ -34,6 +36,7 @@ const App: React.FC = () => {
         </Route>
         <Route path='/register' component={Registration} />
         <Route path='/profile' component={Profile} />
+        <Route path='/offers/:id/buy' component={OfferSale} />
         <Route path='/offers' component={Offers} />
         <Route path='/admin' component={AdminPanel} />
         <Route component={NotFound} />

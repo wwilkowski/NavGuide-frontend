@@ -8,6 +8,7 @@ import * as constants from './constants';
 import * as types from './types';
 
 const offerEndpoint = 'https://235.ip-51-91-9.eu/offers';
+const currentOfferEndpoint = (id: number) => `https://235.ip-51-91-9.eu/offers/${id}`;
 
 function* createOffer(action: types.ICreateOfferAction) {
   const formData = new FormData();
@@ -50,8 +51,32 @@ function* createOffer(action: types.ICreateOfferAction) {
   }
 }
 
+function* getOfferById(action: types.IGetOfferByIdAction) {
+  try {
+    const response = yield call(fetch, currentOfferEndpoint(action.id), {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${getToken()}`
+      }
+    });
+    if (response.status >= 200 && response.status <= 300) {
+      const json = yield response.json();
+      yield put(actions.getOfferByIdSuccessed(json));
+    } else {
+      if (response.status === 401) {
+        throw new Error('You are not logged in');
+      } else {
+        throw new Error('Something goes wrong');
+      }
+    }
+  } catch (error) {
+    yield put(actions.getOfferByIdFailed());
+  }
+}
+
 function* mainSaga() {
   yield takeLatest(constants.CREATE_OFFER_REQUESTED, createOffer);
+  yield takeLatest(constants.GET_OFFER_BY_ID_REQUESTED, getOfferById);
 }
 
 export default mainSaga;
