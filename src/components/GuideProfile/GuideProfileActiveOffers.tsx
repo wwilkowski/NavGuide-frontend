@@ -4,6 +4,19 @@ import { useTranslation } from 'react-i18next';
 import { ISingleTripType, ITag } from '../../containers/TripBrowser/types';
 import { IGuideProfileActiveOffersProps } from '../../containers/GuideProfile/types';
 import back from '../../assets/icons/back.png';
+import leftArrow from '../../assets/icons/leftArrow.png';
+import rightArrow from '../../assets/icons/rightArrow.png';
+
+interface ITripActivePhoto {
+  tripId: number;
+  activePhotoId: number;
+  numberOfPhotos: number;
+}
+
+enum Direction {
+  left,
+  right
+}
 
 const GuideProfileActiveOffers = (props: IGuideProfileActiveOffersProps) => {
   const { t } = useTranslation();
@@ -39,6 +52,18 @@ const GuideProfileActiveOffers = (props: IGuideProfileActiveOffersProps) => {
     }
   ]);
 
+  const [activePhotos, setActivePhotos] = useState<ITripActivePhoto[]>([{ tripId: -1, activePhotoId: -1, numberOfPhotos: -1 }]);
+
+  useEffect(() => {
+    setActivePhotos(activePhotos.splice(0));
+
+    const tmp = activePhotos;
+    activeOffers.forEach((offer: ISingleTripType) => {
+      tmp.push({ tripId: offer.id, activePhotoId: 0, numberOfPhotos: offer.photos.length });
+    });
+    setActivePhotos(tmp);
+  }, [activeOffers]);
+
   useEffect(() => {
     if (activeOffers) {
       setFilteredTrips(
@@ -71,6 +96,34 @@ const GuideProfileActiveOffers = (props: IGuideProfileActiveOffersProps) => {
     }
   };
 
+  const changeActivePhoto = (tripId: number, direction: Direction) => {
+    const tmp: ITripActivePhoto[] = [];
+    activePhotos.forEach((trip: ITripActivePhoto) => {
+      if (trip.tripId === tripId) {
+        if (direction === Direction.left) {
+          if (trip.activePhotoId === 0) trip.activePhotoId = trip.numberOfPhotos - 1;
+          else trip.activePhotoId++;
+        } else {
+          if (trip.activePhotoId === trip.numberOfPhotos - 1) trip.activePhotoId = 0;
+          else trip.activePhotoId++;
+        }
+      }
+      tmp.push(trip);
+    });
+
+    setActivePhotos(tmp);
+  };
+
+  const findIndex = (id: number) => {
+    let i = 0;
+
+    for (const el of activePhotos) {
+      if (el.tripId === id) break;
+      i++;
+    }
+    return i;
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.container__title}>
@@ -83,39 +136,79 @@ const GuideProfileActiveOffers = (props: IGuideProfileActiveOffersProps) => {
         <input value={value} onChange={handleChange} />
       </div>
       <div className={styles.container__content}>
-        {filteredTrips.map((trip: ISingleTripType) => (
-          <div key={trip.id} className={styles.trip} onClick={() => toogleTripVisible(trip.id)}>
-            <div className={styles.trip__title}>{trip.name}</div>
-            <div className={styles.trip__gallery}>
-              <img src={trip.photos[0]} alt='' />
+        {filteredTrips.map((trip: ISingleTripType) => {
+          const indexInActivePhotos = findIndex(trip.id);
+          return (
+            <div key={trip.id} className={styles.trip}>
+              <div className={styles.trip__title} onClick={() => toogleTripVisible(trip.id)}>
+                {trip.name}
+              </div>
+              <div className={styles.gallery}>
+                <div className={styles.gallery__switchLeft} onClick={() => changeActivePhoto(trip.id, Direction.left)}>
+                  <img src={leftArrow} alt='' />
+                </div>
+                <div className={styles.gallery__content}>
+                  <img src={trip.photos[activePhotos[indexInActivePhotos].activePhotoId]} alt='' />
+                </div>
+                <div className={styles.gallery__switchRight} onClick={() => changeActivePhoto(trip.id, Direction.right)}>
+                  <img src={rightArrow} alt='' />
+                </div>
+                <div className={styles.gallery__footer}>
+                  {trip.photos.map((el: string, index: number) => (
+                    <div key={index} className={styles.dot} />
+                  ))}
+                </div>
+              </div>
+              <div className={visibleIds.includes(trip.id) ? styles.trip__data : styles.trip__dataHidden}>
+                <p className={styles.title}>{t('Informations')}</p>
+                <p className={styles.left}>{t('City')}:</p>
+                <p className={styles.right}>{trip.city}</p>
+                <p className={styles.left}>{t('Price')}:</p>
+                <p className={styles.right}>
+                  {trip.price} {trip.priceType}
+                </p>
+                <p className={styles.left} style={{ width: '70%' }}>
+                  {t('Max people')}:
+                </p>
+                <p className={styles.right} style={{ width: '30%' }}>
+                  {trip.maxPeople}
+                </p>
+                <p className={styles.title}>{t('Availability')}:</p>
+                <p className={styles.left}>{t('From')}:</p>
+                <p className={styles.right}>1.01.2020</p>
+                <p className={styles.left}>{t('To')}:</p>
+                <p className={styles.right}>1.03.2020</p>
+                <p className={styles.right} />
+                <div className={styles.tags}>
+                  <div className={styles.tags__title}>{t('Tags')}</div>
+                  <div className={styles.tags__content}>
+                    {trip.tags.map((tag: ITag) => (
+                      <div key={tag.id} className={styles.tag}>
+                        {tag.name}{' '}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <p className={styles.title}>{t('Statistic')}</p>
+                <p className={styles.left}>{t('Sold')}:</p>
+                <p className={styles.right}>{trip.sold}</p>
+                <p className={styles.left} style={{ width: '60%' }}>
+                  {t('Average mark')}:
+                </p>
+                <p className={styles.right} style={{ width: '40%' }}>
+                  {trip.averageMark}
+                </p>
+                <div className={styles.visits}>
+                  <p className={styles.title} style={{ marginBottom: '0.5rem', width: '60%' }}>
+                    {t('Number of visits')}
+                  </p>
+                  <p style={{ width: '100%', textAlign: 'center', marginBottom: '1rem' }}>23</p>
+                </div>
+              </div>
             </div>
-            <div className={visibleIds.includes(trip.id) ? styles.trip__data : styles.trip__dataHidden}>
-              <p>{t('Informations')}</p>
-              <p>{t('City')}:</p>
-              <p>{trip.city}</p>
-              <p>{t('Price')}:</p>
-              <p>
-                {trip.price} {trip.priceType}
-              </p>
-              <p>{t('Max people')}:</p>
-              <p>{trip.maxPeople}</p>
-              <p>{t('Availability')}:</p>
-              <p>{t('From')}:</p>
-              <p>1.01.2020</p>
-              <p>{t('To')}:</p>
-              <p>1.03.2020</p>
-              {trip.tags.map((tag: ITag) => (
-                <div key={tag.id}>{tag.name} </div>
-              ))}
-              <p>{t('Sold')}:</p>
-              <p>{trip.sold}</p>
-              <p>{t('Average mark')}:</p>
-              <p>{trip.averageMark}</p>
-              <p>{t('Number of visits')}:</p>
-              <p>23</p>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
