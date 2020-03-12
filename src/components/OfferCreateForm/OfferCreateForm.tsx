@@ -33,15 +33,16 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
   const [location, setLocation] = useState<string>('');
   const [suggestedListVisible, setSuggestedListVisible] = useState<boolean>(false);
   const [test, setTest] = useState<string[]>([ImagePlaceholder, ImagePlaceholder, ImagePlaceholder]);
+  const [files, setFiles] = useState<File>();
 
   const handlePhotoChange = (selectorFiles: FileList | null, id: number) => {
     if (selectorFiles != null) {
-      values.file[id] = selectorFiles[0];
+      setFiles(selectorFiles[0]);
       setTest(test.map((img, i) => (i === id ? URL.createObjectURL(selectorFiles[0]) : img)));
     }
   };
 
-  useEffect(() => {}, [values.file]);
+  useEffect(() => {}, [files]);
 
   return (
     <Form>
@@ -107,8 +108,8 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
           </label>
         </div>
         <input type='file' id='file1' onChange={e => handlePhotoChange(e.target.files, 0)} className={styles.offerForm__imageInput} />
-        <input type='file' id='file2' onChange={e => handlePhotoChange(e.target.files, 1)} className={styles.offerForm__imageInput} />
-        <input type='file' id='file3' onChange={e => handlePhotoChange(e.target.files, 2)} className={styles.offerForm__imageInput} />
+        {/* <input type='file' id='file2' onChange={e => handlePhotoChange(e.target.files, 1)} className={styles.offerForm__imageInput} />
+        <input type='file' id='file3' onChange={e => handlePhotoChange(e.target.files, 2)} className={styles.offerForm__imageInput} /> */}
       </div>
 
       <div className={`${styles.offerForm__date} ${styles.offerForm__case}`}>
@@ -222,9 +223,11 @@ const OfferCreateForm = withFormik<types.MyFormProps, types.FullFormValues>({
       begin: new Date(),
       city: '',
       end: new Date(),
-      file: new Array(3),
       lat: latitude || 0.0,
       lon: longitude || 0.0,
+      file: new File(['foo'], 'foo.txt', {
+        type: 'text/plain'
+      }),
       maxPeople: 0,
       name: '',
       price: 0.0,

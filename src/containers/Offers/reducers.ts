@@ -14,7 +14,7 @@ const RegistrationReducer = (state = initialState, action: types.IGetOfferByIdSu
     case constants.GET_OFFER_BY_ID_SUCCESSED:
       return {
         ...state,
-        currentTrip: action.offer
+        offer: action.offer
       };
     default:
       return state;

@@ -18,7 +18,6 @@ const priceTypes = {
 const TripListElement = ({ trip, changeVisible }: Props) => {
   const isLogged: boolean = useSelector((state: StoreType) => state.profile.isLoggedIn);
   const { t } = useTranslation();
-
   return (
     <li key={trip.id} onClick={() => changeVisible(trip.id)} className={styles.offer}>
       <img
@@ -52,7 +51,7 @@ const TripListElement = ({ trip, changeVisible }: Props) => {
             </ul>
           </div>
         )}
-        {trip.tags.length > 0 && (
+        {trip.tags && trip.tags.length > 0 && (
           <ul className={styles.offer__tags}>
             {trip.tags.map((tag: ITag) => (
               <li key={tag.name} className={styles.offer__tag}>

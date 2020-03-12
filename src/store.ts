@@ -8,7 +8,7 @@ import profile from './containers/Profile/reducer';
 import logInUserSaga from './containers/Profile/sagas';
 import { IProfileData } from './containers/Profile/types';
 import registration from './containers/Registration/reducer';
-import currentOffer from './containers/Offers/reducers';
+import currentOfferReducer from './containers/Offers/reducers';
 import SignUpUserSaga from './containers/Registration/sagas';
 import { IRegisterStore } from './containers/Registration/types';
 import { GuideProfileReducer, TripBrowserReducer } from './containers/TripBrowser/reducers';
@@ -22,6 +22,10 @@ import { IMultiTripsAndTagsType, IGuideProfileComplete, ISingleTripType } from '
 import { IMultiGuideRequests } from './containers/AdminPanel/types';
 import { IUserProfiles } from './containers/User/types';
 
+interface ICurrentOffer {
+  offer: ISingleTripType;
+}
+
 export interface StoreType {
   registration: IRegisterStore;
   profile: IProfileData;
@@ -29,7 +33,7 @@ export interface StoreType {
   user: IUserProfiles;
   tripBrowser: IMultiTripsAndTagsType;
   adminPanel: IMultiGuideRequests;
-  offerToBuy: ISingleTripType;
+  currentOfferReducer: ICurrentOffer;
 }
 
 function* rootSaga() {
@@ -39,7 +43,7 @@ function* rootSaga() {
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['registration', 'tripBrowser']
+  blacklist: ['registration', 'tripBrowser', 'currentOffer']
 };
 
 const tripBrowser = TripBrowserReducer;
@@ -48,7 +52,7 @@ const guideProfile = GuideProfileReducer;
 export let persistor: Persistor;
 export const configureStore = () => {
   const sagaMiddleware = createSagaMiddleware();
-  const rootReducer = combineReducers({ registration, profile, user, guideProfile, tripBrowser, adminPanel, currentOffer });
+  const rootReducer = combineReducers({ registration, profile, user, guideProfile, tripBrowser, adminPanel, currentOfferReducer });
   let persistedReducer = persistReducer(persistConfig, rootReducer);
   const store = createStore(persistedReducer, composeWithDevTools(applyMiddleware(sagaMiddleware)));
   persistor = persistStore(store);
