@@ -88,10 +88,6 @@ const GuideProfileActiveOffers = (props: IGuideProfileActiveOffersProps) => {
     setFilteredTrips(activeOffers);
   }, [activeOffers]);
 
-  useEffect(() => {
-    console.log(visibleIds);
-  }, [visibleIds]);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
@@ -204,7 +200,7 @@ const GuideProfileActiveOffers = (props: IGuideProfileActiveOffersProps) => {
                     <p className={styles.right} style={{ width: '30%' }}>
                       {trip.maxPeople}
                     </p>
-                    <p className={styles.title}>{t('Availability')}:</p>
+                    <p className={styles.title}>{t('Availability')}</p>
                     <p className={styles.left}>{t('From')}:</p>
                     <p className={styles.right}>1.01.2020</p>
                     <p className={styles.left}>{t('To')}:</p>
@@ -221,14 +217,14 @@ const GuideProfileActiveOffers = (props: IGuideProfileActiveOffersProps) => {
                       </div>
                     </div>
 
-                    <p className={styles.title}>{t('Statistic')}:</p>
+                    <p className={styles.title}>{t('Statistic')}</p>
                     <p className={styles.left}>{t('Sold')}:</p>
                     <p className={styles.right}>{trip.sold}</p>
                     <p className={styles.left} style={{ width: '60%' }}>
                       {t('Average mark')}:
                     </p>
                     <p className={styles.right} style={{ width: '40%' }}>
-                      {trip.averageMark}
+                      {trip.averageMark > 0 ? trip.averageMark : 0}
                     </p>
                     <div className={styles.visits}>
                       <p className={styles.title} style={{ marginBottom: '0.5rem', width: '60%' }}>
@@ -246,7 +242,7 @@ const GuideProfileActiveOffers = (props: IGuideProfileActiveOffersProps) => {
                     <div className={styles.switchData__active} onClick={() => setActiveMode(ActiveMode.description)}>
                       <img src={goRight} alt='' />
                     </div>
-                    <div className={styles.description}>ELO</div>
+                    <div className={styles.description}>{trip.description}</div>
                   </>
                 )}
               </div>

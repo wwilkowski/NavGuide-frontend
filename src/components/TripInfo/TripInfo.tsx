@@ -96,9 +96,6 @@ const TripInfo = (props: ITripInfoProps) => {
             guideProfileData={props.guideProfileData}
           />
         </div>
-        <div className={styles.orderButton}>
-          <Link to='/kupowanie/wycieczek'>{t('Order now!')}</Link>
-        </div>
         <div className={styles.description}>
           <p className={styles.description__title}>{t('Description')}</p>
           <div className={styles.description__content}>

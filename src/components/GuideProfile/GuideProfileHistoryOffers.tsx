@@ -91,10 +91,6 @@ const GuideProfileHistoryOffers = (props: IGuideProfileHistoryOffersProps) => {
     setFilteredTrips(historyOffers);
   }, [historyOffers]);
 
-  useEffect(() => {
-    console.log(visibleIds);
-  }, [visibleIds]);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
@@ -231,7 +227,7 @@ const GuideProfileHistoryOffers = (props: IGuideProfileHistoryOffersProps) => {
                       {t('Average mark')}:
                     </p>
                     <p className={styles.right} style={{ width: '40%' }}>
-                      {trip.offer.averageMark}
+                      {trip.offer.averageMark > 0 ? trip.offer.averageMark : 0}
                     </p>
                     <div className={styles.visits}>
                       <p className={styles.title} style={{ marginBottom: '0.5rem', width: '60%' }}>
@@ -249,7 +245,7 @@ const GuideProfileHistoryOffers = (props: IGuideProfileHistoryOffersProps) => {
                     <div className={styles.switchData__active} onClick={() => setActiveMode(ActiveMode.description)}>
                       <img src={goRight} alt='' />
                     </div>
-                    <div className={styles.description}>ELO</div>
+                    <div className={styles.description}>{trip.offer.description}</div>
                   </>
                 )}
               </div>

@@ -4,7 +4,7 @@ import styles from '../TripInfo.module.scss';
 import { IInformationsProps } from './types';
 import { ITag } from '../../../containers/TripBrowser/types';
 import { Link } from 'react-router-dom';
-import { fetchGuideProfileRequested } from '../../../containers/TripBrowser/actions';
+import { fetchGuideProfileRequested } from '../../../containers/GuideProfile/actions';
 import { useDispatch } from 'react-redux';
 
 const Informations = (props: IInformationsProps) => {
@@ -17,7 +17,8 @@ const Informations = (props: IInformationsProps) => {
   const [activeTripButton, setActiveTripButton] = useState<boolean>(true);
   const [activeGuideButton, setActiveGuideButton] = useState<boolean>(false);
 
-  const [experience, setExperience] = useState<String>('');
+  const [experience, setExperience] = useState<string>('');
+  const [telephone, setTelephone] = useState<string>('');
 
   useEffect(() => {
     let tmp = '';
@@ -29,6 +30,14 @@ const Informations = (props: IInformationsProps) => {
     }
     setExperience(tmp);
   }, [guideProfileData, guideProfile.experience]);
+
+  useEffect(() => {
+    let result = '';
+    const tmp = guideProfileData.telephone.split('');
+
+    result = '+' + tmp[0] + tmp[1] + ' ' + tmp[2] + tmp[3] + tmp[4] + ' ' + tmp[5] + tmp[6] + tmp[7] + ' ' + tmp[8] + tmp[9] + tmp[10];
+    setTelephone(result);
+  }, [guideProfileData.telephone]);
 
   return (
     <>
@@ -79,6 +88,9 @@ const Informations = (props: IInformationsProps) => {
             {t('guide')}
           </div>
         )}
+        <Link to='/kupowanie/wycieczek'>
+          <div className={styles.orderButton}>{t('Order now!')}</div>
+        </Link>
       </div>
       {props.mode === 'trip' ? (
         <div>
@@ -87,23 +99,35 @@ const Informations = (props: IInformationsProps) => {
               <p className={styles.title}>{t('Informations')}</p>
               <p className={styles.left}>{t('City')}:</p>
               <p className={styles.right}>{tripData.city}</p>
-              <p className={styles.left}>{t('Price')}:</p>
-              <p className={styles.right}>
-                {tripData.price} ({/*tripData.priceType*/}osoba)
+              <p className={styles.left} style={{ width: '15%' }}>
+                {t('Price')}:
               </p>
-              <p className={styles.left}>{t('Max people')}:</p>
-              <p className={styles.right}> {tripData.maxPeople}</p>
+              <p className={styles.right} style={{ width: '85%' }}>
+                {tripData.price} ({tripData.priceType})
+              </p>
+              <p className={styles.left} style={{ width: '85%' }}>
+                {t('Max people')}:
+              </p>
+              <p className={styles.right} style={{ width: '15%' }}>
+                {' '}
+                {tripData.maxPeople}
+              </p>
             </div>
             <div className={styles.content2}>
               <p className={styles.title}>{t('Availability')}</p>
-              <div style={{ width: '50%' }}>
-                <p className={styles.left}>{t('From')}:</p>
-                <p className={styles.right}>1.01.2020</p>
-              </div>
-              <div>
-                <p className={styles.left}>{t('To')}:</p>
-                <p className={styles.right}>1.01.2020</p>
-              </div>
+              <p className={styles.left}>{t('From')}:</p>
+              <p className={styles.right}>1.01.2020</p>
+
+              <p className={styles.left}>{t('To')}:</p>
+              <p className={styles.right}>1.01.2020</p>
+            </div>
+            <div className={styles.content2}>
+              <p className={styles.title}>{t('Statistic')}</p>
+              <p className={styles.left}>{t('Sold')}:</p>
+              <p className={styles.right}>{tripData.sold}</p>
+
+              <p className={styles.left}>{t('Average mark')}:</p>
+              <p className={styles.right}>{tripData.averageMark > 0 ? tripData.averageMark : 0}</p>
             </div>
             <div className={styles.content3}>
               <div className={styles.content3__tags}>
@@ -141,11 +165,17 @@ const Informations = (props: IInformationsProps) => {
             <div className={styles.content1}>
               <p className={styles.left}>{t('Experience')}:</p>
               <p className={styles.right}>{experience}</p>
+              <p className={styles.left}>{t('Average mark')}:</p>
+              <p className={styles.right}>{guideProfile.averageMark > 0 ? guideProfile.averageMark : 0}</p>
               <p className={styles.title}>{t('Contact')}</p>
               <p className={styles.left}>{t('Tel')}.:</p>
-              <p className={styles.right}>{props.guideProfileData.telephone}</p>
-              <p className={styles.left}>{t('Email')}:</p>
-              <p className={styles.right}>{props.guideProfileData.email}</p>
+              <p className={styles.right}>{telephone}</p>
+              <p className={styles.left} style={{ width: '15%' }}>
+                {t('Email')}:
+              </p>
+              <p className={styles.right} style={{ width: '85%' }}>
+                {props.guideProfileData.email}
+              </p>
               <p className={styles.title}>{t('Speech')}</p>
               <p className={styles.left}>{t('Country')}:</p>
               <p className={styles.right}>{props.guideProfileData.country}</p>
