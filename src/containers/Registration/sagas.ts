@@ -38,6 +38,7 @@ function* signUpGoogleUser(action: types.ISignUpGoogleRequest) {
         email: json.email,
         telephone: '',
         gender: json.gender,
+        age: json.age,
         experience: 1,
         interests: []
       };
@@ -75,7 +76,20 @@ function* confirmGoogleUser(action: types.IConfirmSignUpRequest) {
         ...action.templateUser
       })
     });
-    const { firstName, lastName, country, email, experience, telephone, avatar, interests, role, token, gender } = yield response.json();
+    const {
+      firstName,
+      lastName,
+      country,
+      email,
+      experience,
+      telephone,
+      avatar,
+      interests,
+      role,
+      token,
+      gender,
+      age
+    } = yield response.json();
     const user = {
       firstName,
       lastName,
@@ -86,7 +100,8 @@ function* confirmGoogleUser(action: types.IConfirmSignUpRequest) {
       avatar,
       interests,
       role,
-      gender
+      gender,
+      age
     };
     if (response.status >= 200 && response.status <= 300) {
       yield put(actions.confirmSignUpSuccessed(token));

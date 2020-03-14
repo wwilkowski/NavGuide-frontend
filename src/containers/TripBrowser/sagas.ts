@@ -1,7 +1,7 @@
 import {
   FETCH_RANDOM_TRIPS_REQUESTED,
   FETCH_TAGS_REQUESTED,
-  FETCH_CITY_TRIPS_REQUESTED,
+  FETCH_NAME_TRIPS_REQUESTED,
   FETCH_GEO_TRIPS_REQUESTED,
   FETCH_SUGGESTED_CITIES_REQUESTED
 } from './constants';
@@ -13,7 +13,7 @@ import i18n from '../../locales/i18n';
 import { getToken } from '../../helpers/tokenCookie';
 
 const randomTripsEndpoint = 'https://235.ip-51-91-9.eu/guests/offers';
-const cityTripsEdnpoint = 'https://235.ip-51-91-9.eu/guests/offers/city?name=';
+const nameTripsEdnpoint = 'https://235.ip-51-91-9.eu/offers/name?name=';
 const tagsEndpoint = 'https://235.ip-51-91-9.eu/tags';
 
 function* fetchRandomTripsFromAPI() {
@@ -41,9 +41,12 @@ function* fetchRandomTripsFromAPI() {
   }
 }
 
-function* fetchCityTripsFromAPI(action: types.IFetchCityTripsRequest) {
+function* fetchNameTripsFromAPI(action: types.IFetchNameTripsRequest) {
   try {
-    const response = yield call(fetch, cityTripsEdnpoint + action.city);
+    let tmp = action.name.split(' ');
+    tmp = tmp.map((el: string) => `${el}%20`);
+
+    const response = yield call(fetch, nameTripsEdnpoint + tmp.join());
     const status = response.status;
     const json = yield response.json();
     const templateTrips: types.IMultiTripsType = { trips: [] };
@@ -52,7 +55,7 @@ function* fetchCityTripsFromAPI(action: types.IFetchCityTripsRequest) {
       json.forEach((trip: types.ISingleTripType) => {
         templateTrips.trips.push(trip);
       });
-      yield put(actions.fetchCityTripsSuccesed(templateTrips));
+      yield put(actions.fetchNameTripsSuccesed(templateTrips));
     } else {
       switch (json.status) {
         default:
@@ -60,7 +63,7 @@ function* fetchCityTripsFromAPI(action: types.IFetchCityTripsRequest) {
       }
     }
   } catch (error) {
-    yield put(actions.fetchCityTripsFailed(`Can't fetch city trips from API`));
+    yield put(actions.fetchNameTripsFailed(`Can't fetch trips by name from API`));
   }
 }
 
@@ -149,7 +152,7 @@ function* fetchSuggestedCitiesFromNominatimAPI(action: types.IFetchSuggestedCiti
 function* mainSaga() {
   //TRIP BROWSER
   yield takeLatest(FETCH_RANDOM_TRIPS_REQUESTED, fetchRandomTripsFromAPI);
-  yield takeLatest(FETCH_CITY_TRIPS_REQUESTED, fetchCityTripsFromAPI);
+  yield takeLatest(FETCH_NAME_TRIPS_REQUESTED, fetchNameTripsFromAPI);
   yield takeLatest(FETCH_GEO_TRIPS_REQUESTED, fetchGeoTripsFromAPI);
   yield takeLatest(FETCH_TAGS_REQUESTED, fetchTagsFromAPI);
   yield takeLatest(FETCH_SUGGESTED_CITIES_REQUESTED, fetchSuggestedCitiesFromNominatimAPI);

@@ -18,6 +18,7 @@ function* fetchUserProfileFromAPI(action: types.IGetUserProfileRequest) {
       }
     });
     const user = yield response.json();
+    console.log(user);
     if (response.status >= 200 && response.status <= 300) {
       yield put(actions.getUserProfileSuccessed(user));
     } else {
