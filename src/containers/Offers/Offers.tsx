@@ -15,7 +15,6 @@ const Offers = () => {
   const dispatcher = useDispatch();
   const profile = useSelector((state: StoreType) => state.profile);
   const { user } = profile;
-
   const [position, setPosition] = useState<IPosition>({
     latitude: 53.01023065,
     longitude: 18.594376006630313,
