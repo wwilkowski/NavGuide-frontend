@@ -1,6 +1,7 @@
-import { ISingleTripType, IGuideProfile } from '../../../containers/TripBrowser/types';
+import { ISingleTripType } from '../../../containers/TripBrowser/types';
 import { IUserData } from '../../../shared/types';
 import { IUserProfile } from '../../../containers/User/types';
+import { IGuideProfile } from '../../../containers/GuideProfile/types';
 
 export interface IInformationsProps {
   mode: string;

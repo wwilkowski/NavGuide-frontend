@@ -13,19 +13,7 @@ import {
   FETCH_GEO_TRIPS_FAILED,
   FETCH_SUGGESTED_CITIES_REQUESTED,
   FETCH_SUGGESTED_CITIES_SUCCESED,
-  FETCH_SUGGESTED_CITIES_FAILED,
-  FETCH_GUIDE_PROFILE_REQUESTED,
-  FETCH_GUIDE_PROFILE_SUCCESSED,
-  FETCH_GUIDE_PROFILE_FAILED,
-  FETCH_GUIDE_PROFILE_DATA_REQUESTED,
-  FETCH_GUIDE_PROFILE_DATA_FAILED,
-  FETCH_GUIDE_PROFILE_DATA_SUCCESSED,
-  FETCH_GUIDE_ACTIVE_OFFERS_REQUESTED,
-  FETCH_GUIDE_ACTIVE_OFFERS_SUCCESSED,
-  FETCH_GUIDE_ACTIVE_OFFERS_FAILED,
-  FETCH_GUIDE_HISTORY_REQUESTED,
-  FETCH_GUIDE_HISTORY_FAILED,
-  FETCH_GUIDE_HISTORY_SUCCESSED
+  FETCH_SUGGESTED_CITIES_FAILED
 } from './constants';
 import { IUserProfile } from '../User/types';
 
@@ -82,23 +70,6 @@ export interface IMultiTripsAndTagsType {
   trips: ISingleTripType[];
   tags: ITag[];
   places: ISuggestedPlace[];
-}
-
-export interface IGuideProfile {
-  languages: string[];
-  lastName: string;
-  firstName: string;
-  guideId: number;
-  userId: number;
-  experience: number;
-  averageMark: string;
-}
-
-export interface IGuideProfileComplete {
-  guideProfile: IGuideProfile;
-  guideProfileData: IUserProfile;
-  activeOffers: ISingleTripType[];
-  historyOffers: IEndedSingleTripType[];
 }
 
 export interface IFetchRandomTripsSuccesedAction {
@@ -169,46 +140,6 @@ export interface IFetchSuggestedCitiesFailedAction {
   message: string;
 }
 
-export interface IFetchGuideProfileSuccessed {
-  type: typeof FETCH_GUIDE_PROFILE_SUCCESSED;
-  guideProfile: IGuideProfile;
-}
-
-export interface IFetchGuideProfileFailed {
-  type: typeof FETCH_GUIDE_PROFILE_FAILED;
-  message: string;
-}
-
-export interface IFetchGuideProfileDataSuccessed {
-  type: typeof FETCH_GUIDE_PROFILE_DATA_SUCCESSED;
-  guideProfileData: IUserProfile;
-}
-
-export interface IFetchGuideProfileDataFailed {
-  type: typeof FETCH_GUIDE_PROFILE_DATA_FAILED;
-  message: string;
-}
-
-export interface IFetchGuideActiveOffersSuccessed {
-  type: typeof FETCH_GUIDE_ACTIVE_OFFERS_SUCCESSED;
-  activeOffers: ISingleTripType[];
-}
-
-export interface IFetchGuideActiveOffersFailed {
-  type: typeof FETCH_GUIDE_ACTIVE_OFFERS_FAILED;
-  message: string;
-}
-
-export interface IFetchGuideHistorySuccessed {
-  type: typeof FETCH_GUIDE_HISTORY_SUCCESSED;
-  historyOffers: IEndedSingleTripType[];
-}
-
-export interface IFetchGuideHistoryFailed {
-  type: typeof FETCH_GUIDE_HISTORY_FAILED;
-  message: string;
-}
-
 export type TripBrowserAction =
   | IFetchRandomTripsRequest
   | IFetchRandomTripsSuccesedAction
@@ -221,16 +152,6 @@ export type TripBrowserAction =
   | IFetchRandomTripsFailedAction
   | IFetchSuggestedCitiesSuccesedAction
   | IFetchSuggestedCitiesFailedAction;
-
-export type GuideProfileAction =
-  | IFetchGuideProfileSuccessed
-  | IFetchGuideProfileFailed
-  | IFetchGuideProfileDataSuccessed
-  | IFetchGuideProfileDataFailed
-  | IFetchGuideActiveOffersSuccessed
-  | IFetchGuideActiveOffersFailed
-  | IFetchGuideHistorySuccessed
-  | IFetchGuideHistoryFailed;
 
 export interface IFetchRandomTripsRequest {
   type: typeof FETCH_RANDOM_TRIPS_REQUESTED;
@@ -258,24 +179,4 @@ export interface IFetchSuggestedCitiesRequest {
   type: typeof FETCH_SUGGESTED_CITIES_REQUESTED;
   location: string;
   number: number;
-}
-
-export interface IFetchGuideProfileRequest {
-  type: typeof FETCH_GUIDE_PROFILE_REQUESTED;
-  id: number;
-}
-
-export interface IFetchGuideProfileDataRequest {
-  type: typeof FETCH_GUIDE_PROFILE_DATA_REQUESTED;
-  id: number;
-}
-
-export interface IFetchGuideActiveOffersRequest {
-  type: typeof FETCH_GUIDE_ACTIVE_OFFERS_REQUESTED;
-  id: number;
-}
-
-export interface IFetchGuideHistoryRequest {
-  type: typeof FETCH_GUIDE_HISTORY_REQUESTED;
-  id: number;
 }
