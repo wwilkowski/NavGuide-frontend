@@ -107,9 +107,18 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
             <img src={test[2]} alt='' className={styles.offerForm__imageIcon} />
           </label>
         </div>
-        <input type='file' id='file1' onChange={e => handlePhotoChange(e.target.files, 0)} className={styles.offerForm__imageInput} />
-        {/* <input type='file' id='file2' onChange={e => handlePhotoChange(e.target.files, 1)} className={styles.offerForm__imageInput} />
-        <input type='file' id='file3' onChange={e => handlePhotoChange(e.target.files, 2)} className={styles.offerForm__imageInput} /> */}
+        <input
+          type='file'
+          id='file1'
+          onChange={e => {
+            handlePhotoChange(e.target.files, 0);
+            console.log(e.target.files);
+            if (e.target.files) {
+              setFieldValue('file', e.target.files[0]);
+            }
+          }}
+          className={styles.offerForm__imageInput}
+        />
       </div>
 
       <div className={`${styles.offerForm__date} ${styles.offerForm__case}`}>

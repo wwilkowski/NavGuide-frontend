@@ -34,6 +34,7 @@ export interface StoreType {
   tripBrowser: IMultiTripsAndTagsType;
   adminPanel: IMultiGuideRequests;
   currentOfferReducer: ICurrentOffer;
+  activeOffers: ISingleTripType[];
 }
 
 function* rootSaga() {

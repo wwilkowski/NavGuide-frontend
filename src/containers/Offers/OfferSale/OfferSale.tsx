@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StoreType } from '../../../store';
 import { useSelector, useDispatch } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import { getOfferByIdRequest } from '../actions';
+import { getOfferByIdRequest, buyOfferRequest } from '../actions';
 import TripListElement from '../../../components/TripBrowser/TripListElement';
-import { getToken } from '../../../helpers/tokenCookie';
+import DatePicker from 'react-datepicker';
 
 type TParams = { id: string };
 
@@ -19,10 +19,26 @@ const OfferSale = (props: Props) => {
 
   useEffect(() => {}, [currentOffer]);
 
+  const [date, setDate] = useState<Date | null>(new Date());
+  const [message, setMessage] = useState<string>('');
+
   return currentOffer ? (
     <div>
       <TripListElement trip={currentOffer} changeVisible={() => {}} />
-      <button>Zamów ofertę</button>
+      <form>
+        <label htmlFor='message'>Wiadomość do sprzedającego</label>
+        <textarea id='message' value={message} onChange={e => setMessage(e.target.value)}></textarea>
+        <DatePicker dateFormat='yyyy/MM/dd' selected={date} onChange={date => setDate(date)} />
+      </form>
+      <button
+        onClick={() => {
+          if (date != null) {
+            dispatcher(buyOfferRequest(currentOffer.id.toString(), date, message));
+          }
+        }}
+      >
+        Zamów ofertę
+      </button>
     </div>
   ) : (
     <p>Nie ma oferty</p>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { StoreType } from '../../../store';
 import UserDataForm from '../../../components/UserDataForm/UserDataForm';
@@ -7,6 +7,8 @@ import * as actions from '../actions';
 import AvatarForm from '../../../components/AvatarForm/AvatarForm';
 import ProfileMenu from '../../../components/ProfileMenu/ProfileMenu';
 import styles from './EditProfileForm.module.scss';
+import OrderedOffers from '../../../components/OrderedOffers/OrderedOffers';
+import { getActiveOffersRequest } from '../../Offers/actions';
 
 enum Scene {
   profile,
@@ -18,10 +20,15 @@ const EditProfileForm = () => {
   const dispatcher = useDispatch();
   const [sceneMode, setSceneMode] = useState<Scene>(Scene.profile);
   const user = useSelector((state: StoreType) => state.profile.user);
+  const activeTrips = useSelector((state: StoreType) => state.activeOffers);
 
   const onEditProfileFormSubmit = (editUser: IUserFormValues) => {
     dispatcher(actions.editProfileRequest(editUser, user));
   };
+
+  useEffect(() => {
+    dispatcher(getActiveOffersRequest());
+  }, [dispatcher]);
 
   return (
     <div className={styles.container}>
@@ -31,12 +38,10 @@ const EditProfileForm = () => {
           <UserDataForm onSubmit={onEditProfileFormSubmit} templateUser={user} />
         </div>
       </div>
-      <div className={styles.profileInfo}>
-        <div className={sceneMode === Scene.activeOffers ? styles.profileSection : styles.profileSectionHidden}>
-          <p>Active Offers</p>
-        </div>
-        <div className={sceneMode === Scene.history ? styles.profileSection : styles.profileSectionHidden}>History</div>
+      <div className={sceneMode === Scene.activeOffers ? styles.profileSection : styles.profileSectionHidden}>
+        <OrderedOffers trips={activeTrips} />
       </div>
+      <div className={sceneMode === Scene.history ? styles.profileSection : styles.profileSectionHidden}>History</div>
       <ProfileMenu setScene={setSceneMode} />
     </div>
   );

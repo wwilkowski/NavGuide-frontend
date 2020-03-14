@@ -21,6 +21,16 @@
   &__title {
     font-weight: 600;
   }
+  &__row {
+    display: flex;
+  }
+  &__languages {
+    display: flex;
+    font-size: 0.8em;
+  }
+  &__langElement {
+    margin: 0.1rem 0.3rem;
+  }
   &__p {
     font-size: 0.9em;
   }

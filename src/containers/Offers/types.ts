@@ -1,4 +1,4 @@
-import { GET_OFFER_BY_ID_SUCCESSED } from './constants';
+import { GET_OFFER_BY_ID_SUCCESSED, GET_ACTIVE_OFFERS_SUCCESSED } from './constants';
 
 export interface IOfferFormValues {
   place: string;
@@ -32,6 +32,13 @@ export interface IGetOfferByIdAction {
   id: number;
 }
 
+export interface IBuyOfferAction {
+  type: string;
+  id: string;
+  message: string;
+  date: Date;
+}
+
 export interface ISingleTripType {
   city: string;
   description: string;
@@ -59,3 +66,10 @@ export interface IGetOfferByIdSuccessed {
   type: typeof GET_OFFER_BY_ID_SUCCESSED;
   offer: ISingleTripType;
 }
+
+export interface IGetActiveTripsSuccessed {
+  type: typeof GET_ACTIVE_OFFERS_SUCCESSED;
+  trips: ISingleTripType[];
+}
+
+export type IOffersActionType = IGetOfferByIdSuccessed | IGetActiveTripsSuccessed;

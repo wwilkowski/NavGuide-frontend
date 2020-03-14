@@ -23,6 +23,12 @@
     "SOCIAL_MEDIA": "Social media",
     "SERIES": "Seriale",
     "DANCE": "Taniec",
+    "ANY": "Cokolwiek",
+    "PARTIES": "Imprezy",
+    "ANIMALS": "Zwierzęta",
+    "GAMES": "Gry",
+    "MOVIES": "Filmy",
+    "BOOKS": "Książki",
 
     "Hello, world!": "Witaj świecie!",
     "Sign up with Google": "Zarejestruj się z Google",
@@ -146,6 +152,7 @@
     "To": "Do",
     "Description": "Opis",
     "Number of visits": "Liczba odwiedzin",
-    "Update": "Aktualizuj"
+    "Update": "Aktualizuj",
+    "Find trip for yourself": "Znajdź ofertę dla siebie"
   }
 }

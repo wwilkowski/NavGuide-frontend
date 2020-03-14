@@ -9,11 +9,13 @@ import * as types from './types';
 
 const offerEndpoint = 'https://235.ip-51-91-9.eu/offers';
 const currentOfferEndpoint = (id: number) => `https://235.ip-51-91-9.eu/offers/${id}`;
+const buyOfferEndpoint = 'https://235.ip-51-91-9.eu/purchases';
+const getActiveOffersEndpoint = 'https://235.ip-51-91-9.eu/purchases';
 
 function* createOffer(action: types.ICreateOfferAction) {
   const formData = new FormData();
   const { file, begin, end, city, lat, lon, maxPeople, name, price, priceType, radius, tags, description } = action.formData;
-  formData.append('file', file.toString());
+  formData.append('file', file);
   formData.append('begin', begin.toUTCString());
   formData.append('end', end.toUTCString());
   formData.append('city', city.toString());
@@ -74,9 +76,64 @@ function* getOfferById(action: types.IGetOfferByIdAction) {
   }
 }
 
+function* buyOffer(action: types.IBuyOfferAction) {
+  try {
+    const response = yield call(fetch, buyOfferEndpoint, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${getToken()}`
+      },
+      body: JSON.stringify({
+        offerId: 7,
+        message: action.message,
+        plannedDate: action.date
+      })
+    });
+    if (response.status >= 200 && response.status <= 300) {
+      yield put(actions.buyOfferSuccessed());
+      showNotification('success', `${i18n.t('You have asked the guide to buy a trip')}`, '');
+      yield call(forwardTo, '/');
+    } else {
+      if (response.status === 401) {
+        throw new Error('You are not logged in');
+      } else {
+        throw new Error('Something goes wrong');
+      }
+    }
+  } catch (error) {
+    yield put(actions.buyOfferFailed());
+  }
+}
+
+function* getActiveOffers() {
+  try {
+    const response = yield call(fetch, getActiveOffersEndpoint, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${getToken()}`
+      }
+    });
+    if (response.status >= 200 && response.status <= 300) {
+      const json = yield response.json();
+      yield put(actions.getActiveOffersSuccessed(json));
+    } else {
+      if (response.status === 401) {
+        throw new Error('You are not logged in');
+      } else {
+        throw new Error('Something goes wrong');
+      }
+    }
+  } catch (error) {
+    yield put(actions.getActiveOffersFailed());
+  }
+}
+
 function* mainSaga() {
   yield takeLatest(constants.CREATE_OFFER_REQUESTED, createOffer);
   yield takeLatest(constants.GET_OFFER_BY_ID_REQUESTED, getOfferById);
+  yield takeLatest(constants.BUY_OFFER_REQUESTED, buyOffer);
+  yield takeLatest(constants.GET_ACTIVE_OFFERS_REQUESTED, getActiveOffers);
 }
 
 export default mainSaga;

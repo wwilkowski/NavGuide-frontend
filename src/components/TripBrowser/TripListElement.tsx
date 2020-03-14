@@ -15,6 +15,23 @@ const priceTypes = {
   PER_GROUP: 'per group'
 };
 
+const getLanguage = (code: string) => {
+  switch (code) {
+    case 'PL':
+      return 'Polish';
+    case 'EN':
+      return 'English';
+    case 'DE':
+      return 'German';
+  }
+};
+
+const languages = {
+  PL: 'Polish',
+  EN: 'English',
+  DE: 'German'
+};
+
 const TripListElement = ({ trip, changeVisible }: Props) => {
   const isLogged: boolean = useSelector((state: StoreType) => state.profile.isLoggedIn);
   const { t } = useTranslation();
@@ -40,22 +57,23 @@ const TripListElement = ({ trip, changeVisible }: Props) => {
             <p className={styles.offer__p}>
               {t('Guide')}: {trip.owner.firstName} {trip.owner.lastName}
             </p>
-
-            <p className={styles.offer__p}>{t('Languages')}: </p>
-            <ul>
-              {trip.owner.languages.map((lang: string) => (
-                <li key={lang}>
-                  <span>{lang}</span>
-                </li>
-              ))}
-            </ul>
+            <div className={styles.offer__row}>
+              <p className={styles.offer__p}>{t('Languages')}: </p>
+              <ul className={styles.offer__languages}>
+                {trip.owner.languages.map((lang: string) => (
+                  <li className={styles.offer__langElement} key={lang}>
+                    <span>{getLanguage(lang)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         )}
         {trip.tags && trip.tags.length > 0 && (
           <ul className={styles.offer__tags}>
             {trip.tags.map((tag: ITag) => (
               <li key={tag.name} className={styles.offer__tag}>
-                <span>{tag.name}</span>
+                <span>{t(tag.name)}</span>
               </li>
             ))}
           </ul>
