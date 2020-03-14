@@ -20,7 +20,7 @@ const EditProfileForm = () => {
   const dispatcher = useDispatch();
   const [sceneMode, setSceneMode] = useState<Scene>(Scene.profile);
   const user = useSelector((state: StoreType) => state.profile.user);
-  const activeTrips = useSelector((state: StoreType) => state.activeOffers);
+  const activeTrips = useSelector((state: StoreType) => state.currentOfferReducer.activeOffers);
 
   const onEditProfileFormSubmit = (editUser: IUserFormValues) => {
     dispatcher(actions.editProfileRequest(editUser, user));
@@ -29,6 +29,10 @@ const EditProfileForm = () => {
   useEffect(() => {
     dispatcher(getActiveOffersRequest());
   }, [dispatcher]);
+
+  useEffect(() => {
+    console.log(activeTrips);
+  }, [activeTrips]);
 
   return (
     <div className={styles.container}>

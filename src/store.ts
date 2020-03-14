@@ -21,9 +21,19 @@ import user from './containers/User/reducer';
 import { IMultiTripsAndTagsType, IGuideProfileComplete, ISingleTripType } from './containers/TripBrowser/types';
 import { IMultiGuideRequests } from './containers/AdminPanel/types';
 import { IUserProfiles } from './containers/User/types';
+import { IUserData } from './shared/types';
+
+interface IActiveOffer {
+  id: number;
+  message: string;
+  offer: ISingleTripType;
+  plannedDate: Date;
+  traveler: IUserData;
+}
 
 interface ICurrentOffer {
   offer: ISingleTripType;
+  activeOffers: IActiveOffer[];
 }
 
 export interface StoreType {
@@ -44,7 +54,7 @@ function* rootSaga() {
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['registration', 'tripBrowser', 'currentOffer']
+  blacklist: ['registration', 'tripBrowser', 'currentOffer', 'currentOfferReducer']
 };
 
 const tripBrowser = TripBrowserReducer;
