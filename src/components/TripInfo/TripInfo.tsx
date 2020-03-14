@@ -46,25 +46,6 @@ const TripInfo = (props: ITripInfoProps) => {
   });
 
   useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      if (node.current.contains(e.target)) {
-        // inside click
-        return;
-      }
-
-      // outside click
-      props.changeTripInfoVisible(0);
-    };
-
-    // add when mounted
-    document.addEventListener('mousedown', handleClick);
-    // return function to be called when unmounted
-    return () => {
-      document.removeEventListener('mousedown', handleClick);
-    };
-  }, [props.changeTripInfoVisible, props]);
-
-  useEffect(() => {
     setTripData(props.tripInformations);
   }, [props.tripInformations]);
 
@@ -97,7 +78,7 @@ const TripInfo = (props: ITripInfoProps) => {
           />
         </div>
         <div className={styles.orderButton}>
-          <Link to={`offers/${tripData.id}/buy`}>{t('Order now!')}</Link>
+          <Link to={`/offers/${tripData.id}/buy`}>{t('Order now!')}</Link>
         </div>
         <div className={styles.description}>
           <p className={styles.description__title}>{t('Description')}</p>

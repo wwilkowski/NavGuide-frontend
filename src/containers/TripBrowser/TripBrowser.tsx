@@ -166,14 +166,14 @@ const TripBrowser: React.FC = () => {
         tripInfoVisible={tripInfoVisible}
         changeTripInfoVisible={changeTripInfoVisible}
       />
-      {tripInfoVisible ? (
+      {/* {tripInfoVisible ? (
         <TripInfo
           tripInformations={tripsData[tripInfoId]}
           guideProfile={guideProfile}
           guideProfileData={guideProfileData}
           changeTripInfoVisible={changeTripInfoVisible}
         />
-      ) : null}
+      ) : null} */}
     </div>
   );
 };
