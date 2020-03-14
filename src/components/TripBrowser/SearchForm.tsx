@@ -17,6 +17,7 @@ import MapIcon from '../../assets/icons/map.png';
 import ListIcon from '../../assets/icons/list.png';
 import CloseIcon from '../../assets/icons/close.png';
 import Slider from '@material-ui/core/Slider';
+import SearchIcon from '../../assets/icons/search.png';
 
 const SearchFormSchema = Yup.object().shape({});
 
@@ -76,120 +77,126 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
 
   return (
     <Form autoComplete='off' className={styles.searchForm}>
-      <div className={styles.searchForm__inputsCase}>
-        <div className={styles.searchForm__locationInput}>
-          <label htmlFor='location' className={styles.searchForm__label}>
-            {t('Location')}:
-          </label>
-          <Field
-            id='location'
-            type='text'
-            name='location'
-            value={props.formValue}
-            className={styles.searchForm__input}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              props.handleChange(event);
-              props.onChange(event.target.value);
-            }}
-          />
-          {errors.location && touched.location && <div>{t(errors.location)}</div>}
-          {suggestedListVisible && suggestedCities.length > 0 && (
-            <ListSuggestedTrips
-              onCityClick={(location: ISuggestedPlace) => {
-                setFieldValue('lat', location.coords[1]);
-                setFieldValue('lon', location.coords[0]);
-                props.setPosition({
-                  latitude: location.coords[1],
-                  longitude: location.coords[0],
-                  radius: props.positionValue.radius
-                });
-                props.onSubmit(location, props.positionValue.radius, 'suggested');
-              }}
-              onCityHover={props.onCityHover}
-              suggestedTrips={suggestedCities}
-              activeTags={values.activeTags}
-              changeVisible={() => setSuggestedListVisible(false)}
-            />
-          )}
-        </div>
-        <div className={fixedRadiusView ? styles.fixedRadius : ''}>
-          <div>
-            <label htmlFor='radius' className={styles.searchForm__label}>
-              {t('Radius')}:
+      <span className={styles.searchForm__icon}>
+        <img src={SearchIcon} alt='' />
+      </span>
+      <h2 className={styles.searchForm__title}>{t('Find trip for yourself')}</h2>
+      <div className={styles.searchForm__formContainer}>
+        <div className={styles.searchForm__inputsCase}>
+          <div className={styles.searchForm__locationInput}>
+            <label htmlFor='location' className={styles.searchForm__label}>
+              {t('Location')}:
             </label>
+            <Field
+              id='location'
+              type='text'
+              name='location'
+              value={props.formValue}
+              className={styles.searchForm__input}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                props.handleChange(event);
+                props.onChange(event.target.value);
+              }}
+            />
+            {errors.location && touched.location && <div>{t(errors.location)}</div>}
+            {suggestedListVisible && suggestedCities.length > 0 && (
+              <ListSuggestedTrips
+                onCityClick={(location: ISuggestedPlace) => {
+                  setFieldValue('lat', location.coords[1]);
+                  setFieldValue('lon', location.coords[0]);
+                  props.setPosition({
+                    latitude: location.coords[1],
+                    longitude: location.coords[0],
+                    radius: props.positionValue.radius
+                  });
+                  props.onSubmit(location, props.positionValue.radius, 'suggested');
+                }}
+                onCityHover={props.onCityHover}
+                suggestedTrips={suggestedCities}
+                activeTags={values.activeTags}
+                changeVisible={() => setSuggestedListVisible(false)}
+              />
+            )}
           </div>
-          <Slider
-            defaultValue={0.0}
-            getAriaValueText={valuetext}
-            aria-labelledby='discrete-slider-small-steps'
-            value={props.positionValue.radius}
-            step={0.1}
-            marks
-            min={0.0}
-            max={5.0}
-            valueLabelDisplay='auto'
-            onChange={(event: React.ChangeEvent<{}>, value: number | number[]) => {
-              props.handleChange(event);
-              const position = {
-                latitude: props.positionValue.latitude,
-                longitude: props.positionValue.longitude,
-                radius: Number(value) || 0.0
-              };
-              props.setPosition(position);
-            }}
-          />
+          <div className={fixedRadiusView ? styles.fixedRadius : ''}>
+            <div>
+              <label htmlFor='radius' className={styles.searchForm__label}>
+                {t('Radius')}:
+              </label>
+            </div>
+            <Slider
+              defaultValue={0.0}
+              getAriaValueText={valuetext}
+              aria-labelledby='discrete-slider-small-steps'
+              value={props.positionValue.radius}
+              step={0.1}
+              marks
+              min={0.0}
+              max={5.0}
+              valueLabelDisplay='auto'
+              onChange={(event: React.ChangeEvent<{}>, value: number | number[]) => {
+                props.handleChange(event);
+                const position = {
+                  latitude: props.positionValue.latitude,
+                  longitude: props.positionValue.longitude,
+                  radius: Number(value) || 0.0
+                };
+                props.setPosition(position);
+              }}
+            />
+          </div>
         </div>
-      </div>
-      <div>
-        <label className={styles.searchForm__label}>{t('Tags')}:</label>
-      </div>
-      <ul className={styles.searchForm__tagList}>
-        {tags.map((tag: ITag) => (
-          <li key={tag.id}>
-            <Checkbox name='activeTags' value={tag.name} valueKey={tag.name} />
-          </li>
-        ))}
-      </ul>
-      <div className={styles.searchForm__buttonCase}>
-        <button type='submit' className={styles.searchForm__submitButton}>
-          {t('Find')}
-        </button>
-        <button
-          className={styles.searchForm__geoButton}
-          onClick={() => {
-            var options = {
-              enableHighAccuracy: true,
-              timeout: 5000,
-              maximumAge: 0
-            };
-            navigator.geolocation.getCurrentPosition(
-              ({ coords: { latitude, longitude } }: Position) => {
-                setFieldValue('lat', latitude);
-                setFieldValue('lon', longitude);
-                showNotification('success', t('Geolocation changed'), t('You changed coords based on your location'));
-                props.setPosition({
-                  ...props.positionValue,
-                  latitude,
-                  longitude
-                });
-              },
-              error => {
-                if (error.code === 1) {
-                  showNotification(
-                    'warning',
-                    t('You denied access to your geolocation'),
-                    t('Allow access following instructions [instruction will be here]')
-                  );
-                } else {
-                  showNotification('danger', t('Something goes wrong'), t(`${error.message}`));
-                }
-              },
-              options
-            );
-          }}
-        >
-          {t('Geolocation')}
-        </button>
+        <div>
+          <label className={styles.searchForm__label}>{t('Tags')}:</label>
+        </div>
+        <ul className={styles.searchForm__tagList}>
+          {tags.map((tag: ITag) => (
+            <li key={tag.id}>
+              <Checkbox name='activeTags' value={tag.name} valueKey={tag.name} />
+            </li>
+          ))}
+        </ul>
+        <div className={styles.searchForm__buttonCase}>
+          <button type='submit' className={styles.searchForm__submitButton}>
+            {t('Find')}
+          </button>
+          <button
+            className={styles.searchForm__geoButton}
+            onClick={() => {
+              var options = {
+                enableHighAccuracy: true,
+                timeout: 5000,
+                maximumAge: 0
+              };
+              navigator.geolocation.getCurrentPosition(
+                ({ coords: { latitude, longitude } }: Position) => {
+                  setFieldValue('lat', latitude);
+                  setFieldValue('lon', longitude);
+                  showNotification('success', t('Geolocation changed'), t('You changed coords based on your location'));
+                  props.setPosition({
+                    ...props.positionValue,
+                    latitude,
+                    longitude
+                  });
+                },
+                error => {
+                  if (error.code === 1) {
+                    showNotification(
+                      'warning',
+                      t('You denied access to your geolocation'),
+                      t('Allow access following instructions [instruction will be here]')
+                    );
+                  } else {
+                    showNotification('danger', t('Something goes wrong'), t(`${error.message}`));
+                  }
+                },
+                options
+              );
+            }}
+          >
+            {t('Geolocation')}
+          </button>
+        </div>
       </div>
     </Form>
   );
@@ -245,7 +252,7 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
 
 const SearchForm = (props: ISearchFormProps) => {
   const [chosenOfferId, setChosenOfferId] = useState<number | null>(null);
-  const [formView, setFormView] = useState(false);
+  const [formView, setFormView] = useState(true);
 
   return (
     <div className={styles.container}>

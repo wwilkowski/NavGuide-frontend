@@ -8,6 +8,7 @@ import profile from './containers/Profile/reducer';
 import logInUserSaga from './containers/Profile/sagas';
 import { IProfileData } from './containers/Profile/types';
 import registration from './containers/Registration/reducer';
+import currentOfferReducer from './containers/Offers/reducers';
 import SignUpUserSaga from './containers/Registration/sagas';
 import GuideProfileSaga from './containers/GuideProfile/sagas';
 import { IRegisterStore } from './containers/Registration/types';
@@ -19,10 +20,23 @@ import tripBrowserSaga from './containers/TripBrowser/sagas';
 import offerSaga from './containers/Offers/sagas';
 import userSaga from './containers/User/sagas';
 import user from './containers/User/reducer';
-import { IMultiTripsAndTagsType } from './containers/TripBrowser/types';
+import { IMultiTripsAndTagsType, IGuideProfileComplete, ISingleTripType } from './containers/TripBrowser/types';
 import { IMultiGuideRequests } from './containers/AdminPanel/types';
 import { IUserProfiles } from './containers/User/types';
-import { IGuideProfileComplete } from './containers/GuideProfile/types';
+import { IUserData } from './shared/types';
+
+interface IActiveOffer {
+  id: number;
+  message: string;
+  offer: ISingleTripType;
+  plannedDate: Date;
+  traveler: IUserData;
+}
+
+interface ICurrentOffer {
+  offer: ISingleTripType;
+  activeOffers: IActiveOffer[];
+}
 
 export interface StoreType {
   registration: IRegisterStore;
@@ -31,6 +45,8 @@ export interface StoreType {
   user: IUserProfiles;
   tripBrowser: IMultiTripsAndTagsType;
   adminPanel: IMultiGuideRequests;
+  currentOfferReducer: ICurrentOffer;
+  activeOffers: ISingleTripType[];
 }
 
 function* rootSaga() {
@@ -40,13 +56,13 @@ function* rootSaga() {
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['registration', 'tripBrowser']
+  blacklist: ['registration', 'tripBrowser', 'currentOffer', 'currentOfferReducer']
 };
 
 export let persistor: Persistor;
 export const configureStore = () => {
   const sagaMiddleware = createSagaMiddleware();
-  const rootReducer = combineReducers({ registration, profile, user, guideProfile, tripBrowser, adminPanel });
+  const rootReducer = combineReducers({ registration, profile, user, guideProfile, tripBrowser, adminPanel, currentOfferReducer });
   let persistedReducer = persistReducer(persistConfig, rootReducer);
   const store = createStore(persistedReducer, composeWithDevTools(applyMiddleware(sagaMiddleware)));
   persistor = persistStore(store);
