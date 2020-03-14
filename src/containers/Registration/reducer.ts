@@ -10,6 +10,7 @@ const initialState: types.IRegisterStore = {
     country: '',
     email: '',
     telephone: '',
+    age: 0,
     gender: '',
     experience: 1,
     interests: []

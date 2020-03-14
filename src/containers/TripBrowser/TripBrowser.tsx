@@ -16,6 +16,7 @@ const TripBrowser: React.FC = () => {
 
   const dispatcher = useDispatch();
 
+  const [searchMode, setSearchMode] = useState<string>('');
   const [tripInfoVisible, setTripInfoVisible] = useState<boolean>(false);
   const [tripInfoId, setTripInfoId] = useState<number>(0);
   const [searchedTrips, setSearchedTrips] = useState<ISingleTripType[]>([]);
@@ -32,6 +33,16 @@ const TripBrowser: React.FC = () => {
     if (sessionStorage.getItem('backFromGuideProfile')) setTripInfoVisible(true);
     sessionStorage.removeItem('backFromGuideProfile');
   }, []);
+
+  useEffect(() => {
+    if (searchMode === 'name' && tripsData.length > 0) {
+      setPositionValue({
+        latitude: tripsData[0].lat,
+        longitude: tripsData[0].lon,
+        radius: 1.0
+      });
+    }
+  }, [tripsData, searchMode]);
 
   useEffect(() => {
     const location = {
@@ -51,7 +62,7 @@ const TripBrowser: React.FC = () => {
         suburb: ''
       }
     };
-    onSearchFormSubmit(location, positionValue.radius, 'normal');
+    onSearchFormSubmit(location, positionValue.radius, 'normal', new Date());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -73,7 +84,7 @@ const TripBrowser: React.FC = () => {
         suburb: ''
       }
     };
-    onSearchFormSubmit(location, positionValue.radius, 'normal');
+    onSearchFormSubmit(location, positionValue.radius, 'normal', new Date());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [positionValue.radius, isLogged]);
 
@@ -102,6 +113,10 @@ const TripBrowser: React.FC = () => {
     //setFormValue(location.name);
   };
 
+  const handleCityClick = () => {
+    dispatcher(actions.fetchSuggestedCitiesRequested('', 0));
+  };
+
   const onSearchFormChange = (location: string) => {
     setFormValue(location);
     if (location.length === 0) {
@@ -111,27 +126,29 @@ const TripBrowser: React.FC = () => {
     }
   };
 
-  const onSearchFormSubmit = (location: ISuggestedPlace, radius: number, mode: string) => {
-    if (mode === 'normal' && suggestedCities.length > 0 && location.displayName !== prevFormValue) {
+  const onSearchFormSubmit = (location: ISuggestedPlace, radius: number, mode: string, end: Date) => {
+    if (mode === 'geo' && suggestedCities.length > 0 && location.displayName !== prevFormValue) {
+      setSearchMode('geo');
       location.coords[0] = suggestedCities[0].coords[0];
       location.coords[1] = suggestedCities[0].coords[1];
       setFormValue(suggestedCities[0].displayName);
-    }
 
-    setFormValue(location.displayName);
-    // dispatcher(actions.fetchSuggestedCitiesRequested('', 0));
-
-    if (location.displayName.length) {
-      setPositionValue({
-        latitude: location.coords[1],
-        longitude: location.coords[0],
-        radius
-      });
-      dispatcher(actions.fetchGeoTripsRequested(location.coords[1], location.coords[0], radius * 1000, isLogged));
-    } else {
-      dispatcher(actions.fetchRandomTripsRequested(isLogged));
+      setFormValue(location.displayName);
+      if (location.displayName.length) {
+        setPositionValue({
+          latitude: location.coords[1],
+          longitude: location.coords[0],
+          radius
+        });
+        dispatcher(actions.fetchGeoTripsRequested(location.coords[1], location.coords[0], radius * 1000, isLogged));
+      } else {
+        dispatcher(actions.fetchRandomTripsRequested(isLogged));
+      }
+      setPrevFormValue(location.displayName);
+    } else if (mode === 'name') {
+      setSearchMode('name');
+      dispatcher(actions.fetchNameTripsRequested(location.displayName));
     }
-    setPrevFormValue(location.displayName);
   };
 
   const changeTripInfoVisible = (tripId: number) => {
@@ -163,6 +180,7 @@ const TripBrowser: React.FC = () => {
         trips={searchedTrips}
         setPosition={setPositionValue}
         onCityHover={handleCityHover}
+        onCityClick={handleCityClick}
         tripInfoVisible={tripInfoVisible}
         changeTripInfoVisible={changeTripInfoVisible}
       />

@@ -12,8 +12,8 @@ const AdminPanel: React.FC = () => {
   const dispatcher = useDispatch();
 
   const guideRequests = useSelector((state: StoreType) => state.adminPanel.guideRequests);
-  const userIds = guideRequests.map((el: IGuideRequest) => el.userId);
-  const availableIDs = guideRequests.map((el: IGuideRequest) => el.id);
+  const userIds = guideRequests.map((req: IGuideRequest) => req.userId);
+  const availableIds = guideRequests.map((req: IGuideRequest) => req.id);
 
   useEffect(() => {
     dispatcher(actions.getGuideRequestsRequest());
@@ -31,7 +31,7 @@ const AdminPanel: React.FC = () => {
   return (
     <div style={{ width: '100%', height: '100%', position: 'relative' }}>
       <ListGuideRequests guideRequests={guideRequests} />
-      <SettleGuideRequestForm onSubmit={onSubmitForm} availableIDs={availableIDs} />
+      <SettleGuideRequestForm onSubmit={onSubmitForm} availableIDs={availableIds} />
     </div>
   );
 };

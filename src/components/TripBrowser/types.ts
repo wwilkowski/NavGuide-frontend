@@ -8,17 +8,19 @@ export interface ISearchFormValues {
   radius: number;
   searchMode: string;
   activeTags: string[];
+  end: Date;
 }
 
 export interface ISearchFormProps {
   onChange: (location: string) => void;
-  onSubmit: (location: ISuggestedPlace, radius: number, mode: string) => void;
+  onSubmit: (location: ISuggestedPlace, radius: number, mode: string, end: Date) => void;
   updateActiveTags: (tagNames: string[]) => void;
   setPosition: (position: IPosition) => void;
   formValue: string;
   positionValue: IPosition;
   trips: ISingleTripType[];
   onCityHover: (location: ISuggestedPlace) => void;
+  onCityClick: () => void;
   tripInfoVisible: boolean;
   changeTripInfoVisible: (id: number) => void;
 }

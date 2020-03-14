@@ -2,9 +2,9 @@ import {
   FETCH_RANDOM_TRIPS_REQUESTED,
   FETCH_RANDOM_TRIPS_SUCCESED,
   FETCH_RANDOM_TRIPS_FAILED,
-  FETCH_CITY_TRIPS_REQUESTED,
-  FETCH_CITY_TRIPS_SUCCESED,
-  FETCH_CITY_TRIPS_FAILED,
+  FETCH_NAME_TRIPS_REQUESTED,
+  FETCH_NAME_TRIPS_SUCCESED,
+  FETCH_NAME_TRIPS_FAILED,
   FETCH_GEO_TRIPS_REQUESTED,
   FETCH_GEO_TRIPS_SUCCESED,
   FETCH_GEO_TRIPS_FAILED,
@@ -16,7 +16,6 @@ import {
   FETCH_SUGGESTED_CITIES_FAILED
 } from './constants';
 import { IMultiTripsType, ITag, ISuggestedPlace } from './types';
-import { IUserProfile } from '../User/types';
 
 //RANDOM TRIPS
 export const fetchRandomTripsRequested = (isLogged: boolean) => ({
@@ -34,19 +33,19 @@ export const fetchRandomTripsFailed = (message: string) => ({
   message
 });
 
-//CITY TRIPS
-export const fetchCityTripsRequested = (city: string) => ({
-  type: FETCH_CITY_TRIPS_REQUESTED,
-  city: city
+//NAME TRIPS
+export const fetchNameTripsRequested = (name: string) => ({
+  type: FETCH_NAME_TRIPS_REQUESTED,
+  name
 });
 
-export const fetchCityTripsSuccesed = (trips: IMultiTripsType) => ({
-  type: FETCH_CITY_TRIPS_SUCCESED,
+export const fetchNameTripsSuccesed = (trips: IMultiTripsType) => ({
+  type: FETCH_NAME_TRIPS_SUCCESED,
   trips
 });
 
-export const fetchCityTripsFailed = (message: string) => ({
-  type: FETCH_CITY_TRIPS_FAILED,
+export const fetchNameTripsFailed = (message: string) => ({
+  type: FETCH_NAME_TRIPS_FAILED,
   message
 });
 

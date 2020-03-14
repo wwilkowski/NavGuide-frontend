@@ -3,19 +3,18 @@ import {
   FETCH_TAGS_REQUESTED,
   FETCH_TAGS_FAILED,
   FETCH_RANDOM_TRIPS_REQUESTED,
-  FETCH_CITY_TRIPS_REQUESTED,
+  FETCH_NAME_TRIPS_REQUESTED,
   FETCH_GEO_TRIPS_REQUESTED,
   FETCH_RANDOM_TRIPS_FAILED,
   FETCH_GEO_TRIPS_SUCCESED,
   FETCH_RANDOM_TRIPS_SUCCESED,
-  FETCH_CITY_TRIPS_SUCCESED,
-  FETCH_CITY_TRIPS_FAILED,
+  FETCH_NAME_TRIPS_SUCCESED,
+  FETCH_NAME_TRIPS_FAILED,
   FETCH_GEO_TRIPS_FAILED,
   FETCH_SUGGESTED_CITIES_REQUESTED,
   FETCH_SUGGESTED_CITIES_SUCCESED,
   FETCH_SUGGESTED_CITIES_FAILED
 } from './constants';
-import { IUserProfile } from '../User/types';
 
 export interface ITag {
   id: number;
@@ -82,13 +81,13 @@ export interface IFetchRandomTripsFailedAction {
   message: string;
 }
 
-export interface IFetchCityTripsSuccesedAction {
-  type: typeof FETCH_CITY_TRIPS_SUCCESED;
+export interface IFetchNameTripsSuccesedAction {
+  type: typeof FETCH_NAME_TRIPS_SUCCESED;
   trips: IMultiTripsType;
 }
 
-export interface IFetchCityTripsFailedAction {
-  type: typeof FETCH_CITY_TRIPS_FAILED;
+export interface IFetchNameTripsFailedAction {
+  type: typeof FETCH_NAME_TRIPS_FAILED;
   message: string;
 }
 
@@ -144,8 +143,8 @@ export type TripBrowserAction =
   | IFetchRandomTripsRequest
   | IFetchRandomTripsSuccesedAction
   | IFetchRandomTripsFailedAction
-  | IFetchCityTripsSuccesedAction
-  | IFetchCityTripsFailedAction
+  | IFetchNameTripsSuccesedAction
+  | IFetchNameTripsFailedAction
   | IFetchGeoTripsSuccesedAction
   | IFetchTagsSuccesedAction
   | IFetchTagsSuccesedAction
@@ -158,9 +157,9 @@ export interface IFetchRandomTripsRequest {
   isLogged: boolean;
 }
 
-export interface IFetchCityTripsRequest {
-  type: typeof FETCH_CITY_TRIPS_REQUESTED;
-  city: string;
+export interface IFetchNameTripsRequest {
+  type: typeof FETCH_NAME_TRIPS_REQUESTED;
+  name: string;
 }
 
 export interface IFetchGeoTripsRequest {

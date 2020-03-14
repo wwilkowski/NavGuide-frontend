@@ -19,7 +19,10 @@ const SignupSchema = Yup.object().shape({
     .required('Last name is required!'),
   telephone: Yup.string()
     .matches(/^[0-9]{2}\s?[0-9]{3}\s?[0-9]{3}\s?[0-9]{3}$/, i18n.t('Input is not valid!'))
-    .required('Telephone number is required!')
+    .required('Telephone number is required!'),
+  age: Yup.string()
+    .matches(/^[1-9]{1}\s?[0-9]{1}$/, i18n.t('Input is not valid!'))
+    .required('Age is required!')
 });
 
 const InnerForm = (props: FormikProps<FullFormValues>) => {
@@ -85,6 +88,16 @@ const InnerForm = (props: FormikProps<FullFormValues>) => {
           <Field id='telephone' type='text' name='telephone' className={`${styles.userForm__input} ${styles.userForm__telephoneInput}`} />
         </div>
         {errors.telephone && touched.telephone && <div className={styles.userForm__warning}>{t(errors.telephone)}</div>}
+      </div>
+
+      <div className={styles.userForm__case}>
+        <label htmlFor='age' className={styles.userForm__label}>
+          {t('Age')}
+        </label>
+        <div style={{ width: '50%' }}>
+          <Field id='age' type='number' name='age' className={`${styles.userForm__input} ${styles.userForm__ageInput}`} />
+        </div>
+        {errors.age && touched.age && <div className={styles.userForm__warning}>{t(errors.age)}</div>}
       </div>
 
       <div className={styles.userForm__case}>
@@ -179,7 +192,7 @@ const InnerForm = (props: FormikProps<FullFormValues>) => {
 
 const MyForm = withFormik<MyFormProps, FullFormValues>({
   mapPropsToValues: (props: MyFormProps) => {
-    const { firstName, lastName, country, email, telephone, gender, experience, interests } = props.templateUser;
+    const { firstName, lastName, country, email, telephone, gender, age, experience, interests } = props.templateUser;
 
     return {
       firstName: firstName || '',
@@ -188,6 +201,7 @@ const MyForm = withFormik<MyFormProps, FullFormValues>({
       email: email || '',
       telephone: telephone || '',
       gender: gender || 'FEMALE',
+      age: age,
       experience: experience || 1,
       interests: interests.length ? interests.map(i => i.id) : [],
       avatar: '',
