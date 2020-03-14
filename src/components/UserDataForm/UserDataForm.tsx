@@ -135,7 +135,7 @@ const InnerForm = (props: FormikProps<FullFormValues>) => {
             value='5'
             onChange={() => props.setFieldValue('experience', 5)}
           />
-          <label htmlFor='5' title='Awesome - 5 stars'></label>
+          <label htmlFor='5' title={t('I travel constantly')}></label>
           <input
             type='radio'
             checked={experience === 4}
@@ -144,7 +144,7 @@ const InnerForm = (props: FormikProps<FullFormValues>) => {
             value='4'
             onChange={() => props.setFieldValue('experience', 4)}
           />
-          <label htmlFor='4' title='Pretty good - 4 stars'></label>
+          <label htmlFor='4' title={t('I travel every few weeks')}></label>
           <input
             type='radio'
             checked={experience === 3}
@@ -153,7 +153,7 @@ const InnerForm = (props: FormikProps<FullFormValues>) => {
             value='3'
             onChange={() => props.setFieldValue('experience', 3)}
           />
-          <label htmlFor='3' title='Meh - 3 stars'></label>
+          <label htmlFor='3' title={t('I travel every few months')}></label>
           <input
             type='radio'
             checked={experience === 2}
@@ -162,7 +162,7 @@ const InnerForm = (props: FormikProps<FullFormValues>) => {
             value='2'
             onChange={() => props.setFieldValue('experience', 2)}
           />
-          <label htmlFor='2' title='Kinda bad - 2 stars'></label>
+          <label htmlFor='2' title={t('I travel once a year')}></label>
           <input
             type='radio'
             checked={experience === 1}
@@ -171,7 +171,7 @@ const InnerForm = (props: FormikProps<FullFormValues>) => {
             value='1'
             onChange={() => props.setFieldValue('experience', 1)}
           />
-          <label htmlFor='1' title='Really bad - 1 star'></label>
+          <label htmlFor='1' title={t('I travel once every few years')}></label>
         </fieldset>
       </div>
       <ul className={styles.userForm__tagList}>
