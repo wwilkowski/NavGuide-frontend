@@ -27,7 +27,7 @@ const OfferSale = (props: Props) => {
       <form>
         <label htmlFor='message'>Wiadomość do sprzedającego</label>
         <textarea id='message' value={message} onChange={e => setMessage(e.target.value)}></textarea>
-        <DatePicker dateFormat='yyyy/MM/dd' selected={date} onChange={date => setDate(date)} />
+        <DatePicker dateFormat='yyyy/MM/dd hh:mm' showTimeSelect showTimeInput selected={date} onChange={date => setDate(date)} />
       </form>
       <button
         onClick={() => {
