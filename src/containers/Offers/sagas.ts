@@ -14,8 +14,10 @@ const getActiveOffersEndpoint = 'https://235.ip-51-91-9.eu/purchases';
 
 function* createOffer(action: types.ICreateOfferAction) {
   const formData = new FormData();
-  const { file, begin, end, city, lat, lon, maxPeople, name, price, priceType, radius, tags, description } = action.formData;
-  formData.append('file', file);
+  const { file1, file2, file3, begin, end, city, lat, lon, maxPeople, name, price, priceType, radius, tags, description } = action.formData;
+  formData.append('file', file1);
+  formData.append('file', file2);
+  formData.append('file', file3);
   formData.append('begin', begin.toUTCString());
   formData.append('end', end.toUTCString());
   formData.append('city', city.toString());
