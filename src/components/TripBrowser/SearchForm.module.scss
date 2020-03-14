@@ -9,7 +9,7 @@
   border: none;
   cursor: pointer;
   z-index: 3000;
-  background: #37b498;
+  background: #67edcf;
   border: 2px solid #000000;
   @media (min-width: 900px) {
     display: none;
@@ -25,9 +25,30 @@
 .searchForm {
   display: flex;
   flex-direction: column;
+  align-items: center;
   padding: 1rem 0.5rem;
   width: 100%;
   margin-bottom: 1rem;
+  &__title {
+    font-size: 2em;
+    text-align: center;
+  }
+
+  &__icon {
+    margin: 1rem;
+    border: 2px solid #000000;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+  }
+
+  &__formContainer {
+    margin: 2rem 0;
+    width: 100%;
+  }
 
   &__inputsCase {
     @media (min-width: 900px) {
@@ -40,7 +61,7 @@
   }
   &__label {
     color: #444444;
-    font-size: 0.8em;
+    font-size: 0.9em;
   }
   &__input {
     border: none;
@@ -49,10 +70,11 @@
     font-family: 'Open sans';
     width: 100%;
     margin: 0.3rem 0;
-    font-size: 0.8em;
+    font-size: 0.9em;
   }
   &__locationInput {
     position: relative;
+    margin-bottom: 1rem;
   }
   &__tagList {
     display: flex;
@@ -63,11 +85,11 @@
   &__submitButton {
     margin: 1rem 1rem 1rem 0;
     font-family: 'Open sans';
-    font-size: 0.9em;
+    font-size: 1em;
     width: 100px;
     border: 1px solid #19cc95;
-    color: #19cc95;
-    background: none;
+    background-color: #19cc95;
+    color: #ffffff;
     border-radius: 5px;
     padding: 0.4rem;
     cursor: pointer;
@@ -78,11 +100,11 @@
   &__geoButton {
     margin: 1rem 0;
     font-family: 'Open sans';
-    font-size: 0.9em;
+    font-size: 1em;
     min-width: 100px;
     border: 1px solid #1496ed;
-    color: #1496ed;
-    background: none;
+    background-color: #1496ed;
+    color: #ffffff;
     border-radius: 5px;
     padding: 0.4rem;
     cursor: pointer;

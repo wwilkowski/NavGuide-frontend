@@ -14,7 +14,7 @@ export interface FullFormValues {
   begin: Date;
   city: string;
   end: Date;
-  file: File[];
+  file: File;
   lat: Number;
   lon: Number;
   maxPeople: Number;

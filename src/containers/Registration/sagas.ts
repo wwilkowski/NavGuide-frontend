@@ -37,7 +37,7 @@ function* signUpGoogleUser(action: types.ISignUpGoogleRequest) {
         country: json.country,
         email: json.email,
         telephone: '',
-        gender: 'Female',
+        gender: json.gender,
         experience: 1,
         interests: []
       };
