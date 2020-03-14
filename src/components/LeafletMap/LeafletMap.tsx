@@ -26,7 +26,7 @@ const LeafletMap = ({ position, trips = [], chosenOfferId = null, setChosenOffer
   return (
     <Map
       center={{ lat: latitude, lng: longitude }}
-      zoom={14}
+      zoom={12}
       style={{ zIndex: 1, height: window.innerWidth > 800 ? height : '100vh', width: 'auto', position: 'relative' }}
     >
       <TileLayer
