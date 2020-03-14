@@ -30,6 +30,12 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
     return `${value}km`;
   }
 
+  const addDays = (date: Date, days: number): Date => {
+    let temp = new Date(date);
+    temp.setDate(date.getDate() + days);
+    return temp;
+  };
+
   const [location, setLocation] = useState<string>('');
   const [suggestedListVisible, setSuggestedListVisible] = useState<boolean>(false);
   const [test, setTest] = useState<string[]>([ImagePlaceholder, ImagePlaceholder, ImagePlaceholder]);
@@ -132,7 +138,13 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
         <label htmlFor='end' className={styles.offerForm__label}>
           {t('End')}
         </label>
-        <DatePicker dateFormat='yyyy/MM/dd' selected={values.end} onChange={date => setFieldValue('end', date)} minDate={values.begin} />
+        <DatePicker
+          dateFormat='yyyy/MM/dd'
+          selected={values.end}
+          maxDate={addDays(values.begin, 31)}
+          onChange={date => setFieldValue('end', date)}
+          minDate={values.begin}
+        />
         {errors.end && touched.end && <div>{t(`Incorrect date`)}</div>}
       </div>
       <div className={styles.offerForm__case}>

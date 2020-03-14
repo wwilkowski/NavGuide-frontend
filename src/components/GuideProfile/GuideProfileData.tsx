@@ -10,6 +10,7 @@ const GuideProfileData = (props: IGuideProfileDataProps) => {
   const { t } = useTranslation();
 
   const [experience, setExperience] = useState<string>('');
+  const [telephone, setTelephone] = useState<string>('');
 
   useEffect(() => {
     let tmp = '';
@@ -21,6 +22,14 @@ const GuideProfileData = (props: IGuideProfileDataProps) => {
     }
     setExperience(tmp);
   }, [profileData, profile.experience]);
+
+  useEffect(() => {
+    let result = '';
+    const tmp = profileData.telephone.split('');
+
+    result = '+' + tmp[0] + tmp[1] + ' ' + tmp[2] + tmp[3] + tmp[4] + ' ' + tmp[5] + tmp[6] + tmp[7] + ' ' + tmp[8] + tmp[9] + tmp[10];
+    setTelephone(result);
+  }, [profileData.telephone]);
 
   return (
     <div className={styles.container}>
@@ -44,11 +53,17 @@ const GuideProfileData = (props: IGuideProfileDataProps) => {
       <div className={styles.data2}>
         <p className={styles.left}>{t('Experience')}</p>
         <p className={styles.right}>{experience}</p>
+        <p className={styles.left}>{t('Average mark')}</p>
+        <p className={styles.right}>{profile.averageMark > 0 ? profile.averageMark : 0}</p>
         <p className={styles.title}>{t('Contact')}</p>
         <p className={styles.left}>{t('Tel')}</p>
-        <p className={styles.right}>{profileData.telephone}</p>
-        <p className={styles.left}>{t('Email')}</p>
-        <p className={styles.right}>{profileData.email}</p>
+        <p className={styles.right}>{telephone}</p>
+        <p className={styles.left} style={{ width: '15%' }}>
+          {t('Email')}
+        </p>
+        <p className={styles.right} style={{ width: '85%' }}>
+          {profileData.email}
+        </p>
         <p className={styles.title}>{t('Speech')}</p>
         <p className={styles.left}>{t('Country')}</p>
         <p className={styles.right}>{profileData.country}</p>

@@ -21,7 +21,6 @@ const OfferSale = (props: Props) => {
 
   const [date, setDate] = useState<Date | null>(new Date());
   const [message, setMessage] = useState<string>('');
-
   return currentOffer ? (
     <div>
       <TripListElement trip={currentOffer} changeVisible={() => {}} />

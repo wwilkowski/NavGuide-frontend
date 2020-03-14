@@ -10,15 +10,18 @@ import { IProfileData } from './containers/Profile/types';
 import registration from './containers/Registration/reducer';
 import currentOfferReducer from './containers/Offers/reducers';
 import SignUpUserSaga from './containers/Registration/sagas';
+import GuideProfileSaga from './containers/GuideProfile/sagas';
 import { IRegisterStore } from './containers/Registration/types';
-import { GuideProfileReducer, TripBrowserReducer } from './containers/TripBrowser/reducers';
+import tripBrowser from './containers/TripBrowser/reducers';
+import guideProfile from './containers/GuideProfile/reducer';
 import adminPanel from './containers/AdminPanel/reducer';
 import adminPanelSaga from './containers/AdminPanel/sagas';
 import tripBrowserSaga from './containers/TripBrowser/sagas';
 import offerSaga from './containers/Offers/sagas';
 import userSaga from './containers/User/sagas';
 import user from './containers/User/reducer';
-import { IMultiTripsAndTagsType, IGuideProfileComplete, ISingleTripType } from './containers/TripBrowser/types';
+import { IMultiTripsAndTagsType, ISingleTripType } from './containers/TripBrowser/types';
+import { IGuideProfileComplete } from './containers/GuideProfile/types';
 import { IMultiGuideRequests } from './containers/AdminPanel/types';
 import { IUserProfiles } from './containers/User/types';
 import { IUserData } from './shared/types';
@@ -48,7 +51,7 @@ export interface StoreType {
 }
 
 function* rootSaga() {
-  yield all([SignUpUserSaga(), logInUserSaga(), tripBrowserSaga(), adminPanelSaga(), offerSaga(), userSaga()]);
+  yield all([SignUpUserSaga(), logInUserSaga(), tripBrowserSaga(), adminPanelSaga(), offerSaga(), userSaga(), GuideProfileSaga()]);
 }
 
 const persistConfig = {
@@ -56,9 +59,6 @@ const persistConfig = {
   storage,
   blacklist: ['registration', 'tripBrowser', 'currentOffer', 'currentOfferReducer']
 };
-
-const tripBrowser = TripBrowserReducer;
-const guideProfile = GuideProfileReducer;
 
 export let persistor: Persistor;
 export const configureStore = () => {

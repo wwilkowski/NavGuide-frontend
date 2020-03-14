@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ISingleTripType, IPosition, ISuggestedPlace } from './types';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from './actions';
+import * as actionsProfile from '../../containers/GuideProfile/actions';
 import { StoreType } from '../../store';
 import SearchForm from '../../components/TripBrowser/SearchForm';
 import TripInfo from '../../components/TripInfo/TripInfo';
@@ -146,8 +147,8 @@ const TripBrowser: React.FC = () => {
     });
 
     if (!tripInfoVisible && isLogged) {
-      dispatcher(actions.fetchGuideProfileRequested(tripsData[id].owner.guideId));
-      dispatcher(actions.fetchGuideProfileDataRequest(tripsData[id].owner.userId));
+      dispatcher(actionsProfile.fetchGuideProfileRequested(tripsData[id].owner.guideId));
+      dispatcher(actionsProfile.fetchGuideProfileDataRequest(tripsData[id].owner.userId));
     }
   };
 
@@ -165,14 +166,14 @@ const TripBrowser: React.FC = () => {
         tripInfoVisible={tripInfoVisible}
         changeTripInfoVisible={changeTripInfoVisible}
       />
-      {tripInfoVisible ? (
+      {/* {tripInfoVisible ? (
         <TripInfo
           tripInformations={tripsData[tripInfoId]}
           guideProfile={guideProfile}
           guideProfileData={guideProfileData}
           changeTripInfoVisible={changeTripInfoVisible}
         />
-      ) : null}
+      ) : null} */}
     </div>
   );
 };
