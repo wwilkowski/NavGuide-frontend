@@ -46,25 +46,6 @@ const TripInfo = (props: ITripInfoProps) => {
   });
 
   useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      if (node.current.contains(e.target)) {
-        // inside click
-        return;
-      }
-
-      // outside click
-      props.changeTripInfoVisible(0);
-    };
-
-    // add when mounted
-    document.addEventListener('mousedown', handleClick);
-    // return function to be called when unmounted
-    return () => {
-      document.removeEventListener('mousedown', handleClick);
-    };
-  }, [props.changeTripInfoVisible, props]);
-
-  useEffect(() => {
     setTripData(props.tripInformations);
   }, [props.tripInformations]);
 

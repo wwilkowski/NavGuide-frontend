@@ -14,6 +14,7 @@ import { getProfileRequest } from './containers/Profile/actions';
 import AdminPanel from './containers/AdminPanel/AdminPanel';
 import 'bulma/css/bulma.css';
 import GuideProfile from './containers/GuideProfile/GuideProfile';
+import Offer from './containers/Offers/Offer';
 // templates
 
 const NotFound = () => {
@@ -38,6 +39,7 @@ const App: React.FC = () => {
         </Route>
         <Route path='/register' component={Registration} />
         <Route path='/profile' component={Profile} />
+        <Route path='/offers/:id' component={Offer} />
         <Route path='/offers/:id/buy' component={OfferSale} />
         <Route path='/offers' component={Offers} />
         <Route path='/admin' component={AdminPanel} />
