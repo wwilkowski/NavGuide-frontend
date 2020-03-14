@@ -74,7 +74,7 @@ const GuideProfileHistoryOffers = (props: IGuideProfileHistoryOffersProps) => {
       tmp.push({ tripId: offer.offer.id, activePhotoId: 0, numberOfPhotos: offer.offer.photos.length });
     });
     setActivePhotos(tmp);
-  }, [historyOffers]);
+  }, [historyOffers, activePhotos]);
 
   useEffect(() => {
     if (historyOffers) {
@@ -85,7 +85,7 @@ const GuideProfileHistoryOffers = (props: IGuideProfileHistoryOffersProps) => {
         })
       );
     }
-  }, [value, historyOffers]);
+  }, [value, historyOffers, activePhotos]);
 
   useEffect(() => {
     setFilteredTrips(historyOffers);

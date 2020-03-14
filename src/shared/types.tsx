@@ -6,6 +6,7 @@ export interface IUserData {
   country: string;
   email: string;
   telephone: string;
+  age: number;
   gender: string;
   experience: number;
   interests: IInterest[];
@@ -25,6 +26,7 @@ export interface IUserFormValues {
   email: string;
   telephone: string;
   gender: string;
+  age: number;
   experience: number;
   interests: number[];
 }

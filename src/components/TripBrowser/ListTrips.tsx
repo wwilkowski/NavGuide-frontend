@@ -18,7 +18,7 @@ const ListTrips = ({ trips, mode, chosenOfferId, setChosenOfferId, changeTripInf
       {trips.length === 0 && mode === 'geo' ? <p>{t('No matching trips')}.</p> : null}
       <ul className={styles.listTrips}>
         {trips.map((trip: ISingleTripType) => (
-          <TripListElement trip={trip} changeVisible={changeTripInfoVisible} />
+          <TripListElement key={trip.id} trip={trip} changeVisible={changeTripInfoVisible} />
         ))}
       </ul>
     </>

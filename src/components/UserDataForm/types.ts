@@ -8,6 +8,7 @@ export interface FormValues {
   country: string;
   email: string;
   telephone: string;
+  age: number;
   gender: string;
   experience: number;
   interests: number[];
@@ -22,6 +23,7 @@ export interface FullFormValues {
   email: string;
   telephone: string;
   gender: string;
+  age: number;
   experience: number;
   interests: number[];
 }

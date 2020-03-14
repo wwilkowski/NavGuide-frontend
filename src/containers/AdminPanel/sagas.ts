@@ -13,8 +13,12 @@ function* fetchGuideRequestsFromAPI() {
   try {
     const response = yield call(fetch, fetchGuideRequestsEndpoint);
     const guideRequests = yield response.json();
-    yield put(actions.getGuideRequestsSuccessed(guideRequests));
-  } catch {
+
+    if (response.status >= 200 && response.status <= 300) {
+      yield put(actions.getGuideRequestsSuccessed(guideRequests));
+    } else throw new Error();
+  } catch (error) {
+    console.log(error);
     yield put(actions.getGuideRequestsFailed('Error while fetching guide requests from API!'));
   }
 }

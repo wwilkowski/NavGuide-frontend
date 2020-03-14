@@ -24,7 +24,20 @@ function* logInGoogle(action: types.ILogInGoogleRequest) {
       })
     });
     if (response.status >= 200 && response.status <= 300) {
-      const { firstName, lastName, country, email, experience, telephone, avatar, interests, role, token, gender } = yield response.json();
+      const {
+        firstName,
+        lastName,
+        country,
+        email,
+        experience,
+        telephone,
+        avatar,
+        interests,
+        role,
+        token,
+        gender,
+        age
+      } = yield response.json();
       const user = {
         firstName,
         lastName,
@@ -35,7 +48,8 @@ function* logInGoogle(action: types.ILogInGoogleRequest) {
         avatar,
         interests,
         role,
-        gender
+        gender,
+        age
       };
       yield put(actions.logInGoogleSuccessed(user));
       yield initTokenCookie(token);
@@ -87,7 +101,7 @@ function* editProfile(action: types.IEditProfileAction) {
       })
     });
     if (response.status >= 200 && response.status <= 300) {
-      const { country, email, experience, firstName, interests, lastName, telephone, gender } = yield response.json();
+      const { country, email, experience, firstName, interests, lastName, telephone, gender, age } = yield response.json();
 
       const user = {
         avatar: action.user.avatar,
@@ -99,7 +113,8 @@ function* editProfile(action: types.IEditProfileAction) {
         telephone,
         gender: gender,
         experience,
-        interests
+        interests,
+        age
       };
       yield put(actions.editProfileSuccessed(user));
       showNotification('success', i18n.t('Profile was edit!'), i18n.t('Your profile is up to data'));
@@ -127,7 +142,7 @@ function* getProfile() {
       }
     });
     if (response.status >= 200 && response.status <= 300) {
-      const { country, email, experience, firstName, interests, lastName, telephone, avatar, role, gender } = yield response.json();
+      const { country, email, experience, firstName, interests, lastName, telephone, avatar, role, gender, age } = yield response.json();
       const user = {
         avatar,
         role,
@@ -138,7 +153,8 @@ function* getProfile() {
         telephone,
         gender,
         experience,
-        interests
+        interests,
+        age
       };
       yield put(actions.getProfileSuccessed(user));
     } else {

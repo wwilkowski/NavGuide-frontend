@@ -72,9 +72,34 @@
     margin: 0.3rem 0;
     font-size: 0.9em;
   }
+  &__radios {
+    display: flex;
+    width: 100%;
+    padding: 0.5rem;
+    font-family: 'Open sans';
+    margin: 0.3rem 0;
+    input {
+      margin: auto;
+    }
+  }
   &__locationInput {
     position: relative;
     margin-bottom: 1rem;
+  }
+  &__searchModeInput {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+  &__dateInput {
+    margin-bottom: 1rem;
+  }
+  &__datePicker {
+    padding: 0.5rem;
+    font-family: 'Open sans';
+    margin: 0.3rem 0;
+    width: 100%;
+    margin: auto;
+    margin-left: 0;
   }
   &__tagList {
     display: flex;

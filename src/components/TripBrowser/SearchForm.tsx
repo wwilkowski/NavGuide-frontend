@@ -18,6 +18,7 @@ import ListIcon from '../../assets/icons/list.png';
 import CloseIcon from '../../assets/icons/close.png';
 import Slider from '@material-ui/core/Slider';
 import SearchIcon from '../../assets/icons/search.png';
+import DatePicker from 'react-datepicker';
 
 const SearchFormSchema = Yup.object().shape({});
 
@@ -43,11 +44,13 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
   };
 
   useEffect(() => {
+    setFieldValue('searchMode', 'geo');
+
     window.addEventListener('scroll', checkScroll);
     return () => {
       window.removeEventListener('scroll', checkScroll);
     };
-  }, []);
+  }, [setFieldValue]);
 
   useEffect(() => {
     setSuggestedListVisible(true);
@@ -99,9 +102,10 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
               }}
             />
             {errors.location && touched.location && <div>{t(errors.location)}</div>}
-            {suggestedListVisible && suggestedCities.length > 0 && (
+            {values.searchMode === 'geo' && suggestedListVisible && suggestedCities.length > 0 && (
               <ListSuggestedTrips
                 onCityClick={(location: ISuggestedPlace) => {
+                  props.onCityClick();
                   setFieldValue('lat', location.coords[1]);
                   setFieldValue('lon', location.coords[0]);
                   props.setPosition({
@@ -109,7 +113,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                     longitude: location.coords[0],
                     radius: props.positionValue.radius
                   });
-                  props.onSubmit(location, props.positionValue.radius, 'suggested');
+                  props.onSubmit(location, props.positionValue.radius, 'suggested', values.end);
                 }}
                 onCityHover={props.onCityHover}
                 suggestedTrips={suggestedCities}
@@ -146,6 +150,46 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
             />
           </div>
         </div>
+
+        <div className={styles.searchForm__inputsCase}>
+          <div className={styles.searchForm__searchModeInput}>
+            <label htmlFor='searchMode' className={styles.searchForm__label}>
+              {t('Search mode')}:
+            </label>
+            <div className={styles.searchForm__radios}>
+              <label htmlFor='searchMode' className={styles.searchForm__label}>
+                {t('adress')}
+              </label>
+              <input
+                type='radio'
+                checked={values.searchMode === 'geo'}
+                name='searchMode'
+                value='geo'
+                onChange={() => setFieldValue('searchMode', 'geo')}
+              />
+              <label htmlFor='searchMode' className={styles.searchForm__label}>
+                {t('name')}
+              </label>
+              <input
+                type='radio'
+                checked={values.searchMode === 'name'}
+                name='searchMode'
+                value='name'
+                onChange={() => setFieldValue('searchMode', 'name')}
+              />
+            </div>
+          </div>
+          <div className={styles.searchForm__dateInput}>
+            <label htmlFor='date' className={styles.searchForm__label}>
+              {t('Date')}:
+            </label>
+            <div className={styles.searchForm__datePicker}>
+              <DatePicker dateFormat='yyyy/MM/dd' selected={values.end} onChange={date => setFieldValue('end', date)} />
+              {errors.end && touched.end && <div>{t(`Incorrect date`)}</div>}
+            </div>
+          </div>
+        </div>
+
         <div>
           <label className={styles.searchForm__label}>{t('Tags')}:</label>
         </div>
@@ -212,8 +256,9 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
       lat: positionValue.latitude,
       lon: positionValue.longitude,
       radius: positionValue.radius || 1,
-      searchMode: 'normal',
-      activeTags: []
+      searchMode: '',
+      activeTags: [],
+      end: new Date()
     };
   },
 
@@ -244,7 +289,8 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
           }
         },
         values.radius,
-        'normal'
+        values.searchMode,
+        values.end
       );
     }
   }
@@ -280,6 +326,7 @@ const SearchForm = (props: ISearchFormProps) => {
           setPosition={props.setPosition}
           trips={props.trips}
           onCityHover={props.onCityHover}
+          onCityClick={props.onCityClick}
           tripInfoVisible={props.tripInfoVisible}
           changeTripInfoVisible={props.changeTripInfoVisible}
         />
