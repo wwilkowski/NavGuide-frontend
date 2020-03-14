@@ -26,12 +26,6 @@ const getLanguage = (code: string) => {
   }
 };
 
-const languages = {
-  PL: 'Polish',
-  EN: 'English',
-  DE: 'German'
-};
-
 const TripListElement = ({ trip, changeVisible }: Props) => {
   const isLogged: boolean = useSelector((state: StoreType) => state.profile.isLoggedIn);
   const { t } = useTranslation();
