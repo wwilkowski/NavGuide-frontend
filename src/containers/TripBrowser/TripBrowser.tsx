@@ -128,7 +128,7 @@ const TripBrowser: React.FC = () => {
 
   const onSearchFormSubmit = (location: ISuggestedPlace, radius: number, mode: string, end: Date) => {
     if (mode === 'geo' && suggestedCities.length > 0 && location.displayName !== prevFormValue) {
-      setSearchMode('geo');
+      console.log(mode);
       location.coords[0] = suggestedCities[0].coords[0];
       location.coords[1] = suggestedCities[0].coords[1];
       setFormValue(suggestedCities[0].displayName);
@@ -148,6 +148,19 @@ const TripBrowser: React.FC = () => {
     } else if (mode === 'name') {
       setSearchMode('name');
       dispatcher(actions.fetchNameTripsRequested(location.displayName));
+    } else {
+      setFormValue(location.displayName);
+      if (location.displayName.length) {
+        setPositionValue({
+          latitude: location.coords[1],
+          longitude: location.coords[0],
+          radius
+        });
+        dispatcher(actions.fetchGeoTripsRequested(location.coords[1], location.coords[0], radius * 1000, isLogged));
+      } else {
+        dispatcher(actions.fetchRandomTripsRequested(isLogged));
+      }
+      setPrevFormValue(location.displayName);
     }
   };
 
