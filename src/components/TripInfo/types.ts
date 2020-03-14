@@ -6,5 +6,4 @@ export interface ITripInfoProps {
   tripInformations: ISingleTripType;
   guideProfile: IGuideProfile;
   guideProfileData: IUserProfile;
-  changeTripInfoVisible: (id: number) => void;
 }
