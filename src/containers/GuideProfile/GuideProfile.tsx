@@ -5,11 +5,7 @@ import GuideProfileData from '../../components/GuideProfile/GuideProfileData';
 import { StoreType } from '../../store';
 import { useSelector, useDispatch } from 'react-redux';
 import GuideProfileActiveOffers from '../../components/GuideProfile/GuideProfileActiveOffers';
-import {
-  fetchGuideProfileDataRequest,
-  fetchGuideActiveOffersRequest,
-  fetchGuideHistoryRequest
-} from '../../containers/TripBrowser/actions';
+import { fetchGuideProfileDataRequest, fetchGuideActiveOffersRequest, fetchGuideHistoryRequest } from './actions';
 import GuideProfileHistoryOffers from '../../components/GuideProfile/GuideProfileHistoryOffers';
 import history from '../../history';
 
