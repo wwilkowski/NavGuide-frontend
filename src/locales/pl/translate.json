@@ -153,6 +153,11 @@
     "Description": "Opis",
     "Number of visits": "Liczba odwiedzin",
     "Update": "Aktualizuj",
-    "Find trip for yourself": "Znajdź ofertę dla siebie"
+    "Find trip for yourself": "Znajdź ofertę dla siebie",
+    "I travel once every few years": "Podróżuję raz na kilka lat",
+    "I travel once a year": "Podróżuję raz w roku",
+    "I travel every few months": "Podróżuję co parę miesięcy",
+    "I travel every few weeks": "Podróżuję co parę tygodni",
+    "I travel constantly": "Podróżuję nieustannie"
   }
 }
