@@ -118,9 +118,30 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
           id='file1'
           onChange={e => {
             handlePhotoChange(e.target.files, 0);
-            console.log(e.target.files);
             if (e.target.files) {
-              setFieldValue('file', e.target.files[0]);
+              setFieldValue('file1', e.target.files[0]);
+            }
+          }}
+          className={styles.offerForm__imageInput}
+        />
+        <input
+          type='file'
+          id='file2'
+          onChange={e => {
+            handlePhotoChange(e.target.files, 1);
+            if (e.target.files) {
+              setFieldValue('file2', e.target.files[0]);
+            }
+          }}
+          className={styles.offerForm__imageInput}
+        />
+        <input
+          type='file'
+          id='file3'
+          onChange={e => {
+            handlePhotoChange(e.target.files, 2);
+            if (e.target.files) {
+              setFieldValue('file3', e.target.files[0]);
             }
           }}
           className={styles.offerForm__imageInput}
@@ -246,7 +267,13 @@ const OfferCreateForm = withFormik<types.MyFormProps, types.FullFormValues>({
       end: new Date(),
       lat: latitude || 0.0,
       lon: longitude || 0.0,
-      file: new File(['foo'], 'foo.txt', {
+      file1: new File(['foo'], 'foo.txt', {
+        type: 'text/plain'
+      }),
+      file2: new File(['foo'], 'foo.txt', {
+        type: 'text/plain'
+      }),
+      file3: new File(['foo'], 'foo.txt', {
         type: 'text/plain'
       }),
       maxPeople: 0,

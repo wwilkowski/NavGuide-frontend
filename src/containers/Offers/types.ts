@@ -5,7 +5,9 @@ export interface IOfferFormValues {
   begin: Date;
   city: string;
   end: Date;
-  file: File;
+  file1: File;
+  file2: File;
+  file3: File;
   lat: Number;
   lon: Number;
   maxPeople: Number;
