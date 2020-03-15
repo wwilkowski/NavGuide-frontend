@@ -1,7 +1,6 @@
 import React from 'react';
 import { ISingleTripType } from '../../containers/TripBrowser/types';
 import TripListElement from '../TripBrowser/TripListElement';
-import { Link } from 'react-router-dom';
 
 interface ITraveler {
   id: number;
@@ -35,9 +34,6 @@ const OrderedOffers = ({ trips }: Props) => {
           <p>{trip.message}</p>
           <p>Planowana data</p>
           <p>{trip.plannedDate}</p>
-          <Link to={`/users/${trip.traveler.id}`}>Zobacz profil użytkownika o id {trip.traveler.id}`</Link>
-          <button>Zaakceptuj</button>
-          <button>Odrzuć</button>
         </li>
       ))}
     </ul>

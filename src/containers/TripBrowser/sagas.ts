@@ -8,9 +8,6 @@ import {
 import { call, put, takeLatest } from 'redux-saga/effects';
 import * as actions from './actions';
 import * as types from './types';
-import { showNotification } from '../../helpers/notification';
-import i18n from '../../locales/i18n';
-import { getToken } from '../../helpers/tokenCookie';
 
 const randomTripsEndpoint = 'https://235.ip-51-91-9.eu/guests/offers';
 const nameTripsEdnpoint = 'https://235.ip-51-91-9.eu/offers/name?name=';

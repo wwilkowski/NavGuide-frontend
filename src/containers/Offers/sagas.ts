@@ -11,6 +11,7 @@ const offerEndpoint = 'https://235.ip-51-91-9.eu/offers';
 const currentOfferEndpoint = (id: number) => `https://235.ip-51-91-9.eu/offers/${id}`;
 const buyOfferEndpoint = 'https://235.ip-51-91-9.eu/purchases';
 const getActiveOffersEndpoint = 'https://235.ip-51-91-9.eu/purchases';
+const getYourApproaches = 'https://235.ip-51-91-9.eu/profile/approaches';
 
 function* createOffer(action: types.ICreateOfferAction) {
   const formData = new FormData();
@@ -131,11 +132,35 @@ function* getActiveOffers() {
   }
 }
 
+function* getApproaches() {
+  try {
+    const response = yield call(fetch, getYourApproaches, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${getToken()}`
+      }
+    });
+    if (response.status >= 200 && response.status <= 300) {
+      const json = yield response.json();
+      yield put(actions.getApproachesSuccessed(json));
+    } else {
+      if (response.status === 401) {
+        throw new Error('You are not logged in');
+      } else {
+        throw new Error('Something goes wrong');
+      }
+    }
+  } catch (error) {
+    yield put(actions.getApproachesFailed());
+  }
+}
+
 function* mainSaga() {
   yield takeLatest(constants.CREATE_OFFER_REQUESTED, createOffer);
   yield takeLatest(constants.GET_OFFER_BY_ID_REQUESTED, getOfferById);
   yield takeLatest(constants.BUY_OFFER_REQUESTED, buyOffer);
   yield takeLatest(constants.GET_ACTIVE_OFFERS_REQUESTED, getActiveOffers);
+  yield takeLatest(constants.GET_APPROACHES_REQUESTED, getApproaches);
 }
 
 export default mainSaga;
