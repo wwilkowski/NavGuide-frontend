@@ -43,7 +43,16 @@ const EditProfileForm = () => {
         </div>
       </div>
       <div className={sceneMode === Scene.activeOffers ? styles.profileSection : styles.profileSectionHidden}>
-        <OrderedOffers trips={activeTrips} />
+        {user.role === 'GUIDE' ? (
+          <div>
+            <h2>Zaintteresowanie ofertami</h2>
+            <OrderedOffers trips={activeTrips} />
+          </div>
+        ) : (
+          <div>
+            <h2>Jesteś zainteresowany</h2>
+          </div>
+        )}
       </div>
       <div className={sceneMode === Scene.history ? styles.profileSection : styles.profileSectionHidden}>History</div>
       <ProfileMenu setScene={setSceneMode} />
