@@ -16,10 +16,10 @@ const TripBrowser: React.FC = () => {
 
   const dispatcher = useDispatch();
 
-  const [searchMode, setSearchMode] = useState<string>('');
+  const [endDate, setEndDate] = useState<Date>();
   const [tripInfoVisible, setTripInfoVisible] = useState<boolean>(false);
   const [tripInfoId, setTripInfoId] = useState<number>(0);
-  const [searchedTrips, setSearchedTrips] = useState<ISingleTripType[]>([]);
+  const [filteredTrips, setFilteredTrips] = useState<ISingleTripType[]>([]);
   const [activeTags, setActiveTags] = useState<string[]>([]);
   const [formValue, setFormValue] = useState<string>('UMK Wydział Matematyki i Informatyki');
   const [prevFormValue, setPrevFormValue] = useState<string>('');
@@ -35,16 +35,6 @@ const TripBrowser: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (searchMode === 'name' && tripsData.length > 0) {
-      setPositionValue({
-        latitude: tripsData[0].lat,
-        longitude: tripsData[0].lon,
-        radius: 1.0
-      });
-    }
-  }, [tripsData, searchMode]);
-
-  useEffect(() => {
     const location = {
       displayName: formValue,
       coords: [positionValue.longitude, positionValue.latitude],
@@ -62,7 +52,7 @@ const TripBrowser: React.FC = () => {
         suburb: ''
       }
     };
-    onSearchFormSubmit(location, positionValue.radius, 'normal', new Date());
+    onSearchFormSubmit(location, positionValue.radius, 'normal', endDate ? endDate : new Date());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -84,25 +74,31 @@ const TripBrowser: React.FC = () => {
         suburb: ''
       }
     };
-    onSearchFormSubmit(location, positionValue.radius, 'normal', new Date());
+    onSearchFormSubmit(location, positionValue.radius, 'normal', endDate ? endDate : new Date());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [positionValue.radius, isLogged]);
 
   useEffect(() => {}, [suggestedCities]);
 
   useEffect(() => {
-    setSearchedTrips(tripsData);
-  }, [tripsData]);
-
-  useEffect(() => {
     if (activeTags && activeTags.length) {
-      const filteredTrips = tripsData.filter(trip => {
+      const tmp = tripsData.filter(trip => {
         const equalTags = trip.tags.filter(tag => activeTags.includes(tag.name));
         if (equalTags.length > 0) return true;
         return false;
       });
-      setSearchedTrips(filteredTrips);
-    } else setSearchedTrips(tripsData);
+      setFilteredTrips(tmp);
+    } else if (endDate && isLogged) {
+      let tmp;
+
+      tmp = tripsData.filter((trip: ISingleTripType) => {
+        if (new Date(trip.end) <= endDate) {
+          return trip;
+        }
+        return false;
+      });
+      setFilteredTrips(tmp);
+    } else if (!isLogged) setFilteredTrips(tripsData);
   }, [activeTags, tripsData]);
 
   useEffect(() => {
@@ -127,8 +123,8 @@ const TripBrowser: React.FC = () => {
   };
 
   const onSearchFormSubmit = (location: ISuggestedPlace, radius: number, mode: string, end: Date) => {
+    setEndDate(end);
     if (mode === 'geo' && suggestedCities.length > 0 && location.displayName !== prevFormValue) {
-      console.log(mode);
       location.coords[0] = suggestedCities[0].coords[0];
       location.coords[1] = suggestedCities[0].coords[1];
       setFormValue(suggestedCities[0].displayName);
@@ -146,7 +142,6 @@ const TripBrowser: React.FC = () => {
       }
       setPrevFormValue(location.displayName);
     } else if (mode === 'name') {
-      setSearchMode('name');
       dispatcher(actions.fetchNameTripsRequested(location.displayName));
     } else {
       setFormValue(location.displayName);
@@ -190,7 +185,7 @@ const TripBrowser: React.FC = () => {
         updateActiveTags={setActiveTags}
         formValue={formValue}
         positionValue={positionValue}
-        trips={searchedTrips}
+        trips={filteredTrips}
         setPosition={setPositionValue}
         onCityHover={handleCityHover}
         onCityClick={handleCityClick}

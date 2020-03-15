@@ -85,6 +85,7 @@ function* fetchGeoTripsFromAPI(action: types.IFetchGeoTripsRequest) {
       json.forEach((trip: types.ISingleTripType) => {
         templateTrips.trips.push(trip);
       });
+
       yield put(actions.fetchGeoTripsSuccesed(templateTrips));
     } else {
       switch (json.status) {
