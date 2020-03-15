@@ -103,7 +103,7 @@ const Informations = (props: IInformationsProps) => {
                 {t('Price')}:
               </p>
               <p className={styles.right} style={{ width: '85%' }}>
-                {tripData.price} ({tripData.priceType})
+                {tripData.price} ({t(tripData.priceType)})
               </p>
               <p className={styles.left} style={{ width: '85%' }}>
                 {t('Max people')}:
@@ -122,7 +122,7 @@ const Informations = (props: IInformationsProps) => {
               <p className={styles.right}>{tripData.end.replace('T', ' ').substr(0, tripData.end.indexOf('.'))}</p>
             </div>
             <div className={styles.content2}>
-              <p className={styles.title}>{t('Statistic')}</p>
+              <p className={styles.title}>{t('Statistics')}</p>
               <p className={styles.left}>{t('Sold')}:</p>
               <p className={styles.right}>{tripData.sold}</p>
 
@@ -133,7 +133,7 @@ const Informations = (props: IInformationsProps) => {
               <div className={styles.content3__tags}>
                 {tripData.tags.map((tag: ITag, index: number) => (
                   <div key={index} className={styles.tag}>
-                    {tag.name}
+                    {t(tag.name)}
                   </div>
                 ))}
               </div>

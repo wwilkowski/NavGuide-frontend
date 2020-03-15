@@ -1,4 +1,4 @@
-import { GET_OFFER_BY_ID_SUCCESSED, GET_ACTIVE_OFFERS_SUCCESSED } from './constants';
+import { GET_OFFER_BY_ID_SUCCESSED, GET_ACTIVE_OFFERS_SUCCESSED, GET_APPROACHES_SUCCESSED } from './constants';
 
 export interface IOfferFormValues {
   place: string;
@@ -74,4 +74,9 @@ export interface IGetActiveTripsSuccessed {
   trips: ISingleTripType[];
 }
 
-export type IOffersActionType = IGetOfferByIdSuccessed | IGetActiveTripsSuccessed;
+export interface IGetApproachesSuccessed {
+  type: typeof GET_APPROACHES_SUCCESSED;
+  trips: ISingleTripType[];
+}
+
+export type IOffersActionType = IGetOfferByIdSuccessed | IGetActiveTripsSuccessed | IGetApproachesSuccessed;

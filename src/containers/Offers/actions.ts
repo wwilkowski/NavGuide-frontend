@@ -55,3 +55,18 @@ export const getActiveOffersSuccessed = (trips: types.ISingleTripType[]) => ({
 export const getActiveOffersFailed = () => ({
   type: constants.GET_ACTIVE_OFFERS_FAILED
 });
+
+// approaches
+
+export const getApproachesRequest = () => ({
+  type: constants.GET_APPROACHES_REQUESTED
+});
+
+export const getApproachesSuccessed = (trips: types.ISingleTripType[]) => ({
+  type: constants.GET_APPROACHES_SUCCESSED,
+  trips
+});
+
+export const getApproachesFailed = () => ({
+  type: constants.GET_APPROACHES_FAILED
+});

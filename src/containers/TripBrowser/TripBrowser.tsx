@@ -5,19 +5,17 @@ import * as actions from './actions';
 import * as actionsProfile from '../../containers/GuideProfile/actions';
 import { StoreType } from '../../store';
 import SearchForm from '../../components/TripBrowser/SearchForm';
-import TripInfo from '../../components/TripInfo/TripInfo';
 
 const TripBrowser: React.FC = () => {
   const isLogged = useSelector((state: StoreType) => state.profile.isLoggedIn);
   const tripsData = useSelector((state: StoreType) => state.tripBrowser.trips);
   const suggestedCities = useSelector((state: StoreType) => state.tripBrowser.places);
-  const guideProfileData = useSelector((state: StoreType) => state.guideProfile.guideProfileData);
-  const guideProfile = useSelector((state: StoreType) => state.guideProfile.guideProfile);
 
   const dispatcher = useDispatch();
 
   const [endDate, setEndDate] = useState<Date>();
   const [tripInfoVisible, setTripInfoVisible] = useState<boolean>(false);
+  const [searchedTrips, setSearchedTrips] = useState<ISingleTripType[]>([]);
   const [tripInfoId, setTripInfoId] = useState<number>(0);
   const [filteredTrips, setFilteredTrips] = useState<ISingleTripType[]>([]);
   const [activeTags, setActiveTags] = useState<string[]>([]);
@@ -165,7 +163,6 @@ const TripBrowser: React.FC = () => {
     let i = 0;
     tripsData.forEach((trip: ISingleTripType) => {
       if (trip.id === tripId) {
-        setTripInfoId(i);
         id = i;
       }
       i++;

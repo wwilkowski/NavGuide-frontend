@@ -1,5 +1,12 @@
 {
   "translation": {
+    "PER_PERSON": "za osobę",
+    "PER_GROUP": "za grupę",
+
+    "PL": "Polski",
+    "EN": "Angielski",
+    "DE": "Niemiecki",
+
     "ALL": "Wszystkie",
     "ART_SCIENCE": "Sztuka",
     "MONUMENTS": "Zabytki",
@@ -158,6 +165,17 @@
     "I travel once a year": "Podróżuję raz w roku",
     "I travel every few months": "Podróżuję co parę miesięcy",
     "I travel every few weeks": "Podróżuję co parę tygodni",
-    "I travel constantly": "Podróżuję nieustannie"
+    "I travel constantly": "Podróżuję nieustannie",
+    "Search mode": "Tryb szukania",
+    "Date": "Data",
+    "address": "adres",
+    "name": "nazwa",
+    "Statistics": "Statystyki",
+    "Speech": "Mowa",
+    "Contact": "Kontakt",
+    "Sold": "Sprzedano",
+    "Average mark": "Średnia ocena",
+    "Active Offers": "Aktywne oferty",
+    "History Offers": "Historia ofert"
   }
 }

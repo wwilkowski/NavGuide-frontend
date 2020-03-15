@@ -197,7 +197,7 @@ const GuideProfileHistoryOffers = (props: IGuideProfileHistoryOffersProps) => {
                     <p className={styles.right}>{trip.offer.city}</p>
                     <p className={styles.left}>{t('Price')}:</p>
                     <p className={styles.right}>
-                      {trip.offer.price} {trip.offer.priceType}
+                      {trip.offer.price} ({t(trip.offer.priceType)})
                     </p>
                     <p className={styles.left} style={{ width: '70%' }}>
                       {t('Max people')}:
@@ -216,13 +216,13 @@ const GuideProfileHistoryOffers = (props: IGuideProfileHistoryOffersProps) => {
                       <div className={styles.tags__content}>
                         {trip.offer.tags.map((tag: ITag) => (
                           <div key={tag.id} className={styles.tag}>
-                            {tag.name}{' '}
+                            {t(tag.name)}{' '}
                           </div>
                         ))}
                       </div>
                     </div>
 
-                    <p className={styles.title}>{t('Statistic')}:</p>
+                    <p className={styles.title}>{t('Statistics')}:</p>
                     <p className={styles.left}>{t('Sold')}:</p>
                     <p className={styles.right}>{trip.offer.sold}</p>
                     <p className={styles.left} style={{ width: '60%' }}>
