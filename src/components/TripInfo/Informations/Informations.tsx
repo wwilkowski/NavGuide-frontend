@@ -88,8 +88,8 @@ const Informations = (props: IInformationsProps) => {
             {t('guide')}
           </div>
         )}
-        <Link to='/kupowanie/wycieczek'>
-          <div className={styles.orderButton}>{t('Order now!')}</div>
+        <Link className={styles.orderButton} to={`/offers/${tripData.id}/buy`}>
+          {t('Order now!')}
         </Link>
       </div>
       {props.mode === 'trip' ? (
