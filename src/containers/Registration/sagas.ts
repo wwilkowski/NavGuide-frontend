@@ -169,7 +169,6 @@ function* getGuideInfo() {
         Authorization: `Bearer ${getToken()}`
       }
     });
-    console.log(getToken());
     if (response.status >= 200 && response.status <= 300) {
       const json = yield response.json();
       yield put(actions.getGuideInfoSuccessed(json));

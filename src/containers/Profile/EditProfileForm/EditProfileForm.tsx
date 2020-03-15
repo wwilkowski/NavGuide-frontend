@@ -8,7 +8,8 @@ import AvatarForm from '../../../components/AvatarForm/AvatarForm';
 import ProfileMenu from '../../../components/ProfileMenu/ProfileMenu';
 import styles from './EditProfileForm.module.scss';
 import OrderedOffers from '../../../components/OrderedOffers/OrderedOffers';
-import { getActiveOffersRequest } from '../../Offers/actions';
+import ActiveOffers from '../../../components/ActiveOffers/ActiveOffers';
+import { getActiveOffersRequest, getApproachesRequest } from '../../Offers/actions';
 
 enum Scene {
   profile,
@@ -21,18 +22,19 @@ const EditProfileForm = () => {
   const [sceneMode, setSceneMode] = useState<Scene>(Scene.profile);
   const user = useSelector((state: StoreType) => state.profile.user);
   const activeTrips = useSelector((state: StoreType) => state.currentOfferReducer.activeOffers);
+  const approaches = useSelector((state: StoreType) => state.currentOfferReducer.approaches);
 
   const onEditProfileFormSubmit = (editUser: IUserFormValues) => {
     dispatcher(actions.editProfileRequest(editUser, user));
   };
 
   useEffect(() => {
-    dispatcher(getActiveOffersRequest());
-  }, [dispatcher]);
-
-  useEffect(() => {
-    console.log(activeTrips);
-  }, [activeTrips]);
+    if (user.role === 'GUIDE') {
+      dispatcher(getActiveOffersRequest());
+    } else {
+      dispatcher(getApproachesRequest());
+    }
+  }, [dispatcher, user.role]);
 
   return (
     <div className={styles.container}>
@@ -51,6 +53,7 @@ const EditProfileForm = () => {
         ) : (
           <div>
             <h2>Jesteś zainteresowany</h2>
+            <ActiveOffers trips={approaches} />
           </div>
         )}
       </div>

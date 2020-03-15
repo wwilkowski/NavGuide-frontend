@@ -105,16 +105,16 @@ const GuideProfileReducer = (state = initialGuideState, action: GuideProfileActi
       return { ...state, historyOffers: action.historyOffers };
 
     case FETCH_GUIDE_PROFILE_DATA_FAILED:
-      console.log(action.message);
+      console.error(action.message);
       return state;
     case FETCH_GUIDE_PROFILE_FAILED:
-      console.log(action.message);
+      console.error(action.message);
       return state;
     case FETCH_GUIDE_ACTIVE_OFFERS_FAILED:
-      console.log(action.message);
+      console.error(action.message);
       return state;
     case FETCH_GUIDE_HISTORY_FAILED:
-      console.log(action.message);
+      console.error(action.message);
       return state;
 
     default:
