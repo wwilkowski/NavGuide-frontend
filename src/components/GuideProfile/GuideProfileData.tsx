@@ -73,7 +73,7 @@ const GuideProfileData = (props: IGuideProfileDataProps) => {
         <div className={styles.data2__interests}>
           {profileData.interests.map((el: { id: number; name: string }) => (
             <div key={el.id} className={styles.data2__interest}>
-              {el.name}
+              {t(el.name)}
             </div>
           ))}
         </div>

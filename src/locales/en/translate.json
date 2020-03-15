@@ -1,5 +1,8 @@
 {
   "translation": {
+    "PER_PERSON": "per person",
+    "PER_GROUP": "per group",
+
     "ALL": "All",
     "ART_SCIENCE": "Art science",
     "MONUMENTS": "Monuments",
