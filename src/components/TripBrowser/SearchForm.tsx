@@ -274,7 +274,6 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
     } else if (values.location === '' && values.searchMode === 'location') {
       showNotification('warning', i18n.t('Warning'), i18n.t('Please enter city first'));
     } else {
-      alert(values.radius);
       props.onSubmit(
         {
           displayName: values.location,

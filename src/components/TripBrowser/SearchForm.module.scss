@@ -54,7 +54,7 @@
     @media (min-width: 900px) {
       display: flex;
       flex: 50%;
-      div {
+      > div {
         width: 50%;
       }
     }
@@ -98,6 +98,7 @@
     font-family: 'Open sans';
     margin: 0.3rem 0;
     width: 100%;
+    width: 100% !important;
     margin: auto;
     margin-left: 0;
   }
