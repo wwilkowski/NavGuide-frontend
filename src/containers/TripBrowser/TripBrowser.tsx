@@ -80,17 +80,28 @@ const TripBrowser: React.FC = () => {
 
   useEffect(() => {
     if (activeTags && activeTags.length) {
-      const tmp = tripsData.filter(trip => {
+      let tmp = tripsData.filter(trip => {
         const equalTags = trip.tags.filter(tag => activeTags.includes(tag.name));
         if (equalTags.length > 0) return true;
         return false;
       });
+
+      if (isLogged && endDate) {
+        tmp = tmp.filter((trip: ISingleTripType) => {
+          const tripDate = new Date(trip.end);
+          if (tripDate.valueOf() + 2 * 86400000 > endDate.valueOf()) {
+            return trip;
+          }
+          return false;
+        });
+      }
+
       setFilteredTrips(tmp);
     } else if (endDate && isLogged) {
-      let tmp;
-
+      let tmp = [];
       tmp = tripsData.filter((trip: ISingleTripType) => {
-        if (new Date(trip.end) <= endDate) {
+        const tripDate = new Date(trip.end);
+        if (tripDate.valueOf() + 2 * 86400000 > endDate.valueOf()) {
           return trip;
         }
         return false;

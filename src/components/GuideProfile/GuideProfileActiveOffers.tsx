@@ -37,10 +37,10 @@ const GuideProfileActiveOffers = (props: IGuideProfileActiveOffersProps) => {
   const [filteredTrips, setFilteredTrips] = useState<ISingleTripType[]>([
     {
       averageMark: -1,
-      begin: '',
+      begin: new Date(),
       city: '',
       description: '',
-      end: '',
+      end: new Date(),
       id: -1,
       lat: -1,
       lon: -1,
@@ -204,9 +204,19 @@ const GuideProfileActiveOffers = (props: IGuideProfileActiveOffersProps) => {
                     </p>
                     <p className={styles.title}>{t('Availability')}</p>
                     <p className={styles.left}>{t('From')}:</p>
-                    <p className={styles.right}>{trip.begin.replace('T', ' ').substr(0, trip.begin.indexOf('.'))}</p>
+                    <p className={styles.right}>
+                      {trip.begin
+                        .toString()
+                        .replace('T', ' ')
+                        .substr(0, trip.begin.toString().indexOf('.'))}
+                    </p>
                     <p className={styles.left}>{t('To')}:</p>
-                    <p className={styles.right}>{trip.end.replace('T', ' ').substr(0, trip.end.indexOf('.'))}</p>
+                    <p className={styles.right}>
+                      {trip.end
+                        .toString()
+                        .replace('T', ' ')
+                        .substr(0, trip.end.toString().indexOf('.'))}
+                    </p>
                     <p className={styles.right} />
                     <div className={styles.tags}>
                       <div className={styles.tags__title}>{t('Tags')}</div>
