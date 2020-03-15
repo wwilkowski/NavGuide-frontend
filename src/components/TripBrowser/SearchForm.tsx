@@ -160,7 +160,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
               </label>
               <div className={styles.searchForm__radios}>
                 <label htmlFor='searchMode' className={styles.searchForm__label}>
-                  {t('adress')}
+                  {t('address')}
                 </label>
                 <input
                   type='radio'
