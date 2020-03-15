@@ -87,7 +87,7 @@ const TripBrowser: React.FC = () => {
       });
 
       if (isLogged && endDate) {
-        tmp = tripsData.filter((trip: ISingleTripType) => {
+        tmp = tmp.filter((trip: ISingleTripType) => {
           const tripDate = new Date(trip.end);
           if (tripDate.valueOf() + 2 * 86400000 > endDate.valueOf()) {
             return trip;
@@ -99,7 +99,6 @@ const TripBrowser: React.FC = () => {
       setFilteredTrips(tmp);
     } else if (endDate && isLogged) {
       let tmp = [];
-      //const tmpDate = new Date(endDate.getDate() + 1);
       tmp = tripsData.filter((trip: ISingleTripType) => {
         const tripDate = new Date(trip.end);
         if (tripDate.valueOf() + 2 * 86400000 > endDate.valueOf()) {
