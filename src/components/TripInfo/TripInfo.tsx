@@ -15,7 +15,6 @@ import { Link } from 'react-router-dom';
 
 const TripInfo = (props: ITripInfoProps) => {
   const { t } = useTranslation();
-  const dispatcher = useDispatch();
   const isLogged = useSelector((state: StoreType) => state.profile.isLoggedIn);
   const node: any = useRef();
 
@@ -49,14 +48,6 @@ const TripInfo = (props: ITripInfoProps) => {
     setTripData(props.tripInformations);
   }, [props.tripInformations]);
 
-  const signUpWithUserCode = (code: string) => {
-    dispatcher(signUpGoogleRequest(code));
-    dispatcher(getInterestsRequest());
-  };
-  const signInWithUserCode = (code: string) => {
-    dispatcher(logInGoogleRequest(code));
-  };
-
   const changeInformationsMode = (mode: string) => {
     setInformationsMode(mode);
     if (informationsMode === 'trip') setTripData(props.tripInformations);
@@ -77,9 +68,9 @@ const TripInfo = (props: ITripInfoProps) => {
             guideProfileData={props.guideProfileData}
           />
         </div>
-        <div className={styles.orderButton}>
+        {/* <div className={styles.orderButton}>
           <Link to={`/offers/${tripData.id}/buy`}>{t('Order now!')}</Link>
-        </div>
+        </div> */}
         <div className={styles.description}>
           <p className={styles.description__title}>{t('Description')}</p>
           <div className={styles.description__content}>
@@ -91,15 +82,7 @@ const TripInfo = (props: ITripInfoProps) => {
   ) : (
     <div className={styles.infoContainer}>
       <div className={styles.infoContainer__content} ref={node}>
-        <p style={{ margin: '2rem' }}>Aby zobaczyć więcej:</p>
-      </div>
-      <div className={styles.googleButtons} ref={node}>
-        <p>
-          <GoogleButton text='Sign up with Google' onSuccess={signUpWithUserCode} onFailure={signUpWithUserCode} />
-        </p>
-        <p>
-          <GoogleButton text='Sign in with Google' onSuccess={signInWithUserCode} onFailure={signInWithUserCode} />
-        </p>
+        <p style={{ margin: '2rem' }}>Zaloguj się lub zarejestruj, aby zobaczyć więcej</p>
       </div>
     </div>
   );
