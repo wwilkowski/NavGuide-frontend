@@ -29,8 +29,10 @@ export interface IPosition {
 
 export interface ISingleTripType {
   averageMark: number;
+  begin: string;
   city: string;
   description: string;
+  end: string;
   id: number;
   lat: number;
   lon: number;
