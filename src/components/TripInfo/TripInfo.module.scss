@@ -1,13 +1,11 @@
 .infoContainer {
   width: 100%;
   min-height: 100%;
-  position: absolute;
   top: 0%;
   left: 0%;
   display: flex;
   font-size: 0.8em;
   justify-content: space-around;
-  z-index: 10000;
   @media (max-width: 800px) {
     background-color: white;
     overflow-y: auto;
@@ -30,7 +28,6 @@
     background-color: rgb(248, 244, 244);
     width: 50%;
     height: 65%;
-    position: absolute;
     margin-top: 8rem;
     display: flex;
     flex-wrap: wrap;
@@ -57,7 +54,6 @@
   justify-content: space-around;
   flex-wrap: wrap;
   margin-top: 15%;
-  z-index: 15;
   margin: auto;
 
   p {
