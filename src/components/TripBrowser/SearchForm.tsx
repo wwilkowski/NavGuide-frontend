@@ -23,6 +23,7 @@ import DatePicker from 'react-datepicker';
 const SearchFormSchema = Yup.object().shape({});
 
 const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => {
+  const isLogged = useSelector((state: StoreType) => state.profile.isLoggedIn);
   const suggestedCities = useSelector((state: StoreType) => state.tripBrowser.places);
 
   const { t } = useTranslation();
@@ -143,7 +144,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                 const position = {
                   latitude: props.positionValue.latitude,
                   longitude: props.positionValue.longitude,
-                  radius: Number(value) || 0.0
+                  radius: Number(value) || 1.0
                 };
                 props.setPosition(position);
               }}
@@ -151,44 +152,46 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
           </div>
         </div>
 
-        <div className={styles.searchForm__inputsCase}>
-          <div className={styles.searchForm__searchModeInput}>
-            <label htmlFor='searchMode' className={styles.searchForm__label}>
-              {t('Search mode')}:
-            </label>
-            <div className={styles.searchForm__radios}>
+        {isLogged && (
+          <div className={styles.searchForm__inputsCase}>
+            <div className={styles.searchForm__searchModeInput}>
               <label htmlFor='searchMode' className={styles.searchForm__label}>
-                {t('adress')}
+                {t('Search mode')}:
               </label>
-              <input
-                type='radio'
-                checked={values.searchMode === 'geo'}
-                name='searchMode'
-                value='geo'
-                onChange={() => setFieldValue('searchMode', 'geo')}
-              />
-              <label htmlFor='searchMode' className={styles.searchForm__label}>
-                {t('name')}
+              <div className={styles.searchForm__radios}>
+                <label htmlFor='searchMode' className={styles.searchForm__label}>
+                  {t('adress')}
+                </label>
+                <input
+                  type='radio'
+                  checked={values.searchMode === 'geo'}
+                  name='searchMode'
+                  value='geo'
+                  onChange={() => setFieldValue('searchMode', 'geo')}
+                />
+                <label htmlFor='searchMode' className={styles.searchForm__label}>
+                  {t('name')}
+                </label>
+                <input
+                  type='radio'
+                  checked={values.searchMode === 'name'}
+                  name='searchMode'
+                  value='name'
+                  onChange={() => setFieldValue('searchMode', 'name')}
+                />
+              </div>
+            </div>
+            <div className={styles.searchForm__dateInput}>
+              <label htmlFor='date' className={styles.searchForm__label}>
+                {t('Date')}:
               </label>
-              <input
-                type='radio'
-                checked={values.searchMode === 'name'}
-                name='searchMode'
-                value='name'
-                onChange={() => setFieldValue('searchMode', 'name')}
-              />
+              <div className={styles.searchForm__datePicker}>
+                <DatePicker dateFormat='yyyy/MM/dd' selected={values.end} onChange={date => setFieldValue('end', date)} />
+                {errors.end && touched.end && <div>{t(`Incorrect date`)}</div>}
+              </div>
             </div>
           </div>
-          <div className={styles.searchForm__dateInput}>
-            <label htmlFor='date' className={styles.searchForm__label}>
-              {t('Date')}:
-            </label>
-            <div className={styles.searchForm__datePicker}>
-              <DatePicker dateFormat='yyyy/MM/dd' selected={values.end} onChange={date => setFieldValue('end', date)} />
-              {errors.end && touched.end && <div>{t(`Incorrect date`)}</div>}
-            </div>
-          </div>
-        </div>
+        )}
 
         <div>
           <label className={styles.searchForm__label}>{t('Tags')}:</label>
