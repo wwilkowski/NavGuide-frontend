@@ -1,0 +1,21 @@
+.checkboxField {
+  display: none;
+}
+
+.checkboxLabel {
+  border: 1px solid #dbdbdb;
+  border-radius: 5px;
+  color: #333333;
+  padding: 0.3rem 0.8rem;
+  margin-right: 0.4rem;
+  font-size: 0.8em;
+  cursor: pointer;
+  background: #ffffff;
+  transition: color 0.2s, background-color 0.2s;
+  white-space: nowrap;
+}
+
+.checkboxField:checked + .checkboxLabel {
+  background-color: #e64740;
+  color: #ffffff;
+}
