@@ -39,10 +39,10 @@ const GuideProfileHistoryOffers = (props: IGuideProfileHistoryOffersProps) => {
       date: '',
       offer: {
         averageMark: -1,
-        begin: '',
+        begin: new Date(),
         city: '',
         description: '',
-        end: '',
+        end: new Date(),
         id: -1,
         lat: -1,
         lon: -1,
@@ -207,9 +207,21 @@ const GuideProfileHistoryOffers = (props: IGuideProfileHistoryOffersProps) => {
                     </p>
                     <p className={styles.title}>{t('Availability')}:</p>
                     <p className={styles.left}>{t('From')}:</p>
-                    <p className={styles.right}>{trip.offer.begin.replace('T', ' ').substr(0, trip.offer.begin.indexOf('.'))}}</p>
+                    <p className={styles.right}>
+                      {trip.offer.begin
+                        .toString()
+                        .replace('T', ' ')
+                        .substr(0, trip.offer.begin.toString().indexOf('.'))}
+                      }
+                    </p>
                     <p className={styles.left}>{t('To')}:</p>
-                    <p className={styles.right}>{trip.offer.end.replace('T', ' ').substr(0, trip.offer.end.indexOf('.'))}}</p>
+                    <p className={styles.right}>
+                      {trip.offer.end
+                        .toString()
+                        .replace('T', ' ')
+                        .substr(0, trip.offer.end.toString().indexOf('.'))}
+                      }
+                    </p>
                     <p className={styles.right} />
                     <div className={styles.tags}>
                       <div className={styles.tags__title}>{t('Tags')}</div>
