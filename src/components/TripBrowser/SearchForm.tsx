@@ -140,6 +140,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
               max={5.0}
               valueLabelDisplay='auto'
               onChange={(event: React.ChangeEvent<{}>, value: number | number[]) => {
+                setFieldValue('radius', value);
                 props.handleChange(event);
                 const position = {
                   latitude: props.positionValue.latitude,
@@ -273,6 +274,7 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
     } else if (values.location === '' && values.searchMode === 'location') {
       showNotification('warning', i18n.t('Warning'), i18n.t('Please enter city first'));
     } else {
+      alert(values.radius);
       props.onSubmit(
         {
           displayName: values.location,
