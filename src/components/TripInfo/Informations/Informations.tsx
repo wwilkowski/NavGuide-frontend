@@ -116,7 +116,7 @@ const Informations = (props: IInformationsProps) => {
             <div className={styles.content2}>
               <p className={styles.title}>{t('Availability')}</p>
               <p className={styles.left}>{t('From')}:</p>
-              <p className={styles.right}>{tripData.begin.replace('T', ' ').substr(0, tripData.end.indexOf('.'))}</p>
+              <p className={styles.right}>{tripData.begin.replace('T', ' ').substr(0, tripData.begin.indexOf('.'))}</p>
 
               <p className={styles.left}>{t('To')}:</p>
               <p className={styles.right}>{tripData.end.replace('T', ' ').substr(0, tripData.end.indexOf('.'))}</p>

@@ -204,9 +204,9 @@ const GuideProfileActiveOffers = (props: IGuideProfileActiveOffersProps) => {
                     </p>
                     <p className={styles.title}>{t('Availability')}</p>
                     <p className={styles.left}>{t('From')}:</p>
-                    <p className={styles.right}>1.01.2020</p>
+                    <p className={styles.right}>{trip.begin.replace('T', ' ').substr(0, trip.begin.indexOf('.'))}</p>
                     <p className={styles.left}>{t('To')}:</p>
-                    <p className={styles.right}>1.03.2020</p>
+                    <p className={styles.right}>{trip.end.replace('T', ' ').substr(0, trip.end.indexOf('.'))}</p>
                     <p className={styles.right} />
                     <div className={styles.tags}>
                       <div className={styles.tags__title}>{t('Tags')}</div>
