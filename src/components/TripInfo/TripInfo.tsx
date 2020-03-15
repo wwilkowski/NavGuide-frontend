@@ -6,12 +6,8 @@ import Informations from './Informations/Informations';
 import Description from './Description/Description';
 import { useTranslation } from 'react-i18next';
 import { StoreType } from '../../store';
-import { useSelector, useDispatch } from 'react-redux';
-import { logInGoogleRequest } from '../../containers/Profile/actions';
-import { getInterestsRequest, signUpGoogleRequest } from '../../containers/Registration/actions';
-import GoogleButton from '../../components/GoogleButton/GoogleButton';
+import { useSelector } from 'react-redux';
 import { ISingleTripType } from '../../containers/TripBrowser/types';
-import { Link } from 'react-router-dom';
 
 const TripInfo = (props: ITripInfoProps) => {
   const { t } = useTranslation();

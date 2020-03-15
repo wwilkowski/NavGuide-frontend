@@ -1,5 +1,5 @@
-import { IPositionData, IGeoLocationProps } from "../shared/types";
-import { useState, useEffect } from "react";
+import { IPositionData, IGeoLocationProps } from '../shared/types';
+import { useState, useEffect } from 'react';
 
 const initialPosition: IPositionData = {
   latitude: 0,
@@ -19,7 +19,7 @@ export const usePosition = () => {
   useEffect(() => {
     const geo = navigator.geolocation;
     if (!geo) {
-      console.log("GeoLocation doesn't supported");
+      console.error("GeoLocation doesn't supported");
     }
 
     const watcher = geo.watchPosition(onChange);

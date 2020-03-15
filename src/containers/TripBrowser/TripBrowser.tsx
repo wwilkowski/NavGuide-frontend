@@ -5,20 +5,16 @@ import * as actions from './actions';
 import * as actionsProfile from '../../containers/GuideProfile/actions';
 import { StoreType } from '../../store';
 import SearchForm from '../../components/TripBrowser/SearchForm';
-import TripInfo from '../../components/TripInfo/TripInfo';
 
 const TripBrowser: React.FC = () => {
   const isLogged = useSelector((state: StoreType) => state.profile.isLoggedIn);
   const tripsData = useSelector((state: StoreType) => state.tripBrowser.trips);
   const suggestedCities = useSelector((state: StoreType) => state.tripBrowser.places);
-  const guideProfileData = useSelector((state: StoreType) => state.guideProfile.guideProfileData);
-  const guideProfile = useSelector((state: StoreType) => state.guideProfile.guideProfile);
 
   const dispatcher = useDispatch();
 
   const [searchMode, setSearchMode] = useState<string>('');
   const [tripInfoVisible, setTripInfoVisible] = useState<boolean>(false);
-  const [tripInfoId, setTripInfoId] = useState<number>(0);
   const [searchedTrips, setSearchedTrips] = useState<ISingleTripType[]>([]);
   const [activeTags, setActiveTags] = useState<string[]>([]);
   const [formValue, setFormValue] = useState<string>('UMK Wydział Matematyki i Informatyki');
@@ -128,7 +124,6 @@ const TripBrowser: React.FC = () => {
 
   const onSearchFormSubmit = (location: ISuggestedPlace, radius: number, mode: string, end: Date) => {
     if (mode === 'geo' && suggestedCities.length > 0 && location.displayName !== prevFormValue) {
-      console.log(mode);
       location.coords[0] = suggestedCities[0].coords[0];
       location.coords[1] = suggestedCities[0].coords[1];
       setFormValue(suggestedCities[0].displayName);
@@ -170,7 +165,6 @@ const TripBrowser: React.FC = () => {
     let i = 0;
     tripsData.forEach((trip: ISingleTripType) => {
       if (trip.id === tripId) {
-        setTripInfoId(i);
         id = i;
       }
       i++;

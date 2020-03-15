@@ -21,6 +21,11 @@ const RegistrationReducer = (state = initialState, action: types.IOffersActionTy
         ...state,
         activeOffers: action.trips
       };
+    case constants.GET_APPROACHES_SUCCESSED:
+      return {
+        ...state,
+        approaches: action.trips
+      };
     default:
       return state;
   }

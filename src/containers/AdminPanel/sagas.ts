@@ -18,7 +18,7 @@ function* fetchGuideRequestsFromAPI() {
       yield put(actions.getGuideRequestsSuccessed(guideRequests));
     } else throw new Error();
   } catch (error) {
-    console.log(error);
+    console.error(error);
     yield put(actions.getGuideRequestsFailed('Error while fetching guide requests from API!'));
   }
 }

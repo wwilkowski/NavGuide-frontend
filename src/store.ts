@@ -46,6 +46,7 @@ interface IActiveOffer {
 interface ICurrentOffer {
   offer: ISingleTripType;
   activeOffers: IActiveOffer[];
+  approaches: IActiveOffer[];
 }
 
 export interface StoreType {
@@ -57,6 +58,7 @@ export interface StoreType {
   adminPanel: IMultiGuideRequests;
   currentOfferReducer: ICurrentOffer;
   activeOffers: ISingleTripType[];
+  approaches: ISingleTripType[];
 }
 
 function* rootSaga() {
