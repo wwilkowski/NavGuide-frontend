@@ -2,13 +2,24 @@ import React from 'react';
 import { ISingleTripType } from '../../containers/TripBrowser/types';
 import TripListElement from '../TripBrowser/TripListElement';
 import { IUserData } from '../../shared/types';
+import { Link } from 'react-router-dom';
+
+interface ITraveler {
+  id: number;
+  firstName: string;
+  lastName: string;
+  country: string;
+  role: string;
+  experience: number;
+  avatar: string;
+}
 
 interface IActiveOffer {
   id: number;
   message: string;
   offer: ISingleTripType;
   plannedDate: Date;
-  traveler: IUserData;
+  traveler: ITraveler;
 }
 
 interface Props {
@@ -25,6 +36,9 @@ const OrderedOffers = ({ trips }: Props) => {
           <p>{trip.message}</p>
           <p>Planowana data</p>
           <p>{trip.plannedDate}</p>
+          <Link to={`/users/${trip.traveler.id}`}>Zobacz profil użytkownika o id {trip.traveler.id}`</Link>
+          <button>Zaakceptuj</button>
+          <button>Odrzuć</button>
         </li>
       ))}
     </ul>

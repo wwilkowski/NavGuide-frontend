@@ -24,14 +24,23 @@ import { IMultiTripsAndTagsType, ISingleTripType } from './containers/TripBrowse
 import { IGuideProfileComplete } from './containers/GuideProfile/types';
 import { IMultiGuideRequests } from './containers/AdminPanel/types';
 import { IUserProfiles } from './containers/User/types';
-import { IUserData } from './shared/types';
+
+interface ITraveler {
+  id: number;
+  firstName: string;
+  lastName: string;
+  country: string;
+  role: string;
+  experience: number;
+  avatar: string;
+}
 
 interface IActiveOffer {
   id: number;
   message: string;
   offer: ISingleTripType;
   plannedDate: Date;
-  traveler: IUserData;
+  traveler: ITraveler;
 }
 
 interface ICurrentOffer {
