@@ -30,6 +30,7 @@ export interface FullFormValues {
 
 export interface MyFormProps {
   templateUser: IUserData;
+  register: boolean;
   onSubmit: (user: FormValues) => void;
 }
 

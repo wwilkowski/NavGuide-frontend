@@ -6,7 +6,7 @@ import {
   SEND_REGISTER_GUIDE_REQUEST,
   GET_GUIDE_INFO_SUCCESSED
 } from './constants';
-import { IUserData } from '../../shared/types';
+import { IUserData, IUserFormValues } from '../../shared/types';
 import { FormValues } from '../../components/GuideRegisterForm/types';
 
 export interface IRegisterStore {
@@ -72,6 +72,12 @@ export interface IGetInterestsSuccessed {
 }
 
 // register guide
+
+export interface IRegisterFormProps {
+  templateUser: IUserData;
+  onSubmit: (user: IUserFormValues) => void;
+  register: boolean;
+}
 
 export interface ISendRegisterGuideRequest {
   type: typeof SEND_REGISTER_GUIDE_REQUEST;

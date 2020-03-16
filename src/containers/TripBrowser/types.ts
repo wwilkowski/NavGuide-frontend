@@ -13,7 +13,13 @@ import {
   FETCH_GEO_TRIPS_FAILED,
   FETCH_SUGGESTED_CITIES_REQUESTED,
   FETCH_SUGGESTED_CITIES_SUCCESED,
-  FETCH_SUGGESTED_CITIES_FAILED
+  FETCH_SUGGESTED_CITIES_FAILED,
+  FETCH_CLOSEST_TRIPS_REQUESTED,
+  FETCH_CLOSEST_TRIPS_SUCCESSED,
+  FETCH_CLOSEST_TRIPS_FAILED,
+  FETCH_POPULAR_TRIPS_SUCCESSED,
+  FETCH_POPULAR_TRIPS_FAILED,
+  FETCH_POPULAR_TRIPS_REQUESTED
 } from './constants';
 
 export interface ITag {
@@ -73,6 +79,24 @@ export interface IMultiTripsAndTagsType {
   places: ISuggestedPlace[];
 }
 
+export interface ISuggestedPlace {
+  displayName: string;
+  coords: number[];
+  class: string;
+  type: string;
+  address: {
+    type: string;
+    cityDistrict: string;
+    country: string;
+    countryCode: string;
+    footway: string;
+    neighbourhood: string;
+    postcode: string;
+    state: string;
+    suburb: string;
+  };
+}
+
 export interface IFetchRandomTripsSuccesedAction {
   type: typeof FETCH_RANDOM_TRIPS_SUCCESED;
   trips: IMultiTripsType;
@@ -103,6 +127,26 @@ export interface IFetchGeoTripsFailedAction {
   message: string;
 }
 
+export interface IFetchClosestTripsSuccessedAction {
+  type: typeof FETCH_CLOSEST_TRIPS_SUCCESSED;
+  trips: IMultiTripsType;
+}
+
+export interface IFetchClosestTripsFailedAction {
+  type: typeof FETCH_CLOSEST_TRIPS_FAILED;
+  message: string;
+}
+
+export interface IFetchPopularTripsSuccessedAction {
+  type: typeof FETCH_POPULAR_TRIPS_SUCCESSED;
+  trips: IMultiTripsType;
+}
+
+export interface IFetchPopularTripsFailedAction {
+  type: typeof FETCH_POPULAR_TRIPS_FAILED;
+  message: string;
+}
+
 export interface IFetchTagsSuccesedAction {
   type: typeof FETCH_TAGS_SUCCESED;
   tags: ITag[];
@@ -111,24 +155,6 @@ export interface IFetchTagsSuccesedAction {
 export interface IFetchTagsFailedAction {
   type: typeof FETCH_TAGS_FAILED;
   message: string;
-}
-
-export interface ISuggestedPlace {
-  displayName: string;
-  coords: number[];
-  class: string;
-  type: string;
-  address: {
-    type: string;
-    cityDistrict: string;
-    country: string;
-    countryCode: string;
-    footway: string;
-    neighbourhood: string;
-    postcode: string;
-    state: string;
-    suburb: string;
-  };
 }
 
 export interface IFetchSuggestedCitiesSuccesedAction {
@@ -152,7 +178,11 @@ export type TripBrowserAction =
   | IFetchTagsSuccesedAction
   | IFetchRandomTripsFailedAction
   | IFetchSuggestedCitiesSuccesedAction
-  | IFetchSuggestedCitiesFailedAction;
+  | IFetchSuggestedCitiesFailedAction
+  | IFetchClosestTripsSuccessedAction
+  | IFetchClosestTripsFailedAction
+  | IFetchPopularTripsSuccessedAction
+  | IFetchPopularTripsFailedAction;
 
 export interface IFetchRandomTripsRequest {
   type: typeof FETCH_RANDOM_TRIPS_REQUESTED;
@@ -162,6 +192,14 @@ export interface IFetchRandomTripsRequest {
 export interface IFetchNameTripsRequest {
   type: typeof FETCH_NAME_TRIPS_REQUESTED;
   name: string;
+}
+
+export interface IFetchClosestTripsRequest {
+  type: typeof FETCH_CLOSEST_TRIPS_REQUESTED;
+}
+
+export interface IFetchPopularTripsRequest {
+  type: typeof FETCH_POPULAR_TRIPS_REQUESTED;
 }
 
 export interface IFetchGeoTripsRequest {

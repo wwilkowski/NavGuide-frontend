@@ -101,6 +101,8 @@
     width: 100% !important;
     margin: auto;
     margin-left: 0;
+    display: flex;
+    justify-content: space-around;
   }
   &__tagList {
     display: flex;

@@ -11,21 +11,34 @@ const ListTrips = ({ trips, mode, chosenOfferId, setChosenOfferId, changeTripInf
 
   return (
     <>
-      {mode === 'random' ? (
+      {mode === types.ListMode.closest ? (
+        <div>
+          {t('No matching trips')}. {t('Trips in your area')}:
+          <ul className={styles.listTrips}>
+            {trips.map((trip: ISingleTripType) => (
+              <div key={trip.id}>
+                <Link to={`/offers/${trip.id}`}>
+                  <TripListElement trip={trip} changeVisible={changeTripInfoVisible} />
+                </Link>
+              </div>
+            ))}
+          </ul>
+        </div>
+      ) : mode === types.ListMode.popular ? (
         <p>
-          {t('No matching trips')} {t('Suggested trips')}:
+          {t('No matching trips')}. {t('The most popular trips')}:
         </p>
-      ) : null}
-      {trips.length === 0 && mode === 'geo' ? <p>{t('No matching trips')}.</p> : null}
-      <ul className={styles.listTrips}>
-        {trips.map((trip: ISingleTripType) => (
-          <li key={trip.id}>
-            <Link to={`/offers/${trip.id}`}>
-              <TripListElement trip={trip} changeVisible={changeTripInfoVisible} />
-            </Link>
-          </li>
-        ))}
-      </ul>
+      ) : (
+        <ul className={styles.listTrips}>
+          {trips.map((trip: ISingleTripType) => (
+            <div key={trip.id}>
+              <Link to={`/offers/${trip.id}`}>
+                <TripListElement trip={trip} changeVisible={changeTripInfoVisible} />
+              </Link>
+            </div>
+          ))}
+        </ul>
+      )}
     </>
   );
 };

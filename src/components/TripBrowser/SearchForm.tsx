@@ -5,7 +5,7 @@ import { withFormik, FormikProps, Field, Form } from 'formik';
 import { useSelector } from 'react-redux';
 import { StoreType } from '../../store';
 import * as Yup from 'yup';
-import { ISearchFormValues, ISearchFormProps } from './types';
+import { ISearchFormValues, ISearchFormProps, ListMode } from './types';
 import { showNotification } from '../../helpers/notification';
 import LeafletMap from '../../components/LeafletMap/LeafletMap';
 import i18n from '../../locales/i18n';
@@ -114,7 +114,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                     longitude: location.coords[0],
                     radius: props.positionValue.radius
                   });
-                  props.onSubmit(location, props.positionValue.radius, 'suggested', values.end);
+                  props.onSubmit(location, props.positionValue.radius, 'suggested', values.end, values.begin);
                 }}
                 onCityHover={props.onCityHover}
                 suggestedTrips={suggestedCities}
@@ -126,7 +126,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
           <div className={fixedRadiusView ? styles.fixedRadius : ''}>
             <div>
               <label htmlFor='radius' className={styles.searchForm__label}>
-                {t('Radius')}:
+                {t('Radius')} (KM):
               </label>
             </div>
             <Slider
@@ -187,6 +187,16 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                 {t('Date')}:
               </label>
               <div className={styles.searchForm__datePicker}>
+                <label htmlFor='begin' className={styles.searchForm__label}>
+                  {t('From')}:
+                </label>
+                <DatePicker dateFormat='yyyy/MM/dd' selected={values.begin} onChange={date => setFieldValue('begin', date)} />
+                {errors.begin && touched.begin && <div>{t(`Incorrect date`)}</div>}
+              </div>
+              <div className={styles.searchForm__datePicker}>
+                <label htmlFor='end' className={styles.searchForm__label}>
+                  {t('To')}:
+                </label>
                 <DatePicker dateFormat='yyyy/MM/dd' selected={values.end} onChange={date => setFieldValue('end', date)} />
                 {errors.end && touched.end && <div>{t(`Incorrect date`)}</div>}
               </div>
@@ -255,6 +265,11 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
     const formValue = props.formValue;
     const positionValue = props.positionValue;
 
+    const defaultBegin = new Date();
+    defaultBegin.setDate(defaultBegin.getDate() - 14);
+    const defaultEnd = new Date();
+    defaultEnd.setDate(defaultEnd.getDate() + 14);
+
     return {
       location: formValue || '',
       lat: positionValue.latitude,
@@ -262,7 +277,8 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
       radius: positionValue.radius || 1,
       searchMode: '',
       activeTags: [],
-      end: new Date()
+      begin: defaultBegin,
+      end: defaultEnd
     };
   },
 
@@ -294,50 +310,64 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
         },
         values.radius,
         values.searchMode,
-        values.end
+        values.end,
+        values.begin
       );
     }
   }
 })(InnerForm);
 
 const SearchForm = (props: ISearchFormProps) => {
+  const isLogged = useSelector((state: StoreType) => state.profile.isLoggedIn);
+
   const [chosenOfferId, setChosenOfferId] = useState<number | null>(null);
   const [formView, setFormView] = useState(true);
+
+  const { tripInfoVisible, changeTripInfoVisible, setPosition, positionValue, formValue, trips, getTrips } = props;
+
+  const [mode, setMode] = useState<ListMode>(ListMode.normal);
+
+  useEffect(() => {
+    if (!trips.length && isLogged) setMode(ListMode.closest);
+    else if (!trips.length && !isLogged) setMode(ListMode.popular);
+    else setMode(ListMode.normal);
+  }, [trips]);
+
+  useEffect(() => {
+    if (mode !== ListMode.normal) getTrips(mode);
+  }, [mode]);
 
   return (
     <div className={styles.container}>
       <button
         onClick={() => setFormView(() => !formView)}
         className={styles.viewToggler}
-        style={props.tripInfoVisible ? { display: 'none' } : {}}
+        style={tripInfoVisible ? { display: 'none' } : {}}
       >
         <img src={formView ? MapIcon : ListIcon} alt='' />
       </button>
-      <button
-        onClick={() => props.changeTripInfoVisible(1)}
-        className={styles.viewToggler}
-        style={!props.tripInfoVisible ? { display: 'none' } : {}}
-      >
+      <button onClick={() => changeTripInfoVisible(1)} className={styles.viewToggler} style={!tripInfoVisible ? { display: 'none' } : {}}>
         <img src={CloseIcon} alt='' />
       </button>
       <div className={styles.container__el}>
         <ControlledSearchForm
           onChange={props.onChange}
           onSubmit={props.onSubmit}
+          getTrips={props.getTrips}
           updateActiveTags={props.updateActiveTags}
-          formValue={props.formValue}
-          positionValue={props.positionValue}
-          setPosition={props.setPosition}
+          formValue={formValue}
+          positionValue={positionValue}
+          setPosition={setPosition}
           trips={props.trips}
           onCityHover={props.onCityHover}
           onCityClick={props.onCityClick}
-          tripInfoVisible={props.tripInfoVisible}
-          changeTripInfoVisible={props.changeTripInfoVisible}
+          tripInfoVisible={tripInfoVisible}
+          changeTripInfoVisible={changeTripInfoVisible}
         />
         <div className={formView ? '' : styles.hidden}>
           <ListTrips
             trips={props.trips}
-            mode={'normal'}
+            mode={mode}
             chosenOfferId={chosenOfferId}
             setChosenOfferId={setChosenOfferId}
             changeTripInfoVisible={props.changeTripInfoVisible}
@@ -346,12 +376,12 @@ const SearchForm = (props: ISearchFormProps) => {
       </div>
       <div className={`${styles.container__el} ${formView ? styles.hidden : ''}`}>
         <LeafletMap
-          position={props.positionValue}
+          position={positionValue}
           height='85vh'
           trips={props.trips}
           chosenOfferId={chosenOfferId}
           setChosenOfferId={setChosenOfferId}
-          changeTripInfoVisible={props.changeTripInfoVisible}
+          changeTripInfoVisible={changeTripInfoVisible}
         />
       </div>
     </div>

@@ -31,6 +31,28 @@ const GuideProfileData = (props: IGuideProfileDataProps) => {
     setTelephone(result);
   }, [profileData.telephone]);
 
+  const getLanguage = (code: string) => {
+    switch (code) {
+      case 'PL':
+        return t('Polish');
+      case 'EN':
+        return t('English');
+      case 'DE':
+        return t('German');
+    }
+  };
+
+  const getCountry = (code: string) => {
+    switch (code) {
+      case 'PL':
+        return t('Poland');
+      case 'EN':
+        return t('England');
+      case 'DE':
+        return t('Germany');
+    }
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.container__title}>
@@ -66,9 +88,9 @@ const GuideProfileData = (props: IGuideProfileDataProps) => {
         </p>
         <p className={styles.title}>{t('Speech')}</p>
         <p className={styles.left}>{t('Country')}</p>
-        <p className={styles.right}>{profileData.country}</p>
+        <p className={styles.right}>{getCountry(profileData.country)}</p>
         <p className={styles.left}>{t('Languages')}</p>
-        <p className={styles.right}>{profile.languages.map((lng: string) => `${lng} `)}</p>
+        <p className={styles.right}>{profile.languages.map((lng: string) => `${getLanguage(lng)} `)}</p>
         <p className={styles.title}>{t('Interests')}</p>
         <div className={styles.data2__interests}>
           {profileData.interests.map((el: { id: number; name: string }) => (

@@ -3,9 +3,13 @@
     "PER_PERSON": "za osobę",
     "PER_GROUP": "za grupę",
 
-    "PL": "Polski",
-    "EN": "Angielski",
-    "DE": "Niemiecki",
+    "Poland": "Polska",
+    "England": "Anglia",
+    "Germany": "Niemcy",
+
+    "Polish": "Polski",
+    "English": "Angielski",
+    "German": "Niemiecki",
 
     "ALL": "Wszystkie",
     "ART_SCIENCE": "Sztuka",
@@ -47,7 +51,7 @@
     "Country": "Kraj",
     "Gender": "Płeć",
     "Experience": "Doświadczenie",
-    "Telephone": "Telefon",
+    "Phone": "Telefon",
     "Submit": "Wyślij",
     "Male": "Mężczyzna",
     "Female": "Kobieta",
@@ -73,7 +77,7 @@
     "Last name is required!": "Nazwisko jest wymagane!",
     "Country is required!": "Państwo jest wymagane!",
     "Telephone number is required!": "Numer telefonu jest wymagany!",
-    "Input is not valid!": "Niepoprawne dane!",
+    "Input is not valid!": "Niepoprawny format danych wejściowych!",
     "You are logged in!": "Jesteś zalogowany/a!",
     "novice": "nowicjusz",
     "experienced": "doświadczenie",
@@ -91,7 +95,8 @@
     "You want to be guide": "Wyraziłeś chęć zostania przewodnikiem",
     "Complete your data to declare to be a guide!": "Uzupełnij dane, aby wysłać zgłoszenie!",
     "User does not exist!": "Użytkownik nie istnieje!",
-    "I want to be a guide too": "Chcę zostać także przewodnikiem",
+    "I want to be a guide": "Chcę zostać także przewodnikiem",
+    "Complete the rest informations to set up an account in the application": "Uzupełnij pozostałe informacje niezbędne do założenia konta w aplikacji",
     "Location": "Lokalizacja",
     "Find": "Szukaj",
     "Trip number": "Wycieczka numer",
@@ -120,6 +125,7 @@
     "You changed coords based on your location": "Ustawiono lokalizację na podstawie położenia użytkownika",
     "City": "Miasto",
     "Guide": "Przewodnik",
+    "Age": "Wiek",
     "Name": "Nazwa",
     "Photos": "Zdjęcia",
     "Price Type": "Typ płatności",
@@ -160,6 +166,7 @@
     "Description": "Opis",
     "Number of visits": "Liczba odwiedzin",
     "Update": "Aktualizuj",
+    "Register": "Zarejestruj",
     "Find trip for yourself": "Znajdź ofertę dla siebie",
     "I travel once every few years": "Podróżuję raz na kilka lat",
     "I travel once a year": "Podróżuję raz w roku",
@@ -176,6 +183,9 @@
     "Sold": "Sprzedano",
     "Average mark": "Średnia ocena",
     "Active Offers": "Aktywne oferty",
-    "History Offers": "Historia ofert"
+    "History Offers": "Historia ofert",
+    "Create Account": "Załóż Konto",
+    "Experience in travelling": "Doświadczenie w podróżowaniu",
+    "Phone format is not valid": "Nieprawidłowy format numeru telefonu"
   }
 }
