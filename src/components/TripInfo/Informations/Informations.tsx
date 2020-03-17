@@ -39,6 +39,28 @@ const Informations = (props: IInformationsProps) => {
     setTelephone(result);
   }, [guideProfileData.telephone]);
 
+  const getLanguage = (code: string) => {
+    switch (code) {
+      case 'PL':
+        return t('Polish');
+      case 'EN':
+        return t('English');
+      case 'DE':
+        return t('German');
+    }
+  };
+
+  const getCountry = (code: string) => {
+    switch (code) {
+      case 'PL':
+        return t('Poland');
+      case 'EN':
+        return t('England');
+      case 'DE':
+        return t('Germany');
+    }
+  };
+
   return (
     <>
       <div className={styles.informations__header}>
@@ -188,9 +210,9 @@ const Informations = (props: IInformationsProps) => {
               </p>
               <p className={styles.title}>{t('Speech')}</p>
               <p className={styles.left}>{t('Country')}:</p>
-              <p className={styles.right}>{props.guideProfileData.country}</p>
+              <p className={styles.right}>{getCountry(props.guideProfileData.country)}</p>
               <p className={styles.left}>{t('Languages')}:</p>
-              <p className={styles.right}>{guideProfile.languages.map((lng: string) => `${lng} `)}</p>
+              <p className={styles.right}>{guideProfile.languages.map((lng: string) => `${getLanguage(lng)} `)}</p>
             </div>
           </div>
         </div>
