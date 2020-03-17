@@ -32,7 +32,7 @@ const ListTrips = ({ trips, mode, chosenOfferId, setChosenOfferId, changeTripInf
         <ul className={styles.listTrips}>
           {trips.map((trip: ISingleTripType) => (
             <div key={trip.id}>
-              <Link to={`/offers/${trip.id}`}>
+              <Link to={`/offers/${trip.id}`} className={styles.link}>
                 <TripListElement trip={trip} changeVisible={changeTripInfoVisible} />
               </Link>
             </div>

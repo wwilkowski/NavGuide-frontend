@@ -15,12 +15,7 @@ import AdminPanel from './containers/AdminPanel/AdminPanel';
 import 'bulma/css/bulma.css';
 import GuideProfile from './containers/GuideProfile/GuideProfile';
 import Offer from './containers/Offers/Offer';
-// templates
-
-const NotFound = () => {
-  const { t } = useTranslation();
-  return <p data-testid='content'>{t('Not found')}</p>;
-};
+import { NotFound } from './components/NotFound';
 
 const App: React.FC = () => {
   const dispatcher = useDispatch();
