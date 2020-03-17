@@ -10,7 +10,6 @@ export interface Props {
   chosenOfferId: number | null;
   setChosenOfferId: (offerId: number) => void;
   height: string;
-  changeTripInfoVisible: (id: number) => void;
 }
 
 var customIcon = new L.Icon({
@@ -20,7 +19,7 @@ var customIcon = new L.Icon({
   popupAnchor: [0, -51]
 });
 
-const LeafletMap = ({ position, trips = [], chosenOfferId = null, setChosenOfferId, height, changeTripInfoVisible }: Props) => {
+const LeafletMap = ({ position, trips = [], chosenOfferId = null, setChosenOfferId, height }: Props) => {
   const { latitude, longitude, radius } = position;
 
   return (
@@ -42,7 +41,6 @@ const LeafletMap = ({ position, trips = [], chosenOfferId = null, setChosenOffer
           position={{ lat: trip.lat, lng: trip.lon }}
           opacity={trip.id === chosenOfferId ? 1 : 0.5}
           onMouseOver={() => setChosenOfferId(trip.id)}
-          onClick={() => changeTripInfoVisible(trip.id)}
         >
           <Popup>{trip.name}</Popup>
           <Circle
