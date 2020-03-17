@@ -1,125 +1,94 @@
 .header {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  @media (min-width: 900px) {
-    height: 10vh;
-  }
-  @media (min-width: 800px) {
-    flex-direction: row;
-    align-content: space-between;
-    align-items: center;
-  }
-  &__logoLink {
-    display: flex;
-    align-items: center;
-    margin: 1rem 0;
-    font-size: 0.8em;
-    @media (min-width: 800px) {
-      font-size: 1em;
-    }
-  }
-  &__titleCase {
-    padding: 0 1rem;
-    color: #000000;
-  }
-  &__title {
-    font-size: 1.3em;
-    font-weight: 800;
-  }
-  &__description {
-    font-size: 0.8em;
-    font-weight: 300;
-  }
-  &__logo {
-    width: 40px;
-    @media (min-width: 800px) {
-      width: 60px;
-    }
-  }
-  &__menuButton {
-    background: none;
-    border: none;
-    cursor: pointer;
+  padding: 1rem;
+  background: #ffffff;
+}
+
+.mainMenu {
+  @media (min-width: 500px) {
+    max-width: 500px;
     position: absolute;
-    top: 2.4rem;
-    right: 1.5rem;
-    @media (min-width: 800px) {
-      display: none;
-    }
-  }
-  &__menuIcon {
-    width: 20px;
-  }
-  &__menuList {
-    width: 100%;
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: column;
-    background-color: #ffffff;
-    transform: scaleY(1);
-    transform-origin: top;
-    transition: all 0.26s ease;
-    height: auto;
-    text-align: center;
-    @media (min-width: 800px) {
-      width: auto;
-      flex-direction: row;
-      align-items: center;
-      text-align: left;
-    }
-  }
-  &__menuListElement {
-    margin: 0.5rem 0;
-  }
-  &__hiddenMenu {
-    transform: scaleY(0);
-    height: 0;
-    @media (min-width: 800px) {
-      height: 100%;
-      transform: scaleY(1);
-    }
+    background: #ffffff;
+    padding: 1rem;
+    right: 1rem;
+    top: 10vh;
+    z-index: 10000000;
+    box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
   }
 }
 
-.profile {
-  &__case {
-    display: none;
-    @media (min-width: 800px) {
-      display: flex;
-      align-items: center;
-      background: none;
-      border: none;
-      font-size: 1em;
-      cursor: pointer;
-    }
-  }
-  &__avatar {
-    width: 30px;
-    margin: 1rem;
-  }
-
-  &__link {
-    padding: 0.5rem 0.2rem;
-    display: block;
-  }
-  &__menu {
-    @media (min-width: 800px) {
-      position: absolute;
-      background: #ffffff;
-      padding: 1rem;
-    }
-  }
-  &__hiddenMenu {
-    @media (min-width: 800px) {
-      display: none;
-    }
-  }
+.hidden {
+  display: none;
 }
 
-.langButtons {
+.menuActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.loginMenu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loginMenuElement {
+  margin: 0.5rem 0;
+}
+
+.userMenu {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+}
+
+.userCase {
+  display: flex;
+  justify-content: space-between;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+}
+
+.userName {
+  font-size: 0.9em;
+  color: #000000;
+  padding: 0 0.5rem;
+}
+
+.avatar {
+  height: 30px;
+  border-radius: 50px;
+}
+
+.menuToggler {
+  height: 20px;
+  width: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.menuIcon {
+  width: 20px;
+}
+
+.menuOptions {
+  margin: 1rem 0;
+}
+
+.menuOption {
+  margin: 0.5rem 0;
+}
+
+.menuLink {
+  font-size: 0.9em;
+}
+
+.languageOptions {
+  text-align: center;
   margin: 0.5rem 0;
 }

@@ -18,6 +18,10 @@ import ListIcon from '../../assets/icons/list.png';
 import Slider from '@material-ui/core/Slider';
 import SearchIcon from '../../assets/icons/search.png';
 import DatePicker from 'react-datepicker';
+import TextField from '@material-ui/core/TextField';
+import Radio from '@material-ui/core/Radio';
+import Button from '@material-ui/core/Button';
+import Switch from '@material-ui/core/Switch';
 
 const SearchFormSchema = Yup.object().shape({});
 
@@ -79,23 +83,17 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
   }
 
   return (
-    <Form autoComplete='off' className={styles.searchForm}>
-      <span className={styles.searchForm__icon}>
-        <img src={SearchIcon} alt='' />
-      </span>
-      <h2 className={styles.searchForm__title}>{t('Find trip for yourself')}</h2>
+    <Form autoComplete='off'>
       <div className={styles.searchForm__formContainer}>
         <div className={styles.searchForm__inputsCase}>
-          <div className={styles.searchForm__locationInput}>
-            <label htmlFor='location' className={styles.searchForm__label}>
-              {t('Location')}:
-            </label>
-            <Field
-              id='location'
+          <div className={styles.location}>
+            <TextField
+              id={'location'}
               type='text'
               name='location'
+              label={t('Location')}
               value={props.formValue}
-              className={styles.searchForm__input}
+              className={styles.input}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 props.handleChange(event);
                 props.onChange(event.target.value);
@@ -124,7 +122,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
           </div>
           <div className={fixedRadiusView ? styles.fixedRadius : ''}>
             <div>
-              <label htmlFor='radius' className={styles.searchForm__label}>
+              <label htmlFor='radius' className={styles.label}>
                 {t('Radius')} (KM):
               </label>
             </div>
@@ -144,7 +142,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                 const position = {
                   latitude: props.positionValue.latitude,
                   longitude: props.positionValue.longitude,
-                  radius: Number(value) || 1.0
+                  radius: Number(value) || 0.0
                 };
                 props.setPosition(position);
               }}
@@ -154,49 +152,60 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
 
         {isLogged && (
           <div className={styles.searchForm__inputsCase}>
-            <div className={styles.searchForm__searchModeInput}>
-              <label htmlFor='searchMode' className={styles.searchForm__label}>
+            <div className={styles.searchMode}>
+              <label htmlFor='searchMode' className={styles.label}>
                 {t('Search mode')}:
               </label>
               <div className={styles.searchForm__radios}>
-                <label htmlFor='searchMode' className={styles.searchForm__label}>
+                <label htmlFor='searchMode' className={styles.radioLabel}>
                   {t('address')}
                 </label>
-                <input
-                  type='radio'
+                <Radio
                   checked={values.searchMode === 'geo'}
-                  name='searchMode'
-                  value='geo'
                   onChange={() => setFieldValue('searchMode', 'geo')}
+                  value='geo'
+                  color='primary'
+                  size='small'
                 />
-                <label htmlFor='searchMode' className={styles.searchForm__label}>
+                <label htmlFor='searchMode' className={styles.radioLabel}>
                   {t('name')}
                 </label>
-                <input
-                  type='radio'
+
+                <Radio
                   checked={values.searchMode === 'name'}
-                  name='searchMode'
-                  value='name'
                   onChange={() => setFieldValue('searchMode', 'name')}
+                  value='name'
+                  color='primary'
+                  size='small'
                 />
               </div>
             </div>
             <div className={styles.searchForm__dateInput}>
-              <label htmlFor='date' className={styles.searchForm__label}>
+              <label htmlFor='date' className={styles.label}>
                 {t('Date')}:
               </label>
-              <div className={styles.searchForm__datePicker}>
-                <label htmlFor='begin' className={styles.searchForm__label}>
+              <div className={styles.searchMode}>
+                <label htmlFor='begin' className={styles.label}>
                   {t('From')}:
                 </label>
-                <DatePicker dateFormat='yyyy/MM/dd' selected={values.begin} onChange={date => setFieldValue('begin', date)} />
+                <DatePicker
+                  dateFormat='yyyy/MM/dd'
+                  selected={values.begin}
+                  onChange={date => setFieldValue('begin', date)}
+                  className={styles.datePicker}
+                />
                 {errors.begin && touched.begin && <div>{t(`Incorrect date`)}</div>}
               </div>
-              <div className={styles.searchForm__datePicker}>
-                <label htmlFor='end' className={styles.searchForm__label}>
+              <div className={styles.searchMode}>
+                <label htmlFor='end' className={styles.label}>
                   {t('To')}:
                 </label>
-                <DatePicker dateFormat='yyyy/MM/dd' selected={values.end} onChange={date => setFieldValue('end', date)} />
+                <DatePicker
+                  dateFormat='yyyy/MM/dd'
+                  selected={values.end}
+                  onChange={date => setFieldValue('end', date)}
+                  className={styles.datePicker}
+                />
                 {errors.end && touched.end && <div>{t(`Incorrect date`)}</div>}
               </div>
             </div>
@@ -204,21 +213,21 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
         )}
 
         <div>
-          <label className={styles.searchForm__label}>{t('Tags')}:</label>
+          <label className={styles.label}>{t('Tags')}:</label>
         </div>
-        <ul className={styles.searchForm__tagList}>
+        <ul className={styles.tagList}>
           {tags.map((tag: ITag) => (
-            <li key={tag.id}>
+            <li key={tag.id} className={styles.tag}>
               <Checkbox name='activeTags' value={tag.name} valueKey={tag.name} />
             </li>
           ))}
         </ul>
-        <div className={styles.searchForm__buttonCase}>
-          <button type='submit' className={styles.searchForm__submitButton}>
+        <div className={styles.buttonCase}>
+          <Button variant='contained' color='primary' type='submit' className={styles.button}>
             {t('Find')}
-          </button>
-          <button
-            className={styles.searchForm__geoButton}
+          </Button>
+          <Button
+            className={styles.button}
             onClick={() => {
               var options = {
                 enableHighAccuracy: true,
@@ -252,7 +261,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
             }}
           >
             {t('Geolocation')}
-          </button>
+          </Button>
         </div>
       </div>
     </Form>
@@ -330,38 +339,49 @@ const SearchForm = (props: ISearchFormProps) => {
     if (!trips.length && isLogged) setMode(ListMode.closest);
     else if (!trips.length && !isLogged) setMode(ListMode.popular);
     else setMode(ListMode.normal);
-  }, [trips]);
+  }, [isLogged, trips]);
 
   useEffect(() => {
     if (mode !== ListMode.normal) getTrips(mode);
-  }, [mode]);
+  }, [getTrips, mode]);
 
   return (
     <div className={styles.container}>
-      <button onClick={() => setFormView(() => !formView)} className={styles.viewToggler}>
-        <img src={formView ? MapIcon : ListIcon} alt='' />
-      </button>
-      <div className={styles.container__el}>
-        <ControlledSearchForm
-          onChange={props.onChange}
-          onSubmit={props.onSubmit}
-          getTrips={props.getTrips}
-          updateActiveTags={props.updateActiveTags}
-          formValue={formValue}
-          positionValue={positionValue}
-          setPosition={setPosition}
-          trips={props.trips}
-          onCityHover={props.onCityHover}
-          onCityClick={props.onCityClick}
-        />
-        <div className={formView ? '' : styles.hidden}>
-          <ListTrips trips={props.trips} mode={mode} chosenOfferId={chosenOfferId} setChosenOfferId={setChosenOfferId} />
+      <div className={styles.searchForm}>
+        <div className={styles.options}>
+          <p>View map</p>
+          <Switch checked={!formView} onChange={() => setFormView(!formView)} value='formView' color='primary' />
+        </div>
+        <div style={!formView ? { display: 'none' } : {}}>
+          <ControlledSearchForm
+            onChange={props.onChange}
+            onSubmit={props.onSubmit}
+            getTrips={props.getTrips}
+            updateActiveTags={props.updateActiveTags}
+            formValue={formValue}
+            positionValue={positionValue}
+            setPosition={setPosition}
+            trips={props.trips}
+            onCityHover={props.onCityHover}
+            onCityClick={props.onCityClick}
+            tripInfoVisible={tripInfoVisible}
+            changeTripInfoVisible={changeTripInfoVisible}
+          />
+          <div className={formView ? '' : styles.hidden}>
+            <ListTrips
+              trips={props.trips}
+              mode={mode}
+              chosenOfferId={chosenOfferId}
+              setChosenOfferId={setChosenOfferId}
+              changeTripInfoVisible={props.changeTripInfoVisible}
+            />
+          </div>
         </div>
       </div>
-      <div className={`${styles.container__el} ${formView ? styles.hidden : ''}`}>
+      <div style={formView && window.innerWidth < 900 ? { visibility: 'hidden' } : {}}>
         <LeafletMap
           position={positionValue}
-          height='85vh'
+          height='100vh'
           trips={props.trips}
           chosenOfferId={chosenOfferId}
           setChosenOfferId={setChosenOfferId}
