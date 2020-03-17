@@ -70,3 +70,17 @@ export const getApproachesSuccessed = (trips: types.ISingleTripType[]) => ({
 export const getApproachesFailed = () => ({
   type: constants.GET_APPROACHES_FAILED
 });
+
+// settle active offer
+
+export const settleActiveOfferRequest = (id: number, status: string, message: string) => ({
+  type: constants.SETTLE_ACTIVE_OFFER_REQUESTED,
+  id,
+  status,
+  message
+});
+
+export const settleActiveOfferFailed = (message: string) => ({
+  type: typeof constants.SETTLE_ACTIVE_OFFER_FAILED,
+  message
+});

@@ -37,7 +37,9 @@ const TripListElement = ({ trip, changeVisible }: Props) => {
         className={styles.offer__photo}
       />
       <div className={styles.offer__desc}>
-        <h2 className={styles.offer__title}>{trip.name}</h2>
+        <h2 className={styles.offer__title}>
+          {trip.name} ({trip.id})
+        </h2>
         <p className={styles.offer__p}>
           {t('City')}: {trip.city}
         </p>

@@ -17,8 +17,6 @@ const TripBrowser: React.FC = () => {
   const [beginDate, setBeginDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
   const [tripInfoVisible, setTripInfoVisible] = useState<boolean>(false);
-  const [searchedTrips, setSearchedTrips] = useState<ISingleTripType[]>([]);
-  const [tripInfoId, setTripInfoId] = useState<number>(0);
   const [filteredTrips, setFilteredTrips] = useState<ISingleTripType[]>([]);
   const [activeTags, setActiveTags] = useState<string[]>([]);
   const [formValue, setFormValue] = useState<string>('UMK Wydział Matematyki i Informatyki');
@@ -31,9 +29,9 @@ const TripBrowser: React.FC = () => {
 
   useEffect(() => {
     const defaultBegin = new Date();
-    defaultBegin.setDate(defaultBegin.getDate() - 14);
+    defaultBegin.setDate(defaultBegin.getDate() - 30);
     const defaultEnd = new Date();
-    defaultEnd.setDate(defaultEnd.getMonth() + 1);
+    defaultEnd.setDate(defaultEnd.getDate() + 30);
 
     const location = {
       displayName: formValue,
@@ -61,9 +59,9 @@ const TripBrowser: React.FC = () => {
 
   useEffect(() => {
     const defaultBegin = new Date();
-    defaultBegin.setDate(defaultBegin.getDate() - 14);
+    defaultBegin.setDate(defaultBegin.getDate() - 30);
     const defaultEnd = new Date();
-    defaultEnd.setDate(defaultEnd.getDate() + 14);
+    defaultEnd.setDate(defaultEnd.getDate() + 30);
 
     const location = {
       displayName: formValue,

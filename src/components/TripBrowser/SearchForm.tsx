@@ -266,7 +266,7 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
     const positionValue = props.positionValue;
 
     const defaultBegin = new Date();
-    defaultBegin.setDate(defaultBegin.getDate() - 14);
+    defaultBegin.setDate(defaultBegin.getDate() - 30);
     const defaultEnd = new Date();
     defaultEnd.setDate(defaultEnd.getDate() + 30);
 
