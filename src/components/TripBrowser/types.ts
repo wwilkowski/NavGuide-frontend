@@ -29,17 +29,13 @@ export interface ISearchFormProps {
   trips: ISingleTripType[];
   onCityHover: (location: ISuggestedPlace) => void;
   onCityClick: () => void;
-  tripInfoVisible: boolean;
-  changeTripInfoVisible: (id: number) => void;
 }
 
 export interface IListTripsProps {
   trips: ISingleTripType[];
   mode: ListMode;
   chosenOfferId: number | null;
-
   setChosenOfferId: (offerId: number | null) => void;
-  changeTripInfoVisible: (id: number) => void;
 }
 
 export interface IListSuggestedTripsProps {

@@ -10,6 +10,7 @@ import styles from './EditProfileForm.module.scss';
 import OrderedOffers from '../../../components/OrderedOffers/OrderedOffers';
 import ActiveOffers from '../../../components/ActiveOffers/ActiveOffers';
 import { getActiveOffersRequest, getApproachesRequest } from '../../Offers/actions';
+import HistoryOffers from '../../../components/HistoryOffers/HistoryOffers';
 
 enum Scene {
   profile,
@@ -23,6 +24,8 @@ const EditProfileForm = () => {
   const user = useSelector((state: StoreType) => state.profile.user);
   const activeTrips = useSelector((state: StoreType) => state.currentOfferReducer.activeOffers);
   const approaches = useSelector((state: StoreType) => state.currentOfferReducer.approaches);
+  const historyOffersTraveler = useSelector((state: StoreType) => state.currentOfferReducer.approaches);
+  const historyOffersGuide = useSelector((state: StoreType) => state.currentOfferReducer.activeOffers);
 
   const onEditProfileFormSubmit = (editUser: IUserFormValues) => {
     dispatcher(actions.editProfileRequest(editUser, user));
@@ -47,7 +50,7 @@ const EditProfileForm = () => {
       <div className={sceneMode === Scene.activeOffers ? styles.profileSection : styles.profileSectionHidden}>
         {user.role === 'GUIDE' ? (
           <div>
-            <h2>Zaintteresowanie ofertami</h2>
+            <h2>Zainteresowanie ofertami</h2>
             <OrderedOffers trips={activeTrips} />
           </div>
         ) : (
@@ -57,7 +60,11 @@ const EditProfileForm = () => {
           </div>
         )}
       </div>
-      <div className={sceneMode === Scene.history ? styles.profileSection : styles.profileSectionHidden}>History</div>
+      <div className={sceneMode === Scene.history ? styles.profileSection : styles.profileSectionHidden}>
+        <h2>Historia Weryfikacji Ofert</h2>
+        {user.role === 'TRAVELER' && <HistoryOffers trips={historyOffersTraveler} role={user.role} />}
+        {user.role === 'GUIDE' && <HistoryOffers trips={historyOffersGuide} role={user.role} />}
+      </div>
       <ProfileMenu setScene={setSceneMode} />
     </div>
   );

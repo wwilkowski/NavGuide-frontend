@@ -15,7 +15,6 @@ import ListTrips from './ListTrips';
 import styles from './SearchForm.module.scss';
 import MapIcon from '../../assets/icons/map.png';
 import ListIcon from '../../assets/icons/list.png';
-import CloseIcon from '../../assets/icons/close.png';
 import Slider from '@material-ui/core/Slider';
 import SearchIcon from '../../assets/icons/search.png';
 import DatePicker from 'react-datepicker';
@@ -266,7 +265,7 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
     const positionValue = props.positionValue;
 
     const defaultBegin = new Date();
-    defaultBegin.setDate(defaultBegin.getDate() - 14);
+    defaultBegin.setDate(defaultBegin.getDate() - 30);
     const defaultEnd = new Date();
     defaultEnd.setDate(defaultEnd.getDate() + 30);
 
@@ -323,7 +322,7 @@ const SearchForm = (props: ISearchFormProps) => {
   const [chosenOfferId, setChosenOfferId] = useState<number | null>(null);
   const [formView, setFormView] = useState(true);
 
-  const { tripInfoVisible, changeTripInfoVisible, setPosition, positionValue, formValue, trips, getTrips } = props;
+  const { setPosition, positionValue, formValue, trips, getTrips } = props;
 
   const [mode, setMode] = useState<ListMode>(ListMode.normal);
 
@@ -339,15 +338,8 @@ const SearchForm = (props: ISearchFormProps) => {
 
   return (
     <div className={styles.container}>
-      <button
-        onClick={() => setFormView(() => !formView)}
-        className={styles.viewToggler}
-        style={tripInfoVisible ? { display: 'none' } : {}}
-      >
+      <button onClick={() => setFormView(() => !formView)} className={styles.viewToggler}>
         <img src={formView ? MapIcon : ListIcon} alt='' />
-      </button>
-      <button onClick={() => changeTripInfoVisible(1)} className={styles.viewToggler} style={!tripInfoVisible ? { display: 'none' } : {}}>
-        <img src={CloseIcon} alt='' />
       </button>
       <div className={styles.container__el}>
         <ControlledSearchForm
@@ -361,17 +353,9 @@ const SearchForm = (props: ISearchFormProps) => {
           trips={props.trips}
           onCityHover={props.onCityHover}
           onCityClick={props.onCityClick}
-          tripInfoVisible={tripInfoVisible}
-          changeTripInfoVisible={changeTripInfoVisible}
         />
         <div className={formView ? '' : styles.hidden}>
-          <ListTrips
-            trips={props.trips}
-            mode={mode}
-            chosenOfferId={chosenOfferId}
-            setChosenOfferId={setChosenOfferId}
-            changeTripInfoVisible={props.changeTripInfoVisible}
-          />
+          <ListTrips trips={props.trips} mode={mode} chosenOfferId={chosenOfferId} setChosenOfferId={setChosenOfferId} />
         </div>
       </div>
       <div className={`${styles.container__el} ${formView ? styles.hidden : ''}`}>
@@ -381,7 +365,6 @@ const SearchForm = (props: ISearchFormProps) => {
           trips={props.trips}
           chosenOfferId={chosenOfferId}
           setChosenOfferId={setChosenOfferId}
-          changeTripInfoVisible={changeTripInfoVisible}
         />
       </div>
     </div>

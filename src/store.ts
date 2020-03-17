@@ -41,6 +41,8 @@ interface IActiveOffer {
   offer: ISingleTripType;
   plannedDate: Date;
   traveler: ITraveler;
+  status: string;
+  feedbackMessage: string;
 }
 
 interface ICurrentOffer {
