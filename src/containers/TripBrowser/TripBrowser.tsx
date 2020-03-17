@@ -33,7 +33,7 @@ const TripBrowser: React.FC = () => {
     const defaultBegin = new Date();
     defaultBegin.setDate(defaultBegin.getDate() - 14);
     const defaultEnd = new Date();
-    defaultEnd.setDate(defaultEnd.getDate() + 14);
+    defaultEnd.setDate(defaultEnd.getMonth() + 1);
 
     const location = {
       displayName: formValue,
