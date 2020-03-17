@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next';
 
 interface Props {
   trip: ISingleTripType;
-  changeVisible: (id: number) => void;
 }
 
 const priceTypes = {
@@ -26,11 +25,11 @@ const getLanguage = (code: string) => {
   }
 };
 
-const TripListElement = ({ trip, changeVisible }: Props) => {
+const TripListElement = ({ trip }: Props) => {
   const isLogged: boolean = useSelector((state: StoreType) => state.profile.isLoggedIn);
   const { t } = useTranslation();
   return (
-    <li key={trip.id} onClick={() => changeVisible(trip.id)} className={styles.offer}>
+    <li key={trip.id} className={styles.offer}>
       <img
         src={trip.photos ? trip.photos[0] : 'https://pwik.krzanowice.pl/uploads/default-image.png'}
         alt='offer view'

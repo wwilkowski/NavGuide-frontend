@@ -44,7 +44,7 @@ const OrderedOffers = ({ trips }: IProfileOffersProps) => {
     <ul>
       {filteredTrips.map((trip: IOffer, i: number) => (
         <li key={i}>
-          <TripListElement trip={trip.offer} changeVisible={() => {}} />
+          <TripListElement trip={trip.offer} />
           <p>Wiadomość od turysty</p>
           <p>{trip.message}</p>
           <p>Planowana data</p>

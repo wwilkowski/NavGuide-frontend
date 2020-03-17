@@ -25,7 +25,7 @@ const HistoryOffers = ({ trips, role }: IProfileHistoryOffersProps) => {
     <ul>
       {filteredTrips.map((trip: IOffer, i: number) => (
         <li key={i}>
-          <TripListElement trip={trip.offer} changeVisible={() => {}} />
+          <TripListElement trip={trip.offer} />
           <p>Status</p>
           <p>{trip.status}</p>
           <p>Wiadomość od turysty</p>

@@ -6,7 +6,7 @@ import TripListElement from './TripListElement';
 import styles from './ListTrips.module.scss';
 import { Link } from 'react-router-dom';
 
-const ListTrips = ({ trips, mode, chosenOfferId, setChosenOfferId, changeTripInfoVisible }: types.IListTripsProps) => {
+const ListTrips = ({ trips, mode, chosenOfferId, setChosenOfferId }: types.IListTripsProps) => {
   const { t } = useTranslation();
 
   return (
@@ -18,7 +18,7 @@ const ListTrips = ({ trips, mode, chosenOfferId, setChosenOfferId, changeTripInf
             {trips.map((trip: ISingleTripType) => (
               <div key={trip.id}>
                 <Link to={`/offers/${trip.id}`}>
-                  <TripListElement trip={trip} changeVisible={changeTripInfoVisible} />
+                  <TripListElement trip={trip} />
                 </Link>
               </div>
             ))}
@@ -33,7 +33,7 @@ const ListTrips = ({ trips, mode, chosenOfferId, setChosenOfferId, changeTripInf
           {trips.map((trip: ISingleTripType) => (
             <div key={trip.id}>
               <Link to={`/offers/${trip.id}`}>
-                <TripListElement trip={trip} changeVisible={changeTripInfoVisible} />
+                <TripListElement trip={trip} />
               </Link>
             </div>
           ))}
