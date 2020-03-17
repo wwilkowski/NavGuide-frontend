@@ -8,9 +8,9 @@ import SwitchLanguageButton from '../../components/SwitchLanguageButton/SwitchLa
 import { StoreType } from '../../store';
 import { logInGoogleRequest, logOutGoogleRequest } from '../Profile/actions';
 import { getInterestsRequest, signUpGoogleRequest } from '../Registration/actions';
-import styles from './Header.module.scss';
-import LogoImage from '../../assets/logo.png';
 import MenuIcon from '../../assets/icons/menu.png';
+import AppLogo from '../../components/AppLogo/AppLogo';
+import styles from './Header.module.scss';
 
 const Header: React.FC = () => {
   const dispatcher = useDispatch();
@@ -34,75 +34,73 @@ const Header: React.FC = () => {
 
   return (
     <header className={styles.header}>
-      <a href='/' className={styles.header__logoLink}>
-        <img src={LogoImage} alt='app logo' className={styles.header__logo} />
-        <div className={styles.header__titleCase}>
-          <h1 className={styles.header__title}>NavGuide</h1>
-          <p className={styles.header__description}>Find your local guides</p>
-        </div>
-      </a>
-      <button className={styles.header__menuButton} onClick={() => setOpenMenu(!openMenu)}>
-        <img src={MenuIcon} className={styles.header__menuIcon} alt='' />
-      </button>
-      <ul className={`${styles.header__menuList} ${!openMenu ? styles.header__hiddenMenu : ''}`}>
+      <div className={styles.menuActions}>
+        <AppLogo />
+        <button onClick={() => setOpenMenu(!openMenu)} className={styles.menuToggler}>
+          <img src={MenuIcon} alt='' className={styles.menuIcon} />
+        </button>
+      </div>
+      <div className={`${styles.mainMenu} ${!openMenu ? styles.hidden : ''}`}>
         {!profile.isLoggedIn ? (
-          <>
-            <li className={styles.header__menuListElement}>
+          <ul className={styles.loginMenu}>
+            <li className={styles.loginMenuElement}>
               <GoogleButton text='Sign up with Google' onSuccess={signUpWithUserCode} onFailure={signUpWithUserCode} />
             </li>
-            <li className={styles.header__menuListElement}>
+            <li className={styles.loginMenuElement}>
               <GoogleButton text='Sign in with Google' onSuccess={signInWithUserCode} onFailure={signInWithUserCode} />
             </li>
-          </>
+          </ul>
         ) : (
-          <ul className={styles.profile}>
-            <button className={styles.profile__case} onClick={() => setOpenProfileMenu(!openProfileMenu)}>
-              <img src={profile.user.avatar} alt='avatar' className={styles.profile__avatar} />
-              <p>{profile.user.firstName}</p>
-            </button>
+          <ul className={styles.userMenu}>
+            <div className={styles.userCase}>
+              <Link to='/' className={styles.user}>
+                <img src={profile.user.avatar} alt='avatar' className={styles.avatar} />
+                <p className={styles.userName}>
+                  {profile.user.firstName} {profile.user.lastName}
+                </p>
+              </Link>
+              <LogoutButton onClick={logout} />
+            </div>
             <ul
-              className={`${styles.profile__menu} ${!openProfileMenu ? styles.profile__hiddenMenu : ''}`}
               onClick={() => {
                 setOpenMenu(false);
                 setOpenProfileMenu(false);
               }}
+              className={styles.menuOptions}
             >
-              <li>
-                <Link to='/profile' className={styles.profile__link}>
+              <li className={styles.menuOption}>
+                <Link to='/profile' className={styles.menuLink}>
                   {t('Profile')}
                 </Link>
               </li>
               {profile.user.role === 'ADMIN' ? (
-                <li>
-                  <Link to='/admin' className={styles.profile__link}>
+                <li className={styles.menuOption}>
+                  <Link to='/admin' className={styles.menuLink}>
                     {t('Admin panel')}
                   </Link>
                 </li>
               ) : profile.user.role === 'GUIDE' ? (
-                <li>
-                  <Link to='/offers/create' className={styles.profile__link}>
+                <li className={styles.menuOption}>
+                  <Link to='/offers/create' className={styles.menuLink}>
                     {t('Create new offer')}
                   </Link>
                 </li>
               ) : (
-                <li>
-                  <Link to='/register/guide' className={styles.profile__link}>
+                <li className={styles.menuOption}>
+                  <Link to='/register/guide' className={styles.menuLink}>
                     {t('Become a guide')}
                   </Link>
                 </li>
               )}
-              <li>
-                <LogoutButton onClick={logout} />
-              </li>
             </ul>
           </ul>
         )}
-        <div className={styles.langButtons}>
+        <div className={styles.languageOptions}>
           <SwitchLanguageButton code='pl' />
           {` / `}
           <SwitchLanguageButton code='en' />
         </div>
-      </ul>
+      </div>
     </header>
   );
 };
