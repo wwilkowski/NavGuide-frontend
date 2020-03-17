@@ -23,7 +23,7 @@ const OfferSale = (props: Props) => {
   const [message, setMessage] = useState<string>('');
   return currentOffer ? (
     <div>
-      <TripListElement trip={currentOffer} changeVisible={() => {}} />
+      <TripListElement trip={currentOffer} />
       <form>
         <label htmlFor='message'>Wiadomość do sprzedającego</label>
         <textarea id='message' value={message} onChange={e => setMessage(e.target.value)}></textarea>

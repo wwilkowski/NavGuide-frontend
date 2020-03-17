@@ -28,13 +28,12 @@ const SignupSchema = Yup.object().shape({
 
 const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
   const { t } = useTranslation();
+
+  const [ageArray, setAgeArray] = useState<number[]>([]);
   const [interests, setInterests] = useState([]);
 
   const { touched, errors, isSubmitting, values } = props;
   const { experience } = values;
-
-  const ageArray = [];
-  for (let i = 10; i < 100; i++) ageArray.push(i);
 
   useEffect(() => {
     if (Object.keys(errors).length !== 0 && isSubmitting) {
@@ -45,6 +44,10 @@ const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
   }, [errors, isSubmitting, t]);
 
   useEffect(() => {
+    const tmp = [];
+    for (let i = 10; i < 100; i++) tmp.push(i);
+    setAgeArray(tmp);
+
     async function fetchData() {
       const data = await fetch('https://235.ip-51-91-9.eu/interests');
       const json = await data.json();

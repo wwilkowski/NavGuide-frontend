@@ -15,7 +15,6 @@ import ListTrips from './ListTrips';
 import styles from './SearchForm.module.scss';
 import MapIcon from '../../assets/icons/map.png';
 import ListIcon from '../../assets/icons/list.png';
-import CloseIcon from '../../assets/icons/close.png';
 import Slider from '@material-ui/core/Slider';
 import SearchIcon from '../../assets/icons/search.png';
 import DatePicker from 'react-datepicker';
@@ -275,7 +274,7 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
     const positionValue = props.positionValue;
 
     const defaultBegin = new Date();
-    defaultBegin.setDate(defaultBegin.getDate() - 14);
+    defaultBegin.setDate(defaultBegin.getDate() - 30);
     const defaultEnd = new Date();
     defaultEnd.setDate(defaultEnd.getDate() + 30);
 
@@ -332,7 +331,7 @@ const SearchForm = (props: ISearchFormProps) => {
   const [chosenOfferId, setChosenOfferId] = useState<number | null>(null);
   const [formView, setFormView] = useState(true);
 
-  const { tripInfoVisible, changeTripInfoVisible, setPosition, positionValue, formValue, trips, getTrips } = props;
+  const { setPosition, positionValue, formValue, trips, getTrips } = props;
 
   const [mode, setMode] = useState<ListMode>(ListMode.normal);
 
@@ -386,7 +385,6 @@ const SearchForm = (props: ISearchFormProps) => {
           trips={props.trips}
           chosenOfferId={chosenOfferId}
           setChosenOfferId={setChosenOfferId}
-          changeTripInfoVisible={changeTripInfoVisible}
         />
       </div>
     </div>

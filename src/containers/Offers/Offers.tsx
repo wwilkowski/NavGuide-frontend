@@ -48,14 +48,7 @@ const Offers = () => {
             setPlace={setPlace}
           />
           <div className={styles.mapContainer}>
-            <LeafletMap
-              height='80vh'
-              position={position}
-              trips={[]}
-              chosenOfferId={0}
-              setChosenOfferId={() => {}}
-              changeTripInfoVisible={() => {}}
-            />
+            <LeafletMap height='80vh' position={position} trips={[]} chosenOfferId={0} setChosenOfferId={() => {}} />
           </div>
         </div>
       </PrivateRoute>

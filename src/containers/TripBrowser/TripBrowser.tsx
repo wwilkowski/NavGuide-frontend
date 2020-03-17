@@ -16,9 +16,6 @@ const TripBrowser: React.FC = () => {
 
   const [beginDate, setBeginDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
-  const [tripInfoVisible, setTripInfoVisible] = useState<boolean>(false);
-  const [searchedTrips, setSearchedTrips] = useState<ISingleTripType[]>([]);
-  const [tripInfoId, setTripInfoId] = useState<number>(0);
   const [filteredTrips, setFilteredTrips] = useState<ISingleTripType[]>([]);
   const [activeTags, setActiveTags] = useState<string[]>([]);
   const [formValue, setFormValue] = useState<string>('UMK Wydział Matematyki i Informatyki');
@@ -31,9 +28,9 @@ const TripBrowser: React.FC = () => {
 
   useEffect(() => {
     const defaultBegin = new Date();
-    defaultBegin.setDate(defaultBegin.getDate() - 14);
+    defaultBegin.setDate(defaultBegin.getDate() - 30);
     const defaultEnd = new Date();
-    defaultEnd.setDate(defaultEnd.getMonth() + 1);
+    defaultEnd.setDate(defaultEnd.getDate() + 30);
 
     const location = {
       displayName: formValue,
@@ -61,9 +58,9 @@ const TripBrowser: React.FC = () => {
 
   useEffect(() => {
     const defaultBegin = new Date();
-    defaultBegin.setDate(defaultBegin.getDate() - 14);
+    defaultBegin.setDate(defaultBegin.getDate() - 30);
     const defaultEnd = new Date();
-    defaultEnd.setDate(defaultEnd.getDate() + 14);
+    defaultEnd.setDate(defaultEnd.getDate() + 30);
 
     const location = {
       displayName: formValue,
@@ -189,23 +186,6 @@ const TripBrowser: React.FC = () => {
     //dispatcher(actions.fetchClosestTripsRequested());
   };
 
-  const changeTripInfoVisible = (tripId: number) => {
-    setTripInfoVisible(!tripInfoVisible);
-    let id = 0;
-    let i = 0;
-    tripsData.forEach((trip: ISingleTripType) => {
-      if (trip.id === tripId) {
-        id = i;
-      }
-      i++;
-    });
-
-    if (!tripInfoVisible && isLogged) {
-      dispatcher(actionsProfile.fetchGuideProfileRequested(tripsData[id].owner.guideId));
-      dispatcher(actionsProfile.fetchGuideProfileDataRequest(tripsData[id].owner.userId));
-    }
-  };
-
   return (
     <div>
       <SearchForm
@@ -219,17 +199,7 @@ const TripBrowser: React.FC = () => {
         setPosition={setPositionValue}
         onCityHover={handleCityHover}
         onCityClick={handleCityClick}
-        tripInfoVisible={tripInfoVisible}
-        changeTripInfoVisible={changeTripInfoVisible}
       />
-      {/* {tripInfoVisible ? (
-        <TripInfo
-          tripInformations={tripsData[tripInfoId]}
-          guideProfile={guideProfile}
-          guideProfileData={guideProfileData}
-          changeTripInfoVisible={changeTripInfoVisible}
-        />
-      ) : null} */}
     </div>
   );
 };
