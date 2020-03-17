@@ -3,7 +3,9 @@ import {
   FETCH_TAGS_REQUESTED,
   FETCH_NAME_TRIPS_REQUESTED,
   FETCH_GEO_TRIPS_REQUESTED,
-  FETCH_SUGGESTED_CITIES_REQUESTED
+  FETCH_SUGGESTED_CITIES_REQUESTED,
+  FETCH_CLOSEST_TRIPS_REQUESTED,
+  FETCH_POPULAR_TRIPS_REQUESTED
 } from './constants';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import * as actions from './actions';
@@ -95,6 +97,28 @@ function* fetchGeoTripsFromAPI(action: types.IFetchGeoTripsRequest) {
   }
 }
 
+function* fetchClosestTripsFromAPI() {
+  try {
+    const endpoint = '';
+
+    const response = yield call(fetch, endpoint);
+    const status = response.status;
+    const trips = response.json();
+
+    if (status >= 200 && status <= 300) {
+      yield put(actions.fetchClosestTripsSuccessed(trips));
+    } else {
+      throw new Error();
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+function* fetchPopularTripsFromAPI() {
+  console.log('popular');
+}
+
 function* fetchTagsFromAPI() {
   try {
     const response = yield call(fetch, tagsEndpoint);
@@ -154,6 +178,8 @@ function* mainSaga() {
   yield takeLatest(FETCH_GEO_TRIPS_REQUESTED, fetchGeoTripsFromAPI);
   yield takeLatest(FETCH_TAGS_REQUESTED, fetchTagsFromAPI);
   yield takeLatest(FETCH_SUGGESTED_CITIES_REQUESTED, fetchSuggestedCitiesFromNominatimAPI);
+  yield takeLatest(FETCH_CLOSEST_TRIPS_REQUESTED, fetchClosestTripsFromAPI);
+  yield takeLatest(FETCH_POPULAR_TRIPS_REQUESTED, fetchPopularTripsFromAPI);
 }
 
 export default mainSaga;

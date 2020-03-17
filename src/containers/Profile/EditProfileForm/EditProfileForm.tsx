@@ -41,7 +41,7 @@ const EditProfileForm = () => {
       <div className={sceneMode === Scene.profile ? styles.userContainer : styles.profileSectionHidden}>
         <div className={sceneMode === Scene.profile ? styles.profileSection : styles.profileSectionHidden}>
           <AvatarForm />
-          <UserDataForm onSubmit={onEditProfileFormSubmit} templateUser={user} />
+          <UserDataForm onSubmit={onEditProfileFormSubmit} register={false} templateUser={user} />
         </div>
       </div>
       <div className={sceneMode === Scene.activeOffers ? styles.profileSection : styles.profileSectionHidden}>

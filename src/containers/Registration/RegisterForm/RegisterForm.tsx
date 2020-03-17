@@ -6,13 +6,9 @@ import { StoreType } from '../../../store';
 import * as actions from '../actions';
 import styles from './RegisterForm.module.scss';
 import PlusIcon from '../../../assets/icons/plus.png';
+import { IRegisterFormProps } from '../types';
 
-interface Props {
-  templateUser: IUserData;
-  onSubmit: (user: IUserFormValues) => void;
-}
-
-const RegisterForm = (Component: ComponentType<Props>) => {
+const RegisterForm = (Component: ComponentType<IRegisterFormProps>) => {
   const dispatcher = useDispatch();
   const { t } = useTranslation();
   const registrationData = useSelector((state: StoreType) => state.registration);
@@ -28,12 +24,12 @@ const RegisterForm = (Component: ComponentType<Props>) => {
         <img src={PlusIcon} alt='' />
       </span>
       <h1 className={styles.registerForm__title}>{t('Create Account')}</h1>
-      <p className={styles.registerForm__desc}>Uzupelnij pozostałe informacje niezbędne do założenia konta w aplikacji.</p>
+      <p className={styles.registerForm__desc}>{t('Complete the rest informations to set up an account in the application')}.</p>
       <label htmlFor='toBeGuide'>
-        {t('I want to be a guide too')}
+        {t('I want to be a guide')}
         <input id='toBeGuide' type='checkbox' style={{ margin: '1rem' }} checked={toBeGuide} onChange={() => setToBeGuide(prev => !prev)} />
       </label>
-      <Component onSubmit={onRegisterFormSubmit} templateUser={registrationData.templateUser} />
+      <Component onSubmit={onRegisterFormSubmit} templateUser={registrationData.templateUser} register={true} />
     </div>
   );
 };

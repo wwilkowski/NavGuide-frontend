@@ -97,9 +97,12 @@ function* editProfile(action: types.IEditProfileAction) {
         interests: action.editUser.interests,
         lastName: action.editUser.lastName,
         telephone: action.editUser.telephone,
-        gender: action.editUser.gender
+        gender: action.editUser.gender,
+        age: action.editUser.age
       })
     });
+
+    console.log(action.editUser.age);
     if (response.status >= 200 && response.status <= 300) {
       const { country, email, experience, firstName, interests, lastName, telephone, gender, age } = yield response.json();
 

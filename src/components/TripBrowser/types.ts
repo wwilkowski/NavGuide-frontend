@@ -1,6 +1,12 @@
 import { ISingleTripType, IPosition, ISuggestedPlace } from '../../containers/TripBrowser/types';
 import { SetStateAction, Dispatch } from 'react';
 
+export enum ListMode {
+  normal,
+  closest,
+  popular
+}
+
 export interface ISearchFormValues {
   location: string;
   lat: number;
@@ -8,12 +14,14 @@ export interface ISearchFormValues {
   radius: number;
   searchMode: string;
   activeTags: string[];
+  begin: Date;
   end: Date;
 }
 
 export interface ISearchFormProps {
   onChange: (location: string) => void;
-  onSubmit: (location: ISuggestedPlace, radius: number, mode: string, end: Date) => void;
+  onSubmit: (location: ISuggestedPlace, radius: number, mode: string, end: Date, begin: Date) => void;
+  getTrips: (mode: ListMode) => void;
   updateActiveTags: (tagNames: string[]) => void;
   setPosition: (position: IPosition) => void;
   formValue: string;
@@ -27,8 +35,9 @@ export interface ISearchFormProps {
 
 export interface IListTripsProps {
   trips: ISingleTripType[];
-  mode: string;
+  mode: ListMode;
   chosenOfferId: number | null;
+
   setChosenOfferId: (offerId: number | null) => void;
   changeTripInfoVisible: (id: number) => void;
 }
