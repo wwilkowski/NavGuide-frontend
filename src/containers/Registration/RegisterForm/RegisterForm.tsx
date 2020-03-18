@@ -7,6 +7,7 @@ import * as actions from '../actions';
 import styles from './RegisterForm.module.scss';
 import PlusIcon from '../../../assets/icons/plus.png';
 import { IRegisterFormProps } from '../types';
+import Checkbox from '@material-ui/core/Checkbox';
 
 const RegisterForm = (Component: ComponentType<IRegisterFormProps>) => {
   const dispatcher = useDispatch();
@@ -20,14 +21,20 @@ const RegisterForm = (Component: ComponentType<IRegisterFormProps>) => {
 
   return (
     <div className={styles.registerForm}>
-      <span className={styles.registerForm__plusIcon}>
+      <span className={styles.plusIcon}>
         <img src={PlusIcon} alt='' />
       </span>
-      <h1 className={styles.registerForm__title}>{t('Create Account')}</h1>
-      <p className={styles.registerForm__desc}>{t('Complete the rest informations to set up an account in the application')}.</p>
-      <label htmlFor='toBeGuide'>
+      <h1 className={styles.title}>{t('Create Account')}</h1>
+      <p className={styles.desc}>{t('Complete the rest informations to set up an account in the application')}.</p>
+      <label htmlFor='toBeGuide' className={styles.guideInfo}>
         {t('I want to be a guide')}
-        <input id='toBeGuide' type='checkbox' style={{ margin: '1rem' }} checked={toBeGuide} onChange={() => setToBeGuide(prev => !prev)} />
+        <Checkbox
+          color='primary'
+          id='toBeGuide'
+          style={{ margin: '1rem' }}
+          checked={toBeGuide}
+          onChange={() => setToBeGuide(prev => !prev)}
+        />
       </label>
       <Component onSubmit={onRegisterFormSubmit} templateUser={registrationData.templateUser} register={true} />
     </div>

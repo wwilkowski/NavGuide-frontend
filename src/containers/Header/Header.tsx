@@ -11,6 +11,10 @@ import { getInterestsRequest, signUpGoogleRequest } from '../Registration/action
 import MenuIcon from '../../assets/icons/menu.png';
 import AppLogo from '../../components/AppLogo/AppLogo';
 import styles from './Header.module.scss';
+import ProfileIcon from '../../assets/icons/002-user.png';
+import CreateOfferIcon from '../../assets/icons/003-pen.png';
+import AdminPanelIcon from '../../assets/icons/004-settings.png';
+import BecomeGuideIcon from '../../assets/icons/005-instruction.png';
 
 const Header: React.FC = () => {
   const dispatcher = useDispatch();
@@ -40,7 +44,12 @@ const Header: React.FC = () => {
           <img src={MenuIcon} alt='' className={styles.menuIcon} />
         </button>
       </div>
-      <div className={`${styles.mainMenu} ${!openMenu ? styles.hidden : ''}`}>
+      <div
+        className={`${styles.mainMenu} ${!openMenu ? styles.hidden : ''}`}
+        onClick={() => {
+          setOpenMenu(false);
+        }}
+      >
         {!profile.isLoggedIn ? (
           <ul className={styles.loginMenu}>
             <li className={styles.loginMenuElement}>
@@ -61,33 +70,32 @@ const Header: React.FC = () => {
               </Link>
               <LogoutButton onClick={logout} />
             </div>
-            <ul
-              onClick={() => {
-                setOpenMenu(false);
-              }}
-              className={styles.menuOptions}
-            >
+            <ul className={styles.menuOptions}>
               <li className={styles.menuOption}>
                 <Link to='/profile' className={styles.menuLink}>
-                  {t('Profile')}
+                  <img src={ProfileIcon} alt='' className={styles.menuLinkIcon} />
+                  <p className={styles.menuLinkText}>{t('Profile')}</p>
                 </Link>
               </li>
               {profile.user.role === 'ADMIN' ? (
                 <li className={styles.menuOption}>
                   <Link to='/admin' className={styles.menuLink}>
-                    {t('Admin panel')}
+                    <img src={AdminPanelIcon} alt='' className={styles.menuLinkIcon} />
+                    <p className={styles.menuLinkText}>{t('Admin panel')}</p>
                   </Link>
                 </li>
               ) : profile.user.role === 'GUIDE' ? (
                 <li className={styles.menuOption}>
                   <Link to='/offers/create' className={styles.menuLink}>
-                    {t('Create new offer')}
+                    <img src={CreateOfferIcon} alt='' className={styles.menuLinkIcon} />
+                    <p className={styles.menuLinkText}>{t('Create new offer')}</p>
                   </Link>
                 </li>
               ) : (
                 <li className={styles.menuOption}>
                   <Link to='/register/guide' className={styles.menuLink}>
-                    {t('Become a guide')}
+                    <img src={BecomeGuideIcon} alt='' className={styles.menuLinkIcon} />
+                    <p className={styles.menuLinkText}>{t('Become a guide')}</p>
                   </Link>
                 </li>
               )}
