@@ -1,4 +1,4 @@
-import { Field, Form, FormikProps, withFormik } from 'formik';
+import { Form, FormikProps, withFormik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
@@ -53,7 +53,7 @@ const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
   const [ageArray, setAgeArray] = useState<number[]>([]);
   const [interests, setInterests] = useState([]);
 
-  const { touched, errors, isSubmitting, values } = props;
+  const { errors, isSubmitting, values } = props;
   const { experience } = values;
 
   useEffect(() => {
@@ -249,7 +249,7 @@ const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
           </li>
         ))}
       </ul>
-      <Button variant='contained' color='primary' className={styles.submitButton} type='submit' disabled={Object.keys(errors).length}>
+      <Button variant='contained' color='primary' className={styles.submitButton} type='submit' disabled={!!Object.keys(errors).length}>
         {props.register ? t('Register') : t('Update')}
       </Button>
     </Form>
