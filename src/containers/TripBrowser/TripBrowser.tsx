@@ -49,8 +49,6 @@ const TripBrowser: React.FC = () => {
       }
     };
 
-    console.log(defaultBegin);
-    console.log(defaultEnd);
     onSearchFormSubmit(location, positionValue.radius, 'normal', endDate ? endDate : defaultEnd, beginDate ? beginDate : defaultBegin);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -97,20 +95,19 @@ const TripBrowser: React.FC = () => {
           const tripBegin = new Date(trip.begin);
           const tripEnd = new Date(trip.end);
           if (tripBegin.getTime() >= beginDate.getTime() && tripEnd.getTime() <= endDate.getTime()) {
-            return trip;
+            return true;
           }
           return false;
         });
       }
 
       setFilteredTrips(tmp);
-    } else if (beginDate && endDate && isLogged) {
+    } else if (beginDate && endDate && isLogged && tripsData) {
       let tmp = [];
       tmp = tripsData.filter((trip: ISingleTripType) => {
         const tripBegin = new Date(trip.begin);
         const tripEnd = new Date(trip.end);
         if (tripBegin.getTime() >= beginDate.getTime() && tripEnd.getTime() <= endDate.getTime()) {
-          console.log('tak');
           return trip;
         }
         return false;
@@ -178,11 +175,10 @@ const TripBrowser: React.FC = () => {
 
   const getTrips = (mode: ListMode) => {
     if (mode === ListMode.closest) {
+      dispatcher(actions.fetchClosestTripsRequested(3, positionValue.latitude, positionValue.longitude));
     } else if (mode === ListMode.popular) {
       dispatcher(actions.fetchPopularTripsRequested());
     }
-    //obsluga popular i closest
-    //dispatcher(actions.fetchClosestTripsRequested());
   };
 
   return (

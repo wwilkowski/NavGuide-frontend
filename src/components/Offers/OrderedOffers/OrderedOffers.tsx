@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import TripListElement from '../TripBrowser/TripListElement';
+import TripListElement from '../../TripBrowser/TripListElement';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import * as actions from '../../containers/Offers/actions';
-import { IProfileOffersProps, IOffer } from '../../containers/Offers/types';
-import { showNotification } from '../../helpers/notification';
+import * as actions from '../../../containers/Offers/actions';
+import { IProfileOffersProps, IOffer } from '../../../containers/Offers/types';
+import { showNotification } from '../../../helpers/notification';
 import { useTranslation } from 'react-i18next';
 
 const OrderedOffers = ({ trips }: IProfileOffersProps) => {

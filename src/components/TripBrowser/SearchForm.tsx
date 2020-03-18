@@ -334,7 +334,7 @@ const SearchForm = (props: ISearchFormProps) => {
 
   useEffect(() => {
     if (!trips.length && isLogged) setMode(ListMode.closest);
-    else if (!trips.length && !isLogged) setMode(ListMode.popular);
+    //else if (!trips.length && !isLogged) setMode(ListMode.popular);
     else setMode(ListMode.normal);
   }, [isLogged, trips]);
 

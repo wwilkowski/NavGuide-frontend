@@ -84,3 +84,30 @@ export const settleActiveOfferFailed = (message: string) => ({
   type: typeof constants.SETTLE_ACTIVE_OFFER_FAILED,
   message
 });
+
+// agreements
+
+export const createAgreementRequest = (newAgreement: types.IAgreement) => ({
+  type: constants.CREATE_AGREEMENT_REQUESTED,
+  newAgreement
+});
+
+export const getOwnAgreementsRequest = () => ({
+  type: constants.GET_OWN_AGREEMENTS_REQUESTED
+});
+
+export const getOwnAgreementsSuccessed = (agreements: types.IActiveOffer[]) => ({
+  type: constants.GET_OWN_AGREEMENTS_SUCCESSED,
+  agreements
+});
+
+export const getOwnAgreementsFailed = (message: string) => ({
+  type: constants.GET_OWN_AGREEMENTS_FAILED,
+  message
+});
+
+export const settleAgreementRequest = (id: number, status: string) => ({
+  type: constants.SETTLE_AGREEMENT_REQUESTED,
+  id,
+  status
+});

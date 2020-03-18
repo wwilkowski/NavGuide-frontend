@@ -23,6 +23,7 @@ import {
 } from './constants';
 import { IMultiTripsType, ITag, ISuggestedPlace } from './types';
 import { ISingleTripType } from '../Offers/types';
+import { number } from 'yup';
 
 //RANDOM TRIPS
 export const fetchRandomTripsRequested = (isLogged: boolean) => ({
@@ -76,11 +77,14 @@ export const fetchGeoTripsFailed = (message: string) => ({
 });
 
 //CLOSEST TRIPS
-export const fetchClosestTripsRequested = () => ({
-  type: FETCH_CLOSEST_TRIPS_REQUESTED
+export const fetchClosestTripsRequested = (count: number, latitude: number, longitude: number) => ({
+  type: FETCH_CLOSEST_TRIPS_REQUESTED,
+  count,
+  latitude,
+  longitude
 });
 
-export const fetchClosestTripsSuccessed = (trips: ISingleTripType[]) => ({
+export const fetchClosestTripsSuccessed = (trips: IMultiTripsType) => ({
   type: FETCH_CLOSEST_TRIPS_SUCCESSED,
   trips
 });

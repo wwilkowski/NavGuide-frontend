@@ -11,6 +11,7 @@ import {
 
 const initialState: IMultiTripsAndTagsType = {
   trips: [],
+  closestTrips: [],
   tags: [],
   places: []
 };
@@ -24,7 +25,7 @@ const TripBrowserReducer = (state = initialState, action: TripBrowserAction) => 
       return { ...state, trips: action.trips.trips };
 
     case FETCH_CLOSEST_TRIPS_SUCCESSED:
-      return { ...state, trips: action.trips.trips };
+      return { ...state, closestTrips: action.trips.trips };
 
     case FETCH_POPULAR_TRIPS_SUCCESSED:
       return { ...state, trips: action.trips.trips };
