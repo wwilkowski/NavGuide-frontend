@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import TripListElement from '../TripBrowser/TripListElement';
-import { IOffer, IProfileOffersProps } from '../../containers/Offers/types';
+import TripListElement from '../../TripBrowser/TripListElement';
+import { IOffer, IProfileOffersProps } from '../../../containers/Offers/types';
 
 const OrderedOffers = ({ trips }: IProfileOffersProps) => {
   const [filteredTrips, setFilteredTrips] = useState<IOffer[]>([]);

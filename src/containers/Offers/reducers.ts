@@ -9,7 +9,7 @@ const initialState: IOffersStore = {
   offer: undefined
 };
 
-const RegistrationReducer = (state = initialState, action: types.IOffersActionType) => {
+const currentOfferReducer = (state = initialState, action: types.IOffersActionType) => {
   switch (action.type) {
     case constants.GET_OFFER_BY_ID_SUCCESSED:
       return {
@@ -26,9 +26,14 @@ const RegistrationReducer = (state = initialState, action: types.IOffersActionTy
         ...state,
         approaches: action.trips
       };
+    case constants.GET_OWN_AGREEMENTS_SUCCESSED:
+      return {
+        ...state,
+        agreements: action.agreements
+      };
     default:
       return state;
   }
 };
 
-export default RegistrationReducer;
+export default currentOfferReducer;

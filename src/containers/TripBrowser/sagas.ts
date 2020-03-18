@@ -97,16 +97,20 @@ function* fetchGeoTripsFromAPI(action: types.IFetchGeoTripsRequest) {
   }
 }
 
-function* fetchClosestTripsFromAPI() {
+function* fetchClosestTripsFromAPI(action: types.IFetchClosestTripsRequest) {
   try {
-    const endpoint = '';
+    const endpoint = `https://235.ip-51-91-9.eu/offers/near?count=${action.count}&lat=${action.latitude}&lon=${action.longitude}`;
 
     const response = yield call(fetch, endpoint);
     const status = response.status;
-    const trips = response.json();
+    const trips = yield response.json();
 
+    const templateTrips: types.IMultiTripsType = { trips: [] };
     if (status >= 200 && status <= 300) {
-      yield put(actions.fetchClosestTripsSuccessed(trips));
+      trips.forEach((trip: types.ISingleTripType) => {
+        templateTrips.trips.push(trip);
+      });
+      yield put(actions.fetchClosestTripsSuccessed(templateTrips));
     } else {
       throw new Error();
     }

@@ -79,8 +79,6 @@ const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
 
   const classes = useStyles();
 
-  console.log(errors);
-
   return (
     <Form className={`${classes.root} ${styles.form}`}>
       <div className={styles.case}>

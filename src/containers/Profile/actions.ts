@@ -1,5 +1,6 @@
 import * as constants from './constants';
 import { IUserData, IUserFormValues } from '../../shared/types';
+import { ISingleTripType } from '../TripBrowser/types';
 
 export const logInGoogleRequest = (code: string) => ({
   type: constants.LOG_IN_GOOGLE_REQUESTED,
@@ -66,4 +67,19 @@ export const sendAvatarSuccessed = () => ({
 
 export const sendAvatarFailed = () => ({
   type: constants.SEND_AVATAR_FAILED
+});
+
+export const getProfileHistoryRequest = (userId: number) => ({
+  type: constants.GET_PROFILE_HISTORY_OFFERS_REQUESTED,
+  userId
+});
+
+export const getProfileHistorySuccessed = (trips: ISingleTripType[]) => ({
+  type: constants.GET_PROFILE_HISTORY_OFFERS_SUCCESSED,
+  trips
+});
+
+export const getProfileHistoryFailed = (message: string) => ({
+  type: constants.GET_PROFILE_HISTORY_OFFERS_FAILED,
+  message
 });
