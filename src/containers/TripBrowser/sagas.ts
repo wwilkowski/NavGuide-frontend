@@ -7,7 +7,7 @@ import {
   FETCH_CLOSEST_TRIPS_REQUESTED,
   FETCH_POPULAR_TRIPS_REQUESTED
 } from './constants';
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest, debounce } from 'redux-saga/effects';
 import * as actions from './actions';
 import * as types from './types';
 
@@ -175,7 +175,7 @@ function* mainSaga() {
   //TRIP BROWSER
   yield takeLatest(FETCH_RANDOM_TRIPS_REQUESTED, fetchRandomTripsFromAPI);
   yield takeLatest(FETCH_NAME_TRIPS_REQUESTED, fetchNameTripsFromAPI);
-  yield takeLatest(FETCH_GEO_TRIPS_REQUESTED, fetchGeoTripsFromAPI);
+  yield debounce(500, FETCH_GEO_TRIPS_REQUESTED, fetchGeoTripsFromAPI);
   yield takeLatest(FETCH_TAGS_REQUESTED, fetchTagsFromAPI);
   yield takeLatest(FETCH_SUGGESTED_CITIES_REQUESTED, fetchSuggestedCitiesFromNominatimAPI);
   yield takeLatest(FETCH_CLOSEST_TRIPS_REQUESTED, fetchClosestTripsFromAPI);
