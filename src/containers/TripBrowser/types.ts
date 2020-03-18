@@ -75,6 +75,7 @@ export interface IMultiEndedTripsType {
 
 export interface IMultiTripsAndTagsType {
   trips: ISingleTripType[];
+  closestTrips: ISingleTripType[];
   tags: ITag[];
   places: ISuggestedPlace[];
 }
@@ -196,6 +197,9 @@ export interface IFetchNameTripsRequest {
 
 export interface IFetchClosestTripsRequest {
   type: typeof FETCH_CLOSEST_TRIPS_REQUESTED;
+  count: number;
+  latitude: number;
+  longitude: number;
 }
 
 export interface IFetchPopularTripsRequest {

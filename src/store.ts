@@ -24,32 +24,7 @@ import { IMultiTripsAndTagsType, ISingleTripType } from './containers/TripBrowse
 import { IGuideProfileComplete } from './containers/GuideProfile/types';
 import { IMultiGuideRequests } from './containers/AdminPanel/types';
 import { IUserProfiles } from './containers/User/types';
-
-interface ITraveler {
-  id: number;
-  firstName: string;
-  lastName: string;
-  country: string;
-  role: string;
-  experience: number;
-  avatar: string;
-}
-
-interface IActiveOffer {
-  id: number;
-  message: string;
-  offer: ISingleTripType;
-  plannedDate: Date;
-  traveler: ITraveler;
-  status: string;
-  feedbackMessage: string;
-}
-
-interface ICurrentOffer {
-  offer: ISingleTripType;
-  activeOffers: IActiveOffer[];
-  approaches: IActiveOffer[];
-}
+import { ICurrentOffer } from './containers/Offers/types';
 
 export interface StoreType {
   registration: IRegisterStore;

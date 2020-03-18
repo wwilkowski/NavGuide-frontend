@@ -60,7 +60,7 @@ const initialGuideState: IGuideProfileComplete = {
       tags: [{ id: -1, name: '' }]
     }
   ],
-  historyOffers: [
+  verifiedOffers: [
     {
       date: '',
       offer: {
@@ -102,7 +102,7 @@ const GuideProfileReducer = (state = initialGuideState, action: GuideProfileActi
     case FETCH_GUIDE_ACTIVE_OFFERS_SUCCESSED:
       return { ...state, activeOffers: action.activeOffers };
     case FETCH_GUIDE_HISTORY_SUCCESSED:
-      return { ...state, historyOffers: action.historyOffers };
+      return { ...state, verifiedOffers: action.verifiedOffers };
 
     case FETCH_GUIDE_PROFILE_DATA_FAILED:
       console.error(action.message);

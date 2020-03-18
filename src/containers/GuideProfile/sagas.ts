@@ -91,10 +91,10 @@ function* fetchGuideHistoryFromAPI(action: types.IFetchGuideHistoryRequest) {
         Authorization: `Bearer ${getToken()}`
       }
     });
-    const historyOffers = yield response.json();
+    const verifiedOffers = yield response.json();
 
     if (response.status >= 200 && response.status <= 300) {
-      yield put(actions.fetchGuideHistorySuccessed(historyOffers));
+      yield put(actions.fetchGuideHistorySuccessed(verifiedOffers));
     } else {
       throw new Error();
     }

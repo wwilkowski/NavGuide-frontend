@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import TripListElement from '../TripBrowser/TripListElement';
-import { IOffer, IProfileHistoryOffersProps } from '../../containers/Offers/types';
+import TripListElement from '../../TripBrowser/TripListElement';
+import { IOffer, IProfileVerifiedOffersProps } from '../../../containers/Offers/types';
 
-const HistoryOffers = ({ trips, role }: IProfileHistoryOffersProps) => {
+const VerifiedOffers = ({ trips, role, state }: IProfileVerifiedOffersProps) => {
   const [filteredTrips, setFilteredTrips] = useState<IOffer[]>([]);
 
   useEffect(() => {
-    if (trips) setFilteredTrips(trips.filter((trip: IOffer) => trip.status !== 'PENDING'));
+    if (trips && state === 'accepted') {
+      setFilteredTrips(trips.filter((trip: IOffer) => trip.status === 'ACCEPTED'));
+    } else if (trips && state === 'rejected') {
+      setFilteredTrips(trips.filter((trip: IOffer) => trip.status == 'REJECTED'));
+    }
   }, [trips]);
 
   const getDate = (date: Date) => {
@@ -35,4 +39,4 @@ const HistoryOffers = ({ trips, role }: IProfileHistoryOffersProps) => {
   ) : null;
 };
 
-export default HistoryOffers;
+export default VerifiedOffers;
