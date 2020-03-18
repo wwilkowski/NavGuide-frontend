@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { ISingleTripType, IPosition, ISuggestedPlace } from './types';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from './actions';
-import * as actionsProfile from '../../containers/GuideProfile/actions';
 import { StoreType } from '../../store';
 import SearchForm from '../../components/TripBrowser/SearchForm';
 import { ListMode } from '../../components/TripBrowser/types';
@@ -118,7 +117,7 @@ const TripBrowser: React.FC = () => {
       });
       setFilteredTrips(tmp);
     } else if (!isLogged) setFilteredTrips(tripsData);
-  }, [activeTags, tripsData]);
+  }, [activeTags, beginDate, endDate, isLogged, tripsData]);
 
   useEffect(() => {
     dispatcher(actions.fetchTagsRequested());

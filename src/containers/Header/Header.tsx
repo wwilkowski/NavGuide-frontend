@@ -30,7 +30,7 @@ const Header: React.FC = () => {
   };
 
   const [openMenu, setOpenMenu] = useState(false);
-  const [openProfileMenu, setOpenProfileMenu] = useState(false);
+  // const [openProfileMenu, setOpenProfileMenu] = useState(false);
 
   return (
     <header className={styles.header}>
@@ -64,7 +64,6 @@ const Header: React.FC = () => {
             <ul
               onClick={() => {
                 setOpenMenu(false);
-                setOpenProfileMenu(false);
               }}
               className={styles.menuOptions}
             >

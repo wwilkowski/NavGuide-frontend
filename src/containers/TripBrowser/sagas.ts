@@ -116,7 +116,7 @@ function* fetchClosestTripsFromAPI() {
 }
 
 function* fetchPopularTripsFromAPI() {
-  console.log('popular');
+  yield console.log('popular');
 }
 
 function* fetchTagsFromAPI() {

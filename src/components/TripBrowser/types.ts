@@ -1,5 +1,4 @@
 import { ISingleTripType, IPosition, ISuggestedPlace } from '../../containers/TripBrowser/types';
-import { SetStateAction, Dispatch } from 'react';
 
 export enum ListMode {
   normal,

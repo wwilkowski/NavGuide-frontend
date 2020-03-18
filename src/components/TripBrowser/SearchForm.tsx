@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ITag, ISuggestedPlace } from '../../containers/TripBrowser/types';
-import { withFormik, FormikProps, Field, Form } from 'formik';
+import { withFormik, FormikProps, Form } from 'formik';
 import { useSelector } from 'react-redux';
 import { StoreType } from '../../store';
 import * as Yup from 'yup';
@@ -13,10 +13,7 @@ import Checkbox from '../../shared/Checkbox';
 import ListSuggestedTrips from './ListSuggestedTrips';
 import ListTrips from './ListTrips';
 import styles from './SearchForm.module.scss';
-import MapIcon from '../../assets/icons/map.png';
-import ListIcon from '../../assets/icons/list.png';
 import Slider from '@material-ui/core/Slider';
-import SearchIcon from '../../assets/icons/search.png';
 import DatePicker from 'react-datepicker';
 import TextField from '@material-ui/core/TextField';
 import Radio from '@material-ui/core/Radio';
@@ -364,17 +361,9 @@ const SearchForm = (props: ISearchFormProps) => {
             trips={props.trips}
             onCityHover={props.onCityHover}
             onCityClick={props.onCityClick}
-            tripInfoVisible={tripInfoVisible}
-            changeTripInfoVisible={changeTripInfoVisible}
           />
           <div className={formView ? '' : styles.hidden}>
-            <ListTrips
-              trips={props.trips}
-              mode={mode}
-              chosenOfferId={chosenOfferId}
-              setChosenOfferId={setChosenOfferId}
-              changeTripInfoVisible={props.changeTripInfoVisible}
-            />
+            <ListTrips trips={props.trips} mode={mode} chosenOfferId={chosenOfferId} setChosenOfferId={setChosenOfferId} />
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React, { ComponentType, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IUserData, IUserFormValues } from '../../../shared/types';
+import { IUserFormValues } from '../../../shared/types';
 import { useSelector, useDispatch } from 'react-redux';
 import { StoreType } from '../../../store';
 import * as actions from '../actions';

@@ -6,12 +6,7 @@ const HistoryOffers = ({ trips, role }: IProfileHistoryOffersProps) => {
   const [filteredTrips, setFilteredTrips] = useState<IOffer[]>([]);
 
   useEffect(() => {
-    if (trips)
-      setFilteredTrips(
-        trips.filter((trip: IOffer) => {
-          if (trip.status !== 'PENDING') return trip;
-        })
-      );
+    if (trips) setFilteredTrips(trips.filter((trip: IOffer) => trip.status !== 'PENDING'));
   }, [trips]);
 
   const getDate = (date: Date) => {
