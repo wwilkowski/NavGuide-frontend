@@ -7,7 +7,8 @@ import Description from './Description/Description';
 import { useTranslation } from 'react-i18next';
 import { StoreType } from '../../store';
 import { useSelector } from 'react-redux';
-import { ISingleTripType } from '../../containers/TripBrowser/types';
+import { ISingleTripType, IPosition } from '../../containers/TripBrowser/types';
+import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 
 const TripInfo = (props: ITripInfoProps) => {
   const { t } = useTranslation();
@@ -51,14 +52,30 @@ const TripInfo = (props: ITripInfoProps) => {
     setInformationsMode(mode);
     if (informationsMode === 'trip') setTripData(props.tripInformations);
   };
+
+  const position: IPosition = {
+    latitude: 53.01023065,
+    longitude: 18.594376006630313,
+    radius: 0.0
+  };
+
   return isLogged ? (
-    <div className={styles.infoContainer}>
-      <div className={styles.infoContainer__content} ref={node}>
-        <div className={styles.infoContainer__header}>{props.tripInformations.name}</div>
-        <div className={styles.gallery}>
+    <div className={styles.case}>
+      <div>
+        <Map center={{ lat: position.latitude, lng: position.longitude }} zoom={12} className={styles.map}>
+          <TileLayer
+            url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          />
+          <Marker position={{ lat: position.latitude, lng: position.longitude }} opacity={0.5}>
+            <Popup>You</Popup>
+          </Marker>
+        </Map>
+      </div>
+      <div className={styles.container}>
+        <div ref={node}>
+          <h2 className={styles.title}>{props.tripInformations.name}</h2>
           <Gallery photos={props.tripInformations.photos} />
-        </div>
-        <div className={styles.informations}>
           <Informations
             mode={informationsMode}
             changeInformationsMode={changeInformationsMode}
@@ -66,22 +83,17 @@ const TripInfo = (props: ITripInfoProps) => {
             guideProfile={props.guideProfile}
             guideProfileData={props.guideProfileData}
           />
-        </div>
-        {/* <div className={styles.orderButton}>
-          <Link to={`/offers/${tripData.id}/buy`}>{t('Order now!')}</Link>
-        </div> */}
-        <div className={styles.description}>
-          <p className={styles.description__title}>{t('Description')}</p>
-          <div className={styles.description__content}>
+          <div>
+            <h2 className={styles.title}>{t('Description')}</h2>
             <Description text={props.tripInformations.description} />
           </div>
         </div>
       </div>
     </div>
   ) : (
-    <div className={styles.infoContainer}>
-      <div className={styles.infoContainer__content} ref={node}>
-        <p style={{ margin: '2rem' }}>Zaloguj się lub zarejestruj, aby zobaczyć więcej</p>
+    <div>
+      <div ref={node}>
+        <p>Zaloguj się lub zarejestruj, aby zobaczyć więcej</p>
       </div>
     </div>
   );

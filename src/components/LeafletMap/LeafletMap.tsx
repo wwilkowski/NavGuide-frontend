@@ -42,7 +42,7 @@ const LeafletMap = ({ position, trips = [], chosenOfferId = null, setChosenOffer
   const classes = useStyles();
 
   return (
-    <Map center={{ lat: latitude, lng: longitude }} zoom={12} className={classes.map}>
+    <Map center={{ lat: latitude, lng: longitude }} zoom={12} className={classes.map} style={{ height: height }}>
       <TileLayer
         url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

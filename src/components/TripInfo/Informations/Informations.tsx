@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import styles from '../TripInfo.module.scss';
 import { IInformationsProps } from './types';
 import { ITag } from '../../../containers/TripBrowser/types';
 import { Link } from 'react-router-dom';
 import { fetchGuideProfileRequested } from '../../../containers/GuideProfile/actions';
 import { useDispatch } from 'react-redux';
+import styles from './styles.module.scss';
 
 const Informations = (props: IInformationsProps) => {
   const { t } = useTranslation();
@@ -63,156 +63,131 @@ const Informations = (props: IInformationsProps) => {
 
   return (
     <>
-      <div className={styles.informations__header}>
-        {activeTripButton ? (
-          <div
-            className={styles.buttonActive}
+      <nav className={styles.nav}>
+        <ul className={styles.nav__menuList}>
+          <li
+            className={styles.nav__menuItem}
             onClick={() => {
               props.changeInformationsMode('trip');
-              if (!activeTripButton) setActiveTripButton(!activeTripButton);
-              if (activeGuideButton) setActiveGuideButton(!activeGuideButton);
             }}
           >
-            {t('trip')}
-          </div>
-        ) : (
-          <div
-            className={styles.button}
-            onClick={() => {
-              props.changeInformationsMode('trip');
-              if (!activeTripButton) setActiveTripButton(!activeTripButton);
-              if (activeGuideButton) setActiveGuideButton(!activeGuideButton);
-            }}
-          >
-            {t('trip')}
-          </div>
-        )}
-        {!activeGuideButton ? (
-          <div
-            className={styles.button}
+            <div className={styles.nav__case}>
+              <img className={styles.nav__icon} src={''} alt='' />
+              <p className={styles.nav__p}>Profile</p>
+            </div>
+          </li>
+          <li
+            className={styles.nav__menuItem}
             onClick={() => {
               props.changeInformationsMode('guide');
-              if (!activeGuideButton) setActiveGuideButton(!activeGuideButton);
-              if (activeTripButton) setActiveTripButton(!activeTripButton);
             }}
           >
-            {t('guide')}
-          </div>
-        ) : (
-          <div
-            className={styles.buttonActive}
-            onClick={() => {
-              props.changeInformationsMode('guide');
-              if (!activeGuideButton) setActiveGuideButton(!activeGuideButton);
-              if (activeTripButton) setActiveTripButton(!activeTripButton);
-            }}
-          >
-            {t('guide')}
-          </div>
-        )}
-        <Link className={styles.orderButton} to={`/offers/${tripData.id}/buy`}>
-          {t('Order now!')}
-        </Link>
-      </div>
+            <div className={styles.nav__case}>
+              <img className={styles.nav__icon} src={''} alt='' />
+              <p className={styles.nav__p}>Active offers</p>
+            </div>
+          </li>
+          <li className={styles.nav__menuItem} onClick={() => {}}>
+            <div className={styles.nav__case}>
+              <Link to={`/offers/${tripData.id}/buy`}>{t('Order now!')}</Link>
+            </div>
+          </li>
+        </ul>
+      </nav>
       {props.mode === 'trip' ? (
         <div>
-          <div className={styles.informations__content}>
-            <div className={styles.content1}>
-              <p className={styles.title}>{t('Informations')}</p>
-              <p className={styles.left}>{t('City')}:</p>
-              <p className={styles.right}>{tripData.city}</p>
-              <p className={styles.left} style={{ width: '15%' }}>
-                {t('Price')}:
-              </p>
-              <p className={styles.right} style={{ width: '85%' }}>
+          <div className={styles.section}>
+            <h2 className={styles.title}>{t('Informations')}</h2>
+            <div className={styles.info}>
+              <p className={styles.subtitle}>{t('City')}</p>
+              <span className={styles.value}>{tripData.city}</span>
+            </div>
+            <div className={styles.info}>
+              <p className={styles.subtitle}>{t('Price')}</p>
+              <p className={styles.value}>
                 {tripData.price} ({t(tripData.priceType)})
               </p>
-              <p className={styles.left} style={{ width: '85%' }}>
-                {t('Max people')}:
-              </p>
-              <p className={styles.right} style={{ width: '15%' }}>
-                {' '}
-                {tripData.maxPeople}
-              </p>
             </div>
-            <div className={styles.content2}>
-              <p className={styles.title}>{t('Availability')}</p>
-              <p className={styles.left}>{t('From')}:</p>
-              <p className={styles.right}>
+            <div className={styles.info}>
+              <p className={styles.subtitle}>{t('Max people')}</p>
+              <p className={styles.value}> {tripData.maxPeople}</p>
+            </div>
+            <div className={styles.info}>
+              <p className={styles.subtitle}>{t('From')}:</p>
+              <p className={styles.value}>
                 {tripData.begin
                   .toString()
                   .replace('T', ' ')
                   .substr(0, tripData.begin.toString().indexOf('.'))}
               </p>
-
-              <p className={styles.left}>{t('To')}:</p>
-              <p className={styles.right}>
+            </div>
+            <div className={styles.info}>
+              <p className={styles.subtitle}>{t('To')}:</p>
+              <p className={styles.value}>
                 {tripData.end
                   .toString()
                   .replace('T', ' ')
                   .substr(0, tripData.end.toString().indexOf('.'))}
               </p>
             </div>
-            <div className={styles.content2}>
-              <p className={styles.title}>{t('Statistics')}</p>
-              <p className={styles.left}>{t('Sold')}:</p>
-              <p className={styles.right}>{tripData.sold}</p>
-
-              <p className={styles.left}>{t('Average mark')}:</p>
-              <p className={styles.right}>{tripData.averageMark > 0 ? tripData.averageMark : 0}</p>
+          </div>
+          <div className={styles.section}>
+            <h2 className={styles.title}>{t('Statistics')}</h2>
+            <div className={styles.info}>
+              <p className={styles.subtitle}>{t('Sold')}:</p>
+              <p className={styles.value}>{tripData.sold}</p>
             </div>
-            <div className={styles.content3}>
-              <div className={styles.content3__tags}>
-                {tripData.tags.map((tag: ITag, index: number) => (
-                  <div key={index} className={styles.tag}>
-                    {t(tag.name)}
-                  </div>
-                ))}
-              </div>
+            <div className={styles.info}>
+              <p className={styles.subtitle}>{t('Average mark')}:</p>
+              <p className={styles.value}>{tripData.averageMark > 0 ? tripData.averageMark : 0}</p>
             </div>
-            <div className={styles.content4}>
-              <p className={styles.title} style={{ width: '65%' }}>
-                {t('Number of visits')}
-              </p>
-              <p>{tripData.inSearch}</p>
-            </div>
+          </div>
+          <div className={styles.section}>
+            <h2 className={styles.title}>{t('Tags')}</h2>
+            <ul className={styles.tagList}>
+              {tripData.tags.map((tag: ITag, index: number) => (
+                <li key={index} className={styles.tag}>
+                  {t(tag.name)}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className={styles.section}>
+            <h2 className={styles.title}>{t('Number of visits')}</h2>
+            <p className={styles.centered}>23</p>
           </div>
         </div>
       ) : (
         <div>
-          <div className={styles.informations__content}>
-            <div className={styles.avatar}>
+          <div>
+            <div>
               <Link to='/guide_profile' onClick={() => dispatcher(fetchGuideProfileRequested(tripData.owner.guideId))}>
                 <img src={props.guideProfileData.avatar} alt='' />
               </Link>
             </div>
-            <div className={styles.guideContent1}>
+            <div>
               <p>
                 {tripData.owner.firstName} {tripData.owner.lastName}
               </p>
-              <p style={{ fontSize: '1.5vh', fontWeight: 'initial', marginTop: '-0.2rem' }}>
+              <p>
                 ({props.guideProfileData.age}, {props.guideProfileData.gender})
               </p>
             </div>
-            <div className={styles.content1}>
-              <p className={styles.left}>{t('Experience')}:</p>
-              <p className={styles.right}>{experience}</p>
-              <p className={styles.left}>{t('Average mark')}:</p>
-              <p className={styles.right}>{guideProfile.averageMark > 0 ? guideProfile.averageMark : 0}</p>
-              <p className={styles.title}>{t('Contact')}</p>
-              <p className={styles.left}>{t('Tel')}.:</p>
-              <p className={styles.right}>{telephone}</p>
-              <p className={styles.left} style={{ width: '15%' }}>
-                {t('Email')}:
-              </p>
-              <p className={styles.right} style={{ width: '85%' }}>
-                {props.guideProfileData.email}
-              </p>
-              <p className={styles.title}>{t('Speech')}</p>
-              <p className={styles.left}>{t('Country')}:</p>
-              <p className={styles.right}>{getCountry(props.guideProfileData.country)}</p>
-              <p className={styles.left}>{t('Languages')}:</p>
-              <p className={styles.right}>{guideProfile.languages.map((lng: string) => `${getLanguage(lng)} `)}</p>
+            <div>
+              <p>{t('Experience')}:</p>
+              <p>{experience}</p>
+              <p>{t('Average mark')}:</p>
+              <p>{guideProfile.averageMark > 0 ? guideProfile.averageMark : 0}</p>
+              <p>{t('Contact')}</p>
+              <p>{t('Tel')}.:</p>
+              <p>{telephone}</p>
+              <p>{t('Email')}:</p>
+              <p>{props.guideProfileData.email}</p>
+              <p>{t('Speech')}</p>
+              <p>{t('Country')}:</p>
+              <p>{getCountry(props.guideProfileData.country)}</p>
+              <p>{t('Languages')}:</p>
+              <p>{guideProfile.languages.map((lng: string) => `${getLanguage(lng)} `)}</p>
             </div>
           </div>
         </div>
