@@ -28,7 +28,7 @@ enum ActiveMode {
 const GuideProfileHistoryOffers = (props: IGuideProfileHistoryOffersProps) => {
   const { t } = useTranslation();
 
-  const { verifiedOffers, goBack } = props;
+  const { historyOffers, goBack } = props;
 
   const [activeMode, setActiveMode] = useState<ActiveMode>(ActiveMode.informations);
 
@@ -38,6 +38,7 @@ const GuideProfileHistoryOffers = (props: IGuideProfileHistoryOffersProps) => {
     {
       date: '',
       offer: {
+        inSearch: -1,
         averageMark: -1,
         begin: new Date(),
         city: '',
@@ -72,26 +73,26 @@ const GuideProfileHistoryOffers = (props: IGuideProfileHistoryOffersProps) => {
     setActivePhotos(activePhotos.splice(0));
 
     const tmp = activePhotos;
-    verifiedOffers.forEach((offer: IEndedSingleTripType) => {
+    historyOffers.forEach((offer: IEndedSingleTripType) => {
       tmp.push({ tripId: offer.offer.id, activePhotoId: 0, numberOfPhotos: offer.offer.photos.length });
     });
     setActivePhotos(tmp);
-  }, [verifiedOffers, activePhotos]);
+  }, [historyOffers, activePhotos]);
 
   useEffect(() => {
-    if (verifiedOffers) {
+    if (historyOffers) {
       setFilteredTrips(
-        verifiedOffers.filter((trip: IEndedSingleTripType) => {
+        historyOffers.filter((trip: IEndedSingleTripType) => {
           if (trip.offer.name.substr(0, value.length) === value) return true;
           return false;
         })
       );
     }
-  }, [value, verifiedOffers, activePhotos]);
+  }, [value, historyOffers, activePhotos]);
 
   useEffect(() => {
-    setFilteredTrips(verifiedOffers);
-  }, [verifiedOffers]);
+    setFilteredTrips(historyOffers);
+  }, [historyOffers]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);

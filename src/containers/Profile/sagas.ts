@@ -6,7 +6,6 @@ import i18n from '../../locales/i18n';
 import * as actions from './actions';
 import * as constants from './constants';
 import * as types from './types';
-import { ISingleTripType } from '../TripBrowser/types';
 
 const logInGoogleEndpoint = 'https://235.ip-51-91-9.eu/auth/google/login';
 const profileEndpoint = 'https://235.ip-51-91-9.eu/profile';
@@ -26,6 +25,7 @@ function* logInGoogle(action: types.ILogInGoogleRequest) {
     });
     if (response.status >= 200 && response.status <= 300) {
       const {
+        id,
         firstName,
         lastName,
         country,
@@ -40,6 +40,7 @@ function* logInGoogle(action: types.ILogInGoogleRequest) {
         age
       } = yield response.json();
       const user = {
+        id,
         firstName,
         lastName,
         email,
@@ -105,9 +106,10 @@ function* editProfile(action: types.IEditProfileAction) {
 
     console.log(action.editUser.age);
     if (response.status >= 200 && response.status <= 300) {
-      const { country, email, experience, firstName, interests, lastName, telephone, gender, age } = yield response.json();
+      const { id, country, email, experience, firstName, interests, lastName, telephone, gender, age } = yield response.json();
 
       const user = {
+        id: id,
         avatar: action.user.avatar,
         role: action.user.role,
         firstName,
@@ -146,8 +148,22 @@ function* getProfile() {
       }
     });
     if (response.status >= 200 && response.status <= 300) {
-      const { country, email, experience, firstName, interests, lastName, telephone, avatar, role, gender, age } = yield response.json();
+      const {
+        id,
+        country,
+        email,
+        experience,
+        firstName,
+        interests,
+        lastName,
+        telephone,
+        avatar,
+        role,
+        gender,
+        age
+      } = yield response.json();
       const user = {
+        id,
         avatar,
         role,
         firstName,

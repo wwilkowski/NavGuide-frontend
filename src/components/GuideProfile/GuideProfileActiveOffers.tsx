@@ -36,6 +36,7 @@ const GuideProfileActiveOffers = (props: IGuideProfileActiveOffersProps) => {
   const [visibleIds, setVisibleIds] = useState<number[]>([]);
   const [filteredTrips, setFilteredTrips] = useState<ISingleTripType[]>([
     {
+      inSearch: -1,
       averageMark: -1,
       begin: new Date(),
       city: '',

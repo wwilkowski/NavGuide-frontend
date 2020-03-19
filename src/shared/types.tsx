@@ -1,4 +1,5 @@
 export interface IUserData {
+  id: number;
   avatar: string;
   role: string;
   firstName: string;

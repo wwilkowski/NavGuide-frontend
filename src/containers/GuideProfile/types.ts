@@ -27,7 +27,7 @@ export interface IGuideProfileActiveOffersProps {
 }
 
 export interface IGuideProfileHistoryOffersProps {
-  verifiedOffers: IEndedSingleTripType[];
+  historyOffers: IEndedSingleTripType[];
   goBack: () => void;
 }
 
@@ -45,7 +45,7 @@ export interface IGuideProfileComplete {
   guideProfile: IGuideProfile;
   guideProfileData: IUserProfile;
   activeOffers: ISingleTripType[];
-  verifiedOffers: IEndedSingleTripType[];
+  historyOffers: IEndedSingleTripType[];
 }
 
 export interface IFetchGuideProfileSuccessed {
@@ -80,7 +80,7 @@ export interface IFetchGuideActiveOffersFailed {
 
 export interface IFetchGuideHistorySuccessed {
   type: typeof FETCH_GUIDE_HISTORY_SUCCESSED;
-  verifiedOffers: IEndedSingleTripType[];
+  historyOffers: IEndedSingleTripType[];
 }
 
 export interface IFetchGuideHistoryFailed {

@@ -23,7 +23,6 @@ import {
 } from './constants';
 import { IMultiTripsType, ITag, ISuggestedPlace } from './types';
 import { ISingleTripType } from '../Offers/types';
-import { number } from 'yup';
 
 //RANDOM TRIPS
 export const fetchRandomTripsRequested = (isLogged: boolean) => ({

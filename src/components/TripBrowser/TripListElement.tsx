@@ -29,7 +29,7 @@ const TripListElement = ({ trip }: Props) => {
   const isLogged: boolean = useSelector((state: StoreType) => state.profile.isLoggedIn);
   const { t } = useTranslation();
   return (
-    <li key={trip.id} className={styles.offer}>
+    <div key={trip.id} className={styles.offer}>
       <img
         src={trip.photos ? trip.photos[0] : 'https://pwik.krzanowice.pl/uploads/default-image.png'}
         alt='offer view'
@@ -72,7 +72,7 @@ const TripListElement = ({ trip }: Props) => {
           </ul>
         )}
       </div>
-    </li>
+    </div>
   );
 };
 

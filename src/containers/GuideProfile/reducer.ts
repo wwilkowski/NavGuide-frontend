@@ -34,6 +34,7 @@ const initialGuideState: IGuideProfileComplete = {
   },
   activeOffers: [
     {
+      inSearch: -1,
       averageMark: -1,
       begin: new Date(),
       city: '',
@@ -60,10 +61,11 @@ const initialGuideState: IGuideProfileComplete = {
       tags: [{ id: -1, name: '' }]
     }
   ],
-  verifiedOffers: [
+  historyOffers: [
     {
       date: '',
       offer: {
+        inSearch: -1,
         averageMark: -1,
         begin: new Date(),
         city: '',
@@ -102,7 +104,7 @@ const GuideProfileReducer = (state = initialGuideState, action: GuideProfileActi
     case FETCH_GUIDE_ACTIVE_OFFERS_SUCCESSED:
       return { ...state, activeOffers: action.activeOffers };
     case FETCH_GUIDE_HISTORY_SUCCESSED:
-      return { ...state, verifiedOffers: action.verifiedOffers };
+      return { ...state, verifiedOffers: action.historyOffers };
 
     case FETCH_GUIDE_PROFILE_DATA_FAILED:
       console.error(action.message);
