@@ -34,6 +34,7 @@ export interface IPosition {
 }
 
 export interface ISingleTripType {
+  inSearch: number;
   averageMark: number;
   begin: Date;
   city: string;

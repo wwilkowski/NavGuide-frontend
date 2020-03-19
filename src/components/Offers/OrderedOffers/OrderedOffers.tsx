@@ -42,8 +42,7 @@ const OrderedOffers = ({ trips }: IProfileOffersProps) => {
           <TripListElement trip={trip.offer} />
           <p>Wiadomość od turysty</p>
           <p>{trip.message}</p>
-          <p>Planowana data</p>
-          <p>{getDate(trip.plannedDate)}</p>
+          <p>Planowana data: {getDate(trip.plannedDate)}</p>
           <Link to={`/users/${trip.traveler.id}`}>Zobacz profil użytkownika o id {trip.traveler.id}</Link>
           <textarea value={message} onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setMessage(e.target.value)} />
           <button onClick={() => acceptOffer(trip.id)}>Zaakceptuj</button>

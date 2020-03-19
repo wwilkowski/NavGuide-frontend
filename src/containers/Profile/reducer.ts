@@ -1,5 +1,4 @@
 import * as constrants from './constants';
-import * as types from './types';
 
 const initialState = {
   isLoggedIn: false,

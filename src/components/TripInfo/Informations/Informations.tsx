@@ -174,7 +174,7 @@ const Informations = (props: IInformationsProps) => {
               <p className={styles.title} style={{ width: '65%' }}>
                 {t('Number of visits')}
               </p>
-              <p>23</p>
+              <p>{tripData.inSearch}</p>
             </div>
           </div>
         </div>

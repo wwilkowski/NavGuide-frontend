@@ -5,6 +5,8 @@ import { RouteComponentProps } from 'react-router';
 import { getOfferByIdRequest, buyOfferRequest } from '../actions';
 import TripListElement from '../../../components/TripBrowser/TripListElement';
 import DatePicker from 'react-datepicker';
+import { showNotification } from '../../../helpers/notification';
+import i18n from '../../../locales/i18n';
 
 type TParams = { id: string };
 
@@ -31,8 +33,13 @@ const OfferSale = (props: Props) => {
       </form>
       <button
         onClick={() => {
-          if (date != null) {
+          const tripBegin = new Date(currentOffer.begin);
+          const tripEnd = new Date(currentOffer.end);
+
+          if (date !== null && date.getTime() >= tripBegin.getTime() && date.getTime() <= tripEnd.getTime()) {
             dispatcher(buyOfferRequest(currentOffer.id.toString(), date, message));
+          } else {
+            showNotification('warning', i18n.t('Bad date!'), i18n.t('Please set date between begin and end offer'));
           }
         }}
       >
