@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { StoreType } from '../../store';
 import { RouteComponentProps } from 'react-router';
 import { getOfferByIdRequest } from './actions';
+import { fetchGuideProfileDataRequest } from '../GuideProfile/actions';
 
 type TParams = { id: string };
 
@@ -18,6 +19,10 @@ const Offer = (props: Props) => {
   useEffect(() => {
     dispatcher(getOfferByIdRequest(props.match.params.id));
   }, [dispatcher, props.match.params.id]);
+
+  useEffect(() => {
+    if (currentOffer) dispatcher(fetchGuideProfileDataRequest(currentOffer.owner.userId));
+  }, [dispatcher, currentOffer]);
 
   return (
     <div>

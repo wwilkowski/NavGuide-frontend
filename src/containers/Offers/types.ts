@@ -44,11 +44,21 @@ export interface IActiveOffer {
   feedbackMessage: string;
 }
 
+export interface IAgreementOffer {
+  description: string;
+  id: number;
+  offer: typesTripBrowser.ISingleTripType;
+  plannedDate: string;
+  price: number;
+  status: string;
+  traveler: ITraveler;
+}
+
 export interface ICurrentOffer {
   offer: typesTripBrowser.ISingleTripType;
   activeOffers: IActiveOffer[];
   approaches: IActiveOffer[];
-  agreements: IActiveOffer[];
+  agreements: IAgreementOffer[];
 }
 
 export interface IProfileOffersProps {
@@ -57,12 +67,21 @@ export interface IProfileOffersProps {
 
 export interface IProfileVerifiedOffersProps {
   trips: IOffer[];
-  role: string;
   state: string;
 }
 
 export interface IProfileHistoryOffersProps {
   trips: typesTripBrowser.ISingleTripType[];
+}
+
+export interface IAgreementsProps {
+  agreements: IAgreementOffer[];
+  verifiedOffers: IActiveOffer[];
+  onAgreementButtonClick: (agreementId: number, status: string) => void;
+}
+
+export interface IAcceptedOffersProps {
+  agreements: IAgreementOffer[];
 }
 
 export interface IOfferFormValues {

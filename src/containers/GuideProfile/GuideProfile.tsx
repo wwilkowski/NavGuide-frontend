@@ -24,7 +24,7 @@ const GuideProfile = () => {
   const guideProfile = useSelector((state: StoreType) => state.guideProfile.guideProfile);
   const guideProfileData = useSelector((state: StoreType) => state.guideProfile.guideProfileData);
   const activeOffers = useSelector((state: StoreType) => state.guideProfile.activeOffers);
-  const verifiedOffers = useSelector((state: StoreType) => state.guideProfile.verifiedOffers);
+  const historyOffers = useSelector((state: StoreType) => state.guideProfile.historyOffers);
 
   useEffect(() => {
     dispatcher(fetchGuideProfileDataRequest(guideProfile.userId));
@@ -49,7 +49,7 @@ const GuideProfile = () => {
         className={sceneMode === Scene.ratedOffers ? styles.container__section : styles.container__sectionHidden}
         style={{ borderRight: 'none', paddingRight: '0' }}
       >
-        <GuideProfileHistoryOffers verifiedOffers={verifiedOffers} goBack={backToMainPage} />
+        <GuideProfileHistoryOffers historyOffers={historyOffers} goBack={backToMainPage} />
       </div>
       <GuideProfileMenu setScene={setSceneMode} />
     </div>

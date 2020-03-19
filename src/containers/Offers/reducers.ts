@@ -31,6 +31,10 @@ const currentOfferReducer = (state = initialState, action: types.IOffersActionTy
         ...state,
         agreements: action.agreements
       };
+
+    case constants.SETTLE_ACTIVE_OFFER_FAILED:
+      return state;
+
     default:
       return state;
   }

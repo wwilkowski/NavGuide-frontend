@@ -30,6 +30,7 @@ function* signUpGoogleUser(action: types.ISignUpGoogleRequest) {
     const json = yield response.json();
     if (status >= 200 && status <= 300) {
       const templateUser = {
+        id: -1,
         avatar: '',
         role: '',
         firstName: json.firstName,
@@ -77,6 +78,7 @@ function* confirmGoogleUser(action: types.IConfirmSignUpRequest) {
       })
     });
     const {
+      id,
       firstName,
       lastName,
       country,
@@ -91,6 +93,7 @@ function* confirmGoogleUser(action: types.IConfirmSignUpRequest) {
       age
     } = yield response.json();
     const user = {
+      id,
       firstName,
       lastName,
       email,

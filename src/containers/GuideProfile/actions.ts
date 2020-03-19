@@ -69,9 +69,9 @@ export const fetchGuideHistoryRequest = (id: number) => ({
   id
 });
 
-export const fetchGuideHistorySuccessed = (verifiedOffers: IEndedSingleTripType[]) => ({
+export const fetchGuideHistorySuccessed = (historyOffers: IEndedSingleTripType[]) => ({
   type: FETCH_GUIDE_HISTORY_SUCCESSED,
-  verifiedOffers
+  historyOffers
 });
 
 export const fetchGuideHistoryFailed = (message: string) => ({

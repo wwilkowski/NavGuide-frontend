@@ -23,8 +23,7 @@ const OrderedOffers = ({ trips }: IProfileOffersProps) => {
           <TripListElement trip={trip.offer} />
           <p>Wiadomość od turysty</p>
           <p>{trip.message}</p>
-          <p>Planowana data</p>
-          <p>{getDate(trip.plannedDate)}</p>
+          <p>Planowana data: {getDate(trip.plannedDate)}</p>
         </li>
       ))}
     </ul>

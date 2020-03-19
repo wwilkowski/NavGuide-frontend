@@ -203,8 +203,7 @@ function* createAgreement(action: types.ICreateAgreementAction) {
     });
 
     if (response.status >= 200 && response.status <= 300) {
-      const json = yield response.json();
-      console.log(json);
+      yield put(actions.getOwnAgreementsRequest());
     } else if (response.status === 401) {
       throw new Error('You are not logged in');
     } else {
@@ -252,9 +251,9 @@ function* settleAgreement(action: types.ISettleAgreementAction) {
       })
     });
 
+    console.log(action.status);
     if (response.status >= 200 && response.status <= 300) {
-      const json = yield response.json();
-      console.log(json);
+      yield put(actions.getOwnAgreementsRequest());
     } else if (response.status === 401) {
       throw new Error('You are not logged in!');
     } else {
