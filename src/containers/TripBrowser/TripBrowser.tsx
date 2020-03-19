@@ -110,7 +110,6 @@ const TripBrowser: React.FC = () => {
         const tripBegin = new Date(trip.begin);
         const tripEnd = new Date(trip.end);
         if (tripBegin.getTime() >= beginDate.getTime() && tripEnd.getTime() <= endDate.getTime()) {
-          console.log('tak');
           return trip;
         }
         return false;
