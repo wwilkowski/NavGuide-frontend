@@ -354,7 +354,7 @@
     "trip": "wycieczka",
     "guide": "przewodnik",
     "Availability": "Dostępność",
-    "Informations": "informacje",
+    "Informations": "Informacje",
     "From": "Od",
     "To": "Do",
     "Description": "Opis",
@@ -380,6 +380,12 @@
     "History Offers": "Historia ofert",
     "Create Account": "Załóż Konto",
     "Experience in travelling": "Doświadczenie w podróżowaniu",
-    "Phone format is not valid": "Nieprawidłowy format numeru telefonu"
+    "Phone format is not valid": "Nieprawidłowy format numeru telefonu",
+
+    "I give tours regularly": "Regularnie organizuję wycieczki",
+    "I organize trips on average once a month": "Organizuję wycieczki średnio raz w miesiącu",
+    "Sometimes, I show something for friends": "Czasami pokazuję coś znajomym",
+    "I am a newcomer in guiding": "Jestem nowicjuszem w prowadzeniu",
+    "I was once a guide": "Byłem kiedyś przewodnikiem"
   }
 }
