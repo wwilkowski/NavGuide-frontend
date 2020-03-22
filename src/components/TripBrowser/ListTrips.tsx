@@ -10,7 +10,7 @@ const ListTrips = ({ trips, mode, chosenOfferId, setChosenOfferId }: types.IList
   const { t } = useTranslation();
 
   return (
-    <>
+    <div className={styles.listTrips}>
       {mode === types.ListMode.closest ? (
         <div>
           {t('No matching trips')}. {t('Trips in your area')}:
@@ -39,7 +39,7 @@ const ListTrips = ({ trips, mode, chosenOfferId, setChosenOfferId }: types.IList
           ))}
         </ul>
       )}
-    </>
+    </div>
   );
 };
 
