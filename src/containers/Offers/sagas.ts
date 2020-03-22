@@ -173,6 +173,7 @@ function* settleActiveOffer(action: types.ISettleOfferAction) {
 
     if (response.status >= 200 && response.status <= 300) {
       yield put(actions.getActiveOffersRequest());
+      showNotification('success', i18n.t('You have accepted offer'), i18n.t('Now create an agreement'));
     } else if (response.status === 401) {
       throw new Error('You are not logged in');
     } else {
@@ -204,14 +205,14 @@ function* createAgreement(action: types.ICreateAgreementAction) {
 
     if (response.status >= 200 && response.status <= 300) {
       yield put(actions.getOwnAgreementsRequest());
+      showNotification('success', i18n.t('Success'), i18n.t('You have created an agreement'));
     } else if (response.status === 401) {
       throw new Error('You are not logged in');
     } else {
-      console.log(response.status);
       throw new Error('Something goes wrong');
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 
@@ -251,9 +252,12 @@ function* settleAgreement(action: types.ISettleAgreementAction) {
       })
     });
 
-    console.log(action.status);
     if (response.status >= 200 && response.status <= 300) {
       yield put(actions.getOwnAgreementsRequest());
+      if (action.status === 'ACCEPT')
+        showNotification('success', i18n.t('You have accepted an agreement'), i18n.t('Your trip will be done'));
+      if (action.status === 'REJECT')
+        showNotification('danger', i18n.t('You have rejected an agreement'), i18n.t('Your trip will not be done'));
     } else if (response.status === 401) {
       throw new Error('You are not logged in!');
     } else {

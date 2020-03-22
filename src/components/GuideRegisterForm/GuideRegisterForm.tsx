@@ -1,5 +1,5 @@
 import React from 'react';
-import { withFormik, FormikProps, Field } from 'formik';
+import { withFormik, FormikProps } from 'formik';
 import * as types from './types';
 import Checkbox from '../../shared/Checkbox';
 import { useTranslation } from 'react-i18next';

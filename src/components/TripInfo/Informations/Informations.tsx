@@ -161,7 +161,7 @@ const Informations = (props: IInformationsProps) => {
         <div>
           <div>
             <div>
-              <Link to='/guide_profile' onClick={() => dispatcher(fetchGuideProfileRequested(tripData.owner.guideId))}>
+              <Link to={`/guide/${tripData.owner.guideId}`} onClick={() => dispatcher(fetchGuideProfileRequested(tripData.owner.guideId))}>
                 <img src={props.guideProfileData.avatar} alt='' />
               </Link>
             </div>

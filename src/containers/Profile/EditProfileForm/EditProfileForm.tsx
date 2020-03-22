@@ -4,7 +4,7 @@ import { StoreType } from '../../../store';
 import UserDataForm from '../../../components/UserDataForm/UserDataForm';
 import { IUserFormValues } from '../../../shared/types';
 import * as actions from '../actions';
-import { getOwnAgreementsRequest, settleAgreementRequest, createAgreementRequest } from '../../Offers/actions';
+import { getOwnAgreementsRequest, settleAgreementRequest } from '../../Offers/actions';
 import AvatarForm from '../../../components/AvatarForm/AvatarForm';
 import ProfileMenu from '../../../components/ProfileMenu/ProfileMenu';
 import styles from './EditProfileForm.module.scss';
@@ -14,6 +14,7 @@ import VerifiedOffers from '../../../components/Offers/VerifiedOffers/VerifiedOf
 import HistoryOffers from '../../../components/Offers/HistoryOffers/HistoryOffers';
 import Agreements from '../../../components/Offers/Agreements/Agreements';
 import AcceptedOffers from '../../../components/Offers/AcceptedOffers/AcceptedOffers';
+import { useTranslation } from 'react-i18next';
 
 enum Scene {
   profile,
@@ -22,6 +23,8 @@ enum Scene {
 }
 
 const EditProfileForm = () => {
+  const { t } = useTranslation();
+
   const dispatcher = useDispatch();
 
   const [sceneMode, setSceneMode] = useState<Scene>(Scene.profile);
@@ -40,21 +43,6 @@ const EditProfileForm = () => {
   const onAgreementButtonClick = (agreementId: number, status: string) => {
     dispatcher(settleAgreementRequest(agreementId, status));
   };
-
-  //DODAWANIE UMOWY
-  useEffect(() => {
-    const d = new Date();
-    console.log();
-    const agreement = {
-      offerId: 7,
-      description: 'test',
-      userId: 11,
-      price: 10,
-      plannedDate: d.toISOString()
-    };
-
-    //dispatcher(createAgreementRequest(agreement));
-  }, []);
 
   useEffect(() => {
     dispatcher(actions.getProfileHistoryRequest(-1));
@@ -78,9 +66,13 @@ const EditProfileForm = () => {
       <div className={sceneMode === Scene.activeOffers ? styles.profileSection : styles.profileSectionHidden}>
         <div>
           <h2>Jesteś zainteresowany</h2>
-          <ActiveOffers trips={approaches} />
-          <h2>Oczekujące umowy</h2>
-          <Agreements agreements={agreements} verifiedOffers={verifiedOffersTraveler} onAgreementButtonClick={onAgreementButtonClick} />
+          <ActiveOffers trips={approaches} agreements={[]} />
+          {agreements && (
+            <>
+              <h2>{t('Your agreements')}: </h2>
+              <Agreements agreements={agreements} verifiedOffers={verifiedOffersTraveler} onAgreementButtonClick={onAgreementButtonClick} />
+            </>
+          )}
         </div>
       </div>
       <div className={sceneMode === Scene.history ? styles.profileSection : styles.profileSectionHidden}>
@@ -93,6 +85,7 @@ const EditProfileForm = () => {
       </div>
       <div className={styles.profileSectionHidden}>
         <h2>Zaakceptowane umowy</h2>
+        <h1>(wycieczki się odbędą)</h1>
         <AcceptedOffers agreements={agreements} />
       </div>
       <div className={styles.profileSectionHidden}>

@@ -63,6 +63,7 @@ export interface ICurrentOffer {
 
 export interface IProfileOffersProps {
   trips: IOffer[];
+  agreements: IAgreementOffer[];
 }
 
 export interface IProfileVerifiedOffersProps {

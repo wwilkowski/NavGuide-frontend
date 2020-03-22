@@ -35,7 +35,6 @@ function* fetchGuideProfileFromAPI(action: types.IFetchGuideProfileRequest) {
 
 function* fetchGuideProfileDataFromAPI(action: types.IFetchGuideProfileRequest) {
   try {
-    console.log(action.id);
     const endpoint = `https://235.ip-51-91-9.eu/users/${action.id}`;
 
     const response = yield call(fetch, endpoint, {

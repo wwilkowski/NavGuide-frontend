@@ -21,8 +21,6 @@ const AcceptedOffers = (props: IAcceptedOffersProps) => {
         if (agr.status === 'ACCEPTED') tmp.push(agr);
       });
 
-      console.log(location.pathname);
-
       if (user.role && location.pathname === '/profile')
         setFilteredAgreements(tmp.filter((agr: IAgreementOffer) => agr.offer.owner.userId !== user.id));
 
@@ -43,6 +41,7 @@ const AcceptedOffers = (props: IAcceptedOffersProps) => {
         <div key={agr.id}>
           <TripListElement trip={agr.offer} />
           {user.role === 'GUIDE' && <Link to={`/users/${agr.traveler.id}`}>Zobacz profil użytkownika o id {agr.traveler.id}</Link>}
+
           <p>Planowana data: {getDate(agr.plannedDate)}</p>
           <p>Cena: {agr.price}</p>
           <p>Opis:</p>
