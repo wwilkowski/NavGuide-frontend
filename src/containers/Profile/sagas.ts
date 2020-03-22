@@ -25,6 +25,7 @@ function* logInGoogle(action: types.ILogInGoogleRequest) {
     });
     if (response.status >= 200 && response.status <= 300) {
       const {
+        id,
         firstName,
         lastName,
         country,
@@ -39,6 +40,7 @@ function* logInGoogle(action: types.ILogInGoogleRequest) {
         age
       } = yield response.json();
       const user = {
+        id,
         firstName,
         lastName,
         email,
@@ -102,11 +104,11 @@ function* editProfile(action: types.IEditProfileAction) {
       })
     });
 
-    console.log(action.editUser.age);
     if (response.status >= 200 && response.status <= 300) {
-      const { country, email, experience, firstName, interests, lastName, telephone, gender, age } = yield response.json();
+      const { id, country, email, experience, firstName, interests, lastName, telephone, gender, age } = yield response.json();
 
       const user = {
+        id: id,
         avatar: action.user.avatar,
         role: action.user.role,
         firstName,
@@ -145,8 +147,22 @@ function* getProfile() {
       }
     });
     if (response.status >= 200 && response.status <= 300) {
-      const { country, email, experience, firstName, interests, lastName, telephone, avatar, role, gender, age } = yield response.json();
+      const {
+        id,
+        country,
+        email,
+        experience,
+        firstName,
+        interests,
+        lastName,
+        telephone,
+        avatar,
+        role,
+        gender,
+        age
+      } = yield response.json();
       const user = {
+        id,
         avatar,
         role,
         firstName,
@@ -199,12 +215,42 @@ function* sendAvatar(action: types.ISendAvatarAction) {
   }
 }
 
+function* getProfileHistory(action: types.IGetProfileHistoryOffersRequest) {
+  try {
+    //GDY ID = -1 TO POBIERA HISTORIE OFERT SWOJEGO PROFILU
+    const endpointProfile = `https://235.ip-51-91-9.eu/profile/history`;
+    const endpointProfileById = `https://235.ip-51-91-9.eu/users/${action.userId}/history`;
+    let response;
+    if (action.userId === -1) {
+      response = yield call(fetch, endpointProfile, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`
+        }
+      });
+    } else {
+      response = yield call(fetch, endpointProfileById);
+    }
+
+    if (response.status >= 200 && response.status <= 300) {
+      const json = yield response.json();
+      yield put(actions.getProfileHistorySuccessed(json));
+    } else {
+      throw new Error('Something goes wrong');
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 function* mainSaga() {
   yield takeLatest(constants.LOG_IN_GOOGLE_REQUESTED, logInGoogle);
   yield takeLatest(constants.LOG_OUT_GOOGLE_REQUESTED, logOutGoogle);
   yield takeLatest(constants.EDIT_PROFILE_REQUESTED, editProfile);
   yield takeLatest(constants.GET_PROFILE_REQUESTED, getProfile);
   yield takeLatest(constants.SEND_AVATAR_REQUESTED, sendAvatar);
+  yield takeLatest(constants.GET_PROFILE_HISTORY_OFFERS_REQUESTED, getProfileHistory);
 }
 
 export default mainSaga;

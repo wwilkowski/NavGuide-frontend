@@ -4,7 +4,12 @@ import {
   GET_APPROACHES_SUCCESSED,
   SETTLE_ACTIVE_OFFER_REQUESTED,
   SETTLE_ACTIVE_OFFER_SUCCESSED,
-  SETTLE_ACTIVE_OFFER_FAILED
+  SETTLE_ACTIVE_OFFER_FAILED,
+  GET_OWN_AGREEMENTS_REQUESTED,
+  GET_OWN_AGREEMENTS_SUCCESSED,
+  GET_OWN_AGREEMENTS_FAILED,
+  CREATE_AGREEMENT_REQUESTED,
+  SETTLE_AGREEMENT_REQUESTED
 } from './constants';
 
 import * as typesTripBrowser from '../../containers/TripBrowser/types';
@@ -29,13 +34,55 @@ export interface IOffer {
   feedbackMessage: string;
 }
 
+export interface IActiveOffer {
+  id: number;
+  message: string;
+  offer: typesTripBrowser.ISingleTripType;
+  plannedDate: Date;
+  traveler: ITraveler;
+  status: string;
+  feedbackMessage: string;
+}
+
+export interface IAgreementOffer {
+  description: string;
+  id: number;
+  offer: typesTripBrowser.ISingleTripType;
+  plannedDate: string;
+  price: number;
+  status: string;
+  traveler: ITraveler;
+}
+
+export interface ICurrentOffer {
+  offer: typesTripBrowser.ISingleTripType;
+  activeOffers: IActiveOffer[];
+  approaches: IActiveOffer[];
+  agreements: IAgreementOffer[];
+}
+
 export interface IProfileOffersProps {
   trips: IOffer[];
+  agreements: IAgreementOffer[];
+}
+
+export interface IProfileVerifiedOffersProps {
+  trips: IOffer[];
+  state: string;
 }
 
 export interface IProfileHistoryOffersProps {
-  trips: IOffer[];
-  role: string;
+  trips: typesTripBrowser.ISingleTripType[];
+}
+
+export interface IAgreementsProps {
+  agreements: IAgreementOffer[];
+  verifiedOffers: IActiveOffer[];
+  onAgreementButtonClick: (agreementId: number, status: string) => void;
+}
+
+export interface IAcceptedOffersProps {
+  agreements: IAgreementOffer[];
 }
 
 export interface IOfferFormValues {
@@ -84,6 +131,13 @@ export interface ITag {
   id: number;
   name: string;
 }
+export interface IAgreement {
+  offerId: number;
+  description: string;
+  userId: number;
+  plannedDate: string;
+  price: number;
+}
 
 export interface ICreateOfferAction {
   type: string;
@@ -109,6 +163,21 @@ export interface ISettleOfferAction {
   message: string;
 }
 
+export interface ICreateAgreementAction {
+  type: typeof CREATE_AGREEMENT_REQUESTED;
+  newAgreement: IAgreement;
+}
+
+export interface IGetOwnAgreementsAction {
+  type: typeof GET_OWN_AGREEMENTS_REQUESTED;
+}
+
+export interface ISettleAgreementAction {
+  type: typeof SETTLE_AGREEMENT_REQUESTED;
+  id: number;
+  status: string;
+}
+
 export interface IGetOfferByIdSuccessed {
   type: typeof GET_OFFER_BY_ID_SUCCESSED;
   offer: ISingleTripType;
@@ -132,9 +201,21 @@ export interface ISettleActiveOfferFailed {
   type: typeof SETTLE_ACTIVE_OFFER_FAILED;
 }
 
+export interface IGetOwnAgreementsSuccessed {
+  type: typeof GET_OWN_AGREEMENTS_SUCCESSED;
+  agreements: IActiveOffer[];
+}
+
+export interface IGetOwnAgreementsFailed {
+  type: typeof GET_OWN_AGREEMENTS_FAILED;
+  message: string;
+}
+
 export type IOffersActionType =
   | IGetOfferByIdSuccessed
   | IGetActiveTripsSuccessed
   | IGetApproachesSuccessed
   | ISettleActiveOfferSuccessed
-  | ISettleActiveOfferFailed;
+  | ISettleActiveOfferFailed
+  | IGetOwnAgreementsSuccessed
+  | IGetOwnAgreementsFailed;

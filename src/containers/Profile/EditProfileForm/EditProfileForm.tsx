@@ -4,14 +4,17 @@ import { StoreType } from '../../../store';
 import UserDataForm from '../../../components/UserDataForm/UserDataForm';
 import { IUserFormValues } from '../../../shared/types';
 import * as actions from '../actions';
+import { getOwnAgreementsRequest, settleAgreementRequest } from '../../Offers/actions';
 import AvatarForm from '../../../components/AvatarForm/AvatarForm';
 import ProfileMenu from '../../../components/ProfileMenu/ProfileMenu';
 import styles from './EditProfileForm.module.scss';
-import OrderedOffers from '../../../components/OrderedOffers/OrderedOffers';
-import ActiveOffers from '../../../components/ActiveOffers/ActiveOffers';
+import ActiveOffers from '../../../components/Offers/ActiveOffers/ActiveOffers';
 import { getActiveOffersRequest, getApproachesRequest } from '../../Offers/actions';
-import HistoryOffers from '../../../components/HistoryOffers/HistoryOffers';
-import UserProfile from '../../../components/UserProfile/UserProfile';
+import VerifiedOffers from '../../../components/Offers/VerifiedOffers/VerifiedOffers';
+import HistoryOffers from '../../../components/Offers/HistoryOffers/HistoryOffers';
+import Agreements from '../../../components/Offers/Agreements/Agreements';
+import AcceptedOffers from '../../../components/Offers/AcceptedOffers/AcceptedOffers';
+import { useTranslation } from 'react-i18next';
 
 enum Scene {
   profile,
@@ -20,19 +23,31 @@ enum Scene {
 }
 
 const EditProfileForm = () => {
+  const { t } = useTranslation();
+
   const dispatcher = useDispatch();
+
   const [sceneMode, setSceneMode] = useState<Scene>(Scene.profile);
+
   const user = useSelector((state: StoreType) => state.profile.user);
-  const activeTrips = useSelector((state: StoreType) => state.currentOfferReducer.activeOffers);
+
   const approaches = useSelector((state: StoreType) => state.currentOfferReducer.approaches);
-  const historyOffersTraveler = useSelector((state: StoreType) => state.currentOfferReducer.approaches);
-  const historyOffersGuide = useSelector((state: StoreType) => state.currentOfferReducer.activeOffers);
+  const verifiedOffersTraveler = useSelector((state: StoreType) => state.currentOfferReducer.approaches);
+  const historyOffersTraveler = useSelector((state: StoreType) => state.profile.historyOffers);
+  const agreements = useSelector((state: StoreType) => state.currentOfferReducer.agreements);
 
   const onEditProfileFormSubmit = (editUser: IUserFormValues) => {
     dispatcher(actions.editProfileRequest(editUser, user));
   };
 
+  const onAgreementButtonClick = (agreementId: number, status: string) => {
+    dispatcher(settleAgreementRequest(agreementId, status));
+  };
+
   useEffect(() => {
+    dispatcher(actions.getProfileHistoryRequest(-1));
+    dispatcher(getOwnAgreementsRequest());
+
     if (user.role === 'GUIDE') {
       dispatcher(getActiveOffersRequest());
     } else {
@@ -48,22 +63,33 @@ const EditProfileForm = () => {
         </div>
       </div>
       <div className={sceneMode === Scene.activeOffers ? styles.profileSection : styles.profileSectionHidden}>
-        {user.role === 'GUIDE' ? (
-          <div>
-            <h2>Zainteresowanie ofertami</h2>
-            <OrderedOffers trips={activeTrips} />
-          </div>
-        ) : (
-          <div>
-            <h2>Jesteś zainteresowany</h2>
-            <ActiveOffers trips={approaches} />
-          </div>
-        )}
+        <div>
+          <h2>Jesteś zainteresowany</h2>
+          <ActiveOffers trips={approaches} agreements={[]} />
+          {agreements && (
+            <>
+              <h2>{t('Your agreements')}: </h2>
+              <Agreements agreements={agreements} verifiedOffers={verifiedOffersTraveler} onAgreementButtonClick={onAgreementButtonClick} />
+            </>
+          )}
+        </div>
       </div>
       <div className={sceneMode === Scene.history ? styles.profileSection : styles.profileSectionHidden}>
-        <h2>Historia Weryfikacji Ofert</h2>
-        {user.role === 'TRAVELER' && <HistoryOffers trips={historyOffersTraveler} role={user.role} />}
-        {user.role === 'GUIDE' && <HistoryOffers trips={historyOffersGuide} role={user.role} />}
+        <h2>Zaakceptowane oferty</h2>
+        <VerifiedOffers trips={verifiedOffersTraveler} state={'accepted'} />
+      </div>
+      <div className={styles.profileSectionHidden}>
+        <h2>Odrzucone oferty</h2>
+        <VerifiedOffers trips={verifiedOffersTraveler} state={'rejected'} />
+      </div>
+      <div className={styles.profileSectionHidden}>
+        <h2>Zaakceptowane umowy</h2>
+        <h1>(wycieczki się odbędą)</h1>
+        <AcceptedOffers agreements={agreements} />
+      </div>
+      <div className={styles.profileSectionHidden}>
+        <h2>Historia wycieczek</h2>
+        <HistoryOffers trips={historyOffersTraveler} />
       </div>
       <ProfileMenu setScene={setSceneMode} />
     </div>

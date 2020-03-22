@@ -18,6 +18,7 @@ const TripInfo = (props: ITripInfoProps) => {
 
   const [informationsMode, setInformationsMode] = useState<string>('trip');
   const [tripData, setTripData] = useState<ISingleTripType>({
+    inSearch: -1,
     averageMark: -1,
     begin: new Date(),
     city: '',

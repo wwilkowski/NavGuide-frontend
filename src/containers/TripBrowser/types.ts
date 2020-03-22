@@ -34,6 +34,7 @@ export interface IPosition {
 }
 
 export interface ISingleTripType {
+  inSearch: number;
   averageMark: number;
   begin: Date;
   city: string;
@@ -75,6 +76,7 @@ export interface IMultiEndedTripsType {
 
 export interface IMultiTripsAndTagsType {
   trips: ISingleTripType[];
+  closestTrips: ISingleTripType[];
   tags: ITag[];
   places: ISuggestedPlace[];
 }
@@ -196,6 +198,9 @@ export interface IFetchNameTripsRequest {
 
 export interface IFetchClosestTripsRequest {
   type: typeof FETCH_CLOSEST_TRIPS_REQUESTED;
+  count: number;
+  latitude: number;
+  longitude: number;
 }
 
 export interface IFetchPopularTripsRequest {

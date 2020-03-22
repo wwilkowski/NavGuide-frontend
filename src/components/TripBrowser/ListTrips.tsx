@@ -5,9 +5,12 @@ import { useTranslation } from 'react-i18next';
 import TripListElement from './TripListElement';
 import styles from './ListTrips.module.scss';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { StoreType } from '../../store';
 
 const ListTrips = ({ trips, mode, chosenOfferId, setChosenOfferId }: types.IListTripsProps) => {
   const { t } = useTranslation();
+  const closestTripsData = useSelector((state: StoreType) => state.tripBrowser.closestTrips);
 
   return (
     <div className={styles.listTrips}>
@@ -15,7 +18,7 @@ const ListTrips = ({ trips, mode, chosenOfferId, setChosenOfferId }: types.IList
         <div>
           {t('No matching trips')}. {t('Trips in your area')}:
           <ul className={styles.listTrips}>
-            {trips.map((trip: ISingleTripType) => (
+            {closestTripsData.map((trip: ISingleTripType) => (
               <div key={trip.id}>
                 <Link to={`/offers/${trip.id}`}>
                   <TripListElement trip={trip} />

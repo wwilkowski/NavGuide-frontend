@@ -90,6 +90,10 @@ const Header: React.FC = () => {
                     <img src={CreateOfferIcon} alt='' className={styles.menuLinkIcon} />
                     <p className={styles.menuLinkText}>{t('Create new offer')}</p>
                   </Link>
+                  <Link to='/profile/guide' className={styles.menuLink}>
+                    <img src={CreateOfferIcon} alt='' className={styles.menuLinkIcon} />
+                    <p className={styles.menuLinkText}>{t('Menage your offers')}</p>
+                  </Link>
                 </li>
               ) : (
                 <li className={styles.menuOption}>

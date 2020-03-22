@@ -38,6 +38,7 @@ const GuideProfileHistoryOffers = (props: IGuideProfileHistoryOffersProps) => {
     {
       date: '',
       offer: {
+        inSearch: -1,
         averageMark: -1,
         begin: new Date(),
         city: '',

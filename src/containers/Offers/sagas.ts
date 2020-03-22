@@ -119,7 +119,6 @@ function* getActiveOffers() {
     });
     if (response.status >= 200 && response.status <= 300) {
       const json = yield response.json();
-      console.log(json);
       yield put(actions.getActiveOffersSuccessed(json));
     } else {
       if (response.status === 401) {
@@ -174,6 +173,7 @@ function* settleActiveOffer(action: types.ISettleOfferAction) {
 
     if (response.status >= 200 && response.status <= 300) {
       yield put(actions.getActiveOffersRequest());
+      showNotification('success', i18n.t('You have accepted offer'), i18n.t('Now create an agreement'));
     } else if (response.status === 401) {
       throw new Error('You are not logged in');
     } else {
@@ -185,6 +185,89 @@ function* settleActiveOffer(action: types.ISettleOfferAction) {
   }
 }
 
+function* createAgreement(action: types.ICreateAgreementAction) {
+  try {
+    const endpoint = `https://235.ip-51-91-9.eu/agreements`;
+    const response = yield call(fetch, endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${getToken()}`
+      },
+      body: JSON.stringify({
+        offerId: action.newAgreement.offerId,
+        description: action.newAgreement.description,
+        userId: action.newAgreement.userId,
+        plannedDate: action.newAgreement.plannedDate,
+        price: action.newAgreement.price
+      })
+    });
+
+    if (response.status >= 200 && response.status <= 300) {
+      yield put(actions.getOwnAgreementsRequest());
+      showNotification('success', i18n.t('Success'), i18n.t('You have created an agreement'));
+    } else if (response.status === 401) {
+      throw new Error('You are not logged in');
+    } else {
+      throw new Error('Something goes wrong');
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+function* getOwnAgreements() {
+  try {
+    const endpoint = `https://235.ip-51-91-9.eu/agreements`;
+    const response = yield call(fetch, endpoint, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${getToken()}`
+      }
+    });
+    if (response.status >= 200 && response.status <= 300) {
+      const json = yield response.json();
+      yield put(actions.getOwnAgreementsSuccessed(json));
+    } else if (response.status === 401) {
+      throw new Error('You are not logged in!');
+    } else {
+      throw new Error('Something goes wrong');
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+function* settleAgreement(action: types.ISettleAgreementAction) {
+  try {
+    const endpoint = `https://235.ip-51-91-9.eu/agreements/${action.id}`;
+    const response = yield call(fetch, endpoint, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${getToken()}`
+      },
+      body: JSON.stringify({
+        status: action.status
+      })
+    });
+
+    if (response.status >= 200 && response.status <= 300) {
+      yield put(actions.getOwnAgreementsRequest());
+      if (action.status === 'ACCEPT')
+        showNotification('success', i18n.t('You have accepted an agreement'), i18n.t('Your trip will be done'));
+      if (action.status === 'REJECT')
+        showNotification('danger', i18n.t('You have rejected an agreement'), i18n.t('Your trip will not be done'));
+    } else if (response.status === 401) {
+      throw new Error('You are not logged in!');
+    } else {
+      throw new Error('Something goes wrong');
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 function* mainSaga() {
   yield takeLatest(constants.CREATE_OFFER_REQUESTED, createOffer);
   yield takeLatest(constants.GET_OFFER_BY_ID_REQUESTED, getOfferById);
@@ -192,6 +275,9 @@ function* mainSaga() {
   yield takeLatest(constants.GET_ACTIVE_OFFERS_REQUESTED, getActiveOffers);
   yield takeLatest(constants.GET_APPROACHES_REQUESTED, getApproaches);
   yield takeLatest(constants.SETTLE_ACTIVE_OFFER_REQUESTED, settleActiveOffer);
+  yield takeLatest(constants.GET_OWN_AGREEMENTS_REQUESTED, getOwnAgreements);
+  yield takeLatest(constants.CREATE_AGREEMENT_REQUESTED, createAgreement);
+  yield takeLatest(constants.SETTLE_AGREEMENT_REQUESTED, settleAgreement);
 }
 
 export default mainSaga;

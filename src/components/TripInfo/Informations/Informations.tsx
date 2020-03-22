@@ -163,8 +163,8 @@ const Informations = (props: IInformationsProps) => {
         {(props.mode === 'guide' || window.innerWidth > 600) && (
           <div className={styles.guideView}>
             <div>
-              <Link to='/guide_profile' onClick={() => dispatcher(fetchGuideProfileRequested(tripData.owner.guideId))}>
-                <img src={props.guideProfileData.avatar} alt='' className={styles.avatar} />
+              <Link to={`/guide/${tripData.owner.guideId}`} onClick={() => dispatcher(fetchGuideProfileRequested(tripData.owner.guideId))}>
+                <img src={props.guideProfileData.avatar} alt='' />
               </Link>
             </div>
             <p className={styles.guideName}>
