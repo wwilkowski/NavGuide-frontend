@@ -40,6 +40,7 @@
 .section {
   padding: 1rem;
   text-align: center;
+  width: 100%;
 }
 
 .title {
@@ -76,4 +77,45 @@
 
 .centered {
   text-align: center;
+}
+
+.avatar {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  box-shadow: 10px 10px 51px 0px rgba(0, 0, 0, 0.35);
+  @media (min-width: 800px) {
+    border-radius: 0;
+    width: 150px;
+    height: 150px;
+    box-shadow: none;
+  }
+}
+
+.guideView {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+}
+
+.guideName {
+  text-align: center;
+  margin: 1rem 0 0 0;
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+.tripView {
+  width: 100%;
+}
+
+.infoContainer {
+  width: 100%;
+  padding: 1rem;
+  @media (min-width: 800px) {
+    width: 60%;
+    display: flex;
+  }
 }

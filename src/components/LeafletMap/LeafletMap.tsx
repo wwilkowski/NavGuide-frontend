@@ -4,6 +4,7 @@ import * as types from './types';
 import { ISingleTripType } from '../../containers/TripBrowser/types';
 import L from 'leaflet';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 
 export interface Props {
   position: types.IPosition;
@@ -57,11 +58,14 @@ const LeafletMap = ({ position, trips = [], chosenOfferId = null, setChosenOffer
           opacity={trip.id === chosenOfferId ? 1 : 0.5}
           onMouseOver={() => setChosenOfferId(trip.id)}
         >
-          <Popup>{trip.name}</Popup>
+          <Popup>
+            <img src={trip.photos[0]} alt='' />
+            <Link to={`offers/${trip.id}`}>{trip.name}</Link>
+          </Popup>
           <Circle
             center={{ lat: trip.lat, lng: trip.lon }}
-            color={'#fff53d'}
-            opacity={trip.id === chosenOfferId ? 1 : 0.5}
+            color={'#303F9F'}
+            opacity={trip.id === chosenOfferId ? 0.3 : 0.1}
             radius={trip.radius}
           />
         </Marker>

@@ -187,6 +187,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                 </label>
                 <DatePicker
                   dateFormat='yyyy/MM/dd'
+                  minDate={new Date()}
                   selected={values.begin}
                   onChange={date => setFieldValue('begin', date)}
                   className={styles.datePicker}
@@ -199,6 +200,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                 </label>
                 <DatePicker
                   dateFormat='yyyy/MM/dd'
+                  minDate={values.begin}
                   selected={values.end}
                   onChange={date => setFieldValue('end', date)}
                   className={styles.datePicker}
@@ -271,7 +273,7 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
     const positionValue = props.positionValue;
 
     const defaultBegin = new Date();
-    defaultBegin.setDate(defaultBegin.getDate() - 30);
+    defaultBegin.setDate(defaultBegin.getDate());
     const defaultEnd = new Date();
     defaultEnd.setDate(defaultEnd.getDate() + 30);
 
