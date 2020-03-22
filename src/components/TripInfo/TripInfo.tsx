@@ -9,6 +9,7 @@ import { StoreType } from '../../store';
 import { useSelector } from 'react-redux';
 import { ISingleTripType, IPosition } from '../../containers/TripBrowser/types';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
+import { Link } from 'react-router-dom';
 
 const TripInfo = (props: ITripInfoProps) => {
   const { t } = useTranslation();
@@ -71,22 +72,23 @@ const TripInfo = (props: ITripInfoProps) => {
           </Marker>
         </Map>
       </div>
-      <div className={styles.container}>
-        <div ref={node}>
+      <div className={styles.container} ref={node}>
+        <div className={styles.mainInfo}>
           <h2 className={styles.title}>{props.tripInformations.name}</h2>
           <Gallery photos={props.tripInformations.photos} />
-          <Informations
-            mode={informationsMode}
-            changeInformationsMode={changeInformationsMode}
-            tripData={tripData}
-            guideProfile={props.guideProfile}
-            guideProfileData={props.guideProfileData}
-          />
-          <div>
-            <h2 className={styles.title}>{t('Description')}</h2>
-            <Description text={props.tripInformations.description} />
-          </div>
+          <h2 className={styles.title}>{t('Description')}</h2>
+          <Description text={props.tripInformations.description} />
+          <Link to={`/offers/${tripData.id}/buy`} className={styles.link}>
+            {t('Order now!')}
+          </Link>
         </div>
+        <Informations
+          mode={informationsMode}
+          changeInformationsMode={changeInformationsMode}
+          tripData={tripData}
+          guideProfile={props.guideProfile}
+          guideProfileData={props.guideProfileData}
+        />
       </div>
     </div>
   ) : (

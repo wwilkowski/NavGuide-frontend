@@ -73,7 +73,7 @@ const Informations = (props: IInformationsProps) => {
           >
             <div className={styles.nav__case}>
               <img className={styles.nav__icon} src={''} alt='' />
-              <p className={styles.nav__p}>Profile</p>
+              <p className={styles.nav__p}>Offer</p>
             </div>
           </li>
           <li
@@ -84,7 +84,7 @@ const Informations = (props: IInformationsProps) => {
           >
             <div className={styles.nav__case}>
               <img className={styles.nav__icon} src={''} alt='' />
-              <p className={styles.nav__p}>Active offers</p>
+              <p className={styles.nav__p}>Guide</p>
             </div>
           </li>
           <li className={styles.nav__menuItem} onClick={() => {}}>
@@ -94,104 +94,121 @@ const Informations = (props: IInformationsProps) => {
           </li>
         </ul>
       </nav>
-      {props.mode === 'trip' ? (
-        <div>
-          <div className={styles.section}>
-            <h2 className={styles.title}>{t('Informations')}</h2>
-            <div className={styles.info}>
-              <p className={styles.subtitle}>{t('City')}</p>
-              <span className={styles.value}>{tripData.city}</span>
+      <div className={styles.infoContainer}>
+        {(props.mode === 'trip' || window.innerWidth > 600) && (
+          <div className={styles.tripView}>
+            <div className={styles.section}>
+              <h2 className={styles.title}>{t('Informations')}</h2>
+              <div className={styles.info}>
+                <p className={styles.subtitle}>{t('City')}</p>
+                <span className={styles.value}>{tripData.city}</span>
+              </div>
+              <div className={styles.info}>
+                <p className={styles.subtitle}>{t('Price')}</p>
+                <p className={styles.value}>
+                  {tripData.price} ({t(tripData.priceType)})
+                </p>
+              </div>
+              <div className={styles.info}>
+                <p className={styles.subtitle}>{t('Max people')}</p>
+                <p className={styles.value}> {tripData.maxPeople}</p>
+              </div>
+              <div className={styles.info}>
+                <p className={styles.subtitle}>{t('From')}:</p>
+                <p className={styles.value}>
+                  {tripData.begin
+                    .toString()
+                    .replace('T', ' ')
+                    .substr(0, tripData.begin.toString().indexOf('.'))}
+                </p>
+              </div>
+              <div className={styles.info}>
+                <p className={styles.subtitle}>{t('To')}:</p>
+                <p className={styles.value}>
+                  {tripData.end
+                    .toString()
+                    .replace('T', ' ')
+                    .substr(0, tripData.end.toString().indexOf('.'))}
+                </p>
+              </div>
             </div>
-            <div className={styles.info}>
-              <p className={styles.subtitle}>{t('Price')}</p>
-              <p className={styles.value}>
-                {tripData.price} ({t(tripData.priceType)})
-              </p>
+            <div className={styles.section}>
+              <h2 className={styles.title}>{t('Statistics')}</h2>
+              <div className={styles.info}>
+                <p className={styles.subtitle}>{t('Sold')}:</p>
+                <p className={styles.value}>{tripData.sold}</p>
+              </div>
+              <div className={styles.info}>
+                <p className={styles.subtitle}>{t('Average mark')}:</p>
+                <p className={styles.value}>{tripData.averageMark > 0 ? tripData.averageMark : 0}</p>
+              </div>
             </div>
-            <div className={styles.info}>
-              <p className={styles.subtitle}>{t('Max people')}</p>
-              <p className={styles.value}> {tripData.maxPeople}</p>
+            <div className={styles.section}>
+              <h2 className={styles.title}>{t('Tags')}</h2>
+              <ul className={styles.tagList}>
+                {tripData.tags.map((tag: ITag, index: number) => (
+                  <li key={index} className={styles.tag}>
+                    {t(tag.name)}
+                  </li>
+                ))}
+              </ul>
             </div>
-            <div className={styles.info}>
-              <p className={styles.subtitle}>{t('From')}:</p>
-              <p className={styles.value}>
-                {tripData.begin
-                  .toString()
-                  .replace('T', ' ')
-                  .substr(0, tripData.begin.toString().indexOf('.'))}
-              </p>
-            </div>
-            <div className={styles.info}>
-              <p className={styles.subtitle}>{t('To')}:</p>
-              <p className={styles.value}>
-                {tripData.end
-                  .toString()
-                  .replace('T', ' ')
-                  .substr(0, tripData.end.toString().indexOf('.'))}
-              </p>
+            <div className={styles.section}>
+              <h2 className={styles.title}>{t('Number of visits')}</h2>
+              <p className={styles.centered}>23</p>
             </div>
           </div>
-          <div className={styles.section}>
-            <h2 className={styles.title}>{t('Statistics')}</h2>
-            <div className={styles.info}>
-              <p className={styles.subtitle}>{t('Sold')}:</p>
-              <p className={styles.value}>{tripData.sold}</p>
-            </div>
-            <div className={styles.info}>
-              <p className={styles.subtitle}>{t('Average mark')}:</p>
-              <p className={styles.value}>{tripData.averageMark > 0 ? tripData.averageMark : 0}</p>
-            </div>
-          </div>
-          <div className={styles.section}>
-            <h2 className={styles.title}>{t('Tags')}</h2>
-            <ul className={styles.tagList}>
-              {tripData.tags.map((tag: ITag, index: number) => (
-                <li key={index} className={styles.tag}>
-                  {t(tag.name)}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className={styles.section}>
-            <h2 className={styles.title}>{t('Number of visits')}</h2>
-            <p className={styles.centered}>23</p>
-          </div>
-        </div>
-      ) : (
-        <div>
-          <div>
+        )}
+
+        {(props.mode === 'guide' || window.innerWidth > 600) && (
+          <div className={styles.guideView}>
             <div>
               <Link to='/guide_profile' onClick={() => dispatcher(fetchGuideProfileRequested(tripData.owner.guideId))}>
-                <img src={props.guideProfileData.avatar} alt='' />
+                <img src={props.guideProfileData.avatar} alt='' className={styles.avatar} />
               </Link>
             </div>
-            <div>
-              <p>
-                {tripData.owner.firstName} {tripData.owner.lastName}
-              </p>
-              <p>
-                ({props.guideProfileData.age}, {props.guideProfileData.gender})
-              </p>
+            <p className={styles.guideName}>
+              {tripData.owner.firstName} {tripData.owner.lastName}
+            </p>
+            <p>
+              ({props.guideProfileData.age}, {props.guideProfileData.gender})
+            </p>
+            <div className={styles.section}>
+              <div className={styles.info}>
+                <p className={styles.subtitle}>{t('Experience')}:</p>
+                <p>{experience}</p>
+              </div>
+              <div className={styles.info}>
+                <p className={styles.subtitle}>{t('Average mark')}:</p>
+                <p>{guideProfile.averageMark > 0 ? guideProfile.averageMark : 0}</p>
+              </div>
             </div>
-            <div>
-              <p>{t('Experience')}:</p>
-              <p>{experience}</p>
-              <p>{t('Average mark')}:</p>
-              <p>{guideProfile.averageMark > 0 ? guideProfile.averageMark : 0}</p>
-              <p>{t('Contact')}</p>
-              <p>{t('Tel')}.:</p>
-              <p>{telephone}</p>
-              <p>{t('Email')}:</p>
-              <p>{props.guideProfileData.email}</p>
-              <p>{t('Speech')}</p>
-              <p>{t('Country')}:</p>
-              <p>{getCountry(props.guideProfileData.country)}</p>
-              <p>{t('Languages')}:</p>
-              <p>{guideProfile.languages.map((lng: string) => `${getLanguage(lng)} `)}</p>
+            <div className={styles.section}>
+              <h2 className={styles.title}>{t('Contact')}</h2>
+              <div className={styles.info}>
+                <p className={styles.subtitle}>{t('Tel')}.:</p>
+                <p>{telephone}</p>
+              </div>
+              <div className={styles.info}>
+                <p className={styles.subtitle}>{t('Email')}:</p>
+                <p>{props.guideProfileData.email}</p>
+              </div>
+            </div>
+            <div className={styles.section}></div>
+            <div className={styles.section}>
+              <h2 className={styles.title}>{t('Speech')}</h2>
+              <div className={styles.info}>
+                <p className={styles.subtitle}>{t('Country')}:</p>
+                <p>{getCountry(props.guideProfileData.country)}</p>
+              </div>
+              <div className={styles.info}>
+                <p className={styles.subtitle}>{t('Languages')}:</p>
+                <p>{guideProfile.languages.map((lng: string) => `${getLanguage(lng)} `)}</p>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </>
   );
 };
