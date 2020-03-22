@@ -2,9 +2,6 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 2rem;
-  @media (min-width: 600px) {
-    flex-direction: row;
-  }
 }
 
 .title {
@@ -15,16 +12,42 @@
 }
 
 .container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: relative;
   top: -5vh;
   z-index: 1000;
   background: #ffffff;
+  @media (min-width: 800px) {
+    padding: 2rem;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: row;
+  }
 }
 
 .map {
   height: 30vh;
   @media (min-width: 600px) {
-    height: 90vh;
-    width: 40vw;
+    height: 450px;
+    width: 100vw;
+  }
+}
+
+.mainInfo {
+  @media (min-width: 800px) {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.link {
+  display: none;
+  @media (min-width: 800px) {
+    display: block;
   }
 }
