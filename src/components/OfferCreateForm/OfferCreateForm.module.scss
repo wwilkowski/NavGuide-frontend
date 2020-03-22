@@ -1,9 +1,9 @@
 .offerForm {
-  display: flex;
-  flex-direction: column;
-  padding: 0.5rem;
-  width: 100%;
-  margin-bottom: 1rem;
+  @media (min-width: 800px) {
+    height: 85vh;
+    overflow-y: scroll;
+    padding: 0 1rem;
+  }
   &__title {
     font-size: 2em;
     text-align: center;
@@ -43,9 +43,12 @@
   }
   &__tagList {
     display: flex;
+    flex-wrap: wrap;
     margin: 0.3rem 0;
     padding: 1rem 0;
-    overflow-x: auto;
+  }
+  &__tag {
+    margin: 0.2rem 0;
   }
   &__date {
     display: flex;

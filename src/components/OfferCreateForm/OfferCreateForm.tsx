@@ -14,6 +14,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import ImagePlaceholder from '../../assets/imagePlaceholder.jpg';
 import Slider from '@material-ui/core/Slider';
+import Button from '@material-ui/core/Button';
 
 const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>) => {
   const { touched, errors, setFieldValue, values } = props;
@@ -51,7 +52,7 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
   useEffect(() => {}, [files]);
 
   return (
-    <Form>
+    <Form className={styles.offerForm}>
       <h2 className={styles.offerForm__title}>{t('Create new offer')}</h2>
       <div className={`${styles.offerForm__locationInput} ${styles.offerForm__case}`}>
         <label className={styles.offerForm__label} htmlFor='location'>
@@ -244,15 +245,15 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
       <div className={styles.offerForm__case}>
         <ul className={styles.offerForm__tagList}>
           {tags.map((tag: ITag) => (
-            <li key={tag.id}>
+            <li key={tag.id} className={styles.offerForm__tag}>
               <Checkbox name='tags' value={tag.name} valueKey={tag.id} />
             </li>
           ))}
         </ul>
       </div>
-      <button className={styles.offerForm__submitButton} type='submit'>
+      <Button variant='contained' color='primary' type='submit' className={styles.offerForm__submitButton}>
         {t('Submit')}
-      </button>
+      </Button>
     </Form>
   );
 };

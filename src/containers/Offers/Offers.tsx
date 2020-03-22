@@ -10,6 +10,7 @@ import { fetchSuggestedCitiesRequested } from '../../containers/TripBrowser/acti
 import * as types from './types';
 import * as actions from './actions';
 import styles from './Offers.module.scss';
+import MaterialSwitch from '@material-ui/core/Switch';
 
 const Offers = () => {
   const dispatcher = useDispatch();
@@ -22,6 +23,7 @@ const Offers = () => {
   });
 
   const [place, setPlace] = useState<string>('UMK Wydział Matematyki i Informatyki');
+  const [formView, setFormView] = useState(true);
 
   const onFormChange = (location: string) => {
     if (location.length === 0) {
@@ -38,6 +40,10 @@ const Offers = () => {
   return (
     <Switch>
       <PrivateRoute exact path='/offers/create' isLoggedIn={user.role === 'GUIDE'}>
+        <div className={styles.options}>
+          <p>View map</p>
+          <MaterialSwitch checked={!formView} onChange={() => setFormView(!formView)} value='formView' color='primary' />
+        </div>
         <div className={styles.container}>
           <OfferCreateForm
             onSubmit={onSubmit}
@@ -47,8 +53,14 @@ const Offers = () => {
             place={place}
             setPlace={setPlace}
           />
-          <div className={styles.mapContainer}>
-            <LeafletMap height='80vh' position={position} trips={[]} chosenOfferId={0} setChosenOfferId={() => {}} />
+          <div style={formView && window.innerWidth < 900 ? { visibility: 'hidden' } : {}}>
+            <LeafletMap
+              height={window.innerWidth > 800 ? '80vh' : '100vh'}
+              position={position}
+              trips={[]}
+              chosenOfferId={0}
+              setChosenOfferId={() => {}}
+            />
           </div>
         </div>
       </PrivateRoute>
