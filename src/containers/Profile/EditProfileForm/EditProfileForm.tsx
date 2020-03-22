@@ -15,6 +15,7 @@ import HistoryOffers from '../../../components/Offers/HistoryOffers/HistoryOffer
 import Agreements from '../../../components/Offers/Agreements/Agreements';
 import AcceptedOffers from '../../../components/Offers/AcceptedOffers/AcceptedOffers';
 import { useTranslation } from 'react-i18next';
+import UserProfile from '../../../components/UserProfile/UserProfile';
 
 enum Scene {
   profile,
