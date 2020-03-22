@@ -13,7 +13,7 @@ const ListGuideRequests = (props: IListGuideRequestProps) => {
   const userProfilesData = useSelector((state: StoreType) => state.user.users);
 
   return (
-    <div className={styles.requestsContainer}>
+    <div>
       {guideRequests.map((req: types.IGuideRequest) => {
         var userProfile: IUserProfile = userProfilesData[0];
         userProfilesData.forEach((user: IUserProfile) => {
@@ -23,8 +23,10 @@ const ListGuideRequests = (props: IListGuideRequestProps) => {
           }
         });
         return (
-          <div className={styles.request} key={req.id}>
-            <GuideRequest guideRequest={req} userProfile={userProfile} />
+          <div className={styles.requestList}>
+            <div key={req.id}>
+              <GuideRequest guideRequest={req} userProfile={userProfile} />
+            </div>
           </div>
         );
       })}

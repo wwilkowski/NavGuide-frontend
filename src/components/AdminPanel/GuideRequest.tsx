@@ -35,49 +35,55 @@ const GuideRequest = ({ guideRequest, userProfile }: IGuideRequestProps) => {
   }, [guideRequest.experience, req.date]);
 
   return (
-    <>
-      <div className={styles.request__content}>
-        <div className={styles.row}>
-          <p className={styles.left}>{t('Date')}:</p>
-          <p className={styles.right}>{reducedDate}</p>
-        </div>
-        <div className={styles.row}>
-          <p className={styles.left}>{t('Email')}:</p> <p className={styles.right}>{user ? user.email : null}</p>
-        </div>
-        <div className={styles.row}>
-          <p className={styles.left}>{t('Tel')}.:</p> <p className={styles.right}>{user ? user.telephone : null}</p>
-        </div>
-        <div className={styles.row}>
-          <p className={styles.left}>{t('Country')}:</p>
-          <p className={styles.right}>{user ? user.country : null}</p>
-        </div>
-        <div className={styles.row}>
-          <p className={styles.left}>{t('Languages')}:</p> <p className={styles.right}>{req.languages.map((lng: string) => `${lng} `)}</p>
-        </div>
-        <div className={styles.row}>
-          <p className={styles.left}>{t('Experience')}:</p> <p className={styles.right}>{experience} </p>
-        </div>
-        <div className={styles.description}>{req.description}</div>
+    <div className={styles.container}>
+      <div>
+        <img src={user ? user.avatar : ''} alt='' className={styles.avatar} />
       </div>
-      <div className={styles.request__menu}>
-        <div className={styles.title} style={{ marginLeft: '0rem' }}>
-          {t('ID')}: {req.id}
+      <div className={styles.infos}>
+        <div className={styles.case}>
+          <div className={styles.info}>
+            <p className={styles.title}>{t('Date')}:</p>
+            <p>{reducedDate}</p>
+          </div>
+          <div className={styles.info}>
+            <p className={styles.title}>{t('ID')}:</p>
+            <p>{req.id}</p>
+          </div>
+          <div className={styles.info}>
+            <p className={styles.title}>{t('First name')}</p>
+            <p>{user ? user.firstName : ''}</p>
+          </div>
+          <div className={styles.info}>
+            <p className={styles.title}>{t('Last name')}</p>
+            <p>{user ? user.lastName : ''}</p>
+          </div>
+
+          <div className={styles.info}>
+            <p className={styles.title}>{t('Email')}:</p>
+            <p>{user ? user.email : null}</p>
+          </div>
         </div>
-        <div className={styles.avatar}>
-          <img src={user ? user.avatar : ''} alt='' />
+        <div className={styles.case}>
+          <div className={styles.info}>
+            <p className={styles.title}>{t('Tel')}.:</p>
+            <p>{user ? user.telephone : null}</p>
+          </div>
+          <div className={styles.info}>
+            <p className={styles.title}>{t('Country')}:</p>
+            <p>{user ? user.country : null}</p>
+          </div>
+          <div className={styles.info}>
+            <p className={styles.title}>{t('Languages')}:</p>
+            <p>{req.languages.map((lng: string) => `${lng} `)}</p>
+          </div>
+          <div className={styles.info}>
+            <p className={styles.title}>{t('Experience')}:</p>
+            <p>{experience} </p>
+          </div>
         </div>
-        <div className={styles.row}>
-          <p className={styles.title}>
-            {user ? user.firstName : null} {user ? user.lastName : null}{' '}
-          </p>
-        </div>
-        <div className={styles.row}>
-          <p style={{ width: '100%', textAlign: 'center' }}>
-            {user ? user.gender : null}, {user ? user.age : null}
-          </p>
-        </div>
+        <div className={`${styles.case} ${styles.description}`}>{req.description}</div>
       </div>
-    </>
+    </div>
   );
 };
 
