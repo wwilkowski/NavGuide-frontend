@@ -2,7 +2,7 @@ import { createBrowserHistory } from 'history';
 const history = createBrowserHistory();
 
 export const forwardTo = (location: string) => {
-  history.push(location);
+  history.push(location, { pathFrom: location });
 };
 
 export const refresh = (location: string) => {

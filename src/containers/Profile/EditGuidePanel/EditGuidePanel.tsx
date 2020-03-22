@@ -8,7 +8,6 @@ import OrderedOffers from '../../../components/Offers/OrderedOffers/OrderedOffer
 import { fetchGuideHistoryRequest } from '../../../containers/GuideProfile/actions';
 import HistoryOffers from '../../../components/Offers/HistoryOffers/HistoryOffers';
 import { IEndedSingleTripType, ISingleTripType } from '../../TripBrowser/types';
-import VerifiedOffers from '../../../components/Offers/VerifiedOffers/VerifiedOffers';
 
 const EditGuidePanel = () => {
   const dispatcher = useDispatch();
@@ -16,7 +15,6 @@ const EditGuidePanel = () => {
   const activeOffers = useSelector((state: StoreType) => state.currentOfferReducer.activeOffers);
   const agreements = useSelector((state: StoreType) => state.currentOfferReducer.agreements);
   const historyOffers = useSelector((state: StoreType) => state.guideProfile.historyOffers);
-  const verifiedOffersGuide = useSelector((state: StoreType) => state.currentOfferReducer.activeOffers);
 
   const [transformedHistoryOffers, setTransformedHistoryOffers] = useState<ISingleTripType[]>([]);
 
@@ -26,7 +24,9 @@ const EditGuidePanel = () => {
   }, [dispatcher]);
 
   useEffect(() => {
-    if (activeOffers) dispatcher(fetchGuideHistoryRequest(activeOffers[0].offer.owner.guideId));
+    if (activeOffers) {
+      if (activeOffers.length > 0) dispatcher(fetchGuideHistoryRequest(activeOffers[0].offer.owner.guideId));
+    }
   }, [activeOffers, dispatcher]);
 
   useEffect(() => {
@@ -68,14 +68,11 @@ const EditGuidePanel = () => {
     <div className={styles.container}>
       <div className={styles.section}>
         <h2>Powiadomienia</h2>
-        <OrderedOffers trips={activeOffers} />
-      </div>
-      <div className={styles.section}>
-        <h2>Umowy do sporządzenia</h2>
-        <VerifiedOffers trips={verifiedOffersGuide} state={'accepted'} />
+        <OrderedOffers trips={activeOffers} agreements={agreements} />
       </div>
       <div className={styles.section}>
         <h2>Zaakceptowane umowy</h2>
+        <h1>(wycieczki się odbędą)</h1>
         <AcceptedOffers agreements={agreements} />
       </div>
       <div className={styles.section}>

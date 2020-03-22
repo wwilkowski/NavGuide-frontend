@@ -104,7 +104,6 @@ function* editProfile(action: types.IEditProfileAction) {
       })
     });
 
-    console.log(action.editUser.age);
     if (response.status >= 200 && response.status <= 300) {
       const { id, country, email, experience, firstName, interests, lastName, telephone, gender, age } = yield response.json();
 
