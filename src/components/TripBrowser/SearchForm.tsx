@@ -372,7 +372,7 @@ const SearchForm = (props: ISearchFormProps) => {
       <div style={formView && window.innerWidth < 900 ? { visibility: 'hidden' } : {}}>
         <LeafletMap
           position={positionValue}
-          height='100vh'
+          height='85vh'
           trips={props.trips}
           chosenOfferId={chosenOfferId}
           setChosenOfferId={setChosenOfferId}

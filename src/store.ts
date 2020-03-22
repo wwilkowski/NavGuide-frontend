@@ -45,7 +45,7 @@ function* rootSaga() {
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['registration', 'tripBrowser', 'currentOffer', 'currentOfferReducer']
+  blacklist: ['guideProfile', 'registration', 'tripBrowser', 'currentOffer', 'currentOfferReducer']
 };
 
 export let persistor: Persistor;
