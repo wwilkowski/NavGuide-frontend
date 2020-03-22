@@ -11,7 +11,7 @@ import { StoreType } from '../../store';
 const ListTrips = ({ trips, mode, chosenOfferId, setChosenOfferId }: types.IListTripsProps) => {
   const { t } = useTranslation();
   const closestTripsData = useSelector((state: StoreType) => state.tripBrowser.closestTrips);
-
+  console.log(trips);
   return (
     <div className={styles.listTrips}>
       {mode === types.ListMode.closest ? (

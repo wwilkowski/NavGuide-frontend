@@ -107,10 +107,10 @@ const TripBrowser: React.FC = () => {
       tmp = tripsData.filter((trip: ISingleTripType) => {
         const tripBegin = new Date(trip.begin);
         const tripEnd = new Date(trip.end);
-        if (tripBegin.getTime() >= beginDate.getTime() && tripEnd.getTime() <= endDate.getTime()) {
-          return trip;
+        console.log(tripBegin.getTime() >= beginDate.getTime());
+        if (tripBegin.getDate() >= new Date(trip.begin).getDate() && tripEnd.getDate() <= new Date(trip.end).getDate()) {
+          return true;
         }
-        return false;
       });
       setFilteredTrips(tmp);
     } else if (!isLogged) setFilteredTrips(tripsData);
@@ -180,6 +180,7 @@ const TripBrowser: React.FC = () => {
       dispatcher(actions.fetchPopularTripsRequested());
     }
   };
+  console.log('trips length: ', filteredTrips.length);
 
   return (
     <div>
