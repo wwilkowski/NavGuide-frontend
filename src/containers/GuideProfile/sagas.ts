@@ -45,6 +45,7 @@ function* fetchGuideProfileDataFromAPI(action: types.IFetchGuideProfileRequest) 
       }
     });
     const user = yield response.json();
+    console.log(user);
     if (response.status >= 200 && response.status <= 300) {
       yield put(actions.fetchGuideProfileDataSuccessed(user));
     } else {

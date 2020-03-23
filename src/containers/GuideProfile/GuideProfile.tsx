@@ -5,9 +5,19 @@ import GuideProfileData from '../../components/GuideProfile/GuideProfileData';
 import { StoreType } from '../../store';
 import { useSelector, useDispatch } from 'react-redux';
 import GuideProfileActiveOffers from '../../components/GuideProfile/GuideProfileActiveOffers';
-import { fetchGuideProfileDataRequest, fetchGuideActiveOffersRequest, fetchGuideHistoryRequest } from './actions';
+import {
+  fetchGuideProfileDataRequest,
+  fetchGuideActiveOffersRequest,
+  fetchGuideHistoryRequest,
+  fetchGuideProfileRequested
+} from './actions';
 import GuideProfileHistoryOffers from '../../components/GuideProfile/GuideProfileHistoryOffers';
 import history from '../../history';
+import { RouteComponentProps } from 'react-router-dom';
+
+interface TParams {
+  guideId: string;
+}
 
 enum Scene {
   profile,
@@ -15,7 +25,9 @@ enum Scene {
   ratedOffers
 }
 
-const GuideProfile = () => {
+const GuideProfile = (props: RouteComponentProps<TParams>) => {
+  const guideId = parseInt(props.match.params.guideId, 10);
+
   const [sceneMode, setSceneMode] = useState<Scene>(Scene.profile);
 
   const dispatcher = useDispatch();
@@ -27,9 +39,13 @@ const GuideProfile = () => {
   const historyOffers = useSelector((state: StoreType) => state.guideProfile.historyOffers);
 
   useEffect(() => {
-    dispatcher(fetchGuideProfileDataRequest(guideProfile.userId));
-    dispatcher(fetchGuideActiveOffersRequest(guideProfile.guideId));
-    dispatcher(fetchGuideHistoryRequest(guideProfile.guideId));
+    dispatcher(fetchGuideProfileRequested(guideId));
+  }, []);
+
+  useEffect(() => {
+    if (guideProfile.userId !== -1) dispatcher(fetchGuideProfileDataRequest(guideProfile.userId));
+    dispatcher(fetchGuideActiveOffersRequest(guideId));
+    dispatcher(fetchGuideHistoryRequest(guideId));
   }, [guideProfile, dispatcher]);
 
   const backToMainPage = () => {
