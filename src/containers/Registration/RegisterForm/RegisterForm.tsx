@@ -14,7 +14,6 @@ const RegisterForm = (Component: ComponentType<IRegisterFormProps>) => {
   const { t } = useTranslation();
   const registrationData = useSelector((state: StoreType) => state.registration);
   const [toBeGuide, setToBeGuide] = useState(false);
-
   const onRegisterFormSubmit = (user: IUserFormValues) => {
     dispatcher(actions.confirmSignUpRequest(user, registrationData.registrationToken, toBeGuide));
   };
