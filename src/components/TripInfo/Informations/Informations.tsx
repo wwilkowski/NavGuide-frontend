@@ -3,8 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { IInformationsProps } from './types';
 import { ITag } from '../../../containers/TripBrowser/types';
 import { Link } from 'react-router-dom';
-import { fetchGuideProfileRequested } from '../../../containers/GuideProfile/actions';
-import { useDispatch } from 'react-redux';
 import styles from './styles.module.scss';
 
 const Informations = (props: IInformationsProps) => {
@@ -12,12 +10,8 @@ const Informations = (props: IInformationsProps) => {
 
   const { tripData, guideProfileData, guideProfile } = props;
 
-  const dispatcher = useDispatch();
-
-  const [activeTripButton, setActiveTripButton] = useState<boolean>(true);
-  const [activeGuideButton, setActiveGuideButton] = useState<boolean>(false);
-
   const [experience, setExperience] = useState<string>('');
+  // eslint-disable-next-line
   const [telephone, setTelephone] = useState<string>('');
 
   useEffect(() => {

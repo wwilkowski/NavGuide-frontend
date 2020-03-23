@@ -8,7 +8,6 @@ import DatePicker from 'react-datepicker';
 import { showNotification } from '../../../helpers/notification';
 import i18n from '../../../locales/i18n';
 import { useTranslation } from 'react-i18next';
-import Popup from '../../../shared/Popup';
 
 type TParams = { id: string };
 
@@ -27,6 +26,7 @@ const OfferSale = (props: Props) => {
 
   const [date, setDate] = useState<Date | null>(new Date());
   const [message, setMessage] = useState<string>('');
+  // eslint-disable-next-line
   const [popupVisible, setPopupVisible] = useState<boolean>(false);
 
   return currentOffer ? (

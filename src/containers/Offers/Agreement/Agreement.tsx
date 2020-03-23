@@ -46,7 +46,7 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
 
   useEffect(() => {
     if (offerId !== -1) dispatcher(actions.getOfferByIdRequest(offerId.toString()));
-  }, [offerId]);
+  }, [offerId, dispatcher]);
 
   useEffect(() => {
     if (pathFrom === '/profile/guide') {

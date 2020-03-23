@@ -13,6 +13,7 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
 
   const dispatcher = useDispatch();
 
+  // eslint-disable-next-line
   const [currentMessage, setCurrentMessage] = useState<string>('');
   const [messages, setMessages] = useState<string[]>([]);
   const [filteredTrips, setFilteredTrips] = useState<IOffer[]>([]);

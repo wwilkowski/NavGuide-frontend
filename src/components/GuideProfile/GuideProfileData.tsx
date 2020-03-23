@@ -10,6 +10,7 @@ const GuideProfileData = (props: IGuideProfileDataProps) => {
   const { t } = useTranslation();
 
   const [experience, setExperience] = useState<string>('');
+  // eslint-disable-next-line
   const [telephone, setTelephone] = useState<string>('');
 
   useEffect(() => {

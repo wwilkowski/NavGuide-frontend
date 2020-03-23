@@ -32,7 +32,6 @@ const GuideProfile = (props: RouteComponentProps<TParams>) => {
 
   const dispatcher = useDispatch();
 
-  /* w Informations jest onClick na Link, ktory pobiera guideProfile */
   const guideProfile = useSelector((state: StoreType) => state.guideProfile.guideProfile);
   const guideProfileData = useSelector((state: StoreType) => state.guideProfile.guideProfileData);
   const activeOffers = useSelector((state: StoreType) => state.guideProfile.activeOffers);
@@ -40,13 +39,13 @@ const GuideProfile = (props: RouteComponentProps<TParams>) => {
 
   useEffect(() => {
     dispatcher(fetchGuideProfileRequested(guideId));
-  }, []);
+  }, [dispatcher, guideId]);
 
   useEffect(() => {
     if (guideProfile.userId !== -1) dispatcher(fetchGuideProfileDataRequest(guideProfile.userId));
     dispatcher(fetchGuideActiveOffersRequest(guideId));
     dispatcher(fetchGuideHistoryRequest(guideId));
-  }, [guideProfile, dispatcher]);
+  }, [guideProfile, dispatcher, guideId]);
 
   const backToMainPage = () => {
     sessionStorage.setItem('backFromGuideProfile', 'true');
