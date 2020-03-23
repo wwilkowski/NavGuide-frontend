@@ -77,7 +77,7 @@ const GuideProfileData = (props: IGuideProfileDataProps) => {
         <p className={styles.right}>{experience}</p>
         <p className={styles.left}>{t('Average mark')}</p>
         <p className={styles.right}>{profile.averageMark > 0 ? profile.averageMark : 0}</p>
-        <p className={styles.title}>{t('Contact')}</p>
+        {/*<p className={styles.title}>{t('Contact')}</p>
         <p className={styles.left}>{t('Tel')}</p>
         <p className={styles.right}>{telephone}</p>
         <p className={styles.left} style={{ width: '15%' }}>
@@ -85,7 +85,7 @@ const GuideProfileData = (props: IGuideProfileDataProps) => {
         </p>
         <p className={styles.right} style={{ width: '85%' }}>
           {profileData.email}
-        </p>
+        </p>*/}
         <p className={styles.title}>{t('Speech')}</p>
         <p className={styles.left}>{t('Country')}</p>
         <p className={styles.right}>{getCountry(profileData.country)}</p>

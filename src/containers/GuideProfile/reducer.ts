@@ -12,7 +12,7 @@ import { GuideProfileAction, IGuideProfileComplete } from './types';
 
 //GUIDE PROFILE
 const initialGuideState: IGuideProfileComplete = {
-  guideProfile: { languages: [], lastName: '', firstName: '', guideId: -1, userId: -1, experience: -1, averageMark: 0 },
+  guideProfile: { avatar: '', languages: [], lastName: '', firstName: '', guideId: -1, userId: -1, experience: -1, averageMark: 0 },
   guideProfileData: {
     age: -1,
     avatar: '',

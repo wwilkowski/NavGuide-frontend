@@ -42,7 +42,7 @@ const App: React.FC = () => {
         <Route exact path='/profile' component={Profile} />
         <Route path='/profile/guide' component={GuidePanel} />
         <Route path='/admin' component={AdminPanel} />
-        <Route path='/guides/:id' component={GuideProfile} />
+        <Route path='/guides/:guideId' component={GuideProfile} />
         <Route component={NotFound} />
       </Switch>
     </>

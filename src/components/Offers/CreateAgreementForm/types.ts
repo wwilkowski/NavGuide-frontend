@@ -7,6 +7,8 @@ export interface ICreateAgreementFormValues {
 }
 
 export interface ICreateAgreementOtherProps {
+  tripBegin: Date;
+  tripEnd: Date;
   propOfferId: number;
   propUserId: number;
   createAgreementClick: (description: string, plannedDate: Date, price: number) => void;
