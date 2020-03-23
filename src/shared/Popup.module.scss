@@ -1,0 +1,25 @@
+.popup {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+
+  &__content {
+    width: 33%;
+    height: 20%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 18rem;
+    background-color: rgba(163, 136, 136, 0.22);
+  }
+  &__title {
+    text-align: center;
+    width: 100%;
+    margin: 2rem 2rem 0;
+  }
+
+  &__buttons {
+    margin: auto;
+  }
+}

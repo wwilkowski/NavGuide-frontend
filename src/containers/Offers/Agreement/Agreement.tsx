@@ -45,6 +45,10 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
   }, []);
 
   useEffect(() => {
+    if (offerId !== -1) dispatcher(actions.getOfferByIdRequest(offerId.toString()));
+  }, [offerId, dispatcher]);
+
+  useEffect(() => {
     if (pathFrom === '/profile/guide') {
       setTravelerId(props.location.state.travelerId);
       setOfferId(props.location.state.offerId);
@@ -84,14 +88,8 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
     console.log('cancel create agreement');
   };
 
-  const handleAcceptAgreement = (id: number) => {
-    dispatcher(actions.settleAgreementRequest(id, 'ACCEPT'));
-    history.goBack();
-  };
-
-  const handleRejectAgreement = (id: number) => {
-    dispatcher(actions.settleAgreementRequest(id, 'REJECT'));
-    history.goBack();
+  const handleSettleAgreement = (id: number, status: string) => {
+    dispatcher(actions.settleAgreementRequest(id, status));
   };
 
   const getDate = (date: string) => {
@@ -117,8 +115,8 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
               </p>
               <p>{t('Description')}</p>
               <p>{currentAgreement.description}</p>
-              <button onClick={() => handleAcceptAgreement(currentAgreement.id)}>{t('Accept')}</button>
-              <button onClick={() => handleRejectAgreement(currentAgreement.id)}>{t('Reject')}</button>
+              <button onClick={() => handleSettleAgreement(currentAgreement.id, 'ACCEPT')}>{t('Accept')}</button>
+              <button onClick={() => handleSettleAgreement(currentAgreement.id, 'REJECT')}>{t('Reject')}</button>
             </>
           ) : null}
         </div>
@@ -127,12 +125,16 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
         <div>
           <h3>Panel tworzenia umowy</h3>
           {currentOffer && <TripListElement trip={currentOffer} />}
-          <CreateAgreementForm
-            propOfferId={offerId}
-            propUserId={travelerId}
-            createAgreementClick={handleCreateAgreementClick}
-            createAgreementCancel={handleCancelAgreementClick}
-          />
+          {currentOffer && (
+            <CreateAgreementForm
+              tripBegin={currentOffer.begin}
+              tripEnd={currentOffer.end}
+              propOfferId={offerId}
+              propUserId={travelerId}
+              createAgreementClick={handleCreateAgreementClick}
+              createAgreementCancel={handleCancelAgreementClick}
+            />
+          )}
         </div>
       )}
     </div>
