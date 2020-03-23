@@ -163,7 +163,7 @@ const Informations = (props: IInformationsProps) => {
         {(props.mode === 'guide' || window.innerWidth > 600) && (
           <div className={styles.guideView}>
             <div>
-              <Link to={`/guide/${tripData.owner.guideId}`} onClick={() => dispatcher(fetchGuideProfileRequested(tripData.owner.guideId))}>
+              <Link to={`/guides/${tripData.owner.guideId}`}>
                 <img src={props.guideProfileData.avatar} alt='' />
               </Link>
             </div>
@@ -183,7 +183,7 @@ const Informations = (props: IInformationsProps) => {
                 <p>{guideProfile.averageMark > 0 ? guideProfile.averageMark : 0}</p>
               </div>
             </div>
-            <div className={styles.section}>
+            {/*<div className={styles.section}>
               <h2 className={styles.title}>{t('Contact')}</h2>
               <div className={styles.info}>
                 <p className={styles.subtitle}>{t('Tel')}.:</p>
@@ -193,7 +193,7 @@ const Informations = (props: IInformationsProps) => {
                 <p className={styles.subtitle}>{t('Email')}:</p>
                 <p>{props.guideProfileData.email}</p>
               </div>
-            </div>
+            </div>*/}
             <div className={styles.section}></div>
             <div className={styles.section}>
               <h2 className={styles.title}>{t('Speech')}</h2>

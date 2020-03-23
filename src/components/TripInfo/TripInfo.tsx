@@ -13,7 +13,9 @@ import { Link } from 'react-router-dom';
 
 const TripInfo = (props: ITripInfoProps) => {
   const { t } = useTranslation();
+
   const isLogged = useSelector((state: StoreType) => state.profile.isLoggedIn);
+
   const node: any = useRef();
 
   const [informationsMode, setInformationsMode] = useState<string>('trip');

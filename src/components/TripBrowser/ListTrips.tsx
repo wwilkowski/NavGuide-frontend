@@ -35,9 +35,7 @@ const ListTrips = ({ trips, mode, chosenOfferId, setChosenOfferId }: types.IList
         <ul className={styles.listTrips}>
           {trips.map((trip: ISingleTripType) => (
             <div key={trip.id}>
-              <Link to={`/offers/${trip.id}`} className={styles.link}>
-                <TripListElement trip={trip} />
-              </Link>
+              <TripListElement trip={trip} />
             </div>
           ))}
         </ul>
