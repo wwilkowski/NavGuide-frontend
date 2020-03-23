@@ -40,6 +40,7 @@ function* createOffer(action: types.ICreateOfferAction) {
       },
       body: formData
     });
+    console.log(radius);
     if (response.status >= 200 && response.status <= 300) {
       yield put(actions.createOfferSuccessed());
       showNotification('success', `${i18n.t('The offer has been added')}`, '');

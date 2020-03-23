@@ -217,10 +217,11 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
           valueLabelDisplay='auto'
           onChange={(event: React.ChangeEvent<{}>, value: number | number[]) => {
             props.handleChange(event);
+            setFieldValue('radius', value);
             const position = {
               latitude: props.position.latitude,
               longitude: props.position.longitude,
-              radius: Number(value) || 0.0
+              radius: values.radius || 0.0
             };
             props.setPosition(position);
           }}
@@ -290,6 +291,7 @@ const OfferCreateForm = withFormik<types.MyFormProps, types.FullFormValues>({
   handleSubmit: (values: types.FullFormValues, { props }) => {
     values.radius *= 1000;
     props.onSubmit(values);
+    values.radius /= 1000;
   }
 })(InnerForm);
 
