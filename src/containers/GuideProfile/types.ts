@@ -32,6 +32,7 @@ export interface IGuideProfileHistoryOffersProps {
 }
 
 export interface IGuideProfile {
+  avatar: string;
   averageMark: number;
   languages: string[];
   lastName: string;

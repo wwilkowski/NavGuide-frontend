@@ -6,7 +6,7 @@ import DatePicker from 'react-datepicker';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import i18n from '../../../locales/i18n';
-import history from '../../../history';
+import { showNotification } from '../../../helpers/notification';
 
 const CreateAgreementSchema = Yup.object().shape({
   description: Yup.string()
@@ -76,8 +76,11 @@ const CreateAgreementForm = withFormik<ICreateAgreementOtherProps, ICreateAgreem
   },
   validationSchema: CreateAgreementSchema,
   handleSubmit: (values, { props }) => {
-    props.createAgreementClick(values.description, values.plannedDate, values.price);
-    history.goBack();
+    const tripBegin = new Date(props.tripBegin);
+    const tripEnd = new Date(props.tripEnd);
+    if (values.plannedDate.getTime() >= tripBegin.getTime() && values.plannedDate.getTime() <= tripEnd.getTime())
+      props.createAgreementClick(values.description, values.plannedDate, values.price);
+    else showNotification('warning', i18n.t('Bad date!'), i18n.t('Please set date between begin and end offer'));
   }
 })(InnerForm);
 

@@ -13,7 +13,9 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
 
   const dispatcher = useDispatch();
 
-  const [message, setMessage] = useState<string>('');
+  // eslint-disable-next-line
+  const [currentMessage, setCurrentMessage] = useState<string>('');
+  const [messages, setMessages] = useState<string[]>([]);
   const [filteredTrips, setFilteredTrips] = useState<IOffer[]>([]);
   const [agreementsTrips] = useState<IOffer[]>([]);
 
@@ -28,14 +30,8 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
       .substr(0, date.toString().indexOf('.'));
   };
 
-  const acceptOffer = (tripId: number) => {
-    if (message) {
-      dispatcher(actions.settleActiveOfferRequest(tripId, 'ACCEPT', message));
-    } else showNotification('warning', t('Form error'), t('Message is required') + '!');
-  };
-
-  const rejectOffer = (tripId: number) => {
-    if (message) dispatcher(actions.settleActiveOfferRequest(tripId, 'REJECT', message));
+  const settleOffer = (tripId: number, status: string, messagesIndex: number) => {
+    if (messages[messagesIndex]) dispatcher(actions.settleActiveOfferRequest(tripId, status, messages[messagesIndex]));
     else showNotification('warning', t('Form error'), t('Message is required') + '!');
   };
 
@@ -69,16 +65,26 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
       {filteredTrips.map((trip: IOffer, i: number) => (
         <li key={i}>
           <TripListElement trip={trip.offer} />
-          <p>Wiadomość od turysty</p>
+          <p>{t('Message from tourist')}:</p>
           <p>{trip.message}</p>
-          <p>Planowana data: {getDate(trip.plannedDate)}</p>
+          <p>
+            {t('Planned date')}: {getDate(trip.plannedDate)}
+          </p>
           <Link to={`/users/${trip.traveler.id}`}>
             {t('Check user profile with ID')} {trip.traveler.id}
           </Link>
-          <textarea value={message} onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setMessage(e.target.value)} />
+          <textarea
+            value={messages[i]}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+              let tmp = messages;
+              tmp[i] = e.target.value;
+              setMessages(tmp);
+              setCurrentMessage(tmp[i]);
+            }}
+          />
           <Link
             to={
-              message
+              messages[i]
                 ? {
                     pathname: `/agreement/create/${trip.traveler.id}/${trip.offer.id}`,
                     state: {
@@ -92,19 +98,17 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
           >
             <button
               onClick={() => {
-                acceptOffer(trip.id);
+                settleOffer(trip.id, 'ACCEPT', i);
               }}
             >
-              Zaakceptuj
+              {t('Accept')}
             </button>
           </Link>
-          <button onClick={() => rejectOffer(trip.id)}>Odrzuć</button>
+          <button onClick={() => settleOffer(trip.id, 'REJECT', i)}>{t('Reject')}</button>
         </li>
       ))}
     </ul>
   ) : null;
 };
-
-//FORMIK!
 
 export default OrderedOffers;

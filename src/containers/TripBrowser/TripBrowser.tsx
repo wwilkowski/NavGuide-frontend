@@ -111,6 +111,7 @@ const TripBrowser: React.FC = () => {
         if (tripBegin.getDate() >= new Date(trip.begin).getDate() && tripEnd.getDate() <= new Date(trip.end).getDate()) {
           return true;
         }
+        return false;
       });
       setFilteredTrips(tmp);
     } else if (!isLogged) setFilteredTrips(tripsData);

@@ -3,8 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { IInformationsProps } from './types';
 import { ITag } from '../../../containers/TripBrowser/types';
 import { Link } from 'react-router-dom';
-import { fetchGuideProfileRequested } from '../../../containers/GuideProfile/actions';
-import { useDispatch } from 'react-redux';
 import styles from './styles.module.scss';
 
 const Informations = (props: IInformationsProps) => {
@@ -12,12 +10,8 @@ const Informations = (props: IInformationsProps) => {
 
   const { tripData, guideProfileData, guideProfile } = props;
 
-  const dispatcher = useDispatch();
-
-  const [activeTripButton, setActiveTripButton] = useState<boolean>(true);
-  const [activeGuideButton, setActiveGuideButton] = useState<boolean>(false);
-
   const [experience, setExperience] = useState<string>('');
+  // eslint-disable-next-line
   const [telephone, setTelephone] = useState<string>('');
 
   useEffect(() => {
@@ -163,7 +157,7 @@ const Informations = (props: IInformationsProps) => {
         {(props.mode === 'guide' || window.innerWidth > 600) && (
           <div className={styles.guideView}>
             <div>
-              <Link to={`/guide/${tripData.owner.guideId}`} onClick={() => dispatcher(fetchGuideProfileRequested(tripData.owner.guideId))}>
+              <Link to={`/guides/${tripData.owner.guideId}`}>
                 <img src={props.guideProfileData.avatar} alt='' />
               </Link>
             </div>
@@ -183,7 +177,7 @@ const Informations = (props: IInformationsProps) => {
                 <p>{guideProfile.averageMark > 0 ? guideProfile.averageMark : 0}</p>
               </div>
             </div>
-            <div className={styles.section}>
+            {/*<div className={styles.section}>
               <h2 className={styles.title}>{t('Contact')}</h2>
               <div className={styles.info}>
                 <p className={styles.subtitle}>{t('Tel')}.:</p>
@@ -193,7 +187,7 @@ const Informations = (props: IInformationsProps) => {
                 <p className={styles.subtitle}>{t('Email')}:</p>
                 <p>{props.guideProfileData.email}</p>
               </div>
-            </div>
+            </div>*/}
             <div className={styles.section}></div>
             <div className={styles.section}>
               <h2 className={styles.title}>{t('Speech')}</h2>

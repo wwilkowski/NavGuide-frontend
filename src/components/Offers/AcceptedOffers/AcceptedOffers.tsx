@@ -4,8 +4,11 @@ import TripListElement from '../../TripBrowser/TripListElement';
 import { useSelector } from 'react-redux';
 import { StoreType } from '../../../store';
 import { Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const AcceptedOffers = (props: IAcceptedOffersProps) => {
+  const { t } = useTranslation();
+
   const { agreements } = props;
 
   const location = useLocation();
@@ -40,11 +43,24 @@ const AcceptedOffers = (props: IAcceptedOffersProps) => {
       {filteredAgreements.map((agr: IAgreementOffer) => (
         <div key={agr.id}>
           <TripListElement trip={agr.offer} />
-          {user.role === 'GUIDE' && <Link to={`/users/${agr.traveler.id}`}>Zobacz profil użytkownika o id {agr.traveler.id}</Link>}
+          {user.role === 'GUIDE' && (
+            <Link to={`/users/${agr.traveler.id}`}>
+              {t('Check user profile with ID')} {agr.traveler.id}
+            </Link>
+          )}
+          {user.role === 'TRAVELER' && (
+            <Link to={`/guides/${agr.offer.owner.guideId}`}>
+              {t('Check guide profile with ID')} {agr.offer.owner.guideId}
+            </Link>
+          )}
 
-          <p>Planowana data: {getDate(agr.plannedDate)}</p>
-          <p>Cena: {agr.price}</p>
-          <p>Opis:</p>
+          <p>
+            {t('Planned date')}: {getDate(agr.plannedDate)}
+          </p>
+          <p>
+            {t('Price')}: {agr.price}
+          </p>
+          <p>{t('Description')}:</p>
           <p>{agr.description}</p>
         </div>
       ))}

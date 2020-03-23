@@ -7,22 +7,28 @@ import TripListElement from '../../../components/TripBrowser/TripListElement';
 import DatePicker from 'react-datepicker';
 import { showNotification } from '../../../helpers/notification';
 import i18n from '../../../locales/i18n';
+import { useTranslation } from 'react-i18next';
 
 type TParams = { id: string };
 
 interface Props extends RouteComponentProps<TParams> {}
 
 const OfferSale = (props: Props) => {
+  const { t } = useTranslation();
+
   const dispatcher = useDispatch();
+
   const currentOffer = useSelector((state: StoreType) => state.currentOfferReducer.offer);
+
   useEffect(() => {
     dispatcher(getOfferByIdRequest(props.match.params.id));
   }, [dispatcher, props.match.params.id]);
 
-  useEffect(() => {}, [currentOffer]);
-
   const [date, setDate] = useState<Date | null>(new Date());
   const [message, setMessage] = useState<string>('');
+  // eslint-disable-next-line
+  const [popupVisible, setPopupVisible] = useState<boolean>(false);
+
   return currentOffer ? (
     <div>
       <TripListElement trip={currentOffer} />
@@ -36,18 +42,20 @@ const OfferSale = (props: Props) => {
           const tripBegin = new Date(currentOffer.begin);
           const tripEnd = new Date(currentOffer.end);
 
-          if (date !== null && date.getTime() >= tripBegin.getTime() && date.getTime() <= tripEnd.getTime()) {
-            dispatcher(buyOfferRequest(currentOffer.id.toString(), date, message));
-          } else {
+          if (!(date !== null && date.getTime() >= tripBegin.getTime() && date.getTime() <= tripEnd.getTime())) {
             showNotification('warning', i18n.t('Bad date!'), i18n.t('Please set date between begin and end offer'));
+          } else if (message === '') {
+            showNotification('warning', i18n.t('Bad message!'), i18n.t('Message can not be empty'));
+          } else {
+            dispatcher(buyOfferRequest(currentOffer.id.toString(), date, message));
           }
         }}
       >
-        Zamów ofertę
+        {t('Order offer')}
       </button>
     </div>
   ) : (
-    <p>Nie ma oferty</p>
+    <p>{t('No offer')}</p>
   );
 };
 

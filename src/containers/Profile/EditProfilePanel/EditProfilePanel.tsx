@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { StoreType } from '../../../store';
-import UserDataForm from '../../../components/UserDataForm/UserDataForm';
-import { IUserFormValues } from '../../../shared/types';
 import * as actions from '../actions';
 import { getOwnAgreementsRequest, settleAgreementRequest } from '../../Offers/actions';
-import AvatarForm from '../../../components/AvatarForm/AvatarForm';
 import ProfileMenu from '../../../components/ProfileMenu/ProfileMenu';
-import styles from './EditProfileForm.module.scss';
+import styles from './EditProfilePanel.module.scss';
 import ActiveOffers from '../../../components/Offers/ActiveOffers/ActiveOffers';
 import { getActiveOffersRequest, getApproachesRequest } from '../../Offers/actions';
 import VerifiedOffers from '../../../components/Offers/VerifiedOffers/VerifiedOffers';
@@ -16,6 +13,7 @@ import Agreements from '../../../components/Offers/Agreements/Agreements';
 import AcceptedOffers from '../../../components/Offers/AcceptedOffers/AcceptedOffers';
 import { useTranslation } from 'react-i18next';
 import UserProfile from '../../../components/UserProfile/UserProfile';
+import { Link } from 'react-router-dom';
 
 enum Scene {
   profile,
@@ -23,7 +21,7 @@ enum Scene {
   activeOffers
 }
 
-const EditProfileForm = () => {
+const EditProfilePanel = () => {
   const { t } = useTranslation();
 
   const dispatcher = useDispatch();
@@ -36,10 +34,6 @@ const EditProfileForm = () => {
   const verifiedOffersTraveler = useSelector((state: StoreType) => state.currentOfferReducer.approaches);
   const historyOffersTraveler = useSelector((state: StoreType) => state.profile.historyOffers);
   const agreements = useSelector((state: StoreType) => state.currentOfferReducer.agreements);
-
-  const onEditProfileFormSubmit = (editUser: IUserFormValues) => {
-    dispatcher(actions.editProfileRequest(editUser, user));
-  };
 
   const onAgreementButtonClick = (agreementId: number, status: string) => {
     dispatcher(settleAgreementRequest(agreementId, status));
@@ -61,6 +55,7 @@ const EditProfileForm = () => {
       <div className={sceneMode === Scene.profile ? styles.userContainer : styles.profileSectionHidden}>
         <div className={sceneMode === Scene.profile ? styles.profileSection : styles.profileSectionHidden}>
           <UserProfile user={user} />
+          <Link to='/profile/edit'>{t('Edit your profile')}</Link>
         </div>
       </div>
       <div className={sceneMode === Scene.activeOffers ? styles.profileSection : styles.profileSectionHidden}>
@@ -97,4 +92,4 @@ const EditProfileForm = () => {
   );
 };
 
-export default EditProfileForm;
+export default EditProfilePanel;

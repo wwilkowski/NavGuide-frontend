@@ -1,7 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { showNotification } from '../../helpers/notification';
 import { getToken } from '../../helpers/tokenCookie';
-import { forwardTo } from '../../history';
+import history, { forwardTo } from '../../history';
 import i18n from '../../locales/i18n';
 import * as actions from './actions';
 import * as constants from './constants';
@@ -207,6 +207,7 @@ function* createAgreement(action: types.ICreateAgreementAction) {
     if (response.status >= 200 && response.status <= 300) {
       yield put(actions.getOwnAgreementsRequest());
       showNotification('success', i18n.t('Success'), i18n.t('You have created an agreement'));
+      history.goBack();
     } else if (response.status === 401) {
       throw new Error('You are not logged in');
     } else {
@@ -257,6 +258,7 @@ function* settleAgreement(action: types.ISettleAgreementAction) {
       yield put(actions.getOwnAgreementsRequest());
       if (action.status === 'ACCEPT')
         showNotification('success', i18n.t('You have accepted an agreement'), i18n.t('Your trip will be done'));
+      history.goBack();
       if (action.status === 'REJECT')
         showNotification('danger', i18n.t('You have rejected an agreement'), i18n.t('Your trip will not be done'));
     } else if (response.status === 401) {

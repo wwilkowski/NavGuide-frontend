@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { StoreType } from '../../store';
 import PrivateRoute from '../../shared/PrivateRoute';
-import EditProfileForm from './EditProfileForm/EditProfileForm';
+import EditProfilePanel from './EditProfilePanel/EditProfilePanel';
 import { Switch } from 'react-router-dom';
 
 const Profile = () => {
@@ -10,7 +10,7 @@ const Profile = () => {
   const { isLoggedIn } = profile;
   return (
     <Switch>
-      <PrivateRoute exact path='/profile' isLoggedIn={isLoggedIn} component={EditProfileForm} />
+      <PrivateRoute exact path='/profile' isLoggedIn={isLoggedIn} component={EditProfilePanel} />
     </Switch>
   );
 };
