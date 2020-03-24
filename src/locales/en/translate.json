@@ -31,6 +31,8 @@
     "MOVIES": "Movies",
     "BOOKS": "Books",
     "ANY": "Any",
-    "PARTIES": "Parties"
+    "PARTIES": "Parties",
+    "MALE": "Male",
+    "FEMALE": "Female"
   }
 }
