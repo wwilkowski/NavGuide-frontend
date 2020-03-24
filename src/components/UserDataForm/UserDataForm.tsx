@@ -88,6 +88,7 @@ const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
           type='text'
           name='firstName'
           label={t('First name')}
+          value={props.values.firstName}
           onChange={e => {
             props.setFieldValue('firstName', e.target.value);
           }}
@@ -96,11 +97,12 @@ const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
           style={{ margin: 0 }}
         />
         <TextField
-          error={!!errors.firstName}
+          error={!!errors.lastName}
           id='lastName'
           type='text'
           name='lastName'
           label={t('Last name')}
+          value={values.lastName}
           onChange={e => {
             props.setFieldValue('lastName', e.target.value);
           }}
@@ -137,6 +139,7 @@ const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
             type='text'
             name='telephone'
             label={t('Phone')}
+            value={values.telephone}
             onChange={e => props.setFieldValue('telephone', e.target.value)}
             helperText={t(errors.telephone || '')}
             InputProps={{
@@ -257,7 +260,6 @@ const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
 const MyForm = withFormik<MyFormProps, FullFormValues>({
   mapPropsToValues: (props: MyFormProps) => {
     const { firstName, lastName, country, email, telephone, gender, age, experience, interests } = props.templateUser;
-
     return {
       firstName: firstName || '',
       lastName: lastName || '',
