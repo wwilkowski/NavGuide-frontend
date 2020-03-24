@@ -87,6 +87,7 @@ const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
           id='firstName'
           type='text'
           name='firstName'
+          value={values.firstName}
           label={t('First name')}
           value={props.values.firstName}
           onChange={e => {
