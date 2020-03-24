@@ -325,6 +325,7 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
 })(InnerForm);
 
 const SearchForm = (props: ISearchFormProps) => {
+  const { t } = useTranslation();
   const isLogged = useSelector((state: StoreType) => state.profile.isLoggedIn);
 
   const [chosenOfferId, setChosenOfferId] = useState<number | null>(null);
@@ -348,7 +349,7 @@ const SearchForm = (props: ISearchFormProps) => {
     <div className={styles.container}>
       <div className={styles.searchForm}>
         <div className={styles.options}>
-          <p>View map</p>
+          <p>{t('View map')}</p>
           <Switch checked={!formView} onChange={() => setFormView(!formView)} value='formView' color='primary' />
         </div>
         <div style={!formView ? { display: 'none' } : {}}>
