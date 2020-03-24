@@ -18,6 +18,7 @@ import { NotFound } from './components/NotFound';
 import GuidePanel from './containers/Profile/GuidePanel';
 import Agreement from './containers/Offers/Agreement/Agreement';
 import EditProfile from './containers/Profile/EditProfile/EditProfile';
+import User from './containers/User/User';
 
 const App: React.FC = () => {
   const dispatcher = useDispatch();
@@ -37,13 +38,14 @@ const App: React.FC = () => {
         <Route path='/offers/create' component={Offers} />
         <Route exact path='/offers/:id' component={Offer} />
         <Route path='/offers/:id/buy' component={OfferSale} />
-        <Route path='/agreement/create/:travelerid/:offerid' component={Agreement} />
+        <Route path='/agreement/create/:travelerid/:offerid/:activeofferid' component={Agreement} />
         <Route exact path='/agreement/:id' component={Agreement} />
         <Route path='/register' component={Registration} />
         <Route exact path='/profile' component={Profile} />
         <Route path='/profile/edit' component={EditProfile} />
         <Route path='/profile/guide' component={GuidePanel} />
         <Route path='/admin' component={AdminPanel} />
+        <Route exact path='/users/:userId' component={User} />
         <Route path='/guides/:guideId' component={GuideProfile} />
         <Route component={NotFound} />
       </Switch>

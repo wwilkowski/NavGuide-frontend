@@ -92,7 +92,7 @@ const Header: React.FC = () => {
                   </Link>
                   <Link to='/profile/guide' className={styles.menuLink}>
                     <img src={CreateOfferIcon} alt='' className={styles.menuLinkIcon} />
-                    <p className={styles.menuLinkText}>{t('Menage your offers')}</p>
+                    <p className={styles.menuLinkText}>{t('Manage your offers')}</p>
                   </Link>
                 </li>
               ) : (

@@ -6,7 +6,7 @@ import CreateAgreementForm from '../../../components/Offers/CreateAgreementForm/
 import * as actions from '../../Offers/actions';
 import TripListElement from '../../../components/TripBrowser/TripListElement';
 import { RouteComponentProps } from 'react-router-dom';
-import { IAgreementOffer } from '../types';
+import { IAgreementOffer, IOffer } from '../types';
 import { useTranslation } from 'react-i18next';
 
 interface TParams {
@@ -22,10 +22,13 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
 
   const currentOffer = useSelector((state: StoreType) => state.currentOfferReducer.offer);
   const agreements = useSelector((state: StoreType) => state.currentOfferReducer.agreements);
+  const activeOffers = useSelector((state: StoreType) => state.currentOfferReducer.activeOffers);
 
   const [pathFrom, setPathFrom] = useState<string>('');
   const [travelerId, setTravelerId] = useState<number>(-1);
   const [offerId, setOfferId] = useState<number>(-1);
+  const [purchaseId, setPurchaseId] = useState<number>(-1);
+  const [touristPlannedDate, setTouristPlannedDate] = useState<Date>(new Date());
   const [currentAgreement, setCurrentAgreement] = useState<IAgreementOffer>();
 
   useEffect(() => {
@@ -38,15 +41,26 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
   useEffect(() => {
     const url = history.location.pathname.substr(18);
     const slash = url.indexOf('/');
+    const secondSlash = url.substr(slash + 1).indexOf('/') + slash + 1;
     const travelerId = parseInt(url.substr(0, slash), 10);
-    const offerId = parseInt(url.substr(slash + 1), 10);
+    const offerId = parseInt(url.substr(slash + 1, slash + 2), 10);
+    const purchaseId = parseInt(url.substr(secondSlash + 1), 10);
     setTravelerId(travelerId);
     setOfferId(offerId);
+    setPurchaseId(purchaseId);
   }, []);
 
   useEffect(() => {
     if (offerId !== -1) dispatcher(actions.getOfferByIdRequest(offerId.toString()));
   }, [offerId, dispatcher]);
+
+  useEffect(() => {
+    if (purchaseId !== -1 && activeOffers) {
+      activeOffers.forEach((offer: IOffer) => {
+        if (offer.id === purchaseId) setTouristPlannedDate(new Date(offer.plannedDate));
+      });
+    }
+  }, [purchaseId, activeOffers]);
 
   useEffect(() => {
     if (pathFrom === '/profile/guide') {
@@ -68,8 +82,7 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
       return agreement;
     };
 
-    const id = props.location.pathname;
-    if (agreements) setCurrentAgreement(findAgreementById(parseInt(id.substr(id.length - 2), 10)));
+    if (agreements) setCurrentAgreement(findAgreementById(parseInt(props.location.pathname.substr(11))));
   }, [agreements, props.location.pathname]);
 
   const handleCreateAgreementClick = (description: string, plannedDate: Date, price: number) => {
@@ -127,6 +140,7 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
           {currentOffer && <TripListElement trip={currentOffer} />}
           {currentOffer && (
             <CreateAgreementForm
+              purchasePlannedDate={touristPlannedDate}
               tripBegin={currentOffer.begin}
               tripEnd={currentOffer.end}
               propOfferId={offerId}

@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FormikProps, withFormik, Form, Field } from 'formik';
 import i18n from '../../locales/i18n';
 import { ISettleGuideRequestFormValues, ISettleGuideRequestFormProps } from './types';
 import { showNotification } from '../../helpers/notification';
 import styles from './SettleGuideRequestForm.module.scss';
+import history from '../../history';
 
 const InnerForm = (props: FormikProps<ISettleGuideRequestFormValues> & ISettleGuideRequestFormProps) => {
   const options = ['REJECT', 'ACCEPT'];
 
   const disabled = props.availableIDs.length ? false : true;
+
+  useEffect(() => {
+    props.setFieldValue('id', props.availableIDs[0]);
+  }, [props.availableIDs, props]);
 
   return (
     <div className={styles.formContainer}>
@@ -17,7 +22,7 @@ const InnerForm = (props: FormikProps<ISettleGuideRequestFormValues> & ISettleGu
           <label htmlFor='id'>{i18n.t('ID')}: </label>
           <Field className={styles.formField__input} id='id' name='id' as='select' disabled={disabled}>
             {props.availableIDs.map((id: number) => (
-              <option key={id} value={id}>
+              <option key={id} value={id} onClick={() => props.setFieldValue('id', id)}>
                 {id}
               </option>
             ))}
@@ -57,8 +62,11 @@ const MyForm = withFormik<ISettleGuideRequestFormProps, ISettleGuideRequestFormV
 
   handleSubmit: (values: ISettleGuideRequestFormValues, { props }) => {
     const { onSubmit } = props;
-    if (values.id && values.message && values.status) onSubmit(values);
-    else showNotification('warning', i18n.t('Warning'), i18n.t('Please enter values first!'));
+    console.log(props.availableIDs);
+    if (values.id && values.message && values.status) {
+      onSubmit(values);
+      history.push('/admin');
+    } else showNotification('warning', i18n.t('Warning'), i18n.t('Please enter values first!'));
   }
 })(InnerForm);
 

@@ -12,6 +12,7 @@ interface Props extends RouteComponentProps<TParams> {}
 
 const Offer = (props: Props) => {
   const dispatcher = useDispatch();
+  const isLogged = useSelector((state: StoreType) => state.profile.isLoggedIn);
   const currentOffer = useSelector((state: StoreType) => state.currentOfferReducer.offer);
   const guideProfileData = useSelector((state: StoreType) => state.guideProfile.guideProfileData);
   const guideProfile = useSelector((state: StoreType) => state.guideProfile.guideProfile);
@@ -21,11 +22,11 @@ const Offer = (props: Props) => {
   }, [dispatcher, props.match.params.id]);
 
   useEffect(() => {
-    if (currentOffer) {
+    if (currentOffer && isLogged) {
       dispatcher(fetchGuideProfileRequested(currentOffer.owner.guideId));
       dispatcher(fetchGuideProfileDataRequest(currentOffer.owner.userId));
     }
-  }, [dispatcher, currentOffer]);
+  }, [dispatcher, currentOffer, isLogged]);
 
   return (
     <div>
