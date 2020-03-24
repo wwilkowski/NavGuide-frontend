@@ -237,7 +237,7 @@ const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
           <label htmlFor='1' title={t('I travel once every few years')}></label>
         </fieldset>
       </div>
-
+      <p className={styles.title}>{t('Interests')}</p>
       <ul className={styles.tagList}>
         {interests.map((interest: IInterest) => (
           <li key={interest.id} className={styles.tagElement}>
