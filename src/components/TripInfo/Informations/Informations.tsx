@@ -165,7 +165,7 @@ const Informations = (props: IInformationsProps) => {
               {tripData.owner.firstName} {tripData.owner.lastName}
             </p>
             <p>
-              ({props.guideProfileData.age}, {props.guideProfileData.gender})
+              ({props.guideProfileData.age}, {t(props.guideProfileData.gender)})
             </p>
             <div className={styles.section}>
               <div className={styles.info}>
