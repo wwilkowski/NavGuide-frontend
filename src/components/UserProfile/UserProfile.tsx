@@ -22,6 +22,10 @@ const UserProfile = ({ user }: Props) => {
           <p>{user.lastName}</p>
         </div>
         <div className={styles.info}>
+          <p className={styles.title}>{t('Gender')}</p>
+          <p>{t(user.gender)}</p>
+        </div>
+        <div className={styles.info}>
           <p className={styles.title}>{t('Email')}</p>
           <p>{user.email}</p>
         </div>
