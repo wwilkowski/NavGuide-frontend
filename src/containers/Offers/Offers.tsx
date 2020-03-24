@@ -11,9 +11,11 @@ import * as types from './types';
 import * as actions from './actions';
 import styles from './Offers.module.scss';
 import MaterialSwitch from '@material-ui/core/Switch';
+import { useTranslation } from 'react-i18next';
 
 const Offers = () => {
   const dispatcher = useDispatch();
+  const { t } = useTranslation();
   const profile = useSelector((state: StoreType) => state.profile);
   const { user } = profile;
   const [position, setPosition] = useState<IPosition>({
@@ -41,7 +43,7 @@ const Offers = () => {
     <Switch>
       <PrivateRoute exact path='/offers/create' isLoggedIn={user.role === 'GUIDE'}>
         <div className={styles.options}>
-          <p>View map</p>
+          <p>{t('View map')}</p>
           <MaterialSwitch checked={!formView} onChange={() => setFormView(!formView)} value='formView' color='primary' />
         </div>
         <div className={styles.container}>

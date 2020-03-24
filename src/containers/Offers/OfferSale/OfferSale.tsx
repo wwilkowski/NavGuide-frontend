@@ -32,7 +32,7 @@ const OfferSale = (props: Props) => {
   const [popupVisible, setPopupVisible] = useState<boolean>(false);
 
   return currentOffer ? (
-    <div>
+    <div className={styles.container}>
       <TripListElement trip={currentOffer} />
       <form className={styles.form}>
         <label htmlFor='message'>Wiadomość do sprzedającego</label>
