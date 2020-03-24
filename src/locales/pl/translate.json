@@ -384,6 +384,9 @@
     "I organize trips on average once a month": "Organizuję wycieczki średnio raz w miesiącu",
     "Sometimes, I show something for friends": "Czasami pokazuję coś znajomym",
     "I am a newcomer in guiding": "Jestem nowicjuszem w prowadzeniu",
-    "I was once a guide": "Byłem kiedyś przewodnikiem"
+    "I was once a guide": "Byłem kiedyś przewodnikiem",
+
+    "MALE": "Mężczyzna",
+    "FEMALE": "Kobieta"
   }
 }
