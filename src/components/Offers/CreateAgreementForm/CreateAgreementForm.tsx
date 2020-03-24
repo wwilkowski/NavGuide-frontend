@@ -29,8 +29,12 @@ const InnerForm = (props: ICreateAgreementOtherProps & FormikProps<ICreateAgreem
       <div>
         <DatePicker
           dateFormat='yyyy/MM/dd hh:mm'
+          timeFormat='HH:mm'
+          timeIntervals={15}
           showTimeSelect
           showTimeInput
+          minDate={new Date(props.tripBegin)}
+          maxDate={new Date(props.tripEnd)}
           selected={values.plannedDate}
           onChange={date => props.setFieldValue('plannedDate', date)}
         ></DatePicker>
@@ -66,11 +70,12 @@ const InnerForm = (props: ICreateAgreementOtherProps & FormikProps<ICreateAgreem
 
 const CreateAgreementForm = withFormik<ICreateAgreementOtherProps, ICreateAgreementFormValues>({
   mapPropsToValues: (props: ICreateAgreementOtherProps) => {
+    console.log(props.purchasePlannedDate);
     return {
       offerId: props.propOfferId,
       description: '',
       userId: props.propUserId,
-      plannedDate: new Date(),
+      plannedDate: props.purchasePlannedDate || new Date(),
       price: 0
     };
   },

@@ -33,9 +33,18 @@ const OfferSale = (props: Props) => {
     <div>
       <TripListElement trip={currentOffer} />
       <form>
-        <label htmlFor='message'>Wiadomość do sprzedającego</label>
+        <label htmlFor='message'>{t('Message to guide')}</label>
         <textarea id='message' value={message} onChange={e => setMessage(e.target.value)}></textarea>
-        <DatePicker dateFormat='yyyy/MM/dd hh:mm' showTimeSelect showTimeInput selected={date} onChange={date => setDate(date)} />
+        <DatePicker
+          dateFormat='yyyy/MM/dd hh:mm'
+          timeFormat='HH:mm'
+          timeIntervals={15}
+          showTimeSelect
+          minDate={new Date(currentOffer.begin)}
+          maxDate={new Date(currentOffer.end)}
+          selected={date}
+          onChange={date => setDate(date)}
+        />
       </form>
       <button
         onClick={() => {

@@ -86,7 +86,7 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
             to={
               messages[i]
                 ? {
-                    pathname: `/agreement/create/${trip.traveler.id}/${trip.offer.id}`,
+                    pathname: `/agreement/create/${trip.traveler.id}/${trip.offer.id}/${trip.id}`,
                     state: {
                       pathFrom: '/profile/guide',
                       offerId: trip.offer.id,

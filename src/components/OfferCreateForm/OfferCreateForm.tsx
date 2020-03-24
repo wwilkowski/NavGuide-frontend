@@ -185,7 +185,7 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
       </div>
       <div className={styles.offerForm__case}>
         <label htmlFor='price' className={styles.offerForm__label}>
-          {t('Price')}
+          {t('Price')} (zł)
         </label>
         <Field id='price' type='number' name='price' className={styles.offerForm__input} />
         {errors.price && touched.price && <div>{t(`Incorrect number`)}</div>}
