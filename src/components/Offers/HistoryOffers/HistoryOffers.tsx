@@ -8,11 +8,12 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
 
   return (
     <div>
-      {trips.map((trip: ISingleTripType) => (
-        <div key={trip.id}>
-          <TripListElement trip={trip} />
-        </div>
-      ))}
+      {trips &&
+        trips.map((trip: ISingleTripType) => (
+          <div key={trip.id}>
+            <TripListElement trip={trip} />
+          </div>
+        ))}
     </div>
   );
 };

@@ -7,6 +7,7 @@ export interface ICreateAgreementFormValues {
 }
 
 export interface ICreateAgreementOtherProps {
+  purchasePlannedDate: Date;
   tripBegin: Date;
   tripEnd: Date;
   propOfferId: number;

@@ -243,7 +243,7 @@ const GuideProfileActiveOffers = (props: IGuideProfileActiveOffersProps) => {
                       <p className={styles.title} style={{ marginBottom: '0.5rem', width: '60%' }}>
                         {t('Number of visits')}
                       </p>
-                      <p style={{ width: '100%', textAlign: 'center', marginBottom: '1rem' }}>23</p>
+                      <p style={{ width: '100%', textAlign: 'center', marginBottom: '1rem' }}>{trip.inSearch}</p>
                     </div>
                   </>
                 ) : (

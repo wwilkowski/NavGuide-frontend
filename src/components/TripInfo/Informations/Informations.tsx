@@ -151,7 +151,7 @@ const Informations = (props: IInformationsProps) => {
             </div>
             <div className={styles.section}>
               <h2 className={styles.title}>{t('Number of visits')}</h2>
-              <p className={styles.centered}>23</p>
+              <p className={styles.centered}>{tripData.inSearch}</p>
             </div>
           </div>
         )}
