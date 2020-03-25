@@ -13,7 +13,8 @@ const InnerForm = (props: FormikProps<ISettleGuideRequestFormValues> & ISettleGu
 
   useEffect(() => {
     props.setFieldValue('id', props.availableIDs[0]);
-  }, [props.availableIDs, props]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.availableIDs]);
 
   return (
     <div className={styles.formContainer}>
@@ -62,7 +63,6 @@ const MyForm = withFormik<ISettleGuideRequestFormProps, ISettleGuideRequestFormV
 
   handleSubmit: (values: ISettleGuideRequestFormValues, { props }) => {
     const { onSubmit } = props;
-    console.log(props.availableIDs);
     if (values.id && values.message && values.status) {
       onSubmit(values);
       history.push('/admin');
