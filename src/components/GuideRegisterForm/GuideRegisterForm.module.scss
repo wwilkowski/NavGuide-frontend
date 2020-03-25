@@ -1,0 +1,41 @@
+.title {
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+.container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+}
+
+.langCase {
+  margin: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.langList {
+  display: flex;
+}
+
+.experienceCase {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.descCase {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  margin: 1rem 0;
+  font-weight: 600;
+}
+
+.textarea {
+  margin-bottom: 1rem;
+}

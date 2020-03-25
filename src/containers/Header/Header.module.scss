@@ -1,0 +1,113 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background: #ffffff;
+  @media (min-width: 800px) {
+    padding: 1.5rem 2rem;
+    height: 15vh;
+  }
+}
+
+.mainMenu {
+  @media (min-width: 500px) {
+    max-width: 500px;
+    position: absolute;
+    background: #ffffff;
+    padding: 1rem;
+    right: 1rem;
+    top: 10vh;
+    z-index: 10000000;
+    box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.menuActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.loginMenu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loginMenuElement {
+  margin: 0.5rem 0;
+}
+
+.userMenu {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+}
+
+.userCase {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+}
+
+.userName {
+  font-size: 0.9em;
+  color: #000000;
+  padding: 0 0.5rem;
+}
+
+.avatar {
+  height: 30px;
+  border-radius: 50px;
+}
+
+.menuToggler {
+  height: 20px;
+  width: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.menuIcon {
+  width: 20px;
+}
+
+.menuOptions {
+  margin: 1rem 0;
+}
+
+.menuOption {
+}
+
+.menuLink {
+  font-size: 0.9em;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+.menuLinkIcon {
+  width: 20px;
+  color: inherit;
+}
+
+.menuLinkText {
+  font-size: 1em;
+  color: #000000;
+  margin: 0 1rem;
+}
+
+.languageOptions {
+  text-align: center;
+  margin: 0.5rem 0;
+}

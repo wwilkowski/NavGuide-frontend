@@ -1,0 +1,38 @@
+.container {
+  padding: 1rem;
+  margin-bottom: 3rem;
+  @media (min-width: 900px) {
+    display: flex;
+    justify-content: center;
+  }
+  &__el {
+    @media (min-width: 900px) {
+      width: 50%;
+      height: 85vh;
+      overflow-y: scroll;
+    }
+  }
+}
+
+.mapContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 0.5rem;
+}
+
+.options {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 50px;
+  background: #ffffff;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  @media (min-width: 900px) {
+    display: none;
+  }
+}

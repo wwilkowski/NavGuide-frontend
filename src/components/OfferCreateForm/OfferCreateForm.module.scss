@@ -1,0 +1,109 @@
+.offerForm {
+  @media (min-width: 800px) {
+    height: 85vh;
+    overflow-y: scroll;
+    padding: 0 1rem;
+  }
+  &__title {
+    font-size: 2em;
+    text-align: center;
+    margin: 1rem 0;
+  }
+  @media (min-width: 800px) {
+    flex-direction: row;
+  }
+
+  &__case {
+    max-width: 500px;
+  }
+
+  &__inputsCase {
+    @media (min-width: 900px) {
+      display: flex;
+      flex: 50%;
+      div {
+        width: 50%;
+      }
+    }
+  }
+  &__label {
+    color: #444444;
+    font-size: 0.8em;
+  }
+  &__input {
+    border: none;
+    border-bottom: 1px solid #555555;
+    padding: 0.5rem;
+    width: 100%;
+    margin: 0.3rem 0;
+    font-size: 0.8em;
+  }
+  &__locationInput {
+    position: relative;
+  }
+  &__tagList {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0.3rem 0;
+    padding: 1rem 0;
+  }
+  &__tag {
+    margin: 0.2rem 0;
+  }
+  &__date {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__submitButton {
+    margin: 1rem 1rem 1rem 0;
+    font-size: 0.9em;
+    width: 100px;
+    border: 1px solid #19cc95;
+    color: #19cc95;
+    background: none;
+    border-radius: 5px;
+    padding: 0.4rem;
+    cursor: pointer;
+    @media (min-width: 900px) {
+      font-size: 0.8em;
+    }
+  }
+  &__geoButton {
+    margin: 1rem 0;
+    font-size: 0.9em;
+    width: 100px;
+    border: 1px solid #1496ed;
+    color: #1496ed;
+    background: none;
+    border-radius: 5px;
+    padding: 0.4rem;
+    cursor: pointer;
+    @media (min-width: 900px) {
+      font-size: 0.8em;
+    }
+  }
+  &__buttonCase {
+    margin: 0.5rem 0;
+  }
+  &__labelList {
+    display: flex;
+    margin: 1rem 0;
+  }
+  &__imageLabel {
+    background: #f0f0f0;
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+  &__imageIcon {
+    width: 100%;
+    height: 100%;
+  }
+  &__imageInput {
+    position: absolute;
+    top: -1000px;
+    left: -1000px;
+    display: none;
+  }
+}

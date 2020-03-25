@@ -1,0 +1,55 @@
+.offer {
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  @media (min-width: 500px) {
+    flex-direction: row;
+  }
+  &__desc {
+    padding: 0.5rem 1rem;
+  }
+  &__photo {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+    @media (min-width: 500px) {
+      width: 200px;
+      height: 150px;
+    }
+  }
+  &__title {
+    font-weight: 600;
+  }
+  &__row {
+    display: flex;
+  }
+  &__languages {
+    display: flex;
+    font-size: 0.8em;
+  }
+  &__langElement {
+    margin: 0.1rem 0.3rem;
+  }
+  &__p {
+    font-size: 0.9em;
+  }
+  &__tags {
+    display: flex;
+  }
+  &__tag {
+    border: 1px solid #dbdbdb;
+    border-radius: 5px;
+    color: #333333;
+    padding: 0.1rem 0.5rem;
+    margin-top: 0.3rem;
+    margin-right: 0.2rem;
+    font-size: 0.7em;
+    cursor: pointer;
+    background: #ffffff;
+  }
+}
+
+.link {
+  color: inherit;
+}
