@@ -32,6 +32,7 @@ export interface ISearchFormProps {
 
 export interface IListTripsProps {
   trips: ISingleTripType[];
+  closestTrips: ISingleTripType[];
   mode: ListMode;
   chosenOfferId: number | null;
   setChosenOfferId: (offerId: number | null) => void;

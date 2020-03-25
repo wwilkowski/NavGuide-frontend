@@ -1,3 +1,5 @@
+import { ISingleTripType } from '../../../containers/TripBrowser/types';
+
 export interface ICreateAgreementFormValues {
   offerId: number;
   description: string;
@@ -7,9 +9,8 @@ export interface ICreateAgreementFormValues {
 }
 
 export interface ICreateAgreementOtherProps {
+  trip: ISingleTripType;
   purchasePlannedDate: Date;
-  tripBegin: Date;
-  tripEnd: Date;
   propOfferId: number;
   propUserId: number;
   createAgreementClick: (description: string, plannedDate: Date, price: number) => void;

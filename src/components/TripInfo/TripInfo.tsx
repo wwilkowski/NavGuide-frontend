@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { ISingleTripType, IPosition } from '../../containers/TripBrowser/types';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 import { Link } from 'react-router-dom';
+import ReportPopup from './ReportPopup/ReportPopup';
 
 const TripInfo = (props: ITripInfoProps) => {
   const { t } = useTranslation();
@@ -18,6 +19,7 @@ const TripInfo = (props: ITripInfoProps) => {
 
   const node: any = useRef();
 
+  const [popupVisibility, setPopupVisibility] = useState<boolean>(false);
   const [informationsMode, setInformationsMode] = useState<string>('trip');
   const [tripData, setTripData] = useState<ISingleTripType>({
     inSearch: -1,
@@ -92,7 +94,9 @@ const TripInfo = (props: ITripInfoProps) => {
           guideProfile={props.guideProfile}
           guideProfileData={props.guideProfileData}
         />
+        {!popupVisibility && <button onClick={() => setPopupVisibility(!popupVisibility)}>{t('Report')}</button>}
       </div>
+      {popupVisibility ? <ReportPopup trip={props.tripInformations} changeVisibility={() => setPopupVisibility(!popupVisibility)} /> : null}
     </div>
   ) : (
     <div>

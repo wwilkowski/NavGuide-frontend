@@ -13,7 +13,6 @@ import Agreements from '../../../components/Offers/Agreements/Agreements';
 import AcceptedOffers from '../../../components/Offers/AcceptedOffers/AcceptedOffers';
 import { useTranslation } from 'react-i18next';
 import UserProfile from '../../../components/UserProfile/UserProfile';
-import { Link } from 'react-router-dom';
 
 enum Scene {
   profile,
@@ -55,7 +54,6 @@ const EditProfilePanel = () => {
       <div className={sceneMode === Scene.profile ? styles.userContainer : styles.profileSectionHidden}>
         <div className={sceneMode === Scene.profile ? styles.profileSection : styles.profileSectionHidden}>
           <UserProfile user={user} />
-          <Link to='/profile/edit'>{t('Edit your profile')}</Link>
         </div>
       </div>
       <div className={sceneMode === Scene.activeOffers ? styles.profileSection : styles.profileSectionHidden}>
