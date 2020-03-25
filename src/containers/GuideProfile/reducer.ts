@@ -61,38 +61,7 @@ const initialGuideState: IGuideProfileComplete = {
       tags: [{ id: -1, name: '' }]
     }
   ],
-  historyOffers: [
-    {
-      date: '',
-      offer: {
-        inSearch: -1,
-        averageMark: -1,
-        begin: new Date(),
-        city: '',
-        description: '',
-        end: new Date(),
-        id: -1,
-        lat: -1,
-        lon: -1,
-        maxPeople: -1,
-        name: '',
-        owner: {
-          experience: -1,
-          firstName: '',
-          guideId: -1,
-          languages: [''],
-          lastName: '',
-          userId: -1
-        },
-        photos: [''],
-        price: -1,
-        priceType: '',
-        radius: -1,
-        sold: -1,
-        tags: [{ id: -1, name: '' }]
-      }
-    }
-  ]
+  historyOffers: []
 };
 
 const GuideProfileReducer = (state = initialGuideState, action: GuideProfileAction) => {
