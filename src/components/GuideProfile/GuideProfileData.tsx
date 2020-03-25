@@ -57,48 +57,38 @@ const GuideProfileData = (props: IGuideProfileDataProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.container__title}>
-        {t('Profile')}
+        {t('Guide profile')}
         <div className={styles.backButton} onClick={goBack}>
           <img src={back} alt='' />
         </div>
       </div>
-      <div className={styles.avatar}>
-        <img src={profileData.avatar} alt='' />
+      <img src={profile.avatar} alt='' className={styles.avatar} />
+      <p className={styles.guideName}>
+        {profile.firstName} {profile.lastName}
+      </p>
+      <p>
+        ({profileData.age}, {t(profileData.gender)})
+      </p>
+      <div className={styles.section}>
+        <div className={styles.info}>
+          <p className={styles.subtitle}>{t('Experience')}:</p>
+          <p>{experience}</p>
+        </div>
+        <div className={styles.info}>
+          <p className={styles.subtitle}>{t('Average mark')}:</p>
+          <p>{profile.averageMark > 0 ? profile.averageMark : 0}</p>
+        </div>
       </div>
-      <div className={styles.data1}>
-        <p>
-          {profileData.firstName} {profileData.lastName}
-        </p>
-        <p className={styles.small}>
-          ({profileData.age}, {profileData.gender})
-        </p>
-      </div>
-      <div className={styles.data2}>
-        <p className={styles.left}>{t('Experience')}</p>
-        <p className={styles.right}>{experience}</p>
-        <p className={styles.left}>{t('Average mark')}</p>
-        <p className={styles.right}>{profile.averageMark > 0 ? profile.averageMark : 0}</p>
-        {/*<p className={styles.title}>{t('Contact')}</p>
-        <p className={styles.left}>{t('Tel')}</p>
-        <p className={styles.right}>{telephone}</p>
-        <p className={styles.left} style={{ width: '15%' }}>
-          {t('Email')}
-        </p>
-        <p className={styles.right} style={{ width: '85%' }}>
-          {profileData.email}
-        </p>*/}
-        <p className={styles.title}>{t('Speech')}</p>
-        <p className={styles.left}>{t('Country')}</p>
-        <p className={styles.right}>{getCountry(profileData.country)}</p>
-        <p className={styles.left}>{t('Languages')}</p>
-        <p className={styles.right}>{profile.languages.map((lng: string) => `${getLanguage(lng)} `)}</p>
-        <p className={styles.title}>{t('Interests')}</p>
-        <div className={styles.data2__interests}>
-          {profileData.interests.map((el: { id: number; name: string }) => (
-            <div key={el.id} className={styles.data2__interest}>
-              {t(el.name)}
-            </div>
-          ))}
+      <div className={styles.section}></div>
+      <div className={styles.section}>
+        <h2 className={styles.title}>{t('Speech')}</h2>
+        <div className={styles.info}>
+          <p className={styles.subtitle}>{t('Country')}:</p>
+          <p>{getCountry(profileData.country)}</p>
+        </div>
+        <div className={styles.info}>
+          <p className={styles.subtitle}>{t('Languages')}:</p>
+          <p>{profile.languages.map((lng: string) => `${getLanguage(lng)} `)}</p>
         </div>
       </div>
     </div>

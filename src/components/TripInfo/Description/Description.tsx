@@ -1,8 +1,9 @@
 import React from 'react';
 import { IDesctiptionProps } from './types';
+import styles from './styles.module.scss';
 
 const Description = ({ text }: IDesctiptionProps) => {
-  return <p style={{ textAlign: 'center' }}>{text}</p>;
+  return <p className={styles.description}>{text}</p>;
 };
 
 export default Description;

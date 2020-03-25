@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import styles from './GuideProfileHistoryOffers.module.scss';
 import { useTranslation } from 'react-i18next';
-import { ITag, IEndedSingleTripType } from '../../containers/TripBrowser/types';
+import { ITag, IEndedSingleTripType, ISingleTripType } from '../../containers/TripBrowser/types';
 import { IGuideProfileHistoryOffersProps } from '../../containers/GuideProfile/types';
 import back from '../../assets/icons/back.png';
 import leftArrow from '../../assets/icons/leftArrow.png';
 import rightArrow from '../../assets/icons/rightArrow.png';
 import goLeft from '../../assets/icons/goLeft.png';
 import goRight from '../../assets/icons/goRight.png';
+import TripListElement from '../TripBrowser/TripListElement';
 
 interface ITripActivePhoto {
   tripId: number;
@@ -34,38 +35,7 @@ const GuideProfileHistoryOffers = (props: IGuideProfileHistoryOffersProps) => {
 
   const [value, setValue] = useState<string>('');
   const [visibleIds, setVisibleIds] = useState<number[]>([]);
-  const [filteredTrips, setFilteredTrips] = useState<IEndedSingleTripType[]>([
-    {
-      date: '',
-      offer: {
-        inSearch: -1,
-        averageMark: -1,
-        begin: new Date(),
-        city: '',
-        description: '',
-        end: new Date(),
-        id: -1,
-        lat: -1,
-        lon: -1,
-        maxPeople: -1,
-        name: '',
-        owner: {
-          experience: -1,
-          firstName: '',
-          guideId: -1,
-          languages: [''],
-          lastName: '',
-          userId: -1
-        },
-        photos: [''],
-        price: -1,
-        priceType: '',
-        radius: -1,
-        sold: -1,
-        tags: [{ id: -1, name: '' }]
-      }
-    }
-  ]);
+  const [filteredTrips, setFilteredTrips] = useState<IEndedSingleTripType[]>([]);
 
   const [activePhotos, setActivePhotos] = useState<ITripActivePhoto[]>([{ tripId: -1, activePhotoId: -1, numberOfPhotos: -1 }]);
 
@@ -147,127 +117,11 @@ const GuideProfileHistoryOffers = (props: IGuideProfileHistoryOffersProps) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.container__title}>
-        {t('History Offers')}
-        <div className={styles.backButton} onClick={goBack}>
-          <img src={back} alt='' />
-        </div>
-      </div>
-      <div className={styles.container__input}>
-        <input value={value} onChange={handleChange} />
-      </div>
-      <div className={styles.container__content}>
-        {filteredTrips.map((trip: IEndedSingleTripType, index: number) => {
-          const indexInActivePhotos = findIndex(trip.offer.id);
-          return (
-            <div key={trip.offer.id} className={styles.trip} style={index === filteredTrips.length - 1 ? { marginBottom: '0' } : {}}>
-              <div className={styles.trip__title} onClick={() => toogleTripVisible(trip.offer.id)}>
-                {trip.offer.name}
-              </div>
-              <div className={styles.gallery}>
-                <div className={styles.gallery__switchLeft} onClick={() => changeActivePhoto(trip.offer.id, Direction.left)}>
-                  <img src={leftArrow} alt='' />
-                </div>
-                <div className={styles.gallery__content}>
-                  <img src={trip.offer.photos[activePhotos[indexInActivePhotos].activePhotoId]} alt='' />
-                </div>
-                <div className={styles.gallery__switchRight} onClick={() => changeActivePhoto(trip.offer.id, Direction.right)}>
-                  <img src={rightArrow} alt='' />
-                </div>
-                <div className={styles.gallery__footer}>
-                  {trip.offer.photos.map((el: string, index: number) =>
-                    index === activePhotos[indexInActivePhotos].activePhotoId ? (
-                      <div key={index} className={styles.dotActive} onClick={() => setActivePhoto(trip.offer.id, index)} />
-                    ) : (
-                      <div key={index} className={styles.dot} onClick={() => setActivePhoto(trip.offer.id, index)} />
-                    )
-                  )}
-                </div>
-              </div>
-              <div className={visibleIds.includes(trip.offer.id) ? styles.trip__data : styles.trip__dataHidden}>
-                {activeMode === ActiveMode.informations ? (
-                  <>
-                    <div className={styles.switchData__active} onClick={() => setActiveMode(ActiveMode.informations)}>
-                      <img src={goLeft} alt='' />
-                    </div>
-                    <p className={styles.title}>{t('Informations')}</p>
-                    <div className={styles.switchData} onClick={() => setActiveMode(ActiveMode.description)}>
-                      <img src={goRight} alt='' />
-                    </div>
-                    <p className={styles.left}>{t('City')}:</p>
-                    <p className={styles.right}>{trip.offer.city}</p>
-                    <p className={styles.left}>{t('Price')}:</p>
-                    <p className={styles.right}>
-                      {trip.offer.price} ({t(trip.offer.priceType)})
-                    </p>
-                    <p className={styles.left} style={{ width: '70%' }}>
-                      {t('Max people')}:
-                    </p>
-                    <p className={styles.right} style={{ width: '30%' }}>
-                      {trip.offer.maxPeople}
-                    </p>
-                    <p className={styles.title}>{t('Availability')}:</p>
-                    <p className={styles.left}>{t('From')}:</p>
-                    <p className={styles.right}>
-                      {trip.offer.begin
-                        .toString()
-                        .replace('T', ' ')
-                        .substr(0, trip.offer.begin.toString().indexOf('.'))}
-                      }
-                    </p>
-                    <p className={styles.left}>{t('To')}:</p>
-                    <p className={styles.right}>
-                      {trip.offer.end
-                        .toString()
-                        .replace('T', ' ')
-                        .substr(0, trip.offer.end.toString().indexOf('.'))}
-                      }
-                    </p>
-                    <p className={styles.right} />
-                    <div className={styles.tags}>
-                      <div className={styles.tags__title}>{t('Tags')}</div>
-                      <div className={styles.tags__content}>
-                        {trip.offer.tags.map((tag: ITag) => (
-                          <div key={tag.id} className={styles.tag}>
-                            {t(tag.name)}{' '}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    <p className={styles.title}>{t('Statistics')}:</p>
-                    <p className={styles.left}>{t('Sold')}:</p>
-                    <p className={styles.right}>{trip.offer.sold}</p>
-                    <p className={styles.left} style={{ width: '60%' }}>
-                      {t('Average mark')}:
-                    </p>
-                    <p className={styles.right} style={{ width: '40%' }}>
-                      {trip.offer.averageMark > 0 ? trip.offer.averageMark : 0}
-                    </p>
-                    <div className={styles.visits}>
-                      <p className={styles.title} style={{ marginBottom: '0.5rem', width: '60%' }}>
-                        {t('Number of visits')}
-                      </p>
-                      <p style={{ width: '100%', textAlign: 'center', marginBottom: '1rem' }}>23</p>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className={styles.switchData} onClick={() => setActiveMode(ActiveMode.informations)}>
-                      <img src={goLeft} alt='' />
-                    </div>
-                    <p className={styles.title}>{t('Description')}</p>
-                    <div className={styles.switchData__active} onClick={() => setActiveMode(ActiveMode.description)}>
-                      <img src={goRight} alt='' />
-                    </div>
-                    <div className={styles.description}>{trip.offer.description}</div>
-                  </>
-                )}
-              </div>
-            </div>
-          );
+      <div className={styles.container__title}>{t('History Offers')}</div>
+      {filteredTrips.length > 0 &&
+        filteredTrips.map((trip: IEndedSingleTripType) => {
+          return <TripListElement trip={trip.offer} />;
         })}
-      </div>
     </div>
   );
 };
