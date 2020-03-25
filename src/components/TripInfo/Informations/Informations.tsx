@@ -160,7 +160,7 @@ const Informations = (props: IInformationsProps) => {
           <div className={styles.guideView}>
             <div>
               <Link to={`/guides/${tripData.owner.guideId}`}>
-                <img src={props.guideProfileData.avatar} alt='' />
+                <img src={props.guideProfileData.avatar} alt='' className={styles.avatar} />
               </Link>
             </div>
             <p className={styles.guideName}>
@@ -179,17 +179,6 @@ const Informations = (props: IInformationsProps) => {
                 <p>{guideProfile.averageMark > 0 ? guideProfile.averageMark : 0}</p>
               </div>
             </div>
-            {/*<div className={styles.section}>
-              <h2 className={styles.title}>{t('Contact')}</h2>
-              <div className={styles.info}>
-                <p className={styles.subtitle}>{t('Tel')}.:</p>
-                <p>{telephone}</p>
-              </div>
-              <div className={styles.info}>
-                <p className={styles.subtitle}>{t('Email')}:</p>
-                <p>{props.guideProfileData.email}</p>
-              </div>
-            </div>*/}
             <div className={styles.section}></div>
             <div className={styles.section}>
               <h2 className={styles.title}>{t('Speech')}</h2>
