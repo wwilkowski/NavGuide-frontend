@@ -77,6 +77,12 @@ const Header: React.FC = () => {
                   <p className={styles.menuLinkText}>{t('Profile')}</p>
                 </Link>
               </li>
+              <li className={styles.menuOption}>
+                <Link to='/profile/edit' className={styles.menuLink}>
+                  <img src={ProfileIcon} alt='' className={styles.menuLinkIcon} />
+                  <p className={styles.menuLinkText}>{t('Edit profile')}</p>
+                </Link>
+              </li>
               {profile.user.role === 'ADMIN' ? (
                 <li className={styles.menuOption}>
                   <Link to='/admin' className={styles.menuLink}>

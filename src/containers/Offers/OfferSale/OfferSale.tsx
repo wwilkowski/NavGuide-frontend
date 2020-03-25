@@ -22,18 +22,38 @@ const OfferSale = (props: Props) => {
 
   const currentOffer = useSelector((state: StoreType) => state.currentOfferReducer.offer);
 
-  useEffect(() => {
-    dispatcher(getOfferByIdRequest(props.match.params.id));
-  }, [dispatcher, props.match.params.id]);
-
   const [date, setDate] = useState<Date | null>(new Date());
   const [message, setMessage] = useState<string>('');
   // eslint-disable-next-line
   const [popupVisible, setPopupVisible] = useState<boolean>(false);
 
+  useEffect(() => {
+    const tmp = sessionStorage.getItem('approachData');
+    if (tmp) {
+      const data = JSON.parse(tmp);
+      setMessage(data.message);
+      setDate(new Date(data.plannedDate));
+      sessionStorage.removeItem('approachData');
+    }
+  }, []);
+
+  useEffect(() => {
+    dispatcher(getOfferByIdRequest(props.match.params.id));
+  }, [dispatcher, props.match.params.id]);
+
   return currentOffer ? (
     <div className={styles.container}>
-      <TripListElement trip={currentOffer} />
+      <div
+        onClick={() => {
+          const data = {
+            message: message,
+            plannedDate: date
+          };
+          sessionStorage.setItem('approachData', JSON.stringify(data));
+        }}
+      >
+        <TripListElement trip={currentOffer} />
+      </div>
       <form className={styles.form}>
         <label htmlFor='message'>{t('Message to guide')}</label>
         <textarea id='message' value={message} onChange={e => setMessage(e.target.value)}></textarea>

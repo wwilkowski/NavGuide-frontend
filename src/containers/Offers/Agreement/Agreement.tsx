@@ -116,7 +116,7 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
     <div>
       {isLogged && pathFrom === '/profile' && (
         <div>
-          <h2>Zadecyduj co zrobić z umową.</h2>
+          <h2>Zadecyduj co zrobić z umową.}</h2>
           {currentAgreement && <TripListElement trip={currentAgreement.offer} />}
           {currentAgreement ? (
             <>
@@ -137,12 +137,10 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
       {isLogged && pathFrom === '/profile/guide' && (
         <div>
           <h3>Panel tworzenia umowy</h3>
-          {currentOffer && <TripListElement trip={currentOffer} />}
           {currentOffer && (
             <CreateAgreementForm
+              trip={currentOffer}
               purchasePlannedDate={touristPlannedDate}
-              tripBegin={currentOffer.begin}
-              tripEnd={currentOffer.end}
               propOfferId={offerId}
               propUserId={travelerId}
               createAgreementClick={handleCreateAgreementClick}

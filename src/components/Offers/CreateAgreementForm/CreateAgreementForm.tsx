@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ICreateAgreementOtherProps, ICreateAgreementFormValues } from './types';
 import { FormikProps, Form, withFormik } from 'formik';
 import { TextField, Button } from '@material-ui/core';
@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import i18n from '../../../locales/i18n';
 import { showNotification } from '../../../helpers/notification';
+import TripListElement from '../../TripBrowser/TripListElement';
 
 const CreateAgreementSchema = Yup.object().shape({
   description: Yup.string()
@@ -20,57 +21,82 @@ const CreateAgreementSchema = Yup.object().shape({
 const InnerForm = (props: ICreateAgreementOtherProps & FormikProps<ICreateAgreementFormValues>) => {
   const { t } = useTranslation();
 
-  //propUserId propOfferId (in props, but never used)
   const { touched, errors, values } = props;
 
+  useEffect(() => {
+    //const tmp = sessionStorage.getItem('agreementData');
+    const tmp = sessionStorage.getItem('agreementData');
+    if (tmp) {
+      const data = JSON.parse(tmp);
+      props.setFieldValue('price', data.price);
+      props.setFieldValue('plannedDate', new Date(data.plannedDate));
+      props.setFieldValue('description', data.description);
+      sessionStorage.removeItem('agreementData');
+    }
+    // eslint-disable-next-line
+  }, []);
+
   return (
-    <Form>
-      <label htmlFor='plannedDate'>{i18n.t('Select date')}</label>
-      <div>
-        <DatePicker
-          dateFormat='yyyy/MM/dd hh:mm'
-          timeFormat='HH:mm'
-          timeIntervals={15}
-          showTimeSelect
-          showTimeInput
-          minDate={new Date(props.tripBegin)}
-          maxDate={new Date(props.tripEnd)}
-          selected={values.plannedDate}
-          onChange={date => props.setFieldValue('plannedDate', date)}
-        ></DatePicker>
+    <>
+      <div
+        onClick={() => {
+          const data = {
+            price: values.price,
+            plannedDate: values.plannedDate,
+            description: values.description
+          };
+          sessionStorage.setItem('agreementData', JSON.stringify(data));
+        }}
+      >
+        <TripListElement trip={props.trip} />
       </div>
-      <div>
-        <TextField
-          id='price'
-          type='text'
-          name='price'
-          label={t('Price')}
-          value={values.price}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => props.handleChange(event)}
-        />
-        {errors.price && touched.price && <div>{t(errors.price)}</div>}
-      </div>
-      <label htmlFor='description'>{t('Description')}</label>
-      <div>
-        <textarea
-          id='description'
-          value={values.description}
-          onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => props.handleChange(event)}
-        />
-        {errors.description && touched.description && <div>{t(errors.description)}</div>}
-      </div>
-      <div>
-        <Button variant='contained' color='primary' type='submit'>
-          {t('Create Agreement')}
-        </Button>
-      </div>
-    </Form>
+      <Form>
+        <label htmlFor='plannedDate'>{i18n.t('Select date')}</label>
+        <div>
+          <DatePicker
+            dateFormat='yyyy/MM/dd hh:mm'
+            timeFormat='HH:mm'
+            timeIntervals={15}
+            showTimeSelect
+            showTimeInput
+            minDate={new Date(props.trip.begin)}
+            maxDate={new Date(props.trip.end)}
+            selected={values.plannedDate}
+            onChange={date => props.setFieldValue('plannedDate', date)}
+          ></DatePicker>
+        </div>
+        <div>
+          <TextField
+            id='price'
+            type='text'
+            name='price'
+            label={t('Price') + ' (zł)'}
+            value={values.price}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => props.handleChange(event)}
+          />
+          {errors.price && touched.price && <div>{t(errors.price)}</div>}
+        </div>
+        <label htmlFor='description'>{t('Description')}</label>
+        <div>
+          <textarea
+            id='description'
+            value={values.description}
+            onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => props.handleChange(event)}
+          />
+          {errors.description && touched.description && <div>{t(errors.description)}</div>}
+        </div>
+        <div>
+          <Button variant='contained' color='primary' type='submit'>
+            {t('Create Agreement')}
+          </Button>
+        </div>
+      </Form>
+    </>
   );
 };
 
 const CreateAgreementForm = withFormik<ICreateAgreementOtherProps, ICreateAgreementFormValues>({
   mapPropsToValues: (props: ICreateAgreementOtherProps) => {
-    console.log(props.purchasePlannedDate);
     return {
       offerId: props.propOfferId,
       description: '',
@@ -81,8 +107,8 @@ const CreateAgreementForm = withFormik<ICreateAgreementOtherProps, ICreateAgreem
   },
   validationSchema: CreateAgreementSchema,
   handleSubmit: (values, { props }) => {
-    const tripBegin = new Date(props.tripBegin);
-    const tripEnd = new Date(props.tripEnd);
+    const tripBegin = new Date(props.trip.begin);
+    const tripEnd = new Date(props.trip.end);
     if (values.plannedDate.getTime() >= tripBegin.getTime() && values.plannedDate.getTime() <= tripEnd.getTime())
       props.createAgreementClick(values.description, values.plannedDate, values.price);
     else showNotification('warning', i18n.t('Bad date!'), i18n.t('Please set date between begin and end offer'));
