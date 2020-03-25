@@ -9,7 +9,8 @@ import {
   GET_OWN_AGREEMENTS_SUCCESSED,
   GET_OWN_AGREEMENTS_FAILED,
   CREATE_AGREEMENT_REQUESTED,
-  SETTLE_AGREEMENT_REQUESTED
+  SETTLE_AGREEMENT_REQUESTED,
+  REPORT_OFFER_REQUESTED
 } from './constants';
 
 import * as typesTripBrowser from '../../containers/TripBrowser/types';
@@ -176,6 +177,12 @@ export interface ISettleAgreementAction {
   type: typeof SETTLE_AGREEMENT_REQUESTED;
   id: number;
   status: string;
+}
+
+export interface IReportOfferAction {
+  type: typeof REPORT_OFFER_REQUESTED;
+  offerId: number;
+  description: string;
 }
 
 export interface IGetOfferByIdSuccessed {

@@ -111,3 +111,11 @@ export const settleAgreementRequest = (id: number, status: string) => ({
   id,
   status
 });
+
+// report offer
+
+export const reportOfferRequest = (offerId: number, description: string) => ({
+  type: constants.REPORT_OFFER_REQUESTED,
+  offerId,
+  description
+});

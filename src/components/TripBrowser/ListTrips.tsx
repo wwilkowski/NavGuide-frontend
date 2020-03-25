@@ -5,13 +5,12 @@ import { useTranslation } from 'react-i18next';
 import TripListElement from './TripListElement';
 import styles from './ListTrips.module.scss';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { StoreType } from '../../store';
 
-const ListTrips = ({ trips, mode, chosenOfferId, setChosenOfferId }: types.IListTripsProps) => {
+const ListTrips = ({ trips, closestTrips, mode, chosenOfferId, setChosenOfferId }: types.IListTripsProps) => {
   const { t } = useTranslation();
-  const closestTripsData = useSelector((state: StoreType) => state.tripBrowser.closestTrips);
-  console.log(trips);
+
+  const closestTripsData = closestTrips;
+
   return (
     <div className={styles.listTrips}>
       {mode === types.ListMode.closest ? (

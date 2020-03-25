@@ -80,7 +80,9 @@ const TripBrowser: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [positionValue.radius, isLogged]);
 
-  useEffect(() => {}, [suggestedCities]);
+  useEffect(() => {
+    dispatcher(actions.fetchTagsRequested());
+  }, [dispatcher]);
 
   useEffect(() => {
     if (activeTags && activeTags.length) {
@@ -94,20 +96,18 @@ const TripBrowser: React.FC = () => {
         tmp = tmp.filter((trip: ISingleTripType) => {
           const tripBegin = new Date(trip.begin);
           const tripEnd = new Date(trip.end);
-          if (tripBegin.getTime() >= beginDate.getTime() && tripEnd.getTime() <= endDate.getTime()) {
+          if (tripBegin.getDate() >= new Date(trip.begin).getDate() && tripEnd.getDate() <= new Date(trip.end).getDate()) {
             return true;
           }
           return false;
         });
       }
-
       setFilteredTrips(tmp);
     } else if (beginDate && endDate && isLogged && tripsData) {
       let tmp = [];
       tmp = tripsData.filter((trip: ISingleTripType) => {
         const tripBegin = new Date(trip.begin);
         const tripEnd = new Date(trip.end);
-        console.log(tripBegin.getTime() >= beginDate.getTime());
         if (tripBegin.getDate() >= new Date(trip.begin).getDate() && tripEnd.getDate() <= new Date(trip.end).getDate()) {
           return true;
         }
@@ -116,10 +116,6 @@ const TripBrowser: React.FC = () => {
       setFilteredTrips(tmp);
     } else if (!isLogged) setFilteredTrips(tripsData);
   }, [activeTags, beginDate, endDate, isLogged, tripsData]);
-
-  useEffect(() => {
-    dispatcher(actions.fetchTagsRequested());
-  }, [dispatcher]);
 
   const handleCityHover = (location: ISuggestedPlace) => {
     //setFormValue(location.name);
@@ -181,7 +177,6 @@ const TripBrowser: React.FC = () => {
       dispatcher(actions.fetchPopularTripsRequested());
     }
   };
-  console.log('trips length: ', filteredTrips.length);
 
   return (
     <div>

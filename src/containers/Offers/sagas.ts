@@ -40,7 +40,6 @@ function* createOffer(action: types.ICreateOfferAction) {
       },
       body: formData
     });
-    console.log(radius);
     if (response.status >= 200 && response.status <= 300) {
       yield put(actions.createOfferSuccessed());
       showNotification('success', `${i18n.t('The offer has been added')}`, '');
@@ -271,6 +270,34 @@ function* settleAgreement(action: types.ISettleAgreementAction) {
   }
 }
 
+function* reportOffer(action: types.IReportOfferAction) {
+  try {
+    const endpoint = `https://235.ip-51-91-9.eu/complains`;
+    const response = yield call(fetch, endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${getToken()}`
+      },
+      body: JSON.stringify({
+        offerId: action.offerId,
+        description: action.description
+      })
+    });
+
+    if (response.status >= 200 && response.status <= 300) {
+      showNotification('success', i18n.t('You have reported an offer'), i18n.t('Thank you for help'));
+    } else if (response.status === 401) {
+      throw new Error('You are not logged in!');
+    } else {
+      throw new Error('Something goes wrong');
+    }
+  } catch (error) {
+    showNotification('danger', i18n.t('You can not report this offer now'), i18n.t('Please, try again later'));
+    console.log(error);
+  }
+}
+
 function* mainSaga() {
   yield takeLatest(constants.CREATE_OFFER_REQUESTED, createOffer);
   yield takeLatest(constants.GET_OFFER_BY_ID_REQUESTED, getOfferById);
@@ -281,6 +308,7 @@ function* mainSaga() {
   yield takeLatest(constants.GET_OWN_AGREEMENTS_REQUESTED, getOwnAgreements);
   yield takeLatest(constants.CREATE_AGREEMENT_REQUESTED, createAgreement);
   yield takeLatest(constants.SETTLE_AGREEMENT_REQUESTED, settleAgreement);
+  yield takeLatest(constants.REPORT_OFFER_REQUESTED, reportOffer);
 }
 
 export default mainSaga;

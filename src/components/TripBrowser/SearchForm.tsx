@@ -327,6 +327,7 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
 const SearchForm = (props: ISearchFormProps) => {
   const { t } = useTranslation();
   const isLogged = useSelector((state: StoreType) => state.profile.isLoggedIn);
+  const closestTripsData = useSelector((state: StoreType) => state.tripBrowser.closestTrips);
 
   const [chosenOfferId, setChosenOfferId] = useState<number | null>(null);
   const [formView, setFormView] = useState(true);
@@ -366,7 +367,13 @@ const SearchForm = (props: ISearchFormProps) => {
             onCityClick={props.onCityClick}
           />
           <div className={formView ? '' : styles.hidden}>
-            <ListTrips trips={props.trips} mode={mode} chosenOfferId={chosenOfferId} setChosenOfferId={setChosenOfferId} />
+            <ListTrips
+              trips={props.trips}
+              closestTrips={closestTripsData}
+              mode={mode}
+              chosenOfferId={chosenOfferId}
+              setChosenOfferId={setChosenOfferId}
+            />
           </div>
         </div>
       </div>
@@ -374,7 +381,7 @@ const SearchForm = (props: ISearchFormProps) => {
         <LeafletMap
           position={positionValue}
           height={window.innerWidth > 800 ? '85vh' : '100vh'}
-          trips={props.trips}
+          trips={props.trips.length > 0 ? props.trips : closestTripsData}
           chosenOfferId={chosenOfferId}
           setChosenOfferId={setChosenOfferId}
         />
