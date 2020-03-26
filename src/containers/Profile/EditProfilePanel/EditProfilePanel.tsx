@@ -49,6 +49,11 @@ const EditProfilePanel = () => {
     }
   }, [dispatcher, user.role]);
 
+  const style = {
+    color: 'red',
+    fontSize: '1.5rem'
+  };
+
   return (
     <div className={styles.container}>
       <div className={sceneMode === Scene.profile ? styles.userContainer : styles.profileSectionHidden}>
@@ -58,31 +63,30 @@ const EditProfilePanel = () => {
       </div>
       <div className={sceneMode === Scene.activeOffers ? styles.profileSection : styles.profileSectionHidden}>
         <div>
-          <h2>Jesteś zainteresowany</h2>
+          <h2 style={style}>{t('You are interested')}</h2>
           <ActiveOffers trips={approaches} agreements={[]} />
           {agreements && (
             <>
-              <h2>{t('Your agreements')}: </h2>
+              <h2 style={style}>{t('Your agreements')} </h2>
               <Agreements agreements={agreements} verifiedOffers={verifiedOffersTraveler} onAgreementButtonClick={onAgreementButtonClick} />
             </>
           )}
         </div>
       </div>
       <div className={sceneMode === Scene.history ? styles.profileSection : styles.profileSectionHidden}>
-        <h2>Zaakceptowane oferty</h2>
+        <h2 style={style}>{t('Accepted approaches')}</h2>
         <VerifiedOffers trips={verifiedOffersTraveler} state={'accepted'} />
       </div>
       <div className={styles.profileSectionHidden}>
-        <h2>Odrzucone oferty</h2>
+        <h2 style={style}>{t('Rejected approaches')}</h2>
         <VerifiedOffers trips={verifiedOffersTraveler} state={'rejected'} />
       </div>
       <div className={styles.profileSectionHidden}>
-        <h2>Zaakceptowane umowy</h2>
-        <h1>(wycieczki się odbędą)</h1>
+        <h2 style={style}>{t('Upcoming trips')}</h2>
         <AcceptedOffers agreements={agreements} />
       </div>
       <div className={styles.profileSectionHidden}>
-        <h2>Historia wycieczek</h2>
+        <h2 style={style}>{t('Completed trips')}</h2>
         <HistoryOffers trips={historyOffersTraveler} />
       </div>
       <ProfileMenu setScene={setSceneMode} />

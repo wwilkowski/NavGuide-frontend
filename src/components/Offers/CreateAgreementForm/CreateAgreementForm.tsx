@@ -51,6 +51,17 @@ const InnerForm = (props: ICreateAgreementOtherProps & FormikProps<ICreateAgreem
         <TripListElement trip={props.trip} />
       </div>
       <Form>
+        <div>
+          <TextField
+            id='price'
+            type='text'
+            name='price'
+            label={t('Price') + ' (zł)'}
+            value={values.price}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => props.handleChange(event)}
+          />
+          {errors.price && touched.price && <div>{t(errors.price)}</div>}
+        </div>
         <label htmlFor='plannedDate'>{i18n.t('Select date')}</label>
         <div>
           <DatePicker
@@ -64,17 +75,6 @@ const InnerForm = (props: ICreateAgreementOtherProps & FormikProps<ICreateAgreem
             selected={values.plannedDate}
             onChange={date => props.setFieldValue('plannedDate', date)}
           ></DatePicker>
-        </div>
-        <div>
-          <TextField
-            id='price'
-            type='text'
-            name='price'
-            label={t('Price') + ' (zł)'}
-            value={values.price}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => props.handleChange(event)}
-          />
-          {errors.price && touched.price && <div>{t(errors.price)}</div>}
         </div>
         <label htmlFor='description'>{t('Description')}</label>
         <div>
