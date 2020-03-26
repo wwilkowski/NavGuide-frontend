@@ -7,16 +7,16 @@ import AcceptedOffers from '../../../components/Offers/AcceptedOffers/AcceptedOf
 import OrderedOffers from '../../../components/Offers/OrderedOffers/OrderedOffers';
 import { fetchGuideHistoryRequest } from '../../../containers/GuideProfile/actions';
 import HistoryOffers from '../../../components/Offers/HistoryOffers/HistoryOffers';
-import { IEndedSingleTripType, ISingleTripType } from '../../TripBrowser/types';
+import { useTranslation } from 'react-i18next';
 
 const EditGuidePanel = () => {
+  const { t } = useTranslation();
+
   const dispatcher = useDispatch();
 
   const activeOffers = useSelector((state: StoreType) => state.currentOfferReducer.activeOffers);
   const agreements = useSelector((state: StoreType) => state.currentOfferReducer.agreements);
   const historyOffers = useSelector((state: StoreType) => state.guideProfile.historyOffers);
-
-  const [transformedHistoryOffers, setTransformedHistoryOffers] = useState<ISingleTripType[]>([]);
 
   useEffect(() => {
     dispatcher(actions.getActiveOffersRequest());
@@ -29,55 +29,24 @@ const EditGuidePanel = () => {
     }
   }, [activeOffers, dispatcher]);
 
-  useEffect(() => {
-    const tmp: ISingleTripType[] = [];
-    historyOffers.forEach((offer: IEndedSingleTripType) => {
-      tmp.push({
-        inSearch: offer.offer.inSearch,
-        averageMark: offer.offer.averageMark,
-        begin: offer.offer.begin,
-        city: offer.offer.city,
-        description: offer.offer.description,
-        end: offer.offer.end,
-        id: offer.offer.id,
-        lat: offer.offer.lat,
-        lon: offer.offer.lon,
-        maxPeople: offer.offer.maxPeople,
-        name: offer.offer.name,
-        owner: {
-          experience: offer.offer.owner.experience,
-          firstName: offer.offer.owner.firstName,
-          guideId: offer.offer.owner.guideId,
-          languages: offer.offer.owner.languages,
-          lastName: offer.offer.owner.lastName,
-          userId: offer.offer.owner.userId
-        },
-        photos: offer.offer.photos,
-        price: offer.offer.price,
-        priceType: offer.offer.priceType,
-        radius: offer.offer.radius,
-        sold: offer.offer.sold,
-        tags: offer.offer.tags
-      });
-    });
-
-    setTransformedHistoryOffers(tmp);
-  }, [historyOffers, dispatcher]);
+  const style = {
+    color: 'red',
+    fontSize: '1.5em'
+  };
 
   return (
     <div className={styles.container}>
       <div className={styles.section}>
-        <h2>Powiadomienia</h2>
+        <h2 style={style}>{t('Notifications')}</h2>
         <OrderedOffers trips={activeOffers} agreements={agreements} />
       </div>
       <div className={styles.section}>
-        <h2>Zaakceptowane umowy</h2>
-        <h1>(wycieczki się odbędą)</h1>
+        <h2 style={style}>{t('Upcoming trips')}</h2>
         <AcceptedOffers agreements={agreements} />
       </div>
       <div className={styles.section}>
-        <h2>Historia wycieczek</h2>
-        <HistoryOffers trips={transformedHistoryOffers} />
+        <h2 style={style}>{t('Completed trips')}</h2>
+        <HistoryOffers trips={historyOffers} />
       </div>
     </div>
   );

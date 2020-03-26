@@ -27,13 +27,12 @@ const VerifiedOffers = ({ trips, state }: IProfileVerifiedOffersProps) => {
     <ul>
       {filteredTrips.map((trip: IOffer, i: number) => (
         <li key={i}>
+          <p>Planowana data: {getDate(trip.plannedDate)}</p>
           <TripListElement trip={trip.offer} />
-          <p>Status: {trip.status}</p>
           <p>Wiadomość od turysty</p>
           <p>{trip.message}</p>
           <p>Odpowiedź</p>
           <p>{trip.feedbackMessage}</p>
-          <p>Planowana data: {getDate(trip.plannedDate)}</p>
           {location.pathname === '/profile/guide' && <button>Sporządź umowę</button>}
         </li>
       ))}
