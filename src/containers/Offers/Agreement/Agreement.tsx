@@ -116,13 +116,13 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
     <div>
       {isLogged && pathFrom === '/profile' && (
         <div>
-          <h2>Zadecyduj co zrobić z umową.}</h2>
-          {currentAgreement && <TripListElement trip={currentAgreement.offer} />}
-          {currentAgreement ? (
+          <h2>{t('Decide what to do with this agreement')}</h2>
+          {currentAgreement && (
             <>
               <p>
                 {t('Planned Date')}: {getDate(currentAgreement.plannedDate)}
               </p>
+              <TripListElement trip={currentAgreement.offer} />
               <p>
                 {t('Price')}: {currentAgreement.price}zł {t(currentAgreement.offer.priceType)}
               </p>
@@ -131,12 +131,14 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
               <button onClick={() => handleSettleAgreement(currentAgreement.id, 'ACCEPT')}>{t('Accept')}</button>
               <button onClick={() => handleSettleAgreement(currentAgreement.id, 'REJECT')}>{t('Reject')}</button>
             </>
-          ) : null}
+          )}
         </div>
       )}
       {isLogged && pathFrom === '/profile/guide' && (
         <div>
-          <h3>Panel tworzenia umowy</h3>
+          <h3>
+            <b>{t('Agreement create panel')}</b>
+          </h3>
           {currentOffer && (
             <CreateAgreementForm
               trip={currentOffer}

@@ -1,5 +1,5 @@
 import { IUserData, IUserFormValues } from '../../shared/types';
-import { ISingleTripType } from '../TripBrowser/types';
+import { ISingleTripType, IEndedSingleTripType } from '../TripBrowser/types';
 import {
   GET_PROFILE_HISTORY_OFFERS_FAILED,
   GET_PROFILE_HISTORY_OFFERS_SUCCESSED,
@@ -25,7 +25,7 @@ export interface ILogOutSuccessedAction {
 export interface IProfileData {
   user: IUserData;
   isLoggedIn: boolean;
-  historyOffers: ISingleTripType[];
+  historyOffers: IEndedSingleTripType[];
 }
 
 export interface ISendAvatarAction {

@@ -64,14 +64,18 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
       ))}
       {filteredTrips.map((trip: IOffer, i: number) => (
         <li key={i}>
-          <TripListElement trip={trip.offer} />
-          <p>{t('Message from tourist')}:</p>
-          <p>{trip.message}</p>
           <p>
-            {t('Planned date')}: {getDate(trip.plannedDate)}
+            <b>{t('Planned date')}:</b> {getDate(trip.plannedDate)}
           </p>
+          <TripListElement trip={trip.offer} />
+          <p>
+            <b>{t('Message from tourist')}:</b>
+          </p>
+          <p>{trip.message}</p>
           <Link to={`/users/${trip.traveler.id}`}>
-            {t('Check user profile with ID')} {trip.traveler.id}
+            <p>
+              {t('Check user profile with ID')} {trip.traveler.id}
+            </p>
           </Link>
           <textarea
             value={messages[i]}

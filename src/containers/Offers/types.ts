@@ -73,7 +73,7 @@ export interface IProfileVerifiedOffersProps {
 }
 
 export interface IProfileHistoryOffersProps {
-  trips: typesTripBrowser.ISingleTripType[];
+  trips: typesTripBrowser.IEndedSingleTripType[];
 }
 
 export interface IAgreementsProps {

@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import TripListElement from '../../TripBrowser/TripListElement';
 import { IOffer, IProfileOffersProps } from '../../../containers/Offers/types';
+import { useTranslation } from 'react-i18next';
 
 const OrderedOffers = ({ trips }: IProfileOffersProps) => {
+  const { t } = useTranslation();
+
   const [filteredTrips, setFilteredTrips] = useState<IOffer[]>([]);
 
   useEffect(() => {
@@ -20,10 +23,14 @@ const OrderedOffers = ({ trips }: IProfileOffersProps) => {
     <ul>
       {filteredTrips.map((trip: IOffer, i: number) => (
         <li key={i}>
+          <p>
+            <b>{t('Planned date')}:</b> {getDate(trip.plannedDate)}
+          </p>
           <TripListElement trip={trip.offer} />
-          <p>Wiadomość od turysty</p>
+          <p>
+            <b>{t('Message')}:</b>
+          </p>
           <p>{trip.message}</p>
-          <p>Planowana data: {getDate(trip.plannedDate)}</p>
         </li>
       ))}
     </ul>
