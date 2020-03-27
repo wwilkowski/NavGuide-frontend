@@ -1,6 +1,6 @@
 import React from 'react';
 import { IProfileHistoryOffersProps } from '../../../containers/Offers/types';
-import { ISingleTripType } from '../../../containers/TripBrowser/types';
+import { IEndedSingleTripType } from '../../../containers/TripBrowser/types';
 import TripListElement from '../../TripBrowser/TripListElement';
 
 const HistoryOffers = (props: IProfileHistoryOffersProps) => {
@@ -9,9 +9,9 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
   return (
     <div>
       {trips &&
-        trips.map((trip: ISingleTripType) => (
-          <div key={trip.id}>
-            <TripListElement trip={trip} />
+        trips.map((trip: IEndedSingleTripType) => (
+          <div key={trip.offer.id}>
+            <TripListElement trip={trip.offer} />
           </div>
         ))}
     </div>

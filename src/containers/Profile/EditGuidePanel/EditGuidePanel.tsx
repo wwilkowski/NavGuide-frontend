@@ -78,7 +78,7 @@ const EditGuidePanel = () => {
       </Grid>
       <Grid item xs={12} sm={4}>
         <h2>Historia wycieczek</h2>
-        <HistoryOffers trips={transformedHistoryOffers} />
+        <HistoryOffers trips={historyOffers} />
       </Grid>
     </Grid>
   );
