@@ -10,7 +10,8 @@ import {
   GET_OWN_AGREEMENTS_FAILED,
   CREATE_AGREEMENT_REQUESTED,
   SETTLE_AGREEMENT_REQUESTED,
-  REPORT_OFFER_REQUESTED
+  REPORT_OFFER_REQUESTED,
+  ADD_FEEDBACK_REQUESTED
 } from './constants';
 
 import * as typesTripBrowser from '../../containers/TripBrowser/types';
@@ -140,6 +141,13 @@ export interface IAgreement {
   price: number;
 }
 
+export interface IFeedback {
+  offerId: number;
+  scoreOffer: number;
+  scoreGuide: number;
+  comment: string;
+}
+
 export interface ICreateOfferAction {
   type: string;
   formData: IOfferFormValues;
@@ -183,6 +191,11 @@ export interface IReportOfferAction {
   type: typeof REPORT_OFFER_REQUESTED;
   offerId: number;
   description: string;
+}
+
+export interface IAddFeedbackAction {
+  type: typeof ADD_FEEDBACK_REQUESTED;
+  feedback: IFeedback;
 }
 
 export interface IGetOfferByIdSuccessed {

@@ -76,12 +76,15 @@ const InnerForm = (props: ICreateAgreementOtherProps & FormikProps<ICreateAgreem
             onChange={date => props.setFieldValue('plannedDate', date)}
           ></DatePicker>
         </div>
-        <label htmlFor='description'>{t('Description')}</label>
         <div>
-          <textarea
+          <TextField
             id='description'
+            label={t('Message to guide')}
+            multiline
+            rows='4'
             value={values.description}
             onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => props.handleChange(event)}
+            variant='outlined'
           />
           {errors.description && touched.description && <div>{t(errors.description)}</div>}
         </div>
