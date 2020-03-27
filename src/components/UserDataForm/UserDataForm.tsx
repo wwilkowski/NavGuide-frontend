@@ -17,6 +17,7 @@ import FormControl from '@material-ui/core/FormControl';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import TagList from '../TagList';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -27,7 +28,23 @@ const useStyles = makeStyles((theme: Theme) =>
       }
     },
     textField: {
-      width: 200
+      width: '100%'
+    },
+    '@media (min-width: 800px)': {
+      root: {
+        '& .MuiTextField-root': {
+          margin: 0,
+          marginRight: '1rem',
+          width: '200px'
+        },
+        '& .MuiFormControl-root': {
+          marginRight: '1rem',
+          width: '450px'
+        }
+      },
+      textField: {
+        width: '100%'
+      }
     }
   })
 );
@@ -93,8 +110,8 @@ const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
             props.setFieldValue('firstName', e.target.value);
           }}
           helperText={t(errors.firstName || '')}
-          className={classes.textField}
-          style={{ margin: 0 }}
+          className={styles.textField}
+          style={{ width: '100%' }}
         />
         <TextField
           error={!!errors.lastName}
@@ -107,8 +124,8 @@ const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
             props.setFieldValue('lastName', e.target.value);
           }}
           helperText={t(errors.lastName || '')}
-          className={classes.textField}
-          style={{ margin: 0 }}
+          className={styles.textField}
+          style={{ width: '100%' }}
         />
       </div>
       <div className={styles.case}>
@@ -122,7 +139,7 @@ const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
             onChange={(event: React.ChangeEvent<{ name?: string | undefined; value: unknown }>) => {
               props.setFieldValue('country', event.target.value);
             }}
-            className={classes.textField}
+            style={{ width: '100%' }}
           >
             {countryCodes.map(country => (
               <option key={country.code} value={country.code}>
@@ -132,7 +149,7 @@ const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
           </Select>
         </FormControl>
 
-        <FormControl>
+        <FormControl style={{ width: '100%' }}>
           <TextField
             error={!!errors.telephone}
             id='telephone'
@@ -145,13 +162,13 @@ const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
             InputProps={{
               startAdornment: <InputAdornment position='start'>+</InputAdornment>
             }}
-            className={classes.textField}
-            style={{ margin: 0 }}
+            className={styles.textField}
+            style={{ margin: '1rem 0', width: '100%' }}
           />
         </FormControl>
       </div>
       <div className={styles.case}>
-        <FormControl>
+        <FormControl style={{ width: '100%' }}>
           <InputLabel htmlFor='age'>{t('Age')}</InputLabel>
           <Select
             native
@@ -161,7 +178,8 @@ const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
             onChange={(event: React.ChangeEvent<{ name?: string | undefined; value: unknown }>) => {
               props.setFieldValue('age', event.target.value);
             }}
-            className={classes.textField}
+            className={styles.textField}
+            style={{ width: '100%' }}
           >
             {ageArray.map((age: number) => (
               <option key={age} value={age} className={styles.userForm__option}>
@@ -171,7 +189,7 @@ const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
           </Select>
         </FormControl>
 
-        <FormControl>
+        <FormControl style={{ width: '100%' }}>
           <InputLabel htmlFor='gender'>{t('Gender')}</InputLabel>
           <Select
             native
@@ -181,7 +199,8 @@ const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
             onChange={(event: React.ChangeEvent<{ name?: string | undefined; value: unknown }>) => {
               props.setFieldValue('gender', event.target.value);
             }}
-            className={classes.textField}
+            className={styles.textField}
+            style={{ width: '100%' }}
           >
             <option value='FEMALE'>{t('Female')}</option>
             <option value='MALE'>{t('Male')}</option>
@@ -189,7 +208,7 @@ const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
         </FormControl>
       </div>
       <div className={styles.case}>
-        <label htmlFor='experience' className={styles.userForm__label}>
+        <label htmlFor='experience' className={styles.title}>
           {t('Experience in travelling')}
         </label>
         <fieldset name='experience' className={experienceStyles.rate}>
@@ -241,15 +260,7 @@ const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
         </fieldset>
       </div>
       <p className={styles.title}>{t('Interests')}</p>
-      <ul className={styles.tagList}>
-        {interests.map((interest: IInterest) => (
-          <li key={interest.id} className={styles.tagElement}>
-            <label htmlFor={interest.name}>
-              <Checkbox id='interests' name='interests' value={interest.name} valueKey={interest.id} />
-            </label>
-          </li>
-        ))}
-      </ul>
+      <TagList tags={interests} />
       <Button variant='contained' color='primary' className={styles.submitButton} type='submit' disabled={!!Object.keys(errors).length}>
         {props.register ? t('Register') : t('Update')}
       </Button>

@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import styles from './EditGuidePanel.module.scss';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../Offers/actions';
 import { StoreType } from '../../../store';
@@ -7,11 +6,9 @@ import AcceptedOffers from '../../../components/Offers/AcceptedOffers/AcceptedOf
 import OrderedOffers from '../../../components/Offers/OrderedOffers/OrderedOffers';
 import { fetchGuideHistoryRequest } from '../../../containers/GuideProfile/actions';
 import HistoryOffers from '../../../components/Offers/HistoryOffers/HistoryOffers';
-import { useTranslation } from 'react-i18next';
+import { Grid, Typography } from '@material-ui/core';
 
 const EditGuidePanel = () => {
-  const { t } = useTranslation();
-
   const dispatcher = useDispatch();
 
   const activeOffers = useSelector((state: StoreType) => state.currentOfferReducer.activeOffers);
@@ -29,26 +26,22 @@ const EditGuidePanel = () => {
     }
   }, [activeOffers, dispatcher]);
 
-  const style = {
-    color: 'red',
-    fontSize: '1.5em'
-  };
-
   return (
-    <div className={styles.container}>
-      <div className={styles.section}>
-        <h2 style={style}>{t('Notifications')}</h2>
+    <Grid container>
+      <Grid item xs={12} sm={4}>
+        <Typography>Powiadomienia</Typography>
         <OrderedOffers trips={activeOffers} agreements={agreements} />
-      </div>
-      <div className={styles.section}>
-        <h2 style={style}>{t('Upcoming trips')}</h2>
+      </Grid>
+      <Grid item xs={12} sm={4}>
+        <h2>Zaakceptowane umowy</h2>
+        <h1>(wycieczki się odbędą)</h1>
         <AcceptedOffers agreements={agreements} />
-      </div>
-      <div className={styles.section}>
-        <h2 style={style}>{t('Completed trips')}</h2>
+      </Grid>
+      <Grid item xs={12} sm={4}>
+        <h2>Historia wycieczek</h2>
         <HistoryOffers trips={historyOffers} />
-      </div>
-    </div>
+      </Grid>
+    </Grid>
   );
 };
 

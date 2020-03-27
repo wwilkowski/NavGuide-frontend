@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import TripListElement from './TripListElement';
 import styles from './ListTrips.module.scss';
 import { Link } from 'react-router-dom';
+import { Container } from '@material-ui/core';
 
 const ListTrips = ({ trips, closestTrips, mode, chosenOfferId, setChosenOfferId }: types.IListTripsProps) => {
   const { t } = useTranslation();
@@ -12,16 +13,14 @@ const ListTrips = ({ trips, closestTrips, mode, chosenOfferId, setChosenOfferId 
   const closestTripsData = closestTrips;
 
   return (
-    <div className={styles.listTrips}>
+    <Container>
       {mode === types.ListMode.closest ? (
         <div>
           {t('No matching trips')}. {t('Trips in your area')}:
           <ul className={styles.listTrips}>
             {closestTripsData.map((trip: ISingleTripType) => (
               <div key={trip.id}>
-                <Link to={`/offers/${trip.id}`}>
-                  <TripListElement trip={trip} />
-                </Link>
+                <TripListElement trip={trip} />
               </div>
             ))}
           </ul>
@@ -39,7 +38,7 @@ const ListTrips = ({ trips, closestTrips, mode, chosenOfferId, setChosenOfferId 
           ))}
         </ul>
       )}
-    </div>
+    </Container>
   );
 };
 

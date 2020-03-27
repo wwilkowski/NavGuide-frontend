@@ -8,8 +8,8 @@ import SwitchLanguageButton from '../../components/SwitchLanguageButton/SwitchLa
 import { StoreType } from '../../store';
 import { logInGoogleRequest, logOutGoogleRequest } from '../Profile/actions';
 import { getInterestsRequest, signUpGoogleRequest } from '../Registration/actions';
-import MenuIcon from '../../assets/icons/menu.png';
 import AppLogo from '../../components/AppLogo/AppLogo';
+import MenuIcon from '@material-ui/icons/Menu';
 import styles from './Header.module.scss';
 import ProfileIcon from '../../assets/icons/002-user.png';
 import CreateOfferIcon from '../../assets/icons/003-pen.png';
@@ -41,7 +41,7 @@ const Header: React.FC = () => {
       <div className={styles.menuActions}>
         <AppLogo />
         <button onClick={() => setOpenMenu(!openMenu)} className={styles.menuToggler}>
-          <img src={MenuIcon} alt='' className={styles.menuIcon} />
+          <MenuIcon />
         </button>
       </div>
       <div

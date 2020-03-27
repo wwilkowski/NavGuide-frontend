@@ -19,6 +19,7 @@ import GuidePanel from './containers/Profile/GuidePanel';
 import Agreement from './containers/Offers/Agreement/Agreement';
 import EditProfile from './containers/Profile/EditProfile/EditProfile';
 import User from './containers/User/User';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 
 const App: React.FC = () => {
   const dispatcher = useDispatch();
@@ -27,8 +28,39 @@ const App: React.FC = () => {
     dispatcher(getProfileRequest());
   }, [dispatcher]);
 
+  const theme = createMuiTheme({
+    typography: {
+      fontFamily: 'Lato, sans-serif',
+      h2: {
+        fontSize: 24,
+        fontWeight: 600
+      },
+      h3: {
+        fontSize: 16,
+        fontWeight: 600,
+        margin: '0.5rem 0'
+      },
+      h4: {
+        fontSize: 14,
+        fontWeight: 600
+      },
+      subtitle1: {
+        fontSize: 12
+      },
+      subtitle2: {
+        color: 'rgba(0, 0, 0, 0.54)',
+        fontSize: '0.8rem'
+      },
+      body1: {
+        fontSize: '0.9em'
+      },
+      button: {
+        fontSize: '0.9em'
+      }
+    }
+  });
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <ReactNotification />
       <Header />
       <Switch>
@@ -49,7 +81,7 @@ const App: React.FC = () => {
         <Route path='/guides/:guideId' component={GuideProfile} />
         <Route component={NotFound} />
       </Switch>
-    </>
+    </ThemeProvider>
   );
 };
 

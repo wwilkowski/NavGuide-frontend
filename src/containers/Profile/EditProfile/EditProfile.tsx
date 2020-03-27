@@ -7,6 +7,7 @@ import { StoreType } from '../../../store';
 import AvatarForm from '../../../components/AvatarForm/AvatarForm';
 import { Redirect } from 'react-router-dom';
 import { showNotification } from '../../../helpers/notification';
+import styles from './styles.module.scss';
 
 const EditProfile = () => {
   const dispatcher = useDispatch();
@@ -24,7 +25,7 @@ const EditProfile = () => {
   return (
     <>
       {user.isLoggedIn ? (
-        <div>
+        <div className={styles.container}>
           <AvatarForm />
           <UserDataForm templateUser={user.user} register={false} onSubmit={onSubmit} />
         </div>

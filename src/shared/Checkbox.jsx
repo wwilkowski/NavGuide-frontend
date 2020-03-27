@@ -2,6 +2,7 @@ import React from 'react';
 import { Field } from 'formik';
 import styles from './Checkbox.module.scss';
 import { useTranslation } from 'react-i18next';
+import { Typography } from '@material-ui/core';
 
 const CheckboxComponent = props => {
   const { t } = useTranslation();
@@ -26,9 +27,9 @@ const CheckboxComponent = props => {
               }
             }}
           />
-          <label htmlFor={props.value} className={styles.checkboxLabel}>
+          <Typography component='label' variant='subtitle1' htmlFor={props.value} className={styles.checkboxLabel}>
             {t(props.value)}
-          </label>
+          </Typography>
         </>
       )}
     </Field>

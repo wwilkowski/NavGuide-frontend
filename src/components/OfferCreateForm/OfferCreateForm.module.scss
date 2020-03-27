@@ -5,7 +5,6 @@
     padding: 0 1rem;
   }
   &__title {
-    font-size: 2em;
     text-align: center;
     margin: 1rem 0;
   }
@@ -28,7 +27,6 @@
   }
   &__label {
     color: #444444;
-    font-size: 0.8em;
   }
   &__input {
     border: none;
@@ -36,7 +34,6 @@
     padding: 0.5rem;
     width: 100%;
     margin: 0.3rem 0;
-    font-size: 0.8em;
   }
   &__locationInput {
     position: relative;
@@ -56,7 +53,6 @@
   }
   &__submitButton {
     margin: 1rem 1rem 1rem 0;
-    font-size: 0.9em;
     width: 100px;
     border: 1px solid #19cc95;
     color: #19cc95;
@@ -64,13 +60,9 @@
     border-radius: 5px;
     padding: 0.4rem;
     cursor: pointer;
-    @media (min-width: 900px) {
-      font-size: 0.8em;
-    }
   }
   &__geoButton {
     margin: 1rem 0;
-    font-size: 0.9em;
     width: 100px;
     border: 1px solid #1496ed;
     color: #1496ed;
@@ -78,9 +70,6 @@
     border-radius: 5px;
     padding: 0.4rem;
     cursor: pointer;
-    @media (min-width: 900px) {
-      font-size: 0.8em;
-    }
   }
   &__buttonCase {
     margin: 0.5rem 0;

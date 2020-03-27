@@ -2,6 +2,7 @@
   margin: 1rem 0;
   display: flex;
   flex-direction: column;
+  align-items: center;
   cursor: pointer;
   @media (min-width: 500px) {
     flex-direction: row;
@@ -23,16 +24,13 @@
   }
   &__row {
     display: flex;
+    align-items: center;
   }
   &__languages {
     display: flex;
-    font-size: 0.8em;
   }
   &__langElement {
-    margin: 0.1rem 0.3rem;
-  }
-  &__p {
-    font-size: 0.9em;
+    margin: 0 0.3rem;
   }
   &__tags {
     display: flex;
@@ -44,9 +42,9 @@
     padding: 0.1rem 0.5rem;
     margin-top: 0.3rem;
     margin-right: 0.2rem;
-    font-size: 0.7em;
     cursor: pointer;
     background: #ffffff;
+    font-size: 0.8em;
   }
 }
 

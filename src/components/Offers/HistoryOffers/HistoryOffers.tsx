@@ -70,6 +70,12 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
             >
               {t('Rate')}
             </button>
+            {trips &&
+              trips.map((trip: IEndedSingleTripType) => (
+                <div key={trip.offer.id}>
+                  <TripListElement trip={trip.offer} />
+                </div>
+              ))}
           </div>
         ))}
       <Modal
