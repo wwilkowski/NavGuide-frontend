@@ -173,7 +173,9 @@ function* settleActiveOffer(action: types.ISettleOfferAction) {
 
     if (response.status >= 200 && response.status <= 300) {
       yield put(actions.getActiveOffersRequest());
-      showNotification('success', i18n.t('You have accepted offer'), i18n.t('Now create an agreement'));
+
+      if (action.status === 'ACCEPT') showNotification('success', i18n.t('You have accepted offer'), i18n.t('Now create an agreement'));
+      else showNotification('success', i18n.t('You have not accepted offer'), i18n.t('...'));
     } else if (response.status === 401) {
       throw new Error('You are not logged in');
     } else {
@@ -298,6 +300,34 @@ function* reportOffer(action: types.IReportOfferAction) {
   }
 }
 
+function* addFeedback(action: types.IAddFeedbackAction) {
+  try {
+    const endpoint = `https://235.ip-51-91-9.eu/feedback`;
+
+    const response = yield call(fetch, endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${getToken()}`
+      },
+      body: JSON.stringify({
+        offerId: action.feedback.offerId,
+        scoreOffer: action.feedback.scoreOffer,
+        scoreGuide: action.feedback.scoreGuide,
+        comment: action.feedback.comment
+      })
+    });
+
+    if (response.status >= 200 && response.status <= 300) {
+      showNotification('success', i18n.t('Thank you'), i18n.t('You have rated a trip'));
+    } else if (response.status === 401) {
+      throw new Error('You are not looged in!');
+    } else {
+      throw new Error('Something goes wrong');
+    }
+  } catch (error) {}
+}
+
 function* mainSaga() {
   yield takeLatest(constants.CREATE_OFFER_REQUESTED, createOffer);
   yield takeLatest(constants.GET_OFFER_BY_ID_REQUESTED, getOfferById);
@@ -309,6 +339,7 @@ function* mainSaga() {
   yield takeLatest(constants.CREATE_AGREEMENT_REQUESTED, createAgreement);
   yield takeLatest(constants.SETTLE_AGREEMENT_REQUESTED, settleAgreement);
   yield takeLatest(constants.REPORT_OFFER_REQUESTED, reportOffer);
+  yield takeLatest(constants.ADD_FEEDBACK_REQUESTED, addFeedback);
 }
 
 export default mainSaga;

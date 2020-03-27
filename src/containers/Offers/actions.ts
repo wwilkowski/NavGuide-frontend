@@ -119,3 +119,10 @@ export const reportOfferRequest = (offerId: number, description: string) => ({
   offerId,
   description
 });
+
+// add feedback
+
+export const addFeedbackRequest = (feedback: types.IFeedback) => ({
+  type: constants.ADD_FEEDBACK_REQUESTED,
+  feedback
+});

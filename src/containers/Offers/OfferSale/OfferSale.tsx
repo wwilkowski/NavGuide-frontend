@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, ChangeEvent } from 'react';
 import { StoreType } from '../../../store';
 import { useSelector, useDispatch } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -10,6 +10,8 @@ import i18n from '../../../locales/i18n';
 import { useTranslation } from 'react-i18next';
 import styles from './styles.module.scss';
 import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import VerifyPopup from '../../../shared/VerifyPopup';
 
 type TParams = { id: string };
 
@@ -24,6 +26,7 @@ const OfferSale = (props: Props) => {
 
   const [date, setDate] = useState<Date | null>(new Date());
   const [message, setMessage] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
   // eslint-disable-next-line
   const [popupVisible, setPopupVisible] = useState<boolean>(false);
 
@@ -41,6 +44,12 @@ const OfferSale = (props: Props) => {
     dispatcher(getOfferByIdRequest(props.match.params.id));
   }, [dispatcher, props.match.params.id]);
 
+  useEffect(() => {
+    if (errorMessage) {
+      if (message.length >= 10) setErrorMessage('');
+    }
+  }, [message]);
+
   return currentOffer ? (
     <div className={styles.container}>
       <div
@@ -55,8 +64,7 @@ const OfferSale = (props: Props) => {
         <TripListElement trip={currentOffer} />
       </div>
       <form className={styles.form}>
-        <label htmlFor='message'>{t('Message to guide')}</label>
-        <textarea id='message' value={message} onChange={e => setMessage(e.target.value)}></textarea>
+        <p>Chcesz wziąć udział w tej wycieczce? Napisz do przewodnika już teraz!</p>
         <DatePicker
           dateFormat='yyyy/MM/dd hh:mm'
           timeFormat='HH:mm'
@@ -67,6 +75,17 @@ const OfferSale = (props: Props) => {
           selected={date}
           onChange={date => setDate(date)}
         />
+        <TextField
+          style={{ marginTop: '1rem' }}
+          id='outlined-multiline-static'
+          label={t('Message to guide')}
+          multiline
+          rows='4'
+          value={message}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setMessage(e.target.value)}
+          variant='outlined'
+        />
+        {errorMessage !== '' ? <div>{errorMessage}</div> : null}
         <Button
           variant='contained'
           color='primary'
@@ -74,18 +93,25 @@ const OfferSale = (props: Props) => {
             const tripBegin = new Date(currentOffer.begin);
             const tripEnd = new Date(currentOffer.end);
 
-            if (!(date !== null && date.getTime() >= tripBegin.getTime() && date.getTime() <= tripEnd.getTime())) {
-              showNotification('warning', i18n.t('Bad date!'), i18n.t('Please set date between begin and end offer'));
-            } else if (message === '') {
-              showNotification('warning', i18n.t('Bad message!'), i18n.t('Message can not be empty'));
+            if (message === '') setErrorMessage('Message is required');
+            else if (message.length < 10) setErrorMessage('Min number of characters is 10');
+            else if (date !== null && date.getTime() >= tripBegin.getTime() && date.getTime() <= tripEnd.getTime()) {
+              setPopupVisible(true);
             } else {
-              dispatcher(buyOfferRequest(currentOffer.id.toString(), date, message));
+              showNotification('warning', i18n.t('Bad date!'), i18n.t('Please set date between begin and end offer'));
             }
           }}
         >
           {t('Order offer')}
         </Button>
       </form>
+      <VerifyPopup
+        onSubmit={() => {
+          dispatcher(buyOfferRequest(currentOffer.id.toString(), date ? date : new Date(), message));
+        }}
+        popupVisible={popupVisible}
+        changePopupVisible={() => setPopupVisible(!popupVisible)}
+      />
     </div>
   ) : (
     <p>{t('No offer')}</p>

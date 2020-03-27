@@ -10,11 +10,11 @@ import { useSelector } from 'react-redux';
 import { ISingleTripType, IPosition } from '../../containers/TripBrowser/types';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 import { Link } from 'react-router-dom';
-import ReportPopup from './ReportPopup/ReportPopup';
+import { makeStyles } from '@material-ui/core';
+import ReportPopup from '../Offers/ReportPopup/ReportPopup';
 
 const TripInfo = (props: ITripInfoProps) => {
   const { t } = useTranslation();
-
   const isLogged = useSelector((state: StoreType) => state.profile.isLoggedIn);
 
   const node: any = useRef();
@@ -94,9 +94,9 @@ const TripInfo = (props: ITripInfoProps) => {
           guideProfile={props.guideProfile}
           guideProfileData={props.guideProfileData}
         />
-        {!popupVisibility && <button onClick={() => setPopupVisibility(!popupVisibility)}>{t('Report')}</button>}
+        <button onClick={() => setPopupVisibility(true)}>{t('Report')}</button>
       </div>
-      {popupVisibility ? <ReportPopup trip={props.tripInformations} changeVisibility={() => setPopupVisibility(!popupVisibility)} /> : null}
+      <ReportPopup offerId={tripData.id} popupVisibility={popupVisibility} changeVisibility={() => setPopupVisibility(!popupVisibility)} />
     </div>
   ) : (
     <div>
