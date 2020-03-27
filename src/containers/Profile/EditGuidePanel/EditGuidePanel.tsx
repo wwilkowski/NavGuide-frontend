@@ -8,6 +8,7 @@ import OrderedOffers from '../../../components/Offers/OrderedOffers/OrderedOffer
 import { fetchGuideHistoryRequest } from '../../../containers/GuideProfile/actions';
 import HistoryOffers from '../../../components/Offers/HistoryOffers/HistoryOffers';
 import { IEndedSingleTripType, ISingleTripType } from '../../TripBrowser/types';
+import { Grid, Typography } from '@material-ui/core';
 
 const EditGuidePanel = () => {
   const dispatcher = useDispatch();
@@ -65,21 +66,21 @@ const EditGuidePanel = () => {
   }, [historyOffers, dispatcher]);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.section}>
-        <h2>Powiadomienia</h2>
+    <Grid container>
+      <Grid item xs={12} sm={4}>
+        <Typography>Powiadomienia</Typography>
         <OrderedOffers trips={activeOffers} agreements={agreements} />
-      </div>
-      <div className={styles.section}>
+      </Grid>
+      <Grid item xs={12} sm={4}>
         <h2>Zaakceptowane umowy</h2>
         <h1>(wycieczki się odbędą)</h1>
         <AcceptedOffers agreements={agreements} />
-      </div>
-      <div className={styles.section}>
+      </Grid>
+      <Grid item xs={12} sm={4}>
         <h2>Historia wycieczek</h2>
         <HistoryOffers trips={transformedHistoryOffers} />
-      </div>
-    </div>
+      </Grid>
+    </Grid>
   );
 };
 

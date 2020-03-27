@@ -13,19 +13,39 @@ import Agreements from '../../../components/Offers/Agreements/Agreements';
 import AcceptedOffers from '../../../components/Offers/AcceptedOffers/AcceptedOffers';
 import { useTranslation } from 'react-i18next';
 import UserProfile from '../../../components/UserProfile/UserProfile';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import HistoryIcon from '@material-ui/icons/History';
+import CheckIcon from '@material-ui/icons/Check';
+import FaceIcon from '@material-ui/icons/Face';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import { makeStyles } from '@material-ui/core/styles';
+import { Grid, Container } from '@material-ui/core';
+
+const useStyles = makeStyles({
+  root: {
+    width: '100vw',
+    position: 'fixed',
+    bottom: '0',
+    left: '0'
+  }
+});
 
 enum Scene {
   profile,
-  history,
-  activeOffers
+  agreements,
+  confirmed,
+  history
 }
 
 const EditProfilePanel = () => {
   const { t } = useTranslation();
 
+  const classes = useStyles();
   const dispatcher = useDispatch();
 
   const [sceneMode, setSceneMode] = useState<Scene>(Scene.profile);
+  const [value, setValue] = React.useState(0);
 
   const user = useSelector((state: StoreType) => state.profile.user);
 
@@ -49,44 +69,87 @@ const EditProfilePanel = () => {
     }
   }, [dispatcher, user.role]);
 
+  const setMode = (value: number) => {
+    switch (value) {
+      case 0:
+        setSceneMode(Scene.profile);
+        break;
+      case 1:
+        setSceneMode(Scene.agreements);
+        break;
+      case 2:
+        setSceneMode(Scene.confirmed);
+        break;
+      case 3:
+        setSceneMode(Scene.history);
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
-    <div className={styles.container}>
-      <div className={sceneMode === Scene.profile ? styles.userContainer : styles.profileSectionHidden}>
-        <div className={sceneMode === Scene.profile ? styles.profileSection : styles.profileSectionHidden}>
-          <UserProfile user={user} />
+    <Grid container>
+      {/* Profile */}
+      <Grid item xs={12} sm={3}>
+        <Container>
+          <div className={sceneMode === Scene.profile ? styles.profileSection : styles.hidden}>
+            <UserProfile user={user} />
+          </div>
+        </Container>
+      </Grid>
+
+      {/* Agreements */}
+      <Grid container item sm={9}>
+        <div className={sceneMode === Scene.agreements ? styles.profileSection : styles.hidden}>
+          <Grid item xs={12} sm={4}>
+            <div>
+              {agreements && (
+                <>
+                  <h2>{t('Your agreements')}: </h2>
+                  <Agreements
+                    agreements={agreements}
+                    verifiedOffers={verifiedOffersTraveler}
+                    onAgreementButtonClick={onAgreementButtonClick}
+                  />
+                </>
+              )}
+            </div>
+          </Grid>
         </div>
-      </div>
-      <div className={sceneMode === Scene.activeOffers ? styles.profileSection : styles.profileSectionHidden}>
-        <div>
-          <h2>Jesteś zainteresowany</h2>
-          <ActiveOffers trips={approaches} agreements={[]} />
-          {agreements && (
-            <>
-              <h2>{t('Your agreements')}: </h2>
-              <Agreements agreements={agreements} verifiedOffers={verifiedOffersTraveler} onAgreementButtonClick={onAgreementButtonClick} />
-            </>
-          )}
+        {/* Confirmed */}
+        <div className={sceneMode === Scene.confirmed ? styles.profileSection : styles.hidden}>
+          <Grid item xs={12} sm={4}>
+            <h2>Zaakceptowane umowy</h2>
+            <h1>(wycieczki się odbędą)</h1>
+            <AcceptedOffers agreements={agreements} />
+          </Grid>
         </div>
-      </div>
-      <div className={sceneMode === Scene.history ? styles.profileSection : styles.profileSectionHidden}>
-        <h2>Zaakceptowane oferty</h2>
-        <VerifiedOffers trips={verifiedOffersTraveler} state={'accepted'} />
-      </div>
-      <div className={styles.profileSectionHidden}>
-        <h2>Odrzucone oferty</h2>
-        <VerifiedOffers trips={verifiedOffersTraveler} state={'rejected'} />
-      </div>
-      <div className={styles.profileSectionHidden}>
-        <h2>Zaakceptowane umowy</h2>
-        <h1>(wycieczki się odbędą)</h1>
-        <AcceptedOffers agreements={agreements} />
-      </div>
-      <div className={styles.profileSectionHidden}>
-        <h2>Historia wycieczek</h2>
-        <HistoryOffers trips={historyOffersTraveler} />
-      </div>
-      <ProfileMenu setScene={setSceneMode} />
-    </div>
+        {/* History */}
+        <div className={sceneMode === Scene.history ? styles.profileSection : styles.hidden}>
+          <Grid item xs={12} sm={4}>
+            <h2>Historia wycieczek</h2>
+            <HistoryOffers trips={historyOffersTraveler} />
+          </Grid>
+        </div>
+      </Grid>
+
+      {/* Navigation */}
+      <BottomNavigation
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+          setMode(newValue);
+        }}
+        className={classes.root}
+        showLabels
+      >
+        <BottomNavigationAction label='Profile' icon={<FaceIcon />} />
+        <BottomNavigationAction label='Agreements' icon={<AssignmentIcon />} />
+        <BottomNavigationAction label='Confirmed' icon={<CheckIcon />} />
+        <BottomNavigationAction label='History' icon={<HistoryIcon />} />
+      </BottomNavigation>
+    </Grid>
   );
 };
 

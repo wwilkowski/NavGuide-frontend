@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { StoreType } from '../../store';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { Paper, Typography } from '@material-ui/core';
 
 interface Props {
   trip: ISingleTripType;
@@ -30,7 +31,7 @@ const TripListElement = ({ trip }: Props) => {
   const isLogged: boolean = useSelector((state: StoreType) => state.profile.isLoggedIn);
   const { t } = useTranslation();
   return (
-    <div>
+    <Paper elevation={1}>
       <Link to={`/offers/${trip.id}`} className={styles.link}>
         <div key={trip.id} className={styles.offer}>
           <img
@@ -39,26 +40,28 @@ const TripListElement = ({ trip }: Props) => {
             className={styles.offer__photo}
           />
           <div className={styles.offer__desc}>
-            <h2 className={styles.offer__title}>
+            <Typography variant='h3'>
               {trip.name} ({trip.id})
-            </h2>
-            <p className={styles.offer__p}>
+            </Typography>
+            <Typography variant='subtitle2'>
               {t('City')}: {trip.city}
-            </p>
-            <p className={styles.offer__p}>
+            </Typography>
+            <Typography variant='subtitle2'>
               {t('Price')}: {trip.price}zł <span>({t(priceTypes['PER_PERSON'])})</span>
-            </p>
+            </Typography>
             {isLogged && trip.owner && (
               <div>
-                <p className={styles.offer__p}>
+                <Typography variant='subtitle2'>
                   {t('Guide')}: {trip.owner.firstName} {trip.owner.lastName}
-                </p>
+                </Typography>
                 <div className={styles.offer__row}>
-                  <p className={styles.offer__p}>{t('Languages')}: </p>
+                  <Typography variant='subtitle2'>{t('Languages')}: </Typography>
                   <ul className={styles.offer__languages}>
                     {trip.owner.languages.map((lang: string) => (
                       <li className={styles.offer__langElement} key={lang}>
-                        <span>{getLanguage(lang)}</span>
+                        <Typography component='span' variant='subtitle2'>
+                          {getLanguage(lang)}
+                        </Typography>
                       </li>
                     ))}
                   </ul>
@@ -77,7 +80,7 @@ const TripListElement = ({ trip }: Props) => {
           </div>
         </div>
       </Link>
-    </div>
+    </Paper>
   );
 };
 

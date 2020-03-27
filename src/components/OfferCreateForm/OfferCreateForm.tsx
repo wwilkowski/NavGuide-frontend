@@ -15,6 +15,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import ImagePlaceholder from '../../assets/imagePlaceholder.jpg';
 import Slider from '@material-ui/core/Slider';
 import Button from '@material-ui/core/Button';
+import { Typography } from '@material-ui/core';
 
 const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>) => {
   const { touched, errors, setFieldValue, values } = props;
@@ -53,11 +54,13 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
 
   return (
     <Form className={styles.offerForm}>
-      <h2 className={styles.offerForm__title}>{t('Create new offer')}</h2>
+      <Typography variant='h2' className={styles.offerForm__title}>
+        {t('Create new offer')}
+      </Typography>
       <div className={`${styles.offerForm__locationInput} ${styles.offerForm__case}`}>
-        <label className={styles.offerForm__label} htmlFor='location'>
+        <Typography component='label' variant='subtitle2' className={styles.offerForm__label} htmlFor='location'>
           {t('Find place')}
-        </label>
+        </Typography>
         <Field
           id='location'
           type='text'
@@ -96,9 +99,9 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
         )}
       </div>
       <div className={styles.offerForm__case}>
-        <label htmlFor='name' className={styles.offerForm__label}>
+        <Typography component='label' variant='subtitle2' htmlFor='name' className={styles.offerForm__label}>
           {t('Offer name')}
-        </label>
+        </Typography>
         <Field id='name' type='text' name='name' className={styles.offerForm__input} />
         {errors.name && touched.name && <div>{t(errors.name)}</div>}
       </div>
@@ -150,16 +153,16 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
       </div>
 
       <div className={`${styles.offerForm__date} ${styles.offerForm__case}`}>
-        <label htmlFor='begin' className={styles.offerForm__label}>
+        <Typography component='label' variant='subtitle2' htmlFor='begin' className={styles.offerForm__label}>
           {t('Begin')}
-        </label>
+        </Typography>
         <DatePicker dateFormat='yyyy/MM/dd' selected={values.begin} onChange={date => setFieldValue('begin', date)} />
         {errors.begin && touched.begin && <div>{t(`Incorrect date`)}</div>}
       </div>
       <div className={`${styles.offerForm__date} ${styles.offerForm__case}`}>
-        <label htmlFor='end' className={styles.offerForm__label}>
+        <Typography component='label' variant='subtitle2' htmlFor='end' className={styles.offerForm__label}>
           {t('End')}
-        </label>
+        </Typography>
         <DatePicker
           dateFormat='yyyy/MM/dd'
           selected={values.end}
@@ -170,30 +173,30 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
         {errors.end && touched.end && <div>{t(`Incorrect date`)}</div>}
       </div>
       <div className={styles.offerForm__case}>
-        <label htmlFor='city' className={styles.offerForm__label}>
+        <Typography component='label' variant='subtitle2' htmlFor='city' className={styles.offerForm__label}>
           {t('City')}
-        </label>
+        </Typography>
         <Field id='city' type='text' name='city' className={styles.offerForm__input} />
         {errors.city && touched.city && <div>{t(errors.city)}</div>}
       </div>
       <div className={styles.offerForm__case}>
-        <label htmlFor='maxPeople' className={styles.offerForm__label}>
+        <Typography component='label' variant='subtitle2' htmlFor='maxPeople' className={styles.offerForm__label}>
           {t('Max people')}
-        </label>
+        </Typography>
         <Field id='maxPeople' type='number' name='maxPeople' className={styles.offerForm__input} />
         {errors.maxPeople && touched.maxPeople && <div>{t(`Incorrect number`)}</div>}
       </div>
       <div className={styles.offerForm__case}>
-        <label htmlFor='price' className={styles.offerForm__label}>
+        <Typography component='label' variant='subtitle2' htmlFor='price' className={styles.offerForm__label}>
           {t('Price')} (zł)
-        </label>
+        </Typography>
         <Field id='price' type='number' name='price' className={styles.offerForm__input} />
         {errors.price && touched.price && <div>{t(`Incorrect number`)}</div>}
       </div>
       <div className={styles.offerForm__case}>
-        <label htmlFor='priceType' className={styles.offerForm__label}>
+        <Typography component='label' variant='subtitle2' htmlFor='priceType' className={styles.offerForm__label}>
           {t('Price type')}
-        </label>
+        </Typography>
         <div>
           <select id='priceType' name='priceType'>
             <option value='PER_PERSON'>{t('per person')}</option>
@@ -202,9 +205,9 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
         </div>
       </div>
       <div className={styles.offerForm__case}>
-        <label htmlFor='radius' className={styles.offerForm__label}>
+        <Typography component='label' variant='subtitle2' htmlFor='radius' className={styles.offerForm__label}>
           {t('Radius')}
-        </label>
+        </Typography>
         <Slider
           defaultValue={0.0}
           getAriaValueText={valuetext}
@@ -229,9 +232,9 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
         {errors.radius && touched.radius && <div>{t(`Incorrect number`)}</div>}
       </div>
       <div className={styles.offerForm__case}>
-        <label htmlFor='description' className={styles.offerForm__label}>
+        <Typography component='label' variant='subtitle2' htmlFor='description' className={styles.offerForm__label}>
           {t('Description')}
-        </label>
+        </Typography>
         <textarea
           id='description'
           name='description'

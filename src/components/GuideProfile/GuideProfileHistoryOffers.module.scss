@@ -1,10 +1,6 @@
 .container {
   width: 100%;
   height: 100%;
-  //display: flex;
-  //flex-wrap: wrap;
-  //justify-content: space-around;
-  font-size: 1em;
   padding-bottom: 3rem;
 
   p {
@@ -15,7 +11,6 @@
     cursor: pointer;
     width: 100%;
     text-align: center;
-    font-size: 1.5em;
     font-weight: bold;
     color: #e9bc27;
 
@@ -83,7 +78,6 @@
         padding: 0.5rem;
         padding-bottom: 0.5rem;
         text-align: center;
-        font-size: 1.2em;
         font-weight: bold;
         position: relative;
       }
@@ -227,7 +221,6 @@
           width: 55%;
           text-align: center;
           font-weight: bold;
-          font-size: 1.1em;
           border-bottom: 1px solid #c3c3c3;
           padding: 0.5rem;
           margin: 1rem;
@@ -275,7 +268,6 @@
               color: #333333;
               padding: 0.3rem 0.8rem;
               margin-right: 0.4rem;
-              font-size: 0.7em;
               background-color: #e64740;
             }
           }
@@ -297,7 +289,6 @@
           margin: 0.5rem;
           background-color: #fff7d7;
           border: solid 1px;
-          font-size: 0.9rem;
           padding: 0.5rem;
         }
       }

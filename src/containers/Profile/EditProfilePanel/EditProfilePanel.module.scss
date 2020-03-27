@@ -16,10 +16,9 @@
 .profileSection {
   width: 100%;
 }
-.profileSectionHidden {
+.hidden {
   display: none;
   @media (min-width: 800px) {
-    width: 60%;
     display: block;
   }
 }

@@ -5,7 +5,6 @@
   left: 0;
   width: 100%;
   color: #ffffff;
-  font-size: 0.8em;
   @media (min-width: 800px) {
     display: none;
   }
@@ -41,11 +40,9 @@
   padding: 1rem;
   text-align: center;
   width: 100%;
-  font-size: 0.9em;
 }
 
 .title {
-  font-size: 1.3em;
   font-weight: 600;
   margin-bottom: 1rem;
 }
@@ -71,7 +68,6 @@
   padding: 0.1rem 0.5rem;
   margin-top: 0.3rem;
   margin-right: 0.2rem;
-  font-size: 0.7em;
   cursor: pointer;
   background: #ffffff;
 }
@@ -104,7 +100,6 @@
 .guideName {
   text-align: center;
   margin: 1rem 0 0 0;
-  font-size: 1.2em;
   font-weight: 600;
 }
 
