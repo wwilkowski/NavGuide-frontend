@@ -8,6 +8,7 @@ import TripListElement from '../../../components/TripBrowser/TripListElement';
 import { RouteComponentProps } from 'react-router-dom';
 import { IAgreementOffer, IOffer } from '../types';
 import { useTranslation } from 'react-i18next';
+import AgreementTraveler from '../../../components/Offers/SettleAgreement/SettleAgreement';
 
 interface TParams {
   id: string;
@@ -105,33 +106,12 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
     dispatcher(actions.settleAgreementRequest(id, status));
   };
 
-  const getDate = (date: string) => {
-    return date
-      .toString()
-      .replace('T', ' ')
-      .substr(0, date.toString().indexOf('.'));
-  };
-
   return (
     <div>
       {isLogged && pathFrom === '/profile' && (
         <div>
           <h2>{t('Decide what to do with this agreement')}</h2>
-          {currentAgreement && (
-            <>
-              <p>
-                {t('Planned Date')}: {getDate(currentAgreement.plannedDate)}
-              </p>
-              <TripListElement trip={currentAgreement.offer} />
-              <p>
-                {t('Price')}: {currentAgreement.price}zł {t(currentAgreement.offer.priceType)}
-              </p>
-              <p>{t('Description')}</p>
-              <p>{currentAgreement.description}</p>
-              <button onClick={() => handleSettleAgreement(currentAgreement.id, 'ACCEPT')}>{t('Accept')}</button>
-              <button onClick={() => handleSettleAgreement(currentAgreement.id, 'REJECT')}>{t('Reject')}</button>
-            </>
-          )}
+          {currentAgreement && <AgreementTraveler currentAgreement={currentAgreement} handleSettleAgreement={handleSettleAgreement} />}
         </div>
       )}
       {isLogged && pathFrom === '/profile/guide' && (
