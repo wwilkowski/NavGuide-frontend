@@ -28,6 +28,9 @@ const useStyles = makeStyles({
     position: 'fixed',
     bottom: '0',
     left: '0'
+  },
+  hidden: {
+    display: 'none'
   }
 });
 
@@ -140,7 +143,7 @@ const EditProfilePanel = () => {
           setValue(newValue);
           setMode(newValue);
         }}
-        className={classes.root}
+        className={`${classes.root} ${window.innerWidth > 900 && classes.hidden}`}
         showLabels
       >
         <BottomNavigationAction label='Profile' icon={<FaceIcon />} />

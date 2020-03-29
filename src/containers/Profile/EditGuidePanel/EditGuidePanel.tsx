@@ -72,19 +72,19 @@ const EditGuidePanel = () => {
   return (
     <Grid container>
       <Grid item xs={12} sm={4}>
-        <div className={!(sceneMode === Scene.notifications) ? classes.hidden : ''}>
+        <div className={!(sceneMode === Scene.notifications) && window.innerWidth < 900 ? classes.hidden : ''}>
           <Typography variant='h2'>Powiadomienia</Typography>
           <OrderedOffers trips={activeOffers} agreements={agreements} />
         </div>
       </Grid>
       <Grid item xs={12} sm={4}>
-        <div className={!(sceneMode === Scene.confirmed) ? classes.hidden : ''}>
+        <div className={!(sceneMode === Scene.confirmed) && window.innerWidth < 900 ? classes.hidden : ''}>
           <Typography variant='h2'>Zaakceptowane umowy</Typography>
           <AcceptedOffers agreements={agreements} />
         </div>
       </Grid>
       <Grid item xs={12} sm={4}>
-        <div className={!(sceneMode === Scene.history) ? classes.hidden : ''}>
+        <div className={!(sceneMode === Scene.history) && window.innerWidth < 900 ? classes.hidden : ''}>
           <Typography variant='h2'>Historia wycieczek</Typography>
           <HistoryOffers trips={historyOffers} />
         </div>
@@ -95,7 +95,7 @@ const EditGuidePanel = () => {
           setValue(newValue);
           setMode(newValue);
         }}
-        className={classes.root}
+        className={`${classes.root} ${window.innerWidth > 900 && classes.hidden}`}
         showLabels
       >
         <BottomNavigationAction label='Agreements' icon={<AssignmentIcon />} />
