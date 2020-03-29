@@ -7,10 +7,13 @@ import { Button } from '@material-ui/core';
 
 const VerifyPopup = props => {
   const { t } = useTranslation();
+
+  const { popupVisible, changePopupVisible, onSubmit } = props;
+
   return (
     <Dialog
-      open={props.popupVisible}
-      onClose={props.changePopupVisible}
+      open={popupVisible}
+      onClose={changePopupVisible}
       aria-labelledby='alert-dialog-title'
       aria-describedby='alert-dialog-description'
     >
@@ -18,8 +21,8 @@ const VerifyPopup = props => {
       <DialogActions>
         <Button
           onClick={() => {
-            props.onSubmit();
-            props.changePopupVisible();
+            onSubmit();
+            changePopupVisible();
           }}
           color='primary'
         >
@@ -27,8 +30,7 @@ const VerifyPopup = props => {
         </Button>
         <Button
           onClick={() => {
-            props.onSubmit();
-            props.changePopupVisible();
+            changePopupVisible();
           }}
           color='primary'
           autoFocus

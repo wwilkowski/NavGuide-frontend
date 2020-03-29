@@ -8,6 +8,7 @@ import TripListElement from '../../../components/TripBrowser/TripListElement';
 import { RouteComponentProps } from 'react-router-dom';
 import { IAgreementOffer, IOffer } from '../types';
 import { useTranslation } from 'react-i18next';
+import AgreementTraveler from '../../../components/Offers/SettleAgreement/SettleAgreement';
 import { Typography, Button, makeStyles } from '@material-ui/core';
 
 interface TParams {
@@ -114,19 +115,14 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
     dispatcher(actions.settleAgreementRequest(id, status));
   };
 
-  const getDate = (date: string) => {
-    return date
-      .toString()
-      .replace('T', ' ')
-      .substr(0, date.toString().indexOf('.'));
-  };
-
   return (
     <div>
       {isLogged && pathFrom === '/profile' && (
         <div>
-          <Typography variant='h2'>{t('Decide what to do with this agreement')}</Typography>
-          {currentAgreement && (
+          <h2>{t('Decide what to do with this agreement')}</h2>
+          {currentAgreement && <AgreementTraveler currentAgreement={currentAgreement} handleSettleAgreement={handleSettleAgreement} />}
+          {/* <Typography variant='h2'>{t('Decide what to do with this agreement')}</Typography> */}
+          {/* {currentAgreement && (
             <div style={{ padding: '1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '1rem 0' }}>
               <Typography variant='subtitle2'>
                 {t('Planned Date')}: {getDate(currentAgreement.plannedDate)}
@@ -150,7 +146,7 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
                 </Button>
               </div>
             </div>
-          )}
+          )} */}
         </div>
       )}
       {isLogged && pathFrom === '/profile/guide' && (
