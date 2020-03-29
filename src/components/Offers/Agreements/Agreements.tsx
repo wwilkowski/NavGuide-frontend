@@ -4,9 +4,20 @@ import TripListElement from '../../TripBrowser/TripListElement';
 import { Link } from 'react-router-dom';
 import history from '../../../history';
 import { useTranslation } from 'react-i18next';
+import { Button, makeStyles, Typography } from '@material-ui/core';
+
+const useStyles = makeStyles({
+  text: {
+    marginTop: '1rem'
+  },
+  list: {
+    marginBottom: '3rem'
+  }
+});
 
 const Agreements = (props: IAgreementsProps) => {
   const { t } = useTranslation();
+  const classes = useStyles();
 
   const { agreements, verifiedOffers } = props;
 
@@ -24,30 +35,33 @@ const Agreements = (props: IAgreementsProps) => {
   };
 
   return (
-    <div>
+    <ul className={classes.list}>
       {filteredAgreements &&
         verifiedOffers &&
         filteredAgreements.map((agr: IAgreementOffer) => (
-          <div key={agr.id}>
+          <li key={agr.id} style={{ padding: '1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '1rem 0' }}>
             <TripListElement trip={agr.offer} />
-            <Link to={`/guides/${agr.offer.owner.guideId}`}>
+            <Link to={`/guides/${agr.offer.owner.guideId}`} className={classes.text}>
               {t('Check guide profile with ID')} {agr.offer.owner.guideId}
             </Link>
-            <p>
+            <Typography variant='subtitle2' className={classes.text}>
               {t('Planned date')}: {getDate(agr.plannedDate)}
-            </p>
-            <button
+            </Typography>
+            <Button
+              variant='contained'
+              color='primary'
               onClick={() =>
                 history.push(`/agreement/${agr.id}`, {
                   pathFrom: '/profile'
                 })
               }
+              className={classes.text}
             >
               {t('See more')}
-            </button>
-          </div>
+            </Button>
+          </li>
         ))}
-    </div>
+    </ul>
   );
 };
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import TripListElement from '../../TripBrowser/TripListElement';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import * as actions from '../../../containers/Offers/actions';
 import { IProfileOffersProps, IOffer } from '../../../containers/Offers/types';
@@ -8,7 +8,16 @@ import { showNotification } from '../../../helpers/notification';
 import { useTranslation } from 'react-i18next';
 import history from '../../../history';
 import VerifyPopup from '../../../shared/VerifyPopup';
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField, Typography, Grid, Card, Box, createStyles, Theme, makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles({
+  text: {
+    marginTop: '1rem'
+  },
+  list: {
+    marginBottom: '3rem'
+  }
+});
 
 const getDate = (date: Date) => {
   return date
@@ -19,6 +28,7 @@ const getDate = (date: Date) => {
 
 const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
   const { t } = useTranslation();
+  const classes = useStyles();
 
   const dispatcher = useDispatch();
 
@@ -46,7 +56,7 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
   };
 
   return filteredTrips && filteredTrips.length ? (
-    <ul>
+    <ul className={classes.list}>
       {agreementsTrips.map((trip: IOffer, i: number) => (
         <li key={i}>
           <p>{trip.plannedDate}</p>
@@ -62,18 +72,20 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
         </li>
       ))}
       {filteredTrips.map((trip: IOffer, i: number) => (
-        <li key={i}>
-          <p>
+        <li key={i} style={{ padding: '1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '1rem 0' }}>
+          <Typography variant='subtitle2'>
             <b>{t('Planned date')}:</b> {getDate(trip.plannedDate)}
-          </p>
+          </Typography>
           <TripListElement trip={trip.offer} />
-          <p>
+          <Typography variant='subtitle2' className={classes.text}>
             <b>{t('Message from tourist')}:</b>
-          </p>
-          <p>{trip.message}</p>
-          <Link to={`/users/${trip.traveler.id}`}>
+          </Typography>
+          <Typography variant='body1' className={classes.text}>
+            {trip.message}
+          </Typography>
+          <Link to={`/users/${trip.traveler.id}`} className={classes.text}>
             <p>
-              {t('Check user profile with ID')} {trip.traveler.id}
+              {t('Check user profile with')} ID {trip.traveler.id}
             </p>
           </Link>
           <TextField
@@ -89,9 +101,11 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
               setCurrentMessage(tmp[i]);
             }}
             variant='outlined'
+            style={{ width: '100%' }}
+            className={classes.text}
           />
           {errorMessage !== '' && <div>{errorMessage}</div>}
-          <div>
+          <div className={classes.text}>
             <Button
               variant='contained'
               color='primary'

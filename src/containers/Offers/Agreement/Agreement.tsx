@@ -9,12 +9,21 @@ import { RouteComponentProps } from 'react-router-dom';
 import { IAgreementOffer, IOffer } from '../types';
 import { useTranslation } from 'react-i18next';
 import AgreementTraveler from '../../../components/Offers/SettleAgreement/SettleAgreement';
+import { Typography, Button, makeStyles } from '@material-ui/core';
 
 interface TParams {
   id: string;
 }
 
+const useStyles = makeStyles({
+  text: {
+    marginTop: '1rem'
+  }
+});
+
 const Agreement = (props: RouteComponentProps<TParams>) => {
+  const classes = useStyles();
+
   const isLogged = useSelector((state: StoreType) => state.profile.isLoggedIn);
 
   const dispatcher = useDispatch();
@@ -112,6 +121,32 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
         <div>
           <h2>{t('Decide what to do with this agreement')}</h2>
           {currentAgreement && <AgreementTraveler currentAgreement={currentAgreement} handleSettleAgreement={handleSettleAgreement} />}
+        //   <Typography variant='h2'>{t('Decide what to do with this agreement')}</Typography>
+        //   {currentAgreement && (
+        //     <div style={{ padding: '1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '1rem 0' }}>
+        //       <Typography variant='subtitle2'>
+        //         {t('Planned Date')}: {getDate(currentAgreement.plannedDate)}
+        //       </Typography>
+        //       <TripListElement trip={currentAgreement.offer} />
+        //       <Typography variant='h4' className={classes.text}>
+        //         {t('Price')}: {currentAgreement.price}zł {t(currentAgreement.offer.priceType)}
+        //       </Typography>
+        //       <Typography variant='subtitle2' className={classes.text}>
+        //         {t('Description')}
+        //       </Typography>
+        //       <Typography variant='body1' className={classes.text}>
+        //         {currentAgreement.description}
+        //       </Typography>
+        //       <div className={classes.text}>
+        //         <Button variant='contained' color='primary' onClick={() => handleSettleAgreement(currentAgreement.id, 'ACCEPT')}>
+        //           {t('Accept')}
+        //         </Button>
+        //         <Button variant='contained' color='primary' onClick={() => handleSettleAgreement(currentAgreement.id, 'REJECT')}>
+        //           {t('Reject')}
+        //         </Button>
+        //       </div>
+        //     </div>
+        //   )}
         </div>
       )}
       {isLogged && pathFrom === '/profile/guide' && (
