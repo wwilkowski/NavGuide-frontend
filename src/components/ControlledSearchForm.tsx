@@ -71,6 +71,11 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
   }, [location]);
 
   useEffect(() => {
+    suggestedCities.splice(0, suggestedCities.length);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     if (Object.keys(errors).length !== 0 && isSubmitting) {
       Object.values(errors).forEach(error => {
         showNotification('warning', t('Form warning'), t(`${error}`));
