@@ -20,7 +20,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import FaceIcon from '@material-ui/icons/Face';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Container } from '@material-ui/core';
+import { Grid, Container, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles({
   root: {
@@ -106,7 +106,7 @@ const EditProfilePanel = () => {
             <div>
               {agreements && (
                 <>
-                  <h2>{t('Your agreements')}: </h2>
+                  <Typography variant='h2'>{t('Your agreements')}: </Typography>
                   <Agreements
                     agreements={agreements}
                     verifiedOffers={verifiedOffersTraveler}
@@ -120,15 +120,14 @@ const EditProfilePanel = () => {
         {/* Confirmed */}
         <div className={sceneMode === Scene.confirmed ? styles.profileSection : styles.hidden}>
           <Grid item xs={12} sm={4}>
-            <h2>Zaakceptowane umowy</h2>
-            <h1>(wycieczki się odbędą)</h1>
+            <Typography variant='h2'>Zaakceptowane umowy</Typography>
             <AcceptedOffers agreements={agreements} />
           </Grid>
         </div>
         {/* History */}
         <div className={sceneMode === Scene.history ? styles.profileSection : styles.hidden}>
           <Grid item xs={12} sm={4}>
-            <h2>Historia wycieczek</h2>
+            <Typography variant='h2'>Historia wycieczek</Typography>
             <HistoryOffers trips={historyOffersTraveler} />
           </Grid>
         </div>
