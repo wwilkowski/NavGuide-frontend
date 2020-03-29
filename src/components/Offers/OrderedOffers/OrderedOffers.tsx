@@ -8,7 +8,7 @@ import { showNotification } from '../../../helpers/notification';
 import { useTranslation } from 'react-i18next';
 import history from '../../../history';
 import VerifyPopup from '../../../shared/VerifyPopup';
-import { Button, TextField, Typography, Grid, Card, Box, createStyles, Theme, makeStyles } from '@material-ui/core';
+import { Button, TextField, Typography, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
   text: {

@@ -48,6 +48,7 @@ const OfferSale = (props: Props) => {
     if (errorMessage) {
       if (message.length >= 10) setErrorMessage('');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [message]);
 
   return currentOffer ? (

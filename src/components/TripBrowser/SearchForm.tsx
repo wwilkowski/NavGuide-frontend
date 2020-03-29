@@ -1,9 +1,8 @@
-import { Container, Grid } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { StoreType } from '../../store';
 import ListTrips from './ListTrips';
@@ -29,7 +28,6 @@ const useStyles = makeStyles({
 });
 
 const SearchForm = (props: ISearchFormProps) => {
-  const { t } = useTranslation();
   const classes = useStyles();
 
   const { setPosition, positionValue, formValue, trips, getTrips } = props;

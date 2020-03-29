@@ -10,7 +10,6 @@ import { useSelector } from 'react-redux';
 import { ISingleTripType, IPosition } from '../../containers/TripBrowser/types';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 import { Link } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core';
 import ReportPopup from '../Offers/ReportPopup/ReportPopup';
 
 const TripInfo = (props: ITripInfoProps) => {

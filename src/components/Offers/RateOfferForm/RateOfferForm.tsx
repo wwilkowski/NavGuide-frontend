@@ -1,9 +1,8 @@
-import React, { ChangeEvent, useState, useEffect } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import * as Yup from 'yup';
 import { FormikProps, Form, withFormik } from 'formik';
 import { IRateOfferFormValues, IRateOfferFormProps } from './types';
 import { showNotification } from '../../../helpers/notification';
-import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import i18n from '../../../locales/i18n';
 import Button from '@material-ui/core/Button';
@@ -25,7 +24,7 @@ const RateOfferSchema = Yup.object().shape({
   scoreGuide: Yup.number().min(1, i18n.t('Score guide is required') + '!'),
   comment: Yup.string()
     .min(10, i18n.t('Min number of characters is 10') + '!')
-    .required(i18n.t('Description is required' + '!'))
+    .required(i18n.t('Description is required') + '!')
 });
 
 const InnerForm = (props: FormikProps<IRateOfferFormValues>) => {
@@ -37,17 +36,6 @@ const InnerForm = (props: FormikProps<IRateOfferFormValues>) => {
   const [hoverScoreGuide, setHoverScoreGuide] = useState<number>(-1);
   const [scoreOffer, setScoreOffer] = useState<number>(0);
   const [hoverScoreOffer, setHoverScoreOffer] = useState<number>(-1);
-  const [disabled, setDisabled] = useState<boolean>(false);
-
-  /*useEffect(() => {
-    if (hoverScoreGuide === -1) setFieldValue('scoreGuide', 0);
-    if (hoverScoreOffer === -1) setFieldValue('scoreOffer', 0);
-  }, [hoverScoreGuide, hoverScoreOffer]);*/
-
-  /*useEffect(() => {
-    if (errors.comment || errors.scoreOffer || errors.scoreGuide) setDisabled(true);
-    else setDisabled(false);
-  }, [errors]);*/
 
   return (
     <Form className={styles.form}>
