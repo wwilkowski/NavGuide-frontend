@@ -19,13 +19,6 @@ const useStyles = makeStyles({
   }
 });
 
-const getDate = (date: Date) => {
-  return date
-    .toString()
-    .replace('T', ' ')
-    .substr(0, date.toString().indexOf('.'));
-};
-
 const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
   const { t } = useTranslation();
   const classes = useStyles();
@@ -47,8 +40,16 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
   }, [trips]);
 
   useEffect(() => {
+    console.log(currentMessage);
     if (currentMessage.length >= 10) setErrorMessage('');
   }, [currentMessage]);
+
+  const getDate = (date: Date) => {
+    return date
+      .toString()
+      .replace('T', ' ')
+      .substr(0, date.toString().indexOf('.'));
+  };
 
   const settleOffer = (tripId: number, status: string, message: string) => {
     if (message) dispatcher(actions.settleActiveOfferRequest(tripId, status, message));
@@ -90,7 +91,7 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
           </Link>
           <TextField
             id='outlined-multiline-static'
-            label={t('Message to traveler')}
+            label={t('Message to guide')}
             multiline
             rows='4'
             value={messages[i]}
@@ -126,9 +127,9 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
                 if (currentMessage === '') setErrorMessage('Message is required');
                 else if (currentMessage.length < 10) setErrorMessage('Min number of character is 10');
                 else if (errorMessage === '') {
+                  setPopupVisible(true);
                   setOfferId(trip.id);
                   setStatus('REJECT');
-                  setPopupVisible(true);
                 }
               }}
             >
@@ -140,7 +141,6 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
               settleOffer(offerId, status, currentMessage);
               setMessages([]);
               setCurrentMessage('');
-              console.log(status);
               if (status !== 'REJECT') {
                 history.push(`/agreement/create/${trip.traveler.id}/${trip.offer.id}/${trip.id}`, {
                   pathFrom: '/profile/guide',
