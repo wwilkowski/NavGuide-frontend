@@ -8,6 +8,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { IAgreementOffer, IOffer } from '../types';
 import { useTranslation } from 'react-i18next';
 import { Typography, Button, makeStyles } from '@material-ui/core';
+import TripListElement from '../../../components/TripBrowser/TripListElement';
 
 interface TParams {
   id: string;
