@@ -36,6 +36,17 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
   const [offerId, setOfferId] = useState<number>(-1);
 
   useEffect(() => {
+    const tmp = sessionStorage.getItem('data');
+    if (tmp) {
+      const data = JSON.parse(tmp);
+      const tmp2 = messages;
+      tmp2[data.index] = data.message;
+      setMessages(tmp2);
+      sessionStorage.removeItem('data');
+    }
+  }, [messages]);
+
+  useEffect(() => {
     if (trips) setFilteredTrips(trips.filter((trip: IOffer) => trip.status === 'PENDING'));
   }, [trips]);
 

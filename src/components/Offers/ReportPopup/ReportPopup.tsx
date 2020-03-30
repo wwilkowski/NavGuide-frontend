@@ -45,6 +45,7 @@ const ReportPopup = (props: IReportPopupProps) => {
     else {
       setErrorMessage(false);
       dispatcher(reportOfferRequest(offerId, message));
+      setMessage('');
       changeVisibility();
     }
   };

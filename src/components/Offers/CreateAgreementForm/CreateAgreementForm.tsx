@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ICreateAgreementOtherProps, ICreateAgreementFormValues } from './types';
 import { FormikProps, Form, withFormik } from 'formik';
 import { TextField, Button } from '@material-ui/core';
@@ -8,6 +8,7 @@ import * as Yup from 'yup';
 import i18n from '../../../locales/i18n';
 import { showNotification } from '../../../helpers/notification';
 import TripListElement from '../../TripBrowser/TripListElement';
+import VerifyPopup from '../../../shared/VerifyPopup';
 
 const CreateAgreementSchema = Yup.object().shape({
   description: Yup.string()
@@ -22,6 +23,8 @@ const InnerForm = (props: ICreateAgreementOtherProps & FormikProps<ICreateAgreem
   const { t } = useTranslation();
 
   const { touched, errors, values } = props;
+
+  const [popupVisibility, setPopupVisibility] = useState<boolean>(false);
 
   useEffect(() => {
     //const tmp = sessionStorage.getItem('agreementData');
@@ -89,10 +92,15 @@ const InnerForm = (props: ICreateAgreementOtherProps & FormikProps<ICreateAgreem
           {errors.description && touched.description && <div>{t(errors.description)}</div>}
         </div>
         <div>
-          <Button variant='contained' color='primary' type='submit'>
+          <Button variant='contained' color='primary' onClick={() => setPopupVisibility(true)}>
             {t('Create Agreement')}
           </Button>
         </div>
+        <VerifyPopup
+          onSubmit={() => props.handleSubmit()}
+          popupVisible={popupVisibility}
+          changePopupVisible={() => setPopupVisibility(!popupVisibility)}
+        />
       </Form>
     </>
   );
