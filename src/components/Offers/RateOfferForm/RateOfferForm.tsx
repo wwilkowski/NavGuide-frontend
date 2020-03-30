@@ -20,11 +20,11 @@ const labels: { [index: string]: string } = {
 };
 
 const RateOfferSchema = Yup.object().shape({
-  scoreOffer: Yup.number().min(1, i18n.t('Score offer is required') + '!'),
-  scoreGuide: Yup.number().min(1, i18n.t('Score guide is required') + '!'),
+  scoreOffer: Yup.number().min(1, `${i18n.t('Score offer is required')}!`),
+  scoreGuide: Yup.number().min(1, `${i18n.t('Score guide is required')}!`),
   comment: Yup.string()
-    .min(10, i18n.t('Min number of characters is 10') + '!')
-    .required(i18n.t('Description is required') + '!')
+    .min(10, `${i18n.t('Min number of characters is 10')}!`)
+    .required(`${i18n.t('Description is required')}!`)
 });
 
 const InnerForm = (props: FormikProps<IRateOfferFormValues>) => {
@@ -54,7 +54,7 @@ const InnerForm = (props: FormikProps<IRateOfferFormValues>) => {
               setFieldValue('scoreGuide', 0);
             } else {
               setScoreGuide(newValue);
-              setFieldValue('scoreGuide', event.target.value);
+              setFieldValue('scoreGuide', parseInt(event.target.value));
             }
           }}
           onChangeActive={(event: any, newHover: any) => {
@@ -78,7 +78,7 @@ const InnerForm = (props: FormikProps<IRateOfferFormValues>) => {
               setFieldValue('scoreOffer', 0);
             } else {
               setScoreOffer(newValue);
-              setFieldValue('scoreOffer', event.target.value);
+              setFieldValue('scoreOffer', parseInt(event.target.value));
             }
           }}
           onChangeActive={(event: any, newHover: any) => {

@@ -27,7 +27,7 @@ const TripBrowser: React.FC = () => {
 
   useEffect(() => {
     const defaultBegin = new Date();
-    defaultBegin.setDate(defaultBegin.getDate() - 30);
+    defaultBegin.setDate(defaultBegin.getDate());
     const defaultEnd = new Date();
     defaultEnd.setDate(defaultEnd.getDate() + 30);
 
@@ -55,7 +55,7 @@ const TripBrowser: React.FC = () => {
 
   useEffect(() => {
     const defaultBegin = new Date();
-    defaultBegin.setDate(defaultBegin.getDate() - 30);
+    defaultBegin.setDate(defaultBegin.getDate());
     const defaultEnd = new Date();
     defaultEnd.setDate(defaultEnd.getDate() + 30);
 
@@ -86,19 +86,21 @@ const TripBrowser: React.FC = () => {
 
   useEffect(() => {
     if (activeTags && activeTags.length) {
+      console.log(tripsData);
       let tmp = tripsData.filter(trip => {
         const equalTags = trip.tags.filter(tag => activeTags.includes(tag.name));
         if (equalTags.length > 0) return true;
         return false;
       });
-
       if (beginDate && isLogged && endDate) {
         tmp = tmp.filter((trip: ISingleTripType) => {
+          console.log(trip);
           const tripBegin = new Date(trip.begin);
           const tripEnd = new Date(trip.end);
-          if (tripBegin.getDate() >= new Date(trip.begin).getDate() && tripEnd.getDate() <= new Date(trip.end).getDate()) {
+          if (tripBegin.getTime() >= beginDate.getTime() && tripEnd.getTime() <= endDate.getTime()) {
             return true;
           }
+          console.log('nie');
           return false;
         });
       }
@@ -108,7 +110,7 @@ const TripBrowser: React.FC = () => {
       tmp = tripsData.filter((trip: ISingleTripType) => {
         const tripBegin = new Date(trip.begin);
         const tripEnd = new Date(trip.end);
-        if (tripBegin.getDate() >= new Date(trip.begin).getDate() && tripEnd.getDate() <= new Date(trip.end).getDate()) {
+        if (tripBegin.getTime() >= beginDate.getTime() && tripEnd.getTime() <= endDate.getTime()) {
           return true;
         }
         return false;

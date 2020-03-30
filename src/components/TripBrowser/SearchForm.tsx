@@ -10,7 +10,6 @@ import { ISearchFormProps, ListMode } from './types';
 import { useSelector } from 'react-redux';
 import ControlledSearchForm from '../ControlledSearchForm';
 import LeafletMap from '../LeafletMap/LeafletMap';
-
 import SearchIcon from '@material-ui/icons/Search';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 
