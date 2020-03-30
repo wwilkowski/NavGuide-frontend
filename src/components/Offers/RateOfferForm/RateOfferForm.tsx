@@ -1,9 +1,8 @@
-import React, { ChangeEvent, useState, useEffect } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import * as Yup from 'yup';
 import { FormikProps, Form, withFormik } from 'formik';
 import { IRateOfferFormValues, IRateOfferFormProps } from './types';
 import { showNotification } from '../../../helpers/notification';
-import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import i18n from '../../../locales/i18n';
 import Button from '@material-ui/core/Button';
@@ -21,11 +20,11 @@ const labels: { [index: string]: string } = {
 };
 
 const RateOfferSchema = Yup.object().shape({
-  scoreOffer: Yup.number().min(1, i18n.t('Score offer is required') + '!'),
-  scoreGuide: Yup.number().min(1, i18n.t('Score guide is required') + '!'),
+  scoreOffer: Yup.number().min(1, `${i18n.t('Score offer is required')}!`),
+  scoreGuide: Yup.number().min(1, `${i18n.t('Score guide is required')}!`),
   comment: Yup.string()
-    .min(10, i18n.t('Min number of characters is 10') + '!')
-    .required(i18n.t('Description is required' + '!'))
+    .min(10, `${i18n.t('Min number of characters is 10')}!`)
+    .required(`${i18n.t('Description is required')}!`)
 });
 
 const InnerForm = (props: FormikProps<IRateOfferFormValues>) => {
@@ -37,17 +36,6 @@ const InnerForm = (props: FormikProps<IRateOfferFormValues>) => {
   const [hoverScoreGuide, setHoverScoreGuide] = useState<number>(-1);
   const [scoreOffer, setScoreOffer] = useState<number>(0);
   const [hoverScoreOffer, setHoverScoreOffer] = useState<number>(-1);
-  const [disabled, setDisabled] = useState<boolean>(false);
-
-  /*useEffect(() => {
-    if (hoverScoreGuide === -1) setFieldValue('scoreGuide', 0);
-    if (hoverScoreOffer === -1) setFieldValue('scoreOffer', 0);
-  }, [hoverScoreGuide, hoverScoreOffer]);*/
-
-  /*useEffect(() => {
-    if (errors.comment || errors.scoreOffer || errors.scoreGuide) setDisabled(true);
-    else setDisabled(false);
-  }, [errors]);*/
 
   return (
     <Form className={styles.form}>
@@ -66,7 +54,7 @@ const InnerForm = (props: FormikProps<IRateOfferFormValues>) => {
               setFieldValue('scoreGuide', 0);
             } else {
               setScoreGuide(newValue);
-              setFieldValue('scoreGuide', event.target.value);
+              setFieldValue('scoreGuide', parseInt(event.target.value));
             }
           }}
           onChangeActive={(event: any, newHover: any) => {
@@ -90,7 +78,7 @@ const InnerForm = (props: FormikProps<IRateOfferFormValues>) => {
               setFieldValue('scoreOffer', 0);
             } else {
               setScoreOffer(newValue);
-              setFieldValue('scoreOffer', event.target.value);
+              setFieldValue('scoreOffer', parseInt(event.target.value));
             }
           }}
           onChangeActive={(event: any, newHover: any) => {

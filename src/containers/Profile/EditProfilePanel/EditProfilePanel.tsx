@@ -3,11 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { StoreType } from '../../../store';
 import * as actions from '../actions';
 import { getOwnAgreementsRequest, settleAgreementRequest } from '../../Offers/actions';
-import ProfileMenu from '../../../components/ProfileMenu/ProfileMenu';
 import styles from './EditProfilePanel.module.scss';
-import ActiveOffers from '../../../components/Offers/ActiveOffers/ActiveOffers';
 import { getActiveOffersRequest, getApproachesRequest } from '../../Offers/actions';
-import VerifiedOffers from '../../../components/Offers/VerifiedOffers/VerifiedOffers';
 import HistoryOffers from '../../../components/Offers/HistoryOffers/HistoryOffers';
 import Agreements from '../../../components/Offers/Agreements/Agreements';
 import AcceptedOffers from '../../../components/Offers/AcceptedOffers/AcceptedOffers';
@@ -49,7 +46,6 @@ const EditProfilePanel = () => {
 
   const user = useSelector((state: StoreType) => state.profile.user);
 
-  const approaches = useSelector((state: StoreType) => state.currentOfferReducer.approaches);
   const verifiedOffersTraveler = useSelector((state: StoreType) => state.currentOfferReducer.approaches);
   const historyOffersTraveler = useSelector((state: StoreType) => state.profile.historyOffers);
   const agreements = useSelector((state: StoreType) => state.currentOfferReducer.agreements);

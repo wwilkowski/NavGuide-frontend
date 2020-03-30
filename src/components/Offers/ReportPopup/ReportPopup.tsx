@@ -9,7 +9,6 @@ import { IReportPopupProps } from './types';
 import { useTranslation } from 'react-i18next';
 import { reportOfferRequest } from '../../../containers/Offers/actions';
 import { useDispatch } from 'react-redux';
-import { showNotification } from '../../../helpers/notification';
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -39,13 +38,14 @@ const ReportPopup = (props: IReportPopupProps) => {
     if (errorMessage) {
       if (message.length >= 10) setErrorMessage(false);
     }
-  }, [message]);
+  }, [message, errorMessage]);
 
   const handleClick = () => {
     if (message.length < 10) setErrorMessage(true);
     else {
       setErrorMessage(false);
       dispatcher(reportOfferRequest(offerId, message));
+      setMessage('');
       changeVisibility();
     }
   };

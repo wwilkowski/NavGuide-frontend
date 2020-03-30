@@ -1,17 +1,14 @@
-import { Container, Grid } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-
 import { StoreType } from '../../store';
 import ListTrips from './ListTrips';
 import { ISearchFormProps, ListMode } from './types';
 import { useSelector } from 'react-redux';
 import ControlledSearchForm from '../ControlledSearchForm';
 import LeafletMap from '../LeafletMap/LeafletMap';
-
 import SearchIcon from '@material-ui/icons/Search';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 
@@ -29,7 +26,6 @@ const useStyles = makeStyles({
 });
 
 const SearchForm = (props: ISearchFormProps) => {
-  const { t } = useTranslation();
   const classes = useStyles();
 
   const { setPosition, positionValue, formValue, trips, getTrips } = props;

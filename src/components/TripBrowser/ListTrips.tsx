@@ -4,7 +4,6 @@ import { ISingleTripType } from '../../containers/TripBrowser/types';
 import { useTranslation } from 'react-i18next';
 import TripListElement from './TripListElement';
 import styles from './ListTrips.module.scss';
-import { Link } from 'react-router-dom';
 import { Container } from '@material-ui/core';
 
 const ListTrips = ({ trips, closestTrips, mode, chosenOfferId, setChosenOfferId }: types.IListTripsProps) => {

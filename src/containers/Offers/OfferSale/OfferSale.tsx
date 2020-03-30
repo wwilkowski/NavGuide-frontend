@@ -48,7 +48,7 @@ const OfferSale = (props: Props) => {
     if (errorMessage) {
       if (message.length >= 10) setErrorMessage('');
     }
-  }, [message]);
+  }, [message, errorMessage]);
 
   return currentOffer ? (
     <div className={styles.container}>

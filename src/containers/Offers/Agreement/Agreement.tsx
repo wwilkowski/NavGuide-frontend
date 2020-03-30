@@ -4,7 +4,6 @@ import { StoreType } from '../../../store';
 import history from '../../../history';
 import CreateAgreementForm from '../../../components/Offers/CreateAgreementForm/CreateAgreementForm';
 import * as actions from '../../Offers/actions';
-import TripListElement from '../../../components/TripBrowser/TripListElement';
 import { RouteComponentProps } from 'react-router-dom';
 import { IAgreementOffer, IOffer } from '../types';
 import { useTranslation } from 'react-i18next';

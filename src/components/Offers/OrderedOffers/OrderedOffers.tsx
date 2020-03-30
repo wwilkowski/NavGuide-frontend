@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import TripListElement from '../../TripBrowser/TripListElement';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import * as actions from '../../../containers/Offers/actions';
 import { IProfileOffersProps, IOffer } from '../../../containers/Offers/types';
@@ -31,6 +31,17 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
   const [currentMessage, setCurrentMessage] = useState<string>('');
   const [status, setStatus] = useState<string>('');
   const [offerId, setOfferId] = useState<number>(-1);
+
+  useEffect(() => {
+    const tmp = sessionStorage.getItem('data');
+    if (tmp) {
+      const data = JSON.parse(tmp);
+      const tmp2 = messages;
+      tmp2[data.index] = data.message;
+      setMessages(tmp2);
+      sessionStorage.removeItem('data');
+    }
+  }, [messages]);
 
   useEffect(() => {
     if (trips) setFilteredTrips(trips.filter((trip: IOffer) => trip.status === 'PENDING'));
@@ -71,7 +82,12 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
             <b>{t('Message from tourist')}:</b>
           </p>
           <p>{trip.message}</p>
-          <Link to={`/users/${trip.traveler.id}`}>
+          <Link
+            to={`/users/${trip.traveler.id}`}
+            onClick={() => {
+              sessionStorage.setItem('data', JSON.stringify({ message: messages[i], index: i }));
+            }}
+          >
             <p>
               {t('Check user profile with ID')} {trip.traveler.id}
             </p>
