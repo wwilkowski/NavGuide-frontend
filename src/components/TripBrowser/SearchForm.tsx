@@ -1,8 +1,9 @@
+import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import React, { useEffect, useState } from 'react';
+
 import { StoreType } from '../../store';
 import ListTrips from './ListTrips';
 import { ISearchFormProps, ListMode } from './types';

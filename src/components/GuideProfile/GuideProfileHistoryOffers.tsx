@@ -3,7 +3,6 @@ import styles from './GuideProfileHistoryOffers.module.scss';
 import { useTranslation } from 'react-i18next';
 import { IEndedSingleTripType } from '../../containers/TripBrowser/types';
 import { IGuideProfileHistoryOffersProps } from '../../containers/GuideProfile/types';
-
 import TripListElement from '../TripBrowser/TripListElement';
 
 interface ITripActivePhoto {
@@ -14,10 +13,9 @@ interface ITripActivePhoto {
 
 const GuideProfileHistoryOffers = (props: IGuideProfileHistoryOffersProps) => {
   const { t } = useTranslation();
-
   const { historyOffers } = props;
 
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [value, setValue] = useState<string>('');
   const [filteredTrips, setFilteredTrips] = useState<IEndedSingleTripType[]>([]);
 

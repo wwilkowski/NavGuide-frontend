@@ -38,7 +38,7 @@ const ReportPopup = (props: IReportPopupProps) => {
     if (errorMessage) {
       if (message.length >= 10) setErrorMessage(false);
     }
-  }, [message, errorMessage]);
+  }, [errorMessage, message]);
 
   const handleClick = () => {
     if (message.length < 10) setErrorMessage(true);

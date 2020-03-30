@@ -33,7 +33,8 @@ const App: React.FC = () => {
       fontFamily: 'Lato, sans-serif',
       h2: {
         fontSize: 24,
-        fontWeight: 600
+        fontWeight: 600,
+        margin: '1rem'
       },
       h3: {
         fontSize: 16,

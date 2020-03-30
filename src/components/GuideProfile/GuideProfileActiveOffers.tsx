@@ -3,7 +3,6 @@ import styles from './GuideProfileActiveOffers.module.scss';
 import { useTranslation } from 'react-i18next';
 import { ISingleTripType } from '../../containers/TripBrowser/types';
 import { IGuideProfileActiveOffersProps } from '../../containers/GuideProfile/types';
-
 import TripListElement from '../TripBrowser/TripListElement';
 
 interface ITripActivePhoto {

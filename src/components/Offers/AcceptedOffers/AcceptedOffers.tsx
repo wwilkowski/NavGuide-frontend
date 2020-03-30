@@ -5,9 +5,20 @@ import { useSelector } from 'react-redux';
 import { StoreType } from '../../../store';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Typography, makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles({
+  text: {
+    marginTop: '1rem'
+  },
+  list: {
+    marginBottom: '3rem'
+  }
+});
 
 const AcceptedOffers = (props: IAcceptedOffersProps) => {
   const { t } = useTranslation();
+  const classes = useStyles();
 
   const { agreements } = props;
 
@@ -39,32 +50,34 @@ const AcceptedOffers = (props: IAcceptedOffersProps) => {
   };
 
   return (
-    <div>
+    <ul className={classes.list}>
       {filteredAgreements.map((agr: IAgreementOffer) => (
-        <div key={agr.id}>
+        <li key={agr.id} style={{ padding: '1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '1rem 0' }}>
+          <Typography variant='subtitle2'>
+            <b>{t('Planned date')}:</b> {getDate(agr.plannedDate)}
+          </Typography>
           <TripListElement trip={agr.offer} />
           {user.role === 'GUIDE' && (
-            <Link to={`/users/${agr.traveler.id}`}>
-              {t('Check user profile with ID')} {agr.traveler.id}
+            <Link to={`/users/${agr.traveler.id}`} className={classes.text}>
+              <p>
+                {t('Check user profile with')} ID {agr.traveler.id}
+              </p>
             </Link>
           )}
           {user.role === 'TRAVELER' && (
-            <Link to={`/guides/${agr.offer.owner.guideId}`}>
-              {t('Check guide profile with ID')} {agr.offer.owner.guideId}
+            <Link to={`/guides/${agr.offer.owner.guideId}`} className={classes.text}>
+              {t('Check guide profile with')} ID {agr.offer.owner.guideId}
             </Link>
           )}
 
-          <p>
-            {t('Planned date')}: {getDate(agr.plannedDate)}
-          </p>
-          <p>
+          <Typography variant='subtitle2'>
             {t('Price')}: {agr.price}
-          </p>
-          <p>{t('Description')}:</p>
-          <p>{agr.description}</p>
-        </div>
+          </Typography>
+          <Typography variant='subtitle2'>{t('Description')}:</Typography>
+          <Typography variant='body1'>{agr.description}</Typography>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 };
 
