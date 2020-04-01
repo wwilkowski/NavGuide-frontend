@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { StoreType } from '../../../store';
 import history from '../../../history';
@@ -9,6 +9,7 @@ import { IAgreementOffer, IOffer } from '../types';
 import { useTranslation } from 'react-i18next';
 import { Typography, Button, makeStyles, Grid } from '@material-ui/core';
 import TripListElement from '../../../components/TripBrowser/TripListElement';
+import AgreementInfo from '../../../components/AgreementInfo';
 
 interface TParams {
   id: string;
@@ -40,6 +41,7 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
   const [purchaseId, setPurchaseId] = useState<number>(-1);
   const [touristPlannedDate, setTouristPlannedDate] = useState<Date>(new Date());
   const [currentAgreement, setCurrentAgreement] = useState<IAgreementOffer>();
+  const [isAgreementCreated, setAgreementCreated] = useState<boolean>(false);
 
   useEffect(() => {
     if (props.location.state) if (props.location.state.pathFrom !== undefined) setPathFrom(props.location.state.pathFrom);
@@ -58,7 +60,9 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
     setTravelerId(travelerId);
     setOfferId(offerId);
     setPurchaseId(purchaseId);
-  }, []);
+    ifAgreementCreated();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [agreements]);
 
   useEffect(() => {
     if (offerId !== -1) dispatcher(actions.getOfferByIdRequest(offerId.toString()));
@@ -93,12 +97,11 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
     };
 
     if (agreements) setCurrentAgreement(findAgreementById(parseInt(props.location.pathname.substr(11))));
-    console.log('agreement: ', agreements);
   }, [agreements, currentAgreement, props.location.pathname]);
 
   const handleCreateAgreementClick = (description: string, plannedDate: Date, price: number) => {
     const newAgreement = {
-      offerId: offerId,
+      purchaseId: purchaseId,
       description: description,
       userId: travelerId,
       plannedDate: plannedDate.toISOString(),
@@ -123,11 +126,21 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
       .substr(0, date.toString().indexOf('.'));
   };
 
-  // const ifAgreementCreated = () => {
-  //   agreements.forEach(agreement => {
-  //     if (agreement.id === )
-  //   })
-  // }
+  const ifAgreementCreated = () => {
+    if (!agreements || agreements.length === 0) {
+      setAgreementCreated(false);
+      return;
+    }
+    let dec = false;
+    agreements.forEach(agreement => {
+      if (agreement.purchase.id === purchaseId) {
+        setCurrentAgreement(agreement);
+        dec = true;
+        return;
+      }
+    });
+    setAgreementCreated(dec);
+  };
 
   return (
     <div>
@@ -172,8 +185,11 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
             {profile.id !== travelerId ? <p>Jestes guidem</p> : <p>Jestes turysta</p>}
             {currentOffer &&
               (profile.id !== travelerId ? (
-                agreements ? (
-                  <p>Utworzyles juz umowę</p>
+                isAgreementCreated ? (
+                  <>
+                    <p>Utworzyles juz umowę</p>
+                    <AgreementInfo agreement={agreements.find(agr => agr.purchase.id === purchaseId)} />
+                  </>
                 ) : (
                   <AgreementCreator
                     trip={currentOffer}
@@ -184,8 +200,11 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
                     createAgreementCancel={handleCancelAgreementClick}
                   />
                 )
-              ) : agreements ? (
-                <p>Umowa utworzona</p>
+              ) : isAgreementCreated ? (
+                <>
+                  <p>Umowa utworzona</p>
+                  <AgreementInfo agreement={agreements.find(agr => agr.purchase.id === purchaseId)} />
+                </>
               ) : (
                 <p>Oferta jest w trakcie tworzenia</p>
               ))}

@@ -206,7 +206,7 @@ function* createAgreement(action: types.ICreateAgreementAction) {
         Authorization: `Bearer ${getToken()}`
       },
       body: JSON.stringify({
-        purchaseRequestId: action.newAgreement.offerId,
+        purchaseRequestId: action.newAgreement.purchaseId,
         description: action.newAgreement.description,
         plannedDate: action.newAgreement.plannedDate,
         price: action.newAgreement.price
