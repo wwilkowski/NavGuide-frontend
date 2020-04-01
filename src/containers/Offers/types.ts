@@ -51,6 +51,7 @@ export interface IAgreementOffer {
   id: number;
   offer: typesTripBrowser.ISingleTripType;
   plannedDate: string;
+  purchase: IActiveOffer;
   price: number;
   status: string;
   traveler: ITraveler;

@@ -1,4 +1,4 @@
-import { ISingleTripType } from '../../../containers/TripBrowser/types';
+import { ISingleTripType } from '../../containers/TripBrowser/types';
 
 export interface ICreateAgreementFormValues {
   offerId: number;

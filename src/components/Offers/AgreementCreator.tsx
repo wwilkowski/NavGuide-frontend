@@ -5,10 +5,10 @@ import { TextField, Button } from '@material-ui/core';
 import DatePicker from 'react-datepicker';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
-import i18n from '../../../locales/i18n';
-import { showNotification } from '../../../helpers/notification';
-import TripListElement from '../../TripBrowser/TripListElement';
-import VerifyPopup from '../../../shared/VerifyPopup';
+import i18n from '../../locales/i18n';
+import { showNotification } from '../../helpers/notification';
+import TripListElement from '../TripBrowser/TripListElement';
+import VerifyPopup from '../../shared/VerifyPopup';
 
 const CreateAgreementSchema = Yup.object().shape({
   description: Yup.string()

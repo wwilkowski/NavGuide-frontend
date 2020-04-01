@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { StoreType } from '../../../store';
 import history from '../../../history';
-import CreateAgreementForm from '../../../components/Offers/CreateAgreementForm/CreateAgreementForm';
+import AgreementCreator from '../../../components/Offers/AgreementCreator';
 import * as actions from '../../Offers/actions';
 import { RouteComponentProps } from 'react-router-dom';
 import { IAgreementOffer, IOffer } from '../types';
 import { useTranslation } from 'react-i18next';
-import { Typography, Button, makeStyles } from '@material-ui/core';
+import { Typography, Button, makeStyles, Grid } from '@material-ui/core';
 import TripListElement from '../../../components/TripBrowser/TripListElement';
 
 interface TParams {
@@ -23,6 +23,7 @@ const useStyles = makeStyles({
 const Agreement = (props: RouteComponentProps<TParams>) => {
   const classes = useStyles();
 
+  const profile = useSelector((state: StoreType) => state.profile.user);
   const isLogged = useSelector((state: StoreType) => state.profile.isLoggedIn);
 
   const dispatcher = useDispatch();
@@ -92,7 +93,8 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
     };
 
     if (agreements) setCurrentAgreement(findAgreementById(parseInt(props.location.pathname.substr(11))));
-  }, [agreements, props.location.pathname]);
+    console.log('agreement: ', agreements);
+  }, [agreements, currentAgreement, props.location.pathname]);
 
   const handleCreateAgreementClick = (description: string, plannedDate: Date, price: number) => {
     const newAgreement = {
@@ -121,54 +123,77 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
       .substr(0, date.toString().indexOf('.'));
   };
 
+  // const ifAgreementCreated = () => {
+  //   agreements.forEach(agreement => {
+  //     if (agreement.id === )
+  //   })
+  // }
+
   return (
     <div>
-      {isLogged && pathFrom === '/profile' && (
+      {isLogged && (
         <div>
-          <Typography variant='h2'>{t('Decide what to do with this agreement')}</Typography>
           {currentAgreement && (
-            <div style={{ padding: '1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '1rem 0' }}>
-              <Typography variant='subtitle2'>
-                {t('Planned Date')}: {getDate(currentAgreement.plannedDate)}
-              </Typography>
-              <TripListElement trip={currentAgreement.offer} />
-              <Typography variant='h4' className={classes.text}>
-                {t('Price')}: {currentAgreement.price}zł {t(currentAgreement.offer.priceType)}
-              </Typography>
-              <Typography variant='subtitle2' className={classes.text}>
-                {t('Description')}
-              </Typography>
-              <Typography variant='body1' className={classes.text}>
-                {currentAgreement.description}
-              </Typography>
-              <div className={classes.text}>
-                <Button variant='contained' color='primary' onClick={() => handleSettleAgreement(currentAgreement.id, 'ACCEPT')}>
-                  {t('Accept')}
-                </Button>
-                <Button variant='contained' color='primary' onClick={() => handleSettleAgreement(currentAgreement.id, 'REJECT')}>
-                  {t('Reject')}
-                </Button>
+            <div>
+              <Typography variant='h2'>{t('Decide what to do with this agreement')}</Typography>
+              <div style={{ padding: '1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '1rem 0' }}>
+                <Typography variant='subtitle2'>
+                  {t('Planned Date')}: {getDate(currentAgreement.plannedDate)}
+                </Typography>
+                <TripListElement trip={currentAgreement.offer} />
+                <Typography variant='h4' className={classes.text}>
+                  {t('Price')}: {currentAgreement.price}zł {t(currentAgreement.offer.priceType)}
+                </Typography>
+                <Typography variant='subtitle2' className={classes.text}>
+                  {t('Description')}
+                </Typography>
+                <Typography variant='body1' className={classes.text}>
+                  {currentAgreement.description}
+                </Typography>
+                <div className={classes.text}>
+                  <Button variant='contained' color='primary' onClick={() => handleSettleAgreement(currentAgreement.id, 'ACCEPT')}>
+                    {t('Accept')}
+                  </Button>
+                  <Button variant='contained' color='primary' onClick={() => handleSettleAgreement(currentAgreement.id, 'REJECT')}>
+                    {t('Reject')}
+                  </Button>
+                </div>
               </div>
             </div>
           )}
         </div>
       )}
-      {isLogged && pathFrom === '/profile/guide' && (
-        <div>
-          <h3>
-            <b>{t('Agreement create panel')}</b>
-          </h3>
-          {currentOffer && (
-            <CreateAgreementForm
-              trip={currentOffer}
-              purchasePlannedDate={touristPlannedDate}
-              propOfferId={offerId}
-              propUserId={travelerId}
-              createAgreementClick={handleCreateAgreementClick}
-              createAgreementCancel={handleCancelAgreementClick}
-            />
-          )}
-        </div>
+      {isLogged && (
+        <Grid container>
+          <Grid item xs={6}>
+            <h3>
+              <b>{t('Agreement create panel')}</b>
+            </h3>
+            {profile.id !== travelerId ? <p>Jestes guidem</p> : <p>Jestes turysta</p>}
+            {currentOffer &&
+              (profile.id !== travelerId ? (
+                agreements ? (
+                  <p>Utworzyles juz umowę</p>
+                ) : (
+                  <AgreementCreator
+                    trip={currentOffer}
+                    purchasePlannedDate={touristPlannedDate}
+                    propOfferId={offerId}
+                    propUserId={travelerId}
+                    createAgreementClick={handleCreateAgreementClick}
+                    createAgreementCancel={handleCancelAgreementClick}
+                  />
+                )
+              ) : agreements ? (
+                <p>Umowa utworzona</p>
+              ) : (
+                <p>Oferta jest w trakcie tworzenia</p>
+              ))}
+          </Grid>
+          <Grid item xs={6}>
+            czat
+          </Grid>
+        </Grid>
       )}
     </div>
   );
