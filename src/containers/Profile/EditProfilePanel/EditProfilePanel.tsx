@@ -52,16 +52,20 @@ const EditProfilePanel = () => {
 
   const user = useSelector((state: StoreType) => state.profile.user);
 
-  // const approaches = useSelector((state: StoreType) => state.currentOfferReducer.approaches);
   const verifiedOffersTraveler = useSelector((state: StoreType) => state.currentOfferReducer.approaches);
   const historyOffersTraveler = useSelector((state: StoreType) => state.profile.historyOffers);
   const approaches = useSelector((state: StoreType) => state.currentOfferReducer.approaches);
   const activeOffers = useSelector((state: StoreType) => state.currentOfferReducer.activeOffers);
   const agreements = useSelector((state: StoreType) => state.currentOfferReducer.agreements);
+  const feedbacks = useSelector((state: StoreType) => state.profile.feedbacks);
 
   const onAgreementButtonClick = (agreementId: number, status: string) => {
     dispatcher(settleAgreementRequest(agreementId, status));
   };
+
+  useEffect(() => {
+    dispatcher(actions.getOwnFeedbacksRequest());
+  }, [dispatcher]);
 
   useEffect(() => {
     dispatcher(actions.getProfileHistoryRequest(-1));
@@ -122,7 +126,7 @@ const EditProfilePanel = () => {
           <Typography variant='h2' className={classes.text}>
             Historia wycieczek
           </Typography>
-          <HistoryOffers trips={historyOffersTraveler} />
+          <HistoryOffers userRole='traveler' trips={historyOffersTraveler}  feedbacks={feedbacks}/>
         </Grid>
       </Grid>
 

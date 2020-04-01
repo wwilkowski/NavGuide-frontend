@@ -6,6 +6,7 @@ import i18n from '../../locales/i18n';
 import * as actions from './actions';
 import * as constants from './constants';
 import * as types from './types';
+import { getOwnFeedbacksRequest } from '../../containers/Profile/actions';
 
 const offerEndpoint = 'https://235.ip-51-91-9.eu/offers';
 const currentOfferEndpoint = (id: number) => `https://235.ip-51-91-9.eu/offers/${id}`;
@@ -205,9 +206,8 @@ function* createAgreement(action: types.ICreateAgreementAction) {
         Authorization: `Bearer ${getToken()}`
       },
       body: JSON.stringify({
-        offerId: action.newAgreement.offerId,
+        purchaseRequestId: action.newAgreement.offerId,
         description: action.newAgreement.description,
-        userId: action.newAgreement.userId,
         plannedDate: action.newAgreement.plannedDate,
         price: action.newAgreement.price
       })
@@ -328,6 +328,7 @@ function* addFeedback(action: types.IAddFeedbackAction) {
 
     if (response.status >= 200 && response.status <= 300) {
       showNotification('success', i18n.t('Thank you'), i18n.t('You have rated a trip'));
+      yield put(getOwnFeedbacksRequest());
     } else if (response.status === 401) {
       throw new Error('You are not looged in!');
     } else {

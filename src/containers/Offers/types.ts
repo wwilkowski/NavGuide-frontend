@@ -11,7 +11,10 @@ import {
   CREATE_AGREEMENT_REQUESTED,
   SETTLE_AGREEMENT_REQUESTED,
   REPORT_OFFER_REQUESTED,
-  ADD_FEEDBACK_REQUESTED
+  ADD_FEEDBACK_REQUESTED,
+  GET_OFFER_FEEDBACKS_REQUESTED,
+  GET_OFFER_FEEDBACKS_SUCCESSED,
+  GET_OFFER_FEEDBACKS_FAILED
 } from './constants';
 
 import * as typesTripBrowser from '../../containers/TripBrowser/types';
@@ -59,6 +62,7 @@ export interface IAgreementOffer {
 
 export interface ICurrentOffer {
   offer: typesTripBrowser.ISingleTripType;
+  feedbacks: IFeedback[];
   activeOffers: IActiveOffer[];
   approaches: IActiveOffer[];
   agreements: IAgreementOffer[];
@@ -76,6 +80,8 @@ export interface IProfileVerifiedOffersProps {
 
 export interface IProfileHistoryOffersProps {
   trips: typesTripBrowser.IEndedSingleTripType[];
+  feedbacks: IFeedback[];
+  userRole: string;
 }
 
 export interface IAgreementsProps {
@@ -199,6 +205,21 @@ export interface IAddFeedbackAction {
   feedback: IFeedback;
 }
 
+export interface IGetOfferFeedbacksAction {
+  type: typeof GET_OFFER_FEEDBACKS_REQUESTED;
+  id: number;
+}
+
+export interface IGetOfferFeedbacksSuccessedAction {
+  type: typeof GET_OFFER_FEEDBACKS_SUCCESSED;
+  feedbacks: IFeedback[];
+}
+
+export interface IGetOfferFeedbacksFailedAction {
+  type: typeof GET_OFFER_FEEDBACKS_FAILED;
+  message: string;
+}
+
 export interface IGetOfferByIdSuccessed {
   type: typeof GET_OFFER_BY_ID_SUCCESSED;
   offer: ISingleTripType;
@@ -239,4 +260,6 @@ export type IOffersActionType =
   | ISettleActiveOfferSuccessed
   | ISettleActiveOfferFailed
   | IGetOwnAgreementsSuccessed
-  | IGetOwnAgreementsFailed;
+  | IGetOwnAgreementsFailed
+  | IGetOfferFeedbacksSuccessedAction
+  | IGetOfferFeedbacksFailedAction;

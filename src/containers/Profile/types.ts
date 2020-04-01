@@ -5,8 +5,12 @@ import {
   GET_PROFILE_HISTORY_OFFERS_SUCCESSED,
   GET_PROFILE_HISTORY_OFFERS_REQUESTED,
   LOG_IN_GOOGLE_SUCCESSED,
-  LOG_OUT_GOOGLE_SUCCESSED
+  LOG_OUT_GOOGLE_SUCCESSED,
+  GET_OWN_FEEDBACKS_REQUESTED,
+  GET_OWN_FEEDBACKS_SUCCESSED,
+  GET_OWN_FEEDBACKS_FAILED
 } from './constants';
+import { IFeedback } from '../Offers/types';
 
 export interface IEditProfileAction {
   type: string;
@@ -25,6 +29,7 @@ export interface ILogOutSuccessedAction {
 export interface IProfileData {
   user: IUserData;
   isLoggedIn: boolean;
+  feedbacks: IFeedback[];
   historyOffers: IEndedSingleTripType[];
 }
 
@@ -50,6 +55,20 @@ export interface IGetProfileHistorySuccessedAction {
 
 export interface IGetProfileHistoryFailedAction {
   type: typeof GET_PROFILE_HISTORY_OFFERS_FAILED;
+  message: string;
+}
+
+export interface IGetOwnFeedbacksAction {
+  type: typeof GET_OWN_FEEDBACKS_REQUESTED;
+}
+
+export interface IGetOwnFeedbacksSuccessedAction {
+  type: typeof GET_OWN_FEEDBACKS_SUCCESSED;
+  feedbacks: IFeedback[];
+}
+
+export interface IGetOwnFeedbacksFailedAction {
+  type: typeof GET_OWN_FEEDBACKS_FAILED;
   message: string;
 }
 
