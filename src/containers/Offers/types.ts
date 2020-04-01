@@ -141,7 +141,7 @@ export interface ITag {
   name: string;
 }
 export interface IAgreement {
-  offerId: number;
+  purchaseId: number;
   description: string;
   userId: number;
   plannedDate: string;
