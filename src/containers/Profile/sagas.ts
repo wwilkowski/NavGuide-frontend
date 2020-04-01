@@ -244,6 +244,30 @@ function* getProfileHistory(action: types.IGetProfileHistoryOffersRequest) {
   }
 }
 
+function* getOwnFeedbacks() {
+  try {
+    const endpoint = `https://235.ip-51-91-9.eu/profile/feedbacks`;
+    const response = yield call(fetch, endpoint, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getToken()}`
+      }
+    });
+    const feedbacks = yield response.json();
+
+    if (response.status >= 200 && response.status <= 300) {
+      yield put(actions.getOwnFeedbacksSuccessed(feedbacks));
+    } else if (response.status === 401) {
+      throw new Error('You are not logged in');
+    } else {
+      throw new Error('Something goes wrong');
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 function* mainSaga() {
   yield takeLatest(constants.LOG_IN_GOOGLE_REQUESTED, logInGoogle);
   yield takeLatest(constants.LOG_OUT_GOOGLE_REQUESTED, logOutGoogle);
@@ -251,6 +275,7 @@ function* mainSaga() {
   yield takeLatest(constants.GET_PROFILE_REQUESTED, getProfile);
   yield takeLatest(constants.SEND_AVATAR_REQUESTED, sendAvatar);
   yield takeLatest(constants.GET_PROFILE_HISTORY_OFFERS_REQUESTED, getProfileHistory);
+  yield takeLatest(constants.GET_OWN_FEEDBACKS_REQUESTED, getOwnFeedbacks);
 }
 
 export default mainSaga;

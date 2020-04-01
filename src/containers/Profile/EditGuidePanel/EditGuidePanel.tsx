@@ -43,6 +43,7 @@ const EditGuidePanel = () => {
   const activeOffers = useSelector((state: StoreType) => state.currentOfferReducer.activeOffers);
   const agreements = useSelector((state: StoreType) => state.currentOfferReducer.agreements);
   const historyOffers = useSelector((state: StoreType) => state.guideProfile.historyOffers);
+  const feedbacks = useSelector((state: StoreType) => state.profile.feedbacks);
 
   useEffect(() => {
     dispatcher(actions.getActiveOffersRequest());
@@ -101,7 +102,7 @@ const EditGuidePanel = () => {
         <Typography variant='h2' className={classes.text}>
           Historia wycieczek
         </Typography>
-        <HistoryOffers trips={historyOffers} />
+        <HistoryOffers userRole='guide' trips={historyOffers} feedbacks={feedbacks} />
       </Grid>
       <BottomNavigation
         value={value}
