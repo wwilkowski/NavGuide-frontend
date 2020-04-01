@@ -2,15 +2,18 @@ import React, { useEffect, useState } from 'react';
 import TripListElement from '../../TripBrowser/TripListElement';
 import { IOffer, IProfileOffersProps } from '../../../containers/Offers/types';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+import { Typography, makeStyles } from '@material-ui/core';
 
-const OrderedOffers = ({ trips }: IProfileOffersProps) => {
+const useStyles = makeStyles({
+  text: {
+    marginTop: '1rem'
+  }
+});
+
+const ActiveOffers = ({ trips }: IProfileOffersProps) => {
   const { t } = useTranslation();
-
-  const [filteredTrips, setFilteredTrips] = useState<IOffer[]>([]);
-
-  useEffect(() => {
-    if (trips) setFilteredTrips(trips.filter((trip: IOffer) => trip.status === 'PENDING'));
-  }, [trips]);
+  const classes = useStyles();
 
   const getDate = (date: Date) => {
     return date
@@ -19,22 +22,21 @@ const OrderedOffers = ({ trips }: IProfileOffersProps) => {
       .substr(0, date.toString().indexOf('.'));
   };
 
-  return filteredTrips && filteredTrips.length ? (
+  return trips && trips.length ? (
     <ul>
-      {filteredTrips.map((trip: IOffer, i: number) => (
-        <li key={i}>
-          <p>
+      {trips.map((trip: IOffer, i: number) => (
+        <li key={i} style={{ padding: '1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '1rem 0' }}>
+          <Typography variant='subtitle2'>
             <b>{t('Planned date')}:</b> {getDate(trip.plannedDate)}
-          </p>
-          <TripListElement trip={trip.offer} />
-          <p>
-            <b>{t('Message')}:</b>
-          </p>
-          <p>{trip.message}</p>
+          </Typography>
+          <TripListElement trip={trip.offer} hidePhoto={true} />
+          <Link to={`/agreement/create/${trip.traveler.id}/${trip.offer.id}/${trip.id}`} className={classes.text}>
+            Szczegóły oferty
+          </Link>
         </li>
       ))}
     </ul>
   ) : null;
 };
 
-export default OrderedOffers;
+export default ActiveOffers;

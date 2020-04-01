@@ -12,6 +12,24 @@ import styles from './styles.module.scss';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import VerifyPopup from '../../../shared/VerifyPopup';
+import { Typography, makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles({
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: '1rem'
+  },
+  text: {
+    textAlign: 'center',
+    margin: '0.5rem 0'
+  },
+  textarea: {
+    width: '100%',
+    marginBottom: '0.5rem'
+  }
+});
 
 type TParams = { id: string };
 
@@ -19,6 +37,7 @@ interface Props extends RouteComponentProps<TParams> {}
 
 const OfferSale = (props: Props) => {
   const { t } = useTranslation();
+  const classes = useStyles();
 
   const dispatcher = useDispatch();
 
@@ -63,8 +82,13 @@ const OfferSale = (props: Props) => {
       >
         <TripListElement trip={currentOffer} />
       </div>
-      <form className={styles.form}>
-        <p>Chcesz wziąć udział w tej wycieczce? Napisz do przewodnika już teraz!</p>
+      <form className={classes.form}>
+        <Typography variant='subtitle2' className={classes.text}>
+          Chcesz wziąć udział w tej wycieczce? Napisz do przewodnika już teraz!
+        </Typography>
+        <Typography variant='h4' className={classes.text}>
+          Zaproponuj datę i godzinę wycieczki
+        </Typography>
         <DatePicker
           dateFormat='yyyy/MM/dd hh:mm'
           timeFormat='HH:mm'
@@ -75,6 +99,9 @@ const OfferSale = (props: Props) => {
           selected={date}
           onChange={date => setDate(date)}
         />
+        <Typography variant='h4' className={classes.text}>
+          Wyślij wiadomość do przewodnika
+        </Typography>
         <TextField
           style={{ marginTop: '1rem' }}
           id='outlined-multiline-static'
@@ -84,6 +111,7 @@ const OfferSale = (props: Props) => {
           value={message}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setMessage(e.target.value)}
           variant='outlined'
+          className={classes.textarea}
         />
         {errorMessage !== '' ? <div>{errorMessage}</div> : null}
         <Button

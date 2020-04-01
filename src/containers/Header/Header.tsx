@@ -11,10 +11,30 @@ import { getInterestsRequest, signUpGoogleRequest } from '../Registration/action
 import AppLogo from '../../components/AppLogo/AppLogo';
 import MenuIcon from '@material-ui/icons/Menu';
 import styles from './Header.module.scss';
-import ProfileIcon from '../../assets/icons/002-user.png';
-import CreateOfferIcon from '../../assets/icons/003-pen.png';
-import AdminPanelIcon from '../../assets/icons/004-settings.png';
-import BecomeGuideIcon from '../../assets/icons/005-instruction.png';
+import { Avatar, Typography } from '@material-ui/core';
+
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import { withStyles } from '@material-ui/core/styles';
+import FaceIcon from '@material-ui/icons/Face';
+import EditIcon from '@material-ui/icons/Edit';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
+import AddIcon from '@material-ui/icons/Add';
+import ListAltIcon from '@material-ui/icons/ListAlt';
+import AccessibilityNewIcon from '@material-ui/icons/AccessibilityNew';
+import { getToken } from '../../helpers/tokenCookie';
+
+const StyledMenuItem = withStyles(theme => ({
+  root: {
+    '&:focus': {
+      backgroundColor: theme.palette.primary.main,
+      '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+        color: theme.palette.common.white
+      }
+    }
+  }
+}))(MenuItem);
 
 const Header: React.FC = () => {
   const dispatcher = useDispatch();
@@ -33,8 +53,9 @@ const Header: React.FC = () => {
     dispatcher(logOutGoogleRequest());
   };
 
+  console.log(getToken());
+
   const [openMenu, setOpenMenu] = useState(false);
-  // const [openProfileMenu, setOpenProfileMenu] = useState(false);
 
   return (
     <header className={styles.header}>
@@ -63,49 +84,73 @@ const Header: React.FC = () => {
           <ul className={styles.userMenu}>
             <div className={styles.userCase}>
               <Link to='/' className={styles.user}>
-                <img src={profile.user.avatar} alt='avatar' className={styles.avatar} />
-                <p className={styles.userName}>
+                <Avatar src={profile.user.avatar} alt='user avatar' />
+                <Typography className={styles.userName}>
                   {profile.user.firstName} {profile.user.lastName}
-                </p>
+                </Typography>
               </Link>
               <LogoutButton onClick={logout} />
             </div>
             <ul className={styles.menuOptions}>
               <li className={styles.menuOption}>
                 <Link to='/profile' className={styles.menuLink}>
-                  <img src={ProfileIcon} alt='' className={styles.menuLinkIcon} />
-                  <p className={styles.menuLinkText}>{t('Profile')}</p>
+                  <StyledMenuItem>
+                    <ListItemIcon>
+                      <FaceIcon fontSize='small' />
+                    </ListItemIcon>
+                    <ListItemText primary={t('Profile')} />
+                  </StyledMenuItem>
                 </Link>
               </li>
               <li className={styles.menuOption}>
                 <Link to='/profile/edit' className={styles.menuLink}>
-                  <img src={ProfileIcon} alt='' className={styles.menuLinkIcon} />
-                  <p className={styles.menuLinkText}>{t('Edit profile')}</p>
+                  <StyledMenuItem>
+                    <ListItemIcon>
+                      <EditIcon fontSize='small' />
+                    </ListItemIcon>
+                    <ListItemText primary={t('Edit profile')} />
+                  </StyledMenuItem>
                 </Link>
               </li>
               {profile.user.role === 'ADMIN' ? (
                 <li className={styles.menuOption}>
                   <Link to='/admin' className={styles.menuLink}>
-                    <img src={AdminPanelIcon} alt='' className={styles.menuLinkIcon} />
-                    <p className={styles.menuLinkText}>{t('Admin panel')}</p>
+                    <StyledMenuItem>
+                      <ListItemIcon>
+                        <SupervisorAccountIcon fontSize='small' />
+                      </ListItemIcon>
+                      <ListItemText primary={t('Admin panel')} />
+                    </StyledMenuItem>
                   </Link>
                 </li>
               ) : profile.user.role === 'GUIDE' ? (
                 <li className={styles.menuOption}>
                   <Link to='/offers/create' className={styles.menuLink}>
-                    <img src={CreateOfferIcon} alt='' className={styles.menuLinkIcon} />
-                    <p className={styles.menuLinkText}>{t('Create new offer')}</p>
+                    <StyledMenuItem>
+                      <ListItemIcon>
+                        <AddIcon fontSize='small' />
+                      </ListItemIcon>
+                      <ListItemText primary={t('Create new offer')} />
+                    </StyledMenuItem>
                   </Link>
                   <Link to='/profile/guide' className={styles.menuLink}>
-                    <img src={CreateOfferIcon} alt='' className={styles.menuLinkIcon} />
-                    <p className={styles.menuLinkText}>{t('Manage your offers')}</p>
+                    <StyledMenuItem>
+                      <ListItemIcon>
+                        <ListAltIcon fontSize='small' />
+                      </ListItemIcon>
+                      <ListItemText primary={t('Manage your offers')} />
+                    </StyledMenuItem>
                   </Link>
                 </li>
               ) : (
                 <li className={styles.menuOption}>
                   <Link to='/register/guide' className={styles.menuLink}>
-                    <img src={BecomeGuideIcon} alt='' className={styles.menuLinkIcon} />
-                    <p className={styles.menuLinkText}>{t('Become a guide')}</p>
+                    <StyledMenuItem>
+                      <ListItemIcon>
+                        <AccessibilityNewIcon fontSize='small' />
+                      </ListItemIcon>
+                      <ListItemText primary={t('Become a guide')} />
+                    </StyledMenuItem>
                   </Link>
                 </li>
               )}
