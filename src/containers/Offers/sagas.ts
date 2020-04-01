@@ -319,7 +319,6 @@ function* addFeedback(action: types.IAddFeedbackAction) {
         Authorization: `Bearer ${getToken()}`
       },
       body: JSON.stringify({
-        offerId: action.feedback.offerId,
         scoreOffer: action.feedback.scoreOffer,
         scoreGuide: action.feedback.scoreGuide,
         comment: action.feedback.comment

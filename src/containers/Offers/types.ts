@@ -149,10 +149,14 @@ export interface IAgreement {
 }
 
 export interface IFeedback {
-  offerId: number;
   scoreOffer: number;
   scoreGuide: number;
   comment: string;
+}
+
+export interface IGotFeedback extends IFeedback {
+  date: Date;
+  offer: ISingleTripType;
 }
 
 export interface ICreateOfferAction {

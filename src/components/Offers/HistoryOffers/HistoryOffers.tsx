@@ -62,7 +62,6 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
 
   const handleFormSubmit = (arg: IFeedback) => {
     const feedback: IFeedback = {
-      offerId: offerId ? offerId : -1,
       scoreOffer: arg.scoreOffer,
       scoreGuide: arg.scoreGuide,
       comment: arg.comment
@@ -112,7 +111,7 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
                       <Typography component='p'>Oferta oceniona. Dziękujemy!</Typography>
                     </Paper>
                   </Grid>
-                  <TravelerOfferRate />
+                  <TravelerOfferRate scoreGuide={3} scoreOffer={3} description={'test'} />
                 </>
               )}
               {userRole === 'guide' && (
