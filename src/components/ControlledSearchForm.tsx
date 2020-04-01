@@ -48,6 +48,9 @@ const useStyles = makeStyles((theme: Theme) =>
       position: 'absolute',
       left: 0,
       top: 0
+    },
+    datePicker: {
+      padding: '0.1rem 0.2rem'
     }
   })
 );
@@ -190,6 +193,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                   minDate={new Date()}
                   selected={values.begin}
                   onChange={date => setFieldValue('begin', date)}
+                  className={classes.datePicker}
                 />
               </Box>
               {errors.begin && touched.begin && <div>{t(`Incorrect date`)}</div>}
@@ -202,6 +206,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                   minDate={values.begin}
                   selected={values.end}
                   onChange={date => setFieldValue('end', date)}
+                  className={classes.datePicker}
                 />
               </Box>
               {errors.end && touched.end && <div>{t(`Incorrect date`)}</div>}
