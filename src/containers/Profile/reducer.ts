@@ -46,6 +46,12 @@ const ProfileReducer = (state = initialState, action: any) => {
         historyOffers: action.trips
       };
 
+    case constrants.GET_OWN_FEEDBACKS_SUCCESSED:
+      return {
+        ...state,
+        feedbacks: action.feedbacks
+      };
+
     default:
       return state;
   }

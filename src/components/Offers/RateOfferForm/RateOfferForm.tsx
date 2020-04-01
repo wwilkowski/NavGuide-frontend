@@ -121,7 +121,12 @@ const RateOfferForm = withFormik<IRateOfferFormProps, IRateOfferFormValues>({
   validationSchema: RateOfferSchema,
   handleSubmit: (values, { props }) => {
     if (values.offerId !== -1)
-      props.onSubmit({ offerId: values.offerId, scoreOffer: values.scoreOffer, scoreGuide: values.scoreGuide, comment: values.comment });
+      props.onSubmit({
+        offerId: values.offerId,
+        scoreOffer: values.scoreOffer,
+        scoreGuide: values.scoreGuide,
+        comment: values.comment
+      });
     else showNotification('danger', 'Error', 'Try again later');
   }
 })(InnerForm);

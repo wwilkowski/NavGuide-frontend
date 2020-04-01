@@ -51,7 +51,6 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
   }, [trips]);
 
   useEffect(() => {
-    console.log(currentMessage);
     if (currentMessage.length >= 10) setErrorMessage('');
   }, [currentMessage]);
 
@@ -76,7 +75,7 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
             variant='contained'
             color='primary'
             onClick={() =>
-              history.push('/agreement/create', { pathFrom: '/profile/guide', offerId: trip.offer.id, travelerId: trip.traveler.id })
+              history.push('/agreement/create', { pathFrom: '/profile/guide', offerId: trip.id, travelerId: trip.traveler.id })
             }
           >
             {t('Create agreement')}
