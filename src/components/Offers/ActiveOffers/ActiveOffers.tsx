@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import TripListElement from '../../TripBrowser/TripListElement';
 import { IOffer, IProfileOffersProps } from '../../../containers/Offers/types';
 import { useTranslation } from 'react-i18next';

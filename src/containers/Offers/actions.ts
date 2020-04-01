@@ -126,3 +126,20 @@ export const addFeedbackRequest = (feedback: types.IFeedback) => ({
   type: constants.ADD_FEEDBACK_REQUESTED,
   feedback
 });
+
+// get offer feedback by ID
+
+export const getOfferFeedbacksRequest = (id: number) => ({
+  type: constants.GET_OFFER_FEEDBACKS_REQUESTED,
+  id
+});
+
+export const getOfferFeedbacksSussecced = (feedbacks: types.IGotFeedback[]) => ({
+  type: constants.GET_OFFER_FEEDBACKS_SUCCESSED,
+  feedbacks
+});
+
+export const getOfferFeedbacksFailed = (message: string) => ({
+  type: constants.GET_OFFER_FEEDBACKS_FAILED,
+  message
+});

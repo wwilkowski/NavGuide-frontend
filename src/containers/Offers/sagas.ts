@@ -337,6 +337,27 @@ function* addFeedback(action: types.IAddFeedbackAction) {
   } catch (error) {}
 }
 
+function* getOfferFeedbacks(action: types.IGetOfferFeedbacksAction) {
+  try {
+    const endpoint = `https://235.ip-51-91-9.eu/offers/${action.id}/feedback`;
+    const response = yield call(fetch, endpoint, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${getToken()}`
+      }
+    });
+    const feedbacks = yield response.json();
+    console.log(feedbacks);
+    if (response.status >= 200 && response.status <= 300) {
+      yield put(actions.getOfferFeedbacksSussecced(feedbacks));
+    } else {
+      throw new Error('Something goes wrong');
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 function* mainSaga() {
   yield takeLatest(constants.CREATE_OFFER_REQUESTED, createOffer);
   yield takeLatest(constants.GET_OFFER_BY_ID_REQUESTED, getOfferById);
@@ -349,6 +370,7 @@ function* mainSaga() {
   yield takeLatest(constants.SETTLE_AGREEMENT_REQUESTED, settleAgreement);
   yield takeLatest(constants.REPORT_OFFER_REQUESTED, reportOffer);
   yield takeLatest(constants.ADD_FEEDBACK_REQUESTED, addFeedback);
+  yield takeLatest(constants.GET_OFFER_FEEDBACKS_REQUESTED, getOfferFeedbacks);
 }
 
 export default mainSaga;

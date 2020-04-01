@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, makeStyles, Backdrop, Fade } from '@material-ui/core';
-import { IOfferRatesProps } from './types';
+import { IRateOfferPopupProps } from './types';
+import RateOfferForm from '../RateOfferForm/RateOfferForm';
 
 const useStyles = makeStyles(theme => ({
   popupModal: {
@@ -17,9 +18,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const OfferRatesPopup = (props: IOfferRatesProps) => {
+const RateOfferPopup = (props: IRateOfferPopupProps) => {
   const classes = useStyles();
-  const { popupVisible, changePopupVisible } = props;
+
+  const { popupVisible, changePopupVisible, onSubmit, offerId } = props;
+
   return (
     <Modal
       aria-labelledby='transition-modal-title'
@@ -34,10 +37,12 @@ const OfferRatesPopup = (props: IOfferRatesProps) => {
       }}
     >
       <Fade in={popupVisible}>
-        <div className={classes.popupPaper}></div>
+        <div className={classes.popupPaper}>
+          <RateOfferForm offerId={offerId ? offerId : -1} onSubmit={onSubmit} />
+        </div>
       </Fade>
     </Modal>
   );
 };
 
-export default OfferRatesPopup;
+export default RateOfferPopup;
