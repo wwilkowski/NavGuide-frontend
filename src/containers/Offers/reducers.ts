@@ -35,6 +35,12 @@ const currentOfferReducer = (state = initialState, action: types.IOffersActionTy
     case constants.SETTLE_ACTIVE_OFFER_FAILED:
       return state;
 
+    case constants.GET_OFFER_FEEDBACKS_SUCCESSED:
+      return {
+        ...state,
+        feedbacks: action.feedbacks
+      };
+
     default:
       return state;
   }

@@ -1,22 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { IProfileHistoryOffersProps, IFeedback } from '../../../containers/Offers/types';
+import { IProfileHistoryOffersProps, IFeedback, IGotFeedback } from '../../../containers/Offers/types';
 import { IEndedSingleTripType } from '../../../containers/TripBrowser/types';
 import TripListElement from '../../TripBrowser/TripListElement';
-import { useTranslation } from 'react-i18next';
 import * as actions from '../../../containers/Offers/actions';
 import { useDispatch } from 'react-redux';
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
 import { makeStyles, Typography, Button } from '@material-ui/core';
-import RateOfferForm from '../RateOfferForm/RateOfferForm';
 import AddIcon from '@material-ui/icons/Add';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import styles from './HistoryOffers.module.scss';
 import i18n from '../../../locales/i18n';
-import OfferRatesPopup from '../../OfferRatesPopup/OfferRatesPopup';
+import RatesOfferPopup from './RatesOfferPopup/RatesOfferPopup';
 import TravelerOfferRate from './TravelerOfferRate';
+import RateOfferPopup from './RateOfferPopup/RateOfferPopup';
 
 const useStyles = makeStyles(theme => ({
   rateRoot: {
@@ -31,24 +27,11 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(1),
     textAlign: 'center',
     color: theme.palette.text.primary
-  },
-  popupModal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  popupPaper: {
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(1),
-    width: '30%',
-    height: '47%'
   }
 }));
 
 const HistoryOffers = (props: IProfileHistoryOffersProps) => {
   const { trips, feedbacks, userRole } = props;
-  const { t } = useTranslation();
   const dispatcher = useDispatch();
   const classes = useStyles();
 
@@ -56,12 +39,17 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
   const [popupVisible, setPopupVisible] = useState<boolean>(false);
   const [offerId, setOfferId] = useState<number>();
 
+  /*useEffect(() => {
+    dispatcher(actions.getOfferFeedbacksRequest(3));
+  }, []);*/
+
   useEffect(() => {
     console.log(feedbacks);
   }, [feedbacks]);
 
   const handleFormSubmit = (arg: IFeedback) => {
     const feedback: IFeedback = {
+      offerId: arg.offerId,
       scoreOffer: arg.scoreOffer,
       scoreGuide: arg.scoreGuide,
       comment: arg.comment
@@ -71,8 +59,9 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
     setPopupVisible(false);
   };
 
-  const isRated = () => {
-    return true;
+  const isRated = (id: number) => {
+    if (feedbacks.find((feedback: IGotFeedback) => feedback.offer.id === id)) return true;
+    return false;
   };
 
   return (
@@ -82,7 +71,7 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
           <div key={trip.offer.id}>
             <TripListElement trip={trip.offer} />
             <Grid container justify='center'>
-              {userRole === 'traveler' && !isRated() && (
+              {userRole === 'traveler' && !isRated(trip.offer.id) && (
                 <>
                   <Grid item xs={10} sm={7}>
                     <Paper elevation={0} className={classes.ratePaper}>
@@ -102,23 +91,35 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
                       />
                     </Paper>
                   </Grid>
+                  <RateOfferPopup
+                    offerId={offerId ? offerId : -1}
+                    popupVisible={popupVisible}
+                    changePopupVisible={() => setPopupVisible(!popupVisible)}
+                    onSubmit={handleFormSubmit}
+                  />
                 </>
               )}
-              {userRole === 'traveler' && isRated() && (
+              {userRole === 'traveler' && isRated(trip.offer.id) && (
                 <>
                   <Grid item sm={12} xs={12}>
                     <Paper elevation={0} className={classes.subtitlePaper}>
                       <Typography component='p'>Oferta oceniona. Dziękujemy!</Typography>
                     </Paper>
                   </Grid>
-                  <TravelerOfferRate scoreGuide={3} scoreOffer={3} description={'test'} />
+                  <TravelerOfferRate feedback={feedbacks.find((feedback: IGotFeedback) => trip.offer.id === feedback.offer.id)} />
                 </>
               )}
               {userRole === 'guide' && (
                 <Grid item xs={5} sm={5}>
-                  <OfferRatesPopup popupVisible={offerRatesVisible} changePopupVisible={() => setOfferRatesVisible(false)} />
+                  <RatesOfferPopup
+                    offerId={trip.offer.id}
+                    popupVisible={offerRatesVisible}
+                    changePopupVisible={() => setOfferRatesVisible(false)}
+                  />
                   <Button
+                    style={window.innerWidth < 900 ? { marginBottom: '5rem' } : {}}
                     onClick={() => {
+                      dispatcher(actions.getOfferFeedbacksRequest(trip.offer.id));
                       setOfferRatesVisible(true);
                     }}
                     type='submit'
@@ -133,25 +134,6 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
             </Grid>
           </div>
         ))}
-      {/* to przeniesc */}
-      <Modal
-        aria-labelledby='transition-modal-title'
-        aria-describedby='transition-modal-description'
-        className={classes.popupModal}
-        open={popupVisible}
-        onClose={() => setPopupVisible(false)}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500
-        }}
-      >
-        <Fade in={popupVisible}>
-          <div className={classes.popupPaper}>
-            <RateOfferForm offerId={offerId ? offerId : -1} onSubmit={handleFormSubmit} />
-          </div>
-        </Fade>
-      </Modal>
     </div>
   );
 };

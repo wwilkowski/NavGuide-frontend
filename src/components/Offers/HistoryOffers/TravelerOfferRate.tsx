@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
 const TravelerOfferRate = (props: ITravelerOfferRateProps) => {
   const classes = useStyles();
 
-  const { description, scoreGuide, scoreOffer } = props;
+  const { feedback } = props;
 
   return (
     <>
@@ -45,17 +45,17 @@ const TravelerOfferRate = (props: ITravelerOfferRateProps) => {
       </Grid>
       <Grid item sm={6} xs={6}>
         <Paper elevation={0} className={classes.rating}>
-          <Rating value={scoreGuide} readOnly />
+          <Rating value={feedback ? feedback.scoreGuide : 0} readOnly />
         </Paper>
       </Grid>
       <Grid item sm={6} xs={6}>
         <Paper elevation={0} className={classes.rating}>
-          <Rating value={scoreOffer} readOnly />
+          <Rating value={feedback ? feedback.scoreOffer : 0} readOnly />
         </Paper>
       </Grid>
       <Grid item sm={12} xs={12}>
         <Paper elevation={0} className={classes.description}>
-          <Typography component='div'>{description} </Typography>
+          <Typography component='div'>{feedback ? feedback.comment : ''} </Typography>
         </Paper>
       </Grid>
     </>

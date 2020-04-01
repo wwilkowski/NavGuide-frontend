@@ -1,5 +1,9 @@
+import { IGotFeedback } from '../../../containers/Offers/types';
+
 export interface ITravelerOfferRateProps {
-  scoreGuide: number;
-  scoreOffer: number;
-  description: string;
+  feedback?: IGotFeedback;
+}
+
+export interface IGuideOfferRateProps {
+  feedback?: IGotFeedback;
 }

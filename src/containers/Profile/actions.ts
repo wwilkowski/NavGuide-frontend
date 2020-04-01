@@ -1,7 +1,7 @@
 import * as constants from './constants';
 import { IUserData, IUserFormValues } from '../../shared/types';
 import { ISingleTripType } from '../TripBrowser/types';
-import { IFeedback, IGotFeedback } from '../Offers/types';
+import { IGotFeedback } from '../Offers/types';
 
 export const logInGoogleRequest = (code: string) => ({
   type: constants.LOG_IN_GOOGLE_REQUESTED,
