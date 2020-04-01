@@ -9,6 +9,7 @@ import { Paper, Typography } from '@material-ui/core';
 
 interface Props {
   trip: ISingleTripType;
+  hidePhoto?: boolean;
 }
 
 const priceTypes = {
@@ -27,18 +28,21 @@ const getLanguage = (code: string) => {
   }
 };
 
-const TripListElement = ({ trip }: Props) => {
+const TripListElement = ({ trip, hidePhoto }: Props) => {
   const isLogged: boolean = useSelector((state: StoreType) => state.profile.isLoggedIn);
   const { t } = useTranslation();
   return (
     <Paper elevation={1}>
       <Link to={`/offers/${trip.id}`} className={styles.link}>
         <div key={trip.id} className={styles.offer}>
-          <img
-            src={trip.photos ? trip.photos[0] : 'https://pwik.krzanowice.pl/uploads/default-image.png'}
-            alt='offer view'
-            className={styles.offer__photo}
-          />
+          {!hidePhoto && (
+            <img
+              src={trip.photos ? trip.photos[0] : 'https://pwik.krzanowice.pl/uploads/default-image.png'}
+              alt='offer view'
+              className={styles.offer__photo}
+            />
+          )}
+
           <div className={styles.offer__desc}>
             <Typography variant='h3'>
               {trip.name} ({trip.id})

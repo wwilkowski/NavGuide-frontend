@@ -6,7 +6,7 @@ import { getOwnAgreementsRequest, settleAgreementRequest } from '../../Offers/ac
 import styles from './EditProfilePanel.module.scss';
 import { getActiveOffersRequest, getApproachesRequest } from '../../Offers/actions';
 import HistoryOffers from '../../../components/Offers/HistoryOffers/HistoryOffers';
-import Agreements from '../../../components/Offers/Agreements/Agreements';
+import ActiveOffers from '../../../components/Offers/ActiveOffers/ActiveOffers';
 import AcceptedOffers from '../../../components/Offers/AcceptedOffers/AcceptedOffers';
 import { useTranslation } from 'react-i18next';
 import UserProfile from '../../../components/UserProfile/UserProfile';
@@ -28,6 +28,9 @@ const useStyles = makeStyles({
   },
   hidden: {
     display: 'none'
+  },
+  text: {
+    textAlign: 'center'
   }
 });
 
@@ -51,6 +54,8 @@ const EditProfilePanel = () => {
 
   const verifiedOffersTraveler = useSelector((state: StoreType) => state.currentOfferReducer.approaches);
   const historyOffersTraveler = useSelector((state: StoreType) => state.profile.historyOffers);
+  const approaches = useSelector((state: StoreType) => state.currentOfferReducer.approaches);
+  const activeOffers = useSelector((state: StoreType) => state.currentOfferReducer.activeOffers);
   const agreements = useSelector((state: StoreType) => state.currentOfferReducer.agreements);
   const feedbacks = useSelector((state: StoreType) => state.profile.feedbacks);
 
@@ -96,45 +101,33 @@ const EditProfilePanel = () => {
     <Grid container>
       {/* Profile */}
       <Grid item xs={12} sm={3}>
-        <Container>
-          <div className={sceneMode === Scene.profile ? styles.profileSection : styles.hidden}>
-            <UserProfile user={user} />
-          </div>
+        <Container className={sceneMode === Scene.profile ? styles.profileSection : styles.hidden}>
+          <UserProfile user={user} />
         </Container>
       </Grid>
 
       {/* Agreements */}
       <Grid container item sm={9}>
-        <div className={sceneMode === Scene.agreements ? styles.profileSection : styles.hidden}>
-          <Grid item xs={12} sm={4}>
-            <div>
-              {agreements && (
-                <>
-                  <Typography variant='h2'>{t('Your agreements')}: </Typography>
-                  <Agreements
-                    agreements={agreements}
-                    verifiedOffers={verifiedOffersTraveler}
-                    onAgreementButtonClick={onAgreementButtonClick}
-                  />
-                </>
-              )}
-            </div>
-          </Grid>
-        </div>
+        <Grid item xs={12} sm={4} className={sceneMode === Scene.agreements ? styles.profileSection : styles.hidden}>
+          <Typography variant='h2' className={classes.text}>
+            {t('In progress')}
+          </Typography>
+          {approaches ? <ActiveOffers trips={approaches} agreements={agreements} /> : <p>brak</p>}
+        </Grid>
         {/* Confirmed */}
-        <div className={sceneMode === Scene.confirmed ? styles.profileSection : styles.hidden}>
-          <Grid item xs={12} sm={4}>
-            <Typography variant='h2'>Zaakceptowane umowy</Typography>
-            <AcceptedOffers agreements={agreements} />
-          </Grid>
-        </div>
+        <Grid item xs={12} sm={4} className={sceneMode === Scene.confirmed ? styles.profileSection : styles.hidden}>
+          <Typography variant='h2' className={classes.text}>
+            Zaakceptowane umowy
+          </Typography>
+          <AcceptedOffers agreements={agreements} />
+        </Grid>
         {/* History */}
-        <div className={sceneMode === Scene.history ? styles.profileSection : styles.hidden}>
-          <Grid item xs={12} sm={12}>
-            <Typography variant='h2'>Historia wycieczek</Typography>
-            <HistoryOffers userRole='traveler' trips={historyOffersTraveler} feedbacks={feedbacks} />
-          </Grid>
-        </div>
+        <Grid item xs={12} sm={4} className={sceneMode === Scene.history ? styles.profileSection : styles.hidden}>
+          <Typography variant='h2' className={classes.text}>
+            Historia wycieczek
+          </Typography>
+          <HistoryOffers userRole='traveler' trips={historyOffersTraveler}  feedbacks={feedbacks}/>
+        </Grid>
       </Grid>
 
       {/* Navigation */}

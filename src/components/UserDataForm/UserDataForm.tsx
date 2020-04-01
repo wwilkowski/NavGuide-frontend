@@ -89,6 +89,7 @@ const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
       const data = await fetch('https://235.ip-51-91-9.eu/interests');
       const json = await data.json();
       setInterests(json);
+      console.log('pobrane: ', json);
     }
     fetchData();
   }, []);
@@ -270,6 +271,7 @@ const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
 const MyForm = withFormik<MyFormProps, FullFormValues>({
   mapPropsToValues: (props: MyFormProps) => {
     const { firstName, lastName, country, email, telephone, gender, age, experience, interests } = props.templateUser;
+    console.log('interests: ', interests);
     return {
       firstName: firstName || '',
       lastName: lastName || '',

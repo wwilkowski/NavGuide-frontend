@@ -12,6 +12,7 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import HistoryIcon from '@material-ui/icons/History';
 import CheckIcon from '@material-ui/icons/Check';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import ActiveOffers from '../../../components/Offers/ActiveOffers/ActiveOffers';
 
 const useStyles = makeStyles({
   root: {
@@ -22,11 +23,15 @@ const useStyles = makeStyles({
   },
   hidden: {
     display: 'none'
+  },
+  text: {
+    textAlign: 'center'
   }
 });
 
 enum Scene {
   notifications,
+  inprogress,
   confirmed,
   history
 }
@@ -60,9 +65,12 @@ const EditGuidePanel = () => {
         setSceneMode(Scene.notifications);
         break;
       case 1:
-        setSceneMode(Scene.confirmed);
+        setSceneMode(Scene.inprogress);
         break;
       case 2:
+        setSceneMode(Scene.confirmed);
+        break;
+      case 3:
         setSceneMode(Scene.history);
         break;
       default:
@@ -72,23 +80,29 @@ const EditGuidePanel = () => {
 
   return (
     <Grid container>
-      <Grid item xs={12} sm={4}>
-        <div className={!(sceneMode === Scene.notifications) && window.innerWidth < 900 ? classes.hidden : ''}>
-          <Typography variant='h2'>Powiadomienia</Typography>
-          <OrderedOffers trips={activeOffers} agreements={agreements} />
-        </div>
+      <Grid item xs={12} sm={3} className={!(sceneMode === Scene.notifications) && window.innerWidth < 900 ? classes.hidden : ''}>
+        <Typography variant='h2' className={classes.text}>
+          Powiadomienia
+        </Typography>
+        <OrderedOffers trips={activeOffers} agreements={agreements} />
       </Grid>
-      <Grid item xs={12} sm={4}>
-        <div className={!(sceneMode === Scene.confirmed) && window.innerWidth < 900 ? classes.hidden : ''}>
-          <Typography variant='h2'>Zaakceptowane umowy</Typography>
-          <AcceptedOffers agreements={agreements} />
-        </div>
+      <Grid item xs={12} sm={3} className={!(sceneMode === Scene.inprogress) && window.innerWidth < 900 ? classes.hidden : ''}>
+        <Typography variant='h2' className={classes.text}>
+          W trakcie:{' '}
+        </Typography>
+        {activeOffers ? <ActiveOffers trips={activeOffers} agreements={agreements} /> : <p>brak</p>}
       </Grid>
-      <Grid item xs={12} sm={4}>
-        <div className={!(sceneMode === Scene.history) && window.innerWidth < 900 ? classes.hidden : ''}>
-          <Typography variant='h2'>Historia wycieczek</Typography>
-          <HistoryOffers userRole='guide' trips={historyOffers} feedbacks={feedbacks} />
-        </div>
+      <Grid item xs={12} sm={3} className={!(sceneMode === Scene.confirmed) && window.innerWidth < 900 ? classes.hidden : ''}>
+        <Typography variant='h2' className={classes.text}>
+          Zaakceptowane umowy
+        </Typography>
+        <AcceptedOffers agreements={agreements} />
+      </Grid>
+      <Grid item xs={12} sm={3} className={!(sceneMode === Scene.history) && window.innerWidth < 900 ? classes.hidden : ''}>
+        <Typography variant='h2' className={classes.text}>
+          Historia wycieczek
+        </Typography>
+        <HistoryOffers userRole='guide' trips={historyOffers} feedbacks={feedbacks} />
       </Grid>
       <BottomNavigation
         value={value}
@@ -100,6 +114,7 @@ const EditGuidePanel = () => {
         showLabels
       >
         <BottomNavigationAction label='Agreements' icon={<AssignmentIcon />} />
+        <BottomNavigationAction label='In progress' icon={<AssignmentIcon />} />
         <BottomNavigationAction label='Confirmed' icon={<CheckIcon />} />
         <BottomNavigationAction label='History' icon={<HistoryIcon />} />
       </BottomNavigation>

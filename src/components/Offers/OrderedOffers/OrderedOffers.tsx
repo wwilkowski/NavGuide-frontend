@@ -16,6 +16,11 @@ const useStyles = makeStyles({
   },
   list: {
     marginBottom: '3rem'
+  },
+  description: {
+    textAlign: 'center',
+    padding: '0 1rem',
+    margin: '0.5rem 0'
   }
 });
 
@@ -87,21 +92,19 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
           <Typography variant='subtitle2'>
             <b>{t('Planned date')}:</b> {getDate(trip.plannedDate)}
           </Typography>
-          <TripListElement trip={trip.offer} />
-          <Typography variant='subtitle2' className={classes.text}>
-            <b>{t('Message from tourist')}:</b>
+          <TripListElement trip={trip.offer} hidePhoto={true} />
+          <Typography variant='h4' className={classes.text}>
+            {t('Message from tourist')}:
           </Typography>
-          <Typography variant='body1' className={classes.text}>
+          <Typography variant='subtitle2' className={classes.description}>
             {trip.message}
           </Typography>
           <Link to={`/users/${trip.traveler.id}`} className={classes.text}>
-            <p>
-              {t('Check user profile with')} ID {trip.traveler.id}
-            </p>
+            {t('Check user profile with')} ID {trip.traveler.id}
           </Link>
           <TextField
             id='outlined-multiline-static'
-            label={t('Message to guide')}
+            label={t('Message to tourist')}
             multiline
             rows='4'
             value={messages[i]}
