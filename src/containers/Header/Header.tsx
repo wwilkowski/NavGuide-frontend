@@ -23,7 +23,6 @@ import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import AddIcon from '@material-ui/icons/Add';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import AccessibilityNewIcon from '@material-ui/icons/AccessibilityNew';
-import { getToken } from '../../helpers/tokenCookie';
 
 const StyledMenuItem = withStyles(theme => ({
   root: {
@@ -53,8 +52,6 @@ const Header: React.FC = () => {
     dispatcher(logOutGoogleRequest());
   };
 
-  console.log(getToken());
-
   const [openMenu, setOpenMenu] = useState(false);
 
   return (
@@ -81,7 +78,7 @@ const Header: React.FC = () => {
             </li>
           </ul>
         ) : (
-          <ul className={styles.userMenu}>
+          <div className={styles.userMenu}>
             <div className={styles.userCase}>
               <Link to='/' className={styles.user}>
                 <Avatar src={profile.user.avatar} alt='user avatar' />
@@ -92,39 +89,33 @@ const Header: React.FC = () => {
               <LogoutButton onClick={logout} />
             </div>
             <ul className={styles.menuOptions}>
-              <li className={styles.menuOption}>
-                <Link to='/profile' className={styles.menuLink}>
-                  <StyledMenuItem>
-                    <ListItemIcon>
-                      <FaceIcon fontSize='small' />
-                    </ListItemIcon>
-                    <ListItemText primary={t('Profile')} />
-                  </StyledMenuItem>
-                </Link>
-              </li>
-              <li className={styles.menuOption}>
-                <Link to='/profile/edit' className={styles.menuLink}>
-                  <StyledMenuItem>
-                    <ListItemIcon>
-                      <EditIcon fontSize='small' />
-                    </ListItemIcon>
-                    <ListItemText primary={t('Edit profile')} />
-                  </StyledMenuItem>
-                </Link>
-              </li>
+              <Link to='/profile' className={styles.menuLink}>
+                <StyledMenuItem>
+                  <ListItemIcon>
+                    <FaceIcon fontSize='small' />
+                  </ListItemIcon>
+                  <ListItemText primary={t('Profile')} />
+                </StyledMenuItem>
+              </Link>
+              <Link to='/profile/edit' className={styles.menuLink}>
+                <StyledMenuItem>
+                  <ListItemIcon>
+                    <EditIcon fontSize='small' />
+                  </ListItemIcon>
+                  <ListItemText primary={t('Edit profile')} />
+                </StyledMenuItem>
+              </Link>
               {profile.user.role === 'ADMIN' ? (
-                <li className={styles.menuOption}>
-                  <Link to='/admin' className={styles.menuLink}>
-                    <StyledMenuItem>
-                      <ListItemIcon>
-                        <SupervisorAccountIcon fontSize='small' />
-                      </ListItemIcon>
-                      <ListItemText primary={t('Admin panel')} />
-                    </StyledMenuItem>
-                  </Link>
-                </li>
+                <Link to='/admin' className={styles.menuLink}>
+                  <StyledMenuItem>
+                    <ListItemIcon>
+                      <SupervisorAccountIcon fontSize='small' />
+                    </ListItemIcon>
+                    <ListItemText primary={t('Admin panel')} />
+                  </StyledMenuItem>
+                </Link>
               ) : profile.user.role === 'GUIDE' ? (
-                <li className={styles.menuOption}>
+                <div>
                   <Link to='/offers/create' className={styles.menuLink}>
                     <StyledMenuItem>
                       <ListItemIcon>
@@ -141,7 +132,7 @@ const Header: React.FC = () => {
                       <ListItemText primary={t('Manage your offers')} />
                     </StyledMenuItem>
                   </Link>
-                </li>
+                </div>
               ) : (
                 <li className={styles.menuOption}>
                   <Link to='/register/guide' className={styles.menuLink}>
@@ -155,7 +146,7 @@ const Header: React.FC = () => {
                 </li>
               )}
             </ul>
-          </ul>
+          </div>
         )}
         <div className={styles.languageOptions}>
           <SwitchLanguageButton code='pl' />

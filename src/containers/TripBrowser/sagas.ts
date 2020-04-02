@@ -120,7 +120,7 @@ function* fetchClosestTripsFromAPI(action: types.IFetchClosestTripsRequest) {
 }
 
 function* fetchPopularTripsFromAPI() {
-  yield console.log('popular');
+  yield console.error('popular');
 }
 
 function* fetchTagsFromAPI() {

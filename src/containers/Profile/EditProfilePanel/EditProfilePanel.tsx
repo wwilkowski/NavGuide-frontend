@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { StoreType } from '../../../store';
 import * as actions from '../actions';
-import { getOwnAgreementsRequest, settleAgreementRequest } from '../../Offers/actions';
+import { getOwnAgreementsRequest } from '../../Offers/actions';
 import styles from './EditProfilePanel.module.scss';
 import { getActiveOffersRequest, getApproachesRequest } from '../../Offers/actions';
 import HistoryOffers from '../../../components/Offers/HistoryOffers/HistoryOffers';
@@ -52,16 +52,10 @@ const EditProfilePanel = () => {
 
   const user = useSelector((state: StoreType) => state.profile.user);
 
-  const verifiedOffersTraveler = useSelector((state: StoreType) => state.currentOfferReducer.approaches);
   const historyOffersTraveler = useSelector((state: StoreType) => state.profile.historyOffers);
   const approaches = useSelector((state: StoreType) => state.currentOfferReducer.approaches);
-  const activeOffers = useSelector((state: StoreType) => state.currentOfferReducer.activeOffers);
   const agreements = useSelector((state: StoreType) => state.currentOfferReducer.agreements);
   const feedbacks = useSelector((state: StoreType) => state.profile.feedbacks);
-
-  const onAgreementButtonClick = (agreementId: number, status: string) => {
-    dispatcher(settleAgreementRequest(agreementId, status));
-  };
 
   useEffect(() => {
     dispatcher(actions.getOwnFeedbacksRequest());
@@ -126,7 +120,7 @@ const EditProfilePanel = () => {
           <Typography variant='h2' className={classes.text}>
             Historia wycieczek
           </Typography>
-          <HistoryOffers userRole='traveler' trips={historyOffersTraveler}  feedbacks={feedbacks}/>
+          <HistoryOffers userRole='traveler' trips={historyOffersTraveler} feedbacks={feedbacks} />
         </Grid>
       </Grid>
 

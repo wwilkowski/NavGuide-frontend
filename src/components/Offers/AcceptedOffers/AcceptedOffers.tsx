@@ -56,7 +56,7 @@ const AcceptedOffers = (props: IAcceptedOffersProps) => {
           <Typography variant='subtitle2'>
             <b>{t('Planned date')}:</b> {getDate(agr.plannedDate)}
           </Typography>
-          <TripListElement trip={agr.offer} />
+          <TripListElement trip={agr.offer} hidePhoto={true} />
           {user.role === 'GUIDE' && (
             <Link to={`/users/${agr.traveler.id}`} className={classes.text}>
               <p>

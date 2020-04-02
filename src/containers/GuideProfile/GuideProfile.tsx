@@ -11,7 +11,6 @@ import {
   fetchGuideHistoryRequest,
   fetchGuideProfileRequested
 } from './actions';
-import GuideProfileHistoryOffers from '../../components/GuideProfile/GuideProfileHistoryOffers';
 import history from '../../history';
 import { RouteComponentProps, Redirect } from 'react-router-dom';
 import { showNotification } from '../../helpers/notification';

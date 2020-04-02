@@ -9,7 +9,6 @@ interface Props {
 }
 
 const AgreementInfo = ({ agreement, handleSettleAgreement }: Props) => {
-  console.log('agr: ', agreement);
   return (
     <>
       <p>Data: {agreement && agreement.plannedDate}</p>

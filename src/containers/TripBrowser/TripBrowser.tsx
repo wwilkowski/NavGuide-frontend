@@ -86,7 +86,6 @@ const TripBrowser: React.FC = () => {
 
   useEffect(() => {
     if (activeTags && activeTags.length) {
-      console.log(tripsData);
       let tmp = tripsData.filter(trip => {
         const equalTags = trip.tags.filter(tag => activeTags.includes(tag.name));
         if (equalTags.length > 0) return true;
@@ -94,13 +93,11 @@ const TripBrowser: React.FC = () => {
       });
       if (beginDate && isLogged && endDate) {
         tmp = tmp.filter((trip: ISingleTripType) => {
-          console.log(trip);
           const tripBegin = new Date(trip.begin);
           const tripEnd = new Date(trip.end);
           if (tripBegin.getTime() >= beginDate.getTime() && tripEnd.getTime() <= endDate.getTime()) {
             return true;
           }
-          console.log('nie');
           return false;
         });
       }
