@@ -5,14 +5,28 @@ import history from '../../../history';
 import AgreementCreator from '../../../components/Offers/AgreementCreator';
 import * as actions from '../../Offers/actions';
 import { RouteComponentProps } from 'react-router-dom';
-import { IAgreementOffer, IOffer } from '../types';
+import { IAgreementOffer, IOffer, IAgreement } from '../types';
 import { useTranslation } from 'react-i18next';
 import { Typography, Button, makeStyles, Grid } from '@material-ui/core';
 import TripListElement from '../../../components/TripBrowser/TripListElement';
 import AgreementInfo from '../../../components/AgreementInfo';
+import Chat from '../../../components/Chat';
+import { IUserData } from '../../../shared/types';
 
 interface TParams {
   id: string;
+}
+
+interface ShortUser {
+  avatar: string;
+  id: number;
+}
+
+interface Message {
+  author: ShortUser;
+  date: Date;
+  description: string;
+  id: number;
 }
 
 const useStyles = makeStyles({
@@ -34,6 +48,7 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
   const currentOffer = useSelector((state: StoreType) => state.currentOfferReducer.offer);
   const agreements = useSelector((state: StoreType) => state.currentOfferReducer.agreements);
   const activeOffers = useSelector((state: StoreType) => state.currentOfferReducer.activeOffers);
+  const purchaseMessages = useSelector((state: StoreType) => state.currentOfferReducer.messages);
 
   const [pathFrom, setPathFrom] = useState<string>('');
   const [travelerId, setTravelerId] = useState<number>(-1);
@@ -42,6 +57,8 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
   const [touristPlannedDate, setTouristPlannedDate] = useState<Date>(new Date());
   const [currentAgreement, setCurrentAgreement] = useState<IAgreementOffer>();
   const [isAgreementCreated, setAgreementCreated] = useState<boolean>(false);
+  const [messages, setMessages] = useState<Message[]>();
+  const [agreement, setAgreement] = useState<IAgreementOffer>();
 
   useEffect(() => {
     if (props.location.state) if (props.location.state.pathFrom !== undefined) setPathFrom(props.location.state.pathFrom);
@@ -49,6 +66,12 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
     dispatcher(actions.getOwnAgreementsRequest());
     // eslint-disable-next-line
   }, [dispatcher]);
+
+  useEffect(() => {
+    if (purchaseId !== undefined && purchaseId !== -1) {
+      dispatcher(actions.getMessagesRequest(purchaseId));
+    }
+  }, [dispatcher, purchaseId]);
 
   useEffect(() => {
     const url = history.location.pathname.substr(18);
@@ -96,8 +119,28 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
       return agreement;
     };
 
-    if (agreements) setCurrentAgreement(findAgreementById(parseInt(props.location.pathname.substr(11))));
-  }, [agreements, currentAgreement, props.location.pathname]);
+    if (agreements) {
+      setCurrentAgreement(findAgreementById(parseInt(props.location.pathname.substr(11))));
+      const actualAgreement = agreements.find(agr => agr.purchase.id === purchaseId);
+      setAgreement(actualAgreement);
+      if (actualAgreement) {
+        setMessages([
+          {
+            author: actualAgreement.traveler as ShortUser,
+            date: new Date(),
+            description: actualAgreement.purchase.message,
+            id: -1
+          },
+          {
+            author: { ...actualAgreement.purchase.offer.owner, id: actualAgreement.purchase.offer.owner.userId } as ShortUser,
+            date: new Date(),
+            description: actualAgreement.purchase.feedbackMessage,
+            id: -1
+          }
+        ]);
+      }
+    }
+  }, [agreements, currentAgreement, props.location.pathname, purchaseId]);
 
   const handleCreateAgreementClick = (description: string, plannedDate: Date, price: number) => {
     const newAgreement = {
@@ -178,7 +221,7 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
       )}
       {isLogged && (
         <Grid container>
-          <Grid item xs={6}>
+          <Grid item xs={4}>
             <h3>
               <b>{t('Agreement create panel')}</b>
             </h3>
@@ -190,7 +233,7 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
                     <p>Utworzyles juz umowę</p>
                     <AgreementInfo
                       handleSettleAgreement={handleSettleAgreement}
-                      agreement={agreements.find(agr => agr.purchase.id === purchaseId)}
+                      agreement={agreement}
                     />
                   </>
                 ) : (
@@ -208,15 +251,17 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
                   <p>Umowa utworzona</p>
                   <AgreementInfo
                     handleSettleAgreement={handleSettleAgreement}
-                    agreement={agreements.find(agr => agr.purchase.id === purchaseId)}
+                    agreement={agreement}
                   />
                 </>
               ) : (
                 <p>Oferta jest w trakcie tworzenia</p>
               ))}
           </Grid>
-          <Grid item xs={6}>
-            czat
+          <Grid item xs={8}>
+            {messages && (
+              <Chat messages={[...messages, ...purchaseMessages]} mode={profile.role} userId={profile.id} purchaseId={purchaseId} />
+            )}
           </Grid>
         </Grid>
       )}

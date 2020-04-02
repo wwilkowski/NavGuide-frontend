@@ -46,6 +46,7 @@ export interface ISingleTripType {
   maxPeople: number;
   name: string;
   owner: {
+    avatar?: string;
     experience: number;
     firstName: string;
     guideId: number;
