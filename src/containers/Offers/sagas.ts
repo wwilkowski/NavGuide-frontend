@@ -337,6 +337,53 @@ function* addFeedback(action: types.IAddFeedbackAction) {
   } catch (error) {}
 }
 
+function* sendMessage(action: types.ISendMessageAction) {
+  try {
+    const endpoint = `https://235.ip-51-91-9.eu/messages/${action.purchaseId}`;
+
+    const response = yield call(fetch, endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${getToken()}`
+      },
+      body: JSON.stringify({
+        description: action.description
+      })
+    });
+
+    if (response.status >= 200 && response.status <= 300) {
+      // yield put(getOwnFeedbacksRequest());
+    } else if (response.status === 401) {
+      // throw new Error('You are not looged in!');
+    } else {
+      // throw new Error('Something goes wrong');
+    }
+  } catch (error) {}
+}
+
+function* getMessages({ purchaseId }: types.IGetMessagesAction) {
+  try {
+    const endpoint = `https://235.ip-51-91-9.eu/messages/${purchaseId}`;
+    const response = yield call(fetch, endpoint, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${getToken()}`
+      }
+    });
+    if (response.status >= 200 && response.status <= 300) {
+      const json = yield response.json();
+      yield put(actions.getMessagesSuccessed(json));
+    } else if (response.status === 401) {
+      throw new Error('You are not logged in!');
+    } else {
+      throw new Error('Something goes wrong');
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 function* mainSaga() {
   yield takeLatest(constants.CREATE_OFFER_REQUESTED, createOffer);
   yield takeLatest(constants.GET_OFFER_BY_ID_REQUESTED, getOfferById);
@@ -349,6 +396,8 @@ function* mainSaga() {
   yield takeLatest(constants.SETTLE_AGREEMENT_REQUESTED, settleAgreement);
   yield takeLatest(constants.REPORT_OFFER_REQUESTED, reportOffer);
   yield takeLatest(constants.ADD_FEEDBACK_REQUESTED, addFeedback);
+  yield takeLatest(constants.SEND_MESSAGE_REQUESTED, sendMessage);
+  yield takeLatest(constants.GET_MESSAGES_REQUESTED, getMessages);
 }
 
 export default mainSaga;

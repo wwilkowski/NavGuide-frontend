@@ -126,3 +126,19 @@ export const addFeedbackRequest = (feedback: types.IFeedback) => ({
   type: constants.ADD_FEEDBACK_REQUESTED,
   feedback
 });
+
+export const sendMessageRequest = (description: string, purchaseId: number) => ({
+  type: constants.SEND_MESSAGE_REQUESTED,
+  description,
+  purchaseId
+});
+
+export const getMessagesRequest = (purchaseId: number) => ({
+  type: constants.GET_MESSAGES_REQUESTED,
+  purchaseId
+});
+
+export const getMessagesSuccessed = (messages: types.Message) => ({
+  type: constants.GET_MESSAGES_SUCCESSED,
+  messages
+});
