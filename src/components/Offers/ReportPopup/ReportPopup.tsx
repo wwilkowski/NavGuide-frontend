@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Paper, Typography, Grid } from '@material-ui/core';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
@@ -17,10 +17,17 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center'
   },
   paper: {
+    width: window.innerWidth > 900 ? '20%' : '100%',
     backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3)
+  },
+  textField: {
+    padding: theme.spacing(2),
+    width: '100%'
+  },
+  button: {
+    margin: theme.spacing(2, 0, 0)
   }
 }));
 
@@ -64,25 +71,39 @@ const ReportPopup = (props: IReportPopupProps) => {
       }}
     >
       <Fade in={popupVisibility}>
-        <div className={classes.paper}>
-          <p>{t('Tell us what is wrong with this offer')}</p>
-          <div>
-            <TextField
-              id='outlined-textarea'
-              label={t('Description')}
-              multiline
-              variant='outlined'
-              value={message}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                setMessage(e.target.value);
-              }}
-            />
-          </div>
-          {errorMessage ? <div>Min number of charaters is 10</div> : null}
-          <Button onClick={handleClick} variant='contained' color='primary'>
-            {t('Send')}
-          </Button>
-        </div>
+        <Paper className={classes.paper}>
+          <Grid container justify='center' xs={12} sm={12}>
+            <Grid container justify='center' xs={12} sm={12}>
+              <Typography variant='h6'>{t('Tell us what is wrong with this offer')}</Typography>
+            </Grid>
+            <Grid container justify='center' xs={12} sm={12}>
+              <TextField
+                className={classes.textField}
+                id='outlined-textarea'
+                label={t('Description')}
+                multiline
+                rows={3}
+                variant='outlined'
+                value={message}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                  setMessage(e.target.value);
+                }}
+              />
+            </Grid>
+            {errorMessage ? (
+              <Grid container justify='center' alignItems='flex-start' xs={12} sm={12}>
+                <Typography variant='subtitle2' color='error'>
+                  Min number of charaters is 10!
+                </Typography>
+              </Grid>
+            ) : null}
+            <Grid container justify='center' xs={12} sm={12}>
+              <Button className={classes.button} onClick={handleClick} variant='contained' color='primary'>
+                {t('Send')}
+              </Button>
+            </Grid>
+          </Grid>
+        </Paper>
       </Fade>
     </Modal>
   );

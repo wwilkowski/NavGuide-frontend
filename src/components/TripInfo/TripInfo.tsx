@@ -11,6 +11,7 @@ import { ISingleTripType, IPosition } from '../../containers/TripBrowser/types';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 import { Link } from 'react-router-dom';
 import ReportPopup from '../Offers/ReportPopup/ReportPopup';
+import { Grid, Button } from '@material-ui/core';
 
 const TripInfo = (props: ITripInfoProps) => {
   const { t } = useTranslation();
@@ -93,8 +94,12 @@ const TripInfo = (props: ITripInfoProps) => {
           guideProfile={props.guideProfile}
           guideProfileData={props.guideProfileData}
         />
-        <button onClick={() => setPopupVisibility(true)}>{t('Report')}</button>
       </div>
+      <Grid container justify='center' sm={12}>
+        <Button color='secondary' onClick={() => setPopupVisibility(true)}>
+          {t('Report offer')}
+        </Button>
+      </Grid>
       <ReportPopup offerId={tripData.id} popupVisibility={popupVisibility} changeVisibility={() => setPopupVisibility(!popupVisibility)} />
     </div>
   ) : (
