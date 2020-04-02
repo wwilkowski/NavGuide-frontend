@@ -1,10 +1,10 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import * as Yup from 'yup';
 import { FormikProps, Form, withFormik } from 'formik';
 import { IRateOfferFormValues, IRateOfferFormProps } from './types';
-import { showNotification } from '../../../helpers/notification';
+import { showNotification } from '../../../../helpers/notification';
 import TextField from '@material-ui/core/TextField';
-import i18n from '../../../locales/i18n';
+import i18n from '../../../../locales/i18n';
 import Button from '@material-ui/core/Button';
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
@@ -36,6 +36,10 @@ const InnerForm = (props: FormikProps<IRateOfferFormValues>) => {
   const [hoverScoreGuide, setHoverScoreGuide] = useState<number>(-1);
   const [scoreOffer, setScoreOffer] = useState<number>(0);
   const [hoverScoreOffer, setHoverScoreOffer] = useState<number>(-1);
+
+  useEffect(() => {
+    setFieldValue('scoreGuide', 2);
+  }, [setFieldValue]);
 
   return (
     <Form className={styles.form}>

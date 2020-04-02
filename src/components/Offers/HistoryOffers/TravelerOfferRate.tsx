@@ -1,6 +1,7 @@
 import React from 'react';
 import { Grid, Typography, makeStyles, Paper } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
+import { ITravelerOfferRateProps } from './types';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,8 +26,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const TravelerOfferRate = () => {
+const TravelerOfferRate = (props: ITravelerOfferRateProps) => {
   const classes = useStyles();
+
+  const { feedback } = props;
 
   return (
     <>
@@ -37,22 +40,22 @@ const TravelerOfferRate = () => {
       </Grid>
       <Grid item sm={6} xs={6}>
         <Paper elevation={0} className={classes.title}>
-          Ocena turysty
+          Ocena wycieczki
         </Paper>
       </Grid>
       <Grid item sm={6} xs={6}>
         <Paper elevation={0} className={classes.rating}>
-          <Rating value={3} readOnly />
+          <Rating value={feedback ? feedback.scoreGuide : 0} readOnly />
         </Paper>
       </Grid>
       <Grid item sm={6} xs={6}>
         <Paper elevation={0} className={classes.rating}>
-          <Rating value={3} readOnly />
+          <Rating value={feedback ? feedback.scoreOffer : 0} readOnly />
         </Paper>
       </Grid>
       <Grid item sm={12} xs={12}>
         <Paper elevation={0} className={classes.description}>
-          <Typography component='div'>OPIS OPIS OPIS OPIS </Typography>
+          <Typography component='div'>{feedback ? feedback.comment : ''} </Typography>
         </Paper>
       </Grid>
     </>

@@ -1,6 +1,5 @@
 import React from 'react';
 import { IDesctiptionProps } from './types';
-import styles from './styles.module.scss';
 import { Typography, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
