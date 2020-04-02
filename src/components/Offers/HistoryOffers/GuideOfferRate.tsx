@@ -6,11 +6,6 @@ import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 
 const useStyles = makeStyles(theme => ({
-  title: {
-    fontSize: '1.2em',
-    textAlign: 'center',
-    padding: theme.spacing(1)
-  },
   heading: {
     fontSize: '1em',
     color: theme.palette.text.secondary
@@ -59,7 +54,9 @@ const GuideOfferRate = (props: IGuideOfferRateProps) => {
               <Typography component='p' className={classes.heading}>
                 Opis
               </Typography>
-              <Typography component='p'>{feedback.comment}</Typography>
+              <Typography component='p' variant='body1' className={classes.comment}>
+                {feedback.comment}
+              </Typography>
             </Grid>
             <Grid item sm={4}>
               <Grid container justify='center' sm={12} className={classes.heading}>
