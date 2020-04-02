@@ -32,7 +32,7 @@ const TravelerOfferRate = (props: ITravelerOfferRateProps) => {
   const { feedback } = props;
 
   return (
-    <>
+    <Grid container xs={12} sm={12} style={window.innerWidth < 900 ? { marginBottom: '4rem' } : {}}>
       <Grid item sm={6} xs={6}>
         <Paper elevation={0} className={classes.title}>
           Ocena przewodnika
@@ -58,7 +58,7 @@ const TravelerOfferRate = (props: ITravelerOfferRateProps) => {
           <Typography component='div'>{feedback ? feedback.comment : ''} </Typography>
         </Paper>
       </Grid>
-    </>
+    </Grid>
   );
 };
 

@@ -15,6 +15,7 @@ import GuideProfileHistoryOffers from '../../components/GuideProfile/GuideProfil
 import history from '../../history';
 import { RouteComponentProps, Redirect } from 'react-router-dom';
 import { showNotification } from '../../helpers/notification';
+import HistoryOffers from '../../components/Offers/HistoryOffers/HistoryOffers';
 
 interface TParams {
   guideId: string;
@@ -39,6 +40,7 @@ const GuideProfile = (props: RouteComponentProps<TParams>) => {
   const guideProfileData = useSelector((state: StoreType) => state.guideProfile.guideProfileData);
   const activeOffers = useSelector((state: StoreType) => state.guideProfile.activeOffers);
   const historyOffers = useSelector((state: StoreType) => state.guideProfile.historyOffers);
+  const feedbacks = useSelector((state: StoreType) => state.currentOfferReducer.feedbacks);
 
   useEffect(() => {
     if (!isLogged) showNotification('info', 'Information', 'You dont have permission to this content');
@@ -75,7 +77,7 @@ const GuideProfile = (props: RouteComponentProps<TParams>) => {
             className={sceneMode === Scene.ratedOffers ? styles.container__section : styles.container__sectionHidden}
             style={{ borderRight: 'none', paddingRight: '0' }}
           >
-            <GuideProfileHistoryOffers historyOffers={historyOffers} goBack={backToMainPage} />
+            <HistoryOffers userRole='guide' trips={historyOffers} feedbacks={feedbacks} />
           </div>
           <GuideProfileMenu setScene={setSceneMode} />
         </div>

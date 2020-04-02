@@ -13,8 +13,8 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing(1),
-    width: '30%',
-    height: '47%'
+    width: window.innerWidth < 900 ? '95%' : '37%',
+    height: window.innerWidth < 900 ? '60%' : '47%'
   }
 }));
 
