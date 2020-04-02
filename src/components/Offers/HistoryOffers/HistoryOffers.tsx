@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { IProfileHistoryOffersProps, IFeedback, IGotFeedback } from '../../../containers/Offers/types';
 import { IEndedSingleTripType } from '../../../containers/TripBrowser/types';
 import TripListElement from '../../TripBrowser/TripListElement';
@@ -39,10 +39,6 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
   const [popupVisible, setPopupVisible] = useState<boolean>(false);
   const [offerId, setOfferId] = useState<number>();
 
-  useEffect(() => {
-    console.log(feedbacks);
-  }, [feedbacks]);
-
   const handleFormSubmit = (arg: IFeedback) => {
     const feedback: IFeedback = {
       offerId: arg.offerId,
@@ -61,11 +57,14 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
   };
 
   return (
-    <div>
+    <ul>
       {trips &&
         trips.map((trip: IEndedSingleTripType) => (
-          <div key={trip.offer.id}>
-            <TripListElement trip={trip.offer} />
+          <li
+            key={trip.offer.id}
+            style={{ padding: '1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '1rem 0' }}
+          >
+            <TripListElement trip={trip.offer} hidePhoto={true} />
             <Grid style={window.innerWidth < 900 ? { marginBottom: '3.5rem' } : {}} container justify='center' xs={12} sm={12}>
               {userRole === 'traveler' && !isRated(trip.offer.id) && (
                 <>
@@ -128,9 +127,9 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
                 </Grid>
               )}
             </Grid>
-          </div>
+          </li>
         ))}
-    </div>
+    </ul>
   );
 };
 

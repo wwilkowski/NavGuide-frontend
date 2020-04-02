@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Avatar, Typography, Grid, Button, Icon } from '@material-ui/core';
+import { Avatar, Typography, Grid, Button } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import { useDispatch } from 'react-redux';
 import { sendMessageRequest } from '../containers/Offers/actions';
@@ -34,8 +34,6 @@ const Chat = ({ messages, userId, purchaseId }: Props) => {
   const onSend = () => {
     dispatcher(sendMessageRequest(message, purchaseId));
   };
-
-  console.log('all messages: ', messages);
 
   return (
     <div>
