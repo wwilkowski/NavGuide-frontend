@@ -39,10 +39,6 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
   const [popupVisible, setPopupVisible] = useState<boolean>(false);
   const [offerId, setOfferId] = useState<number>();
 
-  /*useEffect(() => {
-    dispatcher(actions.getOfferFeedbacksRequest(3));
-  }, []);*/
-
   useEffect(() => {
     console.log(feedbacks);
   }, [feedbacks]);
@@ -60,7 +56,7 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
   };
 
   const isRated = (id: number) => {
-    if (feedbacks.find((feedback: IGotFeedback) => feedback.offer.id === id)) return true;
+    if (feedbacks && feedbacks.find((feedback: IGotFeedback) => feedback.offer.id === id)) return true;
     return false;
   };
 
@@ -70,7 +66,7 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
         trips.map((trip: IEndedSingleTripType) => (
           <div key={trip.offer.id}>
             <TripListElement trip={trip.offer} />
-            <Grid container justify='center'>
+            <Grid style={window.innerWidth < 900 ? { marginBottom: '3.5rem' } : {}} container justify='center' xs={12} sm={12}>
               {userRole === 'traveler' && !isRated(trip.offer.id) && (
                 <>
                   <Grid item xs={10} sm={7}>

@@ -2,6 +2,10 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 2rem;
+
+  @media (max-width: 800px) {
+    margin-bottom: 4rem;
+  }
 }
 
 .title {
