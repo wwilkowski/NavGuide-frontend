@@ -14,7 +14,10 @@ import {
   ADD_FEEDBACK_REQUESTED,
   GET_OFFER_FEEDBACKS_REQUESTED,
   GET_OFFER_FEEDBACKS_SUCCESSED,
-  GET_OFFER_FEEDBACKS_FAILED
+  GET_OFFER_FEEDBACKS_FAILED,
+  SEND_MESSAGE_REQUESTED,
+  GET_MESSAGES_REQUESTED,
+  GET_MESSAGES_SUCCESSED
 } from './constants';
 
 import * as typesTripBrowser from '../../containers/TripBrowser/types';
@@ -66,6 +69,7 @@ export interface ICurrentOffer {
   activeOffers: IActiveOffer[];
   approaches: IActiveOffer[];
   agreements: IAgreementOffer[];
+  messages: Message[];
 }
 
 export interface IProfileOffersProps {
@@ -122,6 +126,7 @@ export interface ISingleTripType {
   maxPeople: number;
   name: string;
   owner: {
+    avatar?: string;
     experience: number;
     firstName: string;
     guideId: number;
@@ -258,6 +263,33 @@ export interface IGetOwnAgreementsFailed {
   message: string;
 }
 
+export interface ISendMessageAction {
+  type: typeof SEND_MESSAGE_REQUESTED;
+  description: string;
+  purchaseId: number;
+}
+
+export interface IGetMessagesAction {
+  type: typeof GET_MESSAGES_REQUESTED;
+  purchaseId: number;
+}
+
+export interface IGetMessagesSuccessed {
+  type: typeof GET_MESSAGES_SUCCESSED;
+  messages: Message[];
+}
+export interface ShortUser {
+  avatar: string;
+  id: number;
+}
+
+export interface Message {
+  author: ShortUser;
+  date: Date;
+  description: string;
+  id: number;
+}
+
 export type IOffersActionType =
   | IGetOfferByIdSuccessed
   | IGetActiveTripsSuccessed
@@ -267,4 +299,5 @@ export type IOffersActionType =
   | IGetOwnAgreementsSuccessed
   | IGetOwnAgreementsFailed
   | IGetOfferFeedbacksSuccessedAction
-  | IGetOfferFeedbacksFailedAction;
+  | IGetOfferFeedbacksFailedAction
+  | IGetMessagesSuccessed;
