@@ -10,7 +10,7 @@ import {
   GET_OWN_FEEDBACKS_SUCCESSED,
   GET_OWN_FEEDBACKS_FAILED
 } from './constants';
-import { IFeedback } from '../Offers/types';
+import { IFeedback, IGotFeedback } from '../Offers/types';
 
 export interface IEditProfileAction {
   type: string;
@@ -29,7 +29,7 @@ export interface ILogOutSuccessedAction {
 export interface IProfileData {
   user: IUserData;
   isLoggedIn: boolean;
-  feedbacks: IFeedback[];
+  feedbacks: IGotFeedback[];
   historyOffers: IEndedSingleTripType[];
 }
 

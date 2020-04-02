@@ -40,6 +40,11 @@ const currentOfferReducer = (state = initialState, action: types.IOffersActionTy
         ...state,
         messages: action.messages
       };
+    case constants.GET_OFFER_FEEDBACKS_SUCCESSED:
+      return {
+        ...state,
+        feedbacks: action.feedbacks
+      };
 
     default:
       return state;

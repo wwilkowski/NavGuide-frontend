@@ -88,7 +88,7 @@ const EditGuidePanel = () => {
       </Grid>
       <Grid item xs={12} sm={3} className={!(sceneMode === Scene.inprogress) && window.innerWidth < 900 ? classes.hidden : ''}>
         <Typography variant='h2' className={classes.text}>
-          W trakcie:{' '}
+          W trakcie
         </Typography>
         {activeOffers ? <ActiveOffers trips={activeOffers} agreements={agreements} /> : <p>brak</p>}
       </Grid>

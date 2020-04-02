@@ -376,6 +376,24 @@ function* getMessages({ purchaseId }: types.IGetMessagesAction) {
       yield put(actions.getMessagesSuccessed(json));
     } else if (response.status === 401) {
       throw new Error('You are not logged in!');
+    }
+  } catch (error) {
+    console.error(error);
+}
+
+function* getOfferFeedbacks(action: types.IGetOfferFeedbacksAction) {
+  try {
+    const endpoint = `https://235.ip-51-91-9.eu/offers/${action.id}/feedback`;
+    const response = yield call(fetch, endpoint, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${getToken()}`
+      }
+    });
+    const feedbacks = yield response.json();
+    console.log(feedbacks);
+    if (response.status >= 200 && response.status <= 300) {
+      yield put(actions.getOfferFeedbacksSussecced(feedbacks));
     } else {
       throw new Error('Something goes wrong');
     }
@@ -396,8 +414,12 @@ function* mainSaga() {
   yield takeLatest(constants.SETTLE_AGREEMENT_REQUESTED, settleAgreement);
   yield takeLatest(constants.REPORT_OFFER_REQUESTED, reportOffer);
   yield takeLatest(constants.ADD_FEEDBACK_REQUESTED, addFeedback);
+<<<<<<< src/containers/Offers/sagas.ts
   yield takeLatest(constants.SEND_MESSAGE_REQUESTED, sendMessage);
   yield takeLatest(constants.GET_MESSAGES_REQUESTED, getMessages);
+=======
+  yield takeLatest(constants.GET_OFFER_FEEDBACKS_REQUESTED, getOfferFeedbacks);
+>>>>>>> src/containers/Offers/sagas.ts
 }
 
 export default mainSaga;

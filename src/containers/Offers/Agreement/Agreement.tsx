@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { StoreType } from '../../../store';
 import history from '../../../history';
@@ -231,7 +231,10 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
                 isAgreementCreated ? (
                   <>
                     <p>Utworzyles juz umowę</p>
-                    <AgreementInfo agreement={agreement} />
+                    <AgreementInfo
+                      handleSettleAgreement={handleSettleAgreement}
+                      agreement={agreement}
+                    />
                   </>
                 ) : (
                   <AgreementCreator
@@ -246,7 +249,10 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
               ) : isAgreementCreated ? (
                 <>
                   <p>Umowa utworzona</p>
-                  <AgreementInfo agreement={agreement} />
+                  <AgreementInfo
+                    handleSettleAgreement={handleSettleAgreement}
+                    agreement={agreement}
+                  />
                 </>
               ) : (
                 <p>Oferta jest w trakcie tworzenia</p>

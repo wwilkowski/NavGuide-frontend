@@ -65,7 +65,7 @@ export interface IAgreementOffer {
 
 export interface ICurrentOffer {
   offer: typesTripBrowser.ISingleTripType;
-  feedbacks: IFeedback[];
+  feedbacks: IGotFeedback[];
   activeOffers: IActiveOffer[];
   approaches: IActiveOffer[];
   agreements: IAgreementOffer[];
@@ -84,7 +84,7 @@ export interface IProfileVerifiedOffersProps {
 
 export interface IProfileHistoryOffersProps {
   trips: typesTripBrowser.IEndedSingleTripType[];
-  feedbacks: IFeedback[];
+  feedbacks: IGotFeedback[];
   userRole: string;
 }
 
@@ -158,6 +158,11 @@ export interface IFeedback {
   scoreOffer: number;
   scoreGuide: number;
   comment: string;
+}
+
+export interface IGotFeedback extends IFeedback {
+  date: Date;
+  offer: ISingleTripType;
 }
 
 export interface ICreateOfferAction {
