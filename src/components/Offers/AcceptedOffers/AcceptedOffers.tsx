@@ -71,7 +71,7 @@ const AcceptedOffers = (props: IAcceptedOffersProps) => {
           )}
 
           <Typography variant='subtitle2'>
-            {t('Price')}: {agr.price}
+            {t('Price')}: {agr.price}zł ({t(agr.offer.priceType)})
           </Typography>
           <Typography variant='subtitle2'>{t('Description')}:</Typography>
           <Typography variant='body1'>{agr.description}</Typography>

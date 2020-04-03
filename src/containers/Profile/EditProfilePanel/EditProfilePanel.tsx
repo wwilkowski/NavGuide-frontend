@@ -111,14 +111,14 @@ const EditProfilePanel = () => {
         {/* Confirmed */}
         <Grid item xs={12} sm={4} className={sceneMode === Scene.confirmed ? styles.profileSection : styles.hidden}>
           <Typography variant='h2' className={classes.text}>
-            Zaakceptowane umowy
+            {t('Accepted agreements')}
           </Typography>
           <AcceptedOffers agreements={agreements} />
         </Grid>
         {/* History */}
         <Grid item xs={12} sm={4} className={sceneMode === Scene.history ? styles.profileSection : styles.hidden}>
           <Typography variant='h2' className={classes.text}>
-            Historia wycieczek
+            {t('History offers')}
           </Typography>
           <HistoryOffers userRole='traveler' trips={historyOffersTraveler} feedbacks={feedbacks} />
         </Grid>

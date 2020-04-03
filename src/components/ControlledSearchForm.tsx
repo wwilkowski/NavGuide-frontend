@@ -79,6 +79,10 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
   }, []);
 
   useEffect(() => {
+    if (values.searchMode === 'geo') setSuggestedListVisible(false);
+  }, [values.searchMode]);
+
+  useEffect(() => {
     if (Object.keys(errors).length !== 0 && isSubmitting) {
       Object.values(errors).forEach(error => {
         showNotification('warning', t('Form warning'), t(`${error}`));

@@ -4,13 +4,11 @@ import { IEndedSingleTripType } from '../../../containers/TripBrowser/types';
 import TripListElement from '../../TripBrowser/TripListElement';
 import * as actions from '../../../containers/Offers/actions';
 import { useDispatch } from 'react-redux';
-import { makeStyles, Typography, Button } from '@material-ui/core';
+import { makeStyles, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import styles from './HistoryOffers.module.scss';
-import i18n from '../../../locales/i18n';
-import RatesOfferPopup from './RatesOfferPopup/RatesOfferPopup';
 import TravelerOfferRate from './TravelerOfferRate';
 import RateOfferPopup from './RateOfferPopup/RateOfferPopup';
 
@@ -35,7 +33,6 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
   const dispatcher = useDispatch();
   const classes = useStyles();
 
-  const [offerRatesVisible, setOfferRatesVisible] = useState<boolean>(false);
   const [popupVisible, setPopupVisible] = useState<boolean>(false);
   const [offerId, setOfferId] = useState<number>();
 
@@ -103,28 +100,6 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
                   </Grid>
                   <TravelerOfferRate feedback={feedbacks.find((feedback: IGotFeedback) => trip.offer.id === feedback.offer.id)} />
                 </>
-              )}
-              {userRole === 'guide' && (
-                <Grid item xs={5} sm={5}>
-                  <RatesOfferPopup
-                    offerId={trip.offer.id}
-                    popupVisible={offerRatesVisible}
-                    changePopupVisible={() => setOfferRatesVisible(false)}
-                  />
-                  <Button
-                    style={window.innerWidth < 900 ? { marginBottom: '5rem' } : {}}
-                    onClick={() => {
-                      dispatcher(actions.getOfferFeedbacksRequest(trip.offer.id));
-                      setOfferRatesVisible(true);
-                    }}
-                    type='submit'
-                    variant='contained'
-                    color='primary'
-                    disabled={false}
-                  >
-                    {i18n.t('Zobacz oceny')}
-                  </Button>
-                </Grid>
               )}
             </Grid>
           </li>

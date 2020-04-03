@@ -5,6 +5,7 @@ import { StoreType } from '../../../../store';
 import { useSelector } from 'react-redux';
 import { IGotFeedback } from '../../../../containers/Offers/types';
 import GuideOfferRate from '../GuideOfferRate';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles(theme => ({
   popupModal: {
@@ -26,6 +27,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const RatesOfferPopup = (props: IOfferRatesProps) => {
+  const { t } = useTranslation();
   const classes = useStyles();
   const { popupVisible, changePopupVisible } = props;
   const feedbacks = useSelector((state: StoreType) => state.currentOfferReducer.feedbacks);
@@ -47,19 +49,21 @@ const RatesOfferPopup = (props: IOfferRatesProps) => {
           <Grid container sm={12} spacing={1}>
             <Grid container justify='center' sm={12}>
               <Typography component='p' variant='h3'>
-                Oceny wycieczki
+                {t('Trip rates')}
               </Typography>
             </Grid>
-            <Grid container justify='center' sm={12}>
+            {/*<Grid container justify='center' sm={12}>
               <Typography component='p' variant='h3'>
                 {feedbacks && feedbacks[0].offer.name}
               </Typography>
-            </Grid>
+            </Grid>*/}
             <Grid item sm={12}>
               {feedbacks && feedbacks.map((feedback: IGotFeedback) => <GuideOfferRate feedback={feedback} />)}
             </Grid>
             <Grid container justify='flex-end' sm={12}>
-              <p className={classes.popupFooter}>Łączna ilość ocen: {feedbacks && feedbacks.length}</p>
+              <p className={classes.popupFooter}>
+                {t('Total number of rates')}: {feedbacks && feedbacks.length}
+              </p>
             </Grid>
           </Grid>
         </Paper>

@@ -4,12 +4,19 @@ import { IInformationsProps } from './types';
 import { ITag } from '../../../containers/TripBrowser/types';
 import { Link } from 'react-router-dom';
 import styles from './styles.module.scss';
+import RatesOfferPopup from '../../Offers/HistoryOffers/RatesOfferPopup/RatesOfferPopup';
+import { Button } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
+import { getOfferFeedbacksRequest } from '../../../containers/Offers/actions';
 
 const Informations = (props: IInformationsProps) => {
   const { t } = useTranslation();
 
+  const dispatcher = useDispatch();
+
   const { tripData, guideProfileData, guideProfile } = props;
 
+  const [offerRatesVisible, setOfferRatesVisible] = useState<boolean>(false);
   const [experience, setExperience] = useState<string>('');
   // eslint-disable-next-line
   const [telephone, setTelephone] = useState<string>('');
@@ -137,6 +144,26 @@ const Informations = (props: IInformationsProps) => {
               <div className={styles.info}>
                 <p className={styles.subtitle}>{t('Average mark')}:</p>
                 <p className={styles.value}>{tripData.averageMark > 0 ? tripData.averageMark : 0}</p>
+              </div>
+              <div>
+                <RatesOfferPopup
+                  offerId={tripData.id}
+                  popupVisible={offerRatesVisible}
+                  changePopupVisible={() => setOfferRatesVisible(false)}
+                />
+                <Button
+                  style={window.innerWidth < 900 ? { marginBottom: '5rem' } : {}}
+                  onClick={() => {
+                    dispatcher(getOfferFeedbacksRequest(tripData.id));
+                    setOfferRatesVisible(true);
+                  }}
+                  type='submit'
+                  variant='contained'
+                  color='primary'
+                  disabled={false}
+                >
+                  {t('Zobacz oceny')}
+                </Button>
               </div>
             </div>
             <div className={styles.section}>
