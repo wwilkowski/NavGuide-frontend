@@ -9,3 +9,8 @@ export interface IRateOfferFormProps {
   offerId: number;
   onSubmit: (feedback: IRateOfferFormValues) => void;
 }
+
+export interface IRateOfferFormOtherProps {
+  scoreGuide: number;
+  scoreOffer: number;
+}

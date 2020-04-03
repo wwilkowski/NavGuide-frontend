@@ -90,7 +90,8 @@ const OfferSale = (props: Props) => {
           Zaproponuj datę i godzinę wycieczki
         </Typography>
         <DatePicker
-          dateFormat='yyyy/MM/dd hh:mm'
+          locale='pl-PL'
+          dateFormat='yyyy/MM/dd hh:mm aa'
           timeFormat='HH:mm'
           timeIntervals={15}
           showTimeSelect

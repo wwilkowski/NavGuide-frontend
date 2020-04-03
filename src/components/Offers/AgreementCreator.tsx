@@ -68,16 +68,17 @@ const InnerForm = (props: ICreateAgreementOtherProps & FormikProps<ICreateAgreem
         <label htmlFor='plannedDate'>{i18n.t('Select date')}</label>
         <div>
           <DatePicker
-            dateFormat='yyyy/MM/dd hh:mm'
+            dateFormat='yyyy/MM/dd hh:mm aa'
             timeFormat='HH:mm'
             timeIntervals={15}
             showTimeSelect
             showTimeInput
+            locale='pl-PL'
             minDate={new Date(props.trip.begin)}
             maxDate={new Date(props.trip.end)}
             selected={values.plannedDate}
             onChange={date => props.setFieldValue('plannedDate', date)}
-          ></DatePicker>
+          />
         </div>
         <div>
           <TextField

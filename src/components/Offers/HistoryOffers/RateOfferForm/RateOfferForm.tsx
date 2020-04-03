@@ -66,7 +66,7 @@ const InnerForm = (props: FormikProps<IRateOfferFormValues>) => {
         <Grid container justify='flex-start' xs={12}>
           <Grid item xs={6}>
             <Rating
-              name='scoreGuide'
+              name='simple-controlled'
               value={scoreGuide}
               precision={1}
               onChange={(event: any, newValue: any) => {

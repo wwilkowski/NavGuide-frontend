@@ -375,10 +375,12 @@
     "Sold": "Sprzedano",
     "Average mark": "Średnia ocena",
     "Active Offers": "Aktywne oferty",
-    "History Offers": "Historia ofert",
+    "History offers": "Historia ofert",
     "Create Account": "Załóż Konto",
     "Experience in travelling": "Doświadczenie w podróżowaniu",
     "Phone format is not valid": "Nieprawidłowy format numeru telefonu",
+    "Trips in your area": "Wycieczki w Twojej okolicy",
+    "Report offer": "Zgłoś ofertę",
 
     "I give tours regularly": "Regularnie organizuję wycieczki",
     "I organize trips on average once a month": "Organizuję wycieczki średnio raz w miesiącu",
@@ -394,9 +396,15 @@
     "Order offer": "Zamów ofertę",
     "Planned date": "Planowana data",
     "Message from tourist": "Wiadomość od turysty",
+    "Message to tourist": "Wiadomość dla turysty",
     "Check user profile with": "Sprawdź profil użytkownika o",
     "Check guide profile with": "Sprawdź profil przewodnika o",
     "Manage your offers": "Zarządzaj swoimi ofertami",
-    "In progress": "W trakcie"
+    "In progress": "W trakcie",
+    "Accepted agreements": "Zaakceptowane umowy",
+    "Send": "Wyślij",
+    "Please, share with us your rating": "Podziel się z nami oceną",
+    "Total number of rates": "Łączna liczba ocen",
+    "Trip rates": "Oceny wycieczki"
   }
 }

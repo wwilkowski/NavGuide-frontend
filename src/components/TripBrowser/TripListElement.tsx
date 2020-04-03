@@ -25,6 +25,8 @@ const getLanguage = (code: string) => {
       return 'English';
     case 'DE':
       return 'German';
+    default:
+      return '';
   }
 };
 
@@ -64,7 +66,7 @@ const TripListElement = ({ trip, hidePhoto }: Props) => {
                     {trip.owner.languages.map((lang: string) => (
                       <li className={styles.offer__langElement} key={lang}>
                         <Typography component='span' variant='subtitle2'>
-                          {getLanguage(lang)}
+                          {t(getLanguage(lang))}
                         </Typography>
                       </li>
                     ))}
