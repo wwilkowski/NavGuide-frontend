@@ -304,7 +304,6 @@ function* reportOffer(action: types.IReportOfferAction) {
     }
   } catch (error) {
     showNotification('danger', i18n.t('You can not report this offer now'), i18n.t('Please, try again later'));
-    console.log(error);
   }
 }
 
@@ -392,7 +391,6 @@ function* getOfferFeedbacks(action: types.IGetOfferFeedbacksAction) {
       }
     });
     const feedbacks = yield response.json();
-    console.log(feedbacks);
     if (response.status >= 200 && response.status <= 300) {
       yield put(actions.getOfferFeedbacksSussecced(feedbacks));
     } else {

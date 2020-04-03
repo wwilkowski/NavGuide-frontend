@@ -5,13 +5,12 @@ import history from '../../../history';
 import AgreementCreator from '../../../components/Offers/AgreementCreator';
 import * as actions from '../../Offers/actions';
 import { RouteComponentProps } from 'react-router-dom';
-import { IAgreementOffer, IOffer, IAgreement } from '../types';
+import { IAgreementOffer, IOffer } from '../types';
 import { useTranslation } from 'react-i18next';
 import { Typography, Button, makeStyles, Grid } from '@material-ui/core';
 import TripListElement from '../../../components/TripBrowser/TripListElement';
 import AgreementInfo from '../../../components/AgreementInfo';
 import Chat from '../../../components/Chat';
-import { IUserData } from '../../../shared/types';
 
 interface TParams {
   id: string;
@@ -155,7 +154,7 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
   };
 
   const handleCancelAgreementClick = () => {
-    console.log('cancel create agreement');
+    console.warn('cancel create agreement');
   };
 
   const handleSettleAgreement = (id: number, status: string) => {
@@ -231,10 +230,7 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
                 isAgreementCreated ? (
                   <>
                     <p>Utworzyles juz umowę</p>
-                    <AgreementInfo
-                      handleSettleAgreement={handleSettleAgreement}
-                      agreement={agreement}
-                    />
+                    <AgreementInfo handleSettleAgreement={handleSettleAgreement} agreement={agreement} />
                   </>
                 ) : (
                   <AgreementCreator
@@ -249,19 +245,19 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
               ) : isAgreementCreated ? (
                 <>
                   <p>Umowa utworzona</p>
-                  <AgreementInfo
-                    handleSettleAgreement={handleSettleAgreement}
-                    agreement={agreement}
-                  />
+                  <AgreementInfo handleSettleAgreement={handleSettleAgreement} agreement={agreement} />
                 </>
               ) : (
                 <p>Oferta jest w trakcie tworzenia</p>
               ))}
           </Grid>
           <Grid item xs={8}>
-            {messages && (
-              <Chat messages={[...messages, ...purchaseMessages]} mode={profile.role} userId={profile.id} purchaseId={purchaseId} />
-            )}
+            {messages &&
+              (purchaseMessages ? (
+                <Chat messages={[...messages, ...purchaseMessages]} mode={profile.role} userId={profile.id} purchaseId={purchaseId} />
+              ) : (
+                <Chat messages={messages} mode={profile.role} userId={profile.id} purchaseId={purchaseId} />
+              ))}
           </Grid>
         </Grid>
       )}

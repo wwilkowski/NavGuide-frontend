@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState, useEffect } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import * as Yup from 'yup';
 import { FormikProps, Form, withFormik } from 'formik';
 import { IRateOfferFormValues, IRateOfferFormProps } from './types';
