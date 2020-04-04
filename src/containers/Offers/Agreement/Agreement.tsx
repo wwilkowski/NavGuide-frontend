@@ -5,7 +5,7 @@ import history from '../../../history';
 import AgreementCreator from '../../../components/Offers/AgreementCreator';
 import * as actions from '../../Offers/actions';
 import { RouteComponentProps } from 'react-router-dom';
-import { IAgreementOffer, IOffer } from '../types';
+import { IAgreementOffer, IActiveOffer } from '../types';
 import { useTranslation } from 'react-i18next';
 import { Typography, Button, makeStyles, Grid } from '@material-ui/core';
 import TripListElement from '../../../components/TripBrowser/TripListElement';
@@ -46,23 +46,27 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
 
   const currentOffer = useSelector((state: StoreType) => state.currentOfferReducer.offer);
   const agreements = useSelector((state: StoreType) => state.currentOfferReducer.agreements);
-  const activeOffers = useSelector((state: StoreType) => state.currentOfferReducer.activeOffers);
   const purchaseMessages = useSelector((state: StoreType) => state.currentOfferReducer.messages);
+
+  const approaches = useSelector((state: StoreType) => state.currentOfferReducer.approaches);
+  const purchases = useSelector((state: StoreType) => state.currentOfferReducer.activeOffers);
 
   const [pathFrom, setPathFrom] = useState<string>('');
   const [travelerId, setTravelerId] = useState<number>(-1);
   const [offerId, setOfferId] = useState<number>(-1);
   const [purchaseId, setPurchaseId] = useState<number>(-1);
-  const [touristPlannedDate, setTouristPlannedDate] = useState<Date>(new Date());
   const [currentAgreement, setCurrentAgreement] = useState<IAgreementOffer>();
   const [isAgreementCreated, setAgreementCreated] = useState<boolean>(false);
   const [messages, setMessages] = useState<Message[]>();
   const [agreement, setAgreement] = useState<IAgreementOffer>();
+  const [activePurchase, setActivePurchase] = useState<IActiveOffer>();
 
   useEffect(() => {
     if (props.location.state) if (props.location.state.pathFrom !== undefined) setPathFrom(props.location.state.pathFrom);
 
     dispatcher(actions.getOwnAgreementsRequest());
+    dispatcher(actions.getApproachesRequest());
+    dispatcher(actions.getActiveOffersRequest());
     // eslint-disable-next-line
   }, [dispatcher]);
 
@@ -91,14 +95,6 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
   }, [offerId, dispatcher]);
 
   useEffect(() => {
-    if (purchaseId !== -1 && activeOffers) {
-      activeOffers.forEach((offer: IOffer) => {
-        if (offer.id === purchaseId) setTouristPlannedDate(new Date(offer.plannedDate));
-      });
-    }
-  }, [purchaseId, activeOffers]);
-
-  useEffect(() => {
     if (pathFrom === '/profile/guide') {
       setTravelerId(props.location.state.travelerId);
       setOfferId(props.location.state.offerId);
@@ -122,31 +118,35 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
       setCurrentAgreement(findAgreementById(parseInt(props.location.pathname.substr(11))));
       const actualAgreement = agreements.find(agr => agr.purchase.id === purchaseId);
       setAgreement(actualAgreement);
-      if (actualAgreement) {
+      const actualPurchase = purchases && purchases.find(purchase => purchase.id === purchaseId);
+      const actualApproache = approaches && approaches.find(approache => approache.id === purchaseId);
+      const actual = actualPurchase || actualApproache || undefined;
+      setActivePurchase(actual);
+      if (actual) {
         setMessages([
           {
-            author: actualAgreement.traveler as ShortUser,
+            author: actual.traveler as ShortUser,
             date: new Date(),
-            description: actualAgreement.purchase.message,
+            description: actual.message,
             id: -1
           },
           {
-            author: { ...actualAgreement.purchase.offer.owner, id: actualAgreement.purchase.offer.owner.userId } as ShortUser,
+            author: { ...actual.offer.owner, id: actual.offer.owner.userId } as ShortUser,
             date: new Date(),
-            description: actualAgreement.purchase.feedbackMessage,
+            description: actual.feedbackMessage,
             id: -1
           }
         ]);
       }
     }
-  }, [agreements, currentAgreement, props.location.pathname, purchaseId]);
+  }, [agreements, approaches, currentAgreement, props.location.pathname, purchaseId, purchases]);
 
   const handleCreateAgreementClick = (description: string, plannedDate: Date, price: number) => {
     const newAgreement = {
       purchaseId: purchaseId,
       description: description,
       userId: travelerId,
-      plannedDate: plannedDate.toISOString(),
+      plannedDate: plannedDate.toString(),
       price: price
     };
 
@@ -230,12 +230,12 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
                 isAgreementCreated ? (
                   <>
                     <p>Utworzyles juz umowę</p>
-                    <AgreementInfo handleSettleAgreement={handleSettleAgreement} agreement={agreement} />
+                    <AgreementInfo handleSettleAgreement={handleSettleAgreement} agreement={agreement} role={profile.role} />
                   </>
                 ) : (
                   <AgreementCreator
                     trip={currentOffer}
-                    purchasePlannedDate={touristPlannedDate}
+                    purchasePlannedDate={activePurchase ? activePurchase.plannedDate : new Date()}
                     propOfferId={offerId}
                     propUserId={travelerId}
                     createAgreementClick={handleCreateAgreementClick}
@@ -245,7 +245,7 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
               ) : isAgreementCreated ? (
                 <>
                   <p>Umowa utworzona</p>
-                  <AgreementInfo handleSettleAgreement={handleSettleAgreement} agreement={agreement} />
+                  <AgreementInfo handleSettleAgreement={handleSettleAgreement} agreement={agreement} role={profile.role} />
                 </>
               ) : (
                 <p>Oferta jest w trakcie tworzenia</p>
