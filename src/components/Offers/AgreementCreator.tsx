@@ -32,7 +32,7 @@ const InnerForm = (props: ICreateAgreementOtherProps & FormikProps<ICreateAgreem
     if (tmp) {
       const data = JSON.parse(tmp);
       props.setFieldValue('price', data.price);
-      props.setFieldValue('plannedDate', new Date(data.plannedDate));
+      // props.setFieldValue('plannedDate', new Date(data.plannedDate));
       props.setFieldValue('description', data.description);
       sessionStorage.removeItem('agreementData');
     }
@@ -68,22 +68,21 @@ const InnerForm = (props: ICreateAgreementOtherProps & FormikProps<ICreateAgreem
         <label htmlFor='plannedDate'>{i18n.t('Select date')}</label>
         <div>
           <DatePicker
-            dateFormat='yyyy/MM/dd hh:mm aa'
-            timeFormat='HH:mm'
-            timeIntervals={15}
+            dateFormat='yyyy/MM/dd HH:mm'
+            timeIntervals={30}
             showTimeSelect
             showTimeInput
             locale='pl-PL'
             minDate={new Date(props.trip.begin)}
             maxDate={new Date(props.trip.end)}
-            selected={values.plannedDate}
+            selected={new Date(values.plannedDate)}
             onChange={date => props.setFieldValue('plannedDate', date)}
           />
         </div>
         <div>
           <TextField
             id='description'
-            label={t('Message to guide')}
+            label={t('Message to tourist')}
             multiline
             rows='4'
             value={values.description}
@@ -113,15 +112,15 @@ const CreateAgreementForm = withFormik<ICreateAgreementOtherProps, ICreateAgreem
       offerId: props.propOfferId,
       description: '',
       userId: props.propUserId,
-      plannedDate: props.purchasePlannedDate || new Date(),
-      price: 0
+      plannedDate: props.purchasePlannedDate,
+      price: props.trip.price
     };
   },
   validationSchema: CreateAgreementSchema,
   handleSubmit: (values, { props }) => {
     const tripBegin = new Date(props.trip.begin);
     const tripEnd = new Date(props.trip.end);
-    if (values.plannedDate.getTime() >= tripBegin.getTime() && values.plannedDate.getTime() <= tripEnd.getTime())
+    if (new Date(values.plannedDate).getTime() >= tripBegin.getTime() && new Date(values.plannedDate).getTime() <= tripEnd.getTime())
       props.createAgreementClick(values.description, values.plannedDate, values.price);
     else showNotification('warning', i18n.t('Bad date!'), i18n.t('Please set date between begin and end offer'));
   }
