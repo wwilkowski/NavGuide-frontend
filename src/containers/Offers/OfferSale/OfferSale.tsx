@@ -91,9 +91,9 @@ const OfferSale = (props: Props) => {
         </Typography>
         <DatePicker
           locale='pl-PL'
-          dateFormat='yyyy/MM/dd hh:mm aa'
+          dateFormat='yyyy/MM/dd HH:mm '
           timeFormat='HH:mm'
-          timeIntervals={15}
+          timeIntervals={30}
           showTimeSelect
           minDate={new Date(currentOffer.begin)}
           maxDate={new Date(currentOffer.end)}
