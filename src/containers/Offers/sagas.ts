@@ -351,8 +351,8 @@ function* sendMessage(action: types.ISendMessageAction) {
       })
     });
 
+    yield put(actions.getMessagesRequest(action.purchaseId));
     if (response.status >= 200 && response.status <= 300) {
-      // yield put(getOwnFeedbacksRequest());
     } else if (response.status === 401) {
       // throw new Error('You are not looged in!');
     } else {

@@ -23,6 +23,10 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center',
     padding: theme.spacing(1),
     color: theme.palette.text.primary
+  },
+  centered: {
+    display: 'flex',
+    alignItems: 'center'
   }
 }));
 
@@ -33,25 +37,17 @@ const TravelerOfferRate = (props: ITravelerOfferRateProps) => {
 
   return (
     <Grid container xs={12} sm={12} style={window.innerWidth < 900 ? { marginBottom: '4rem' } : {}}>
-      <Grid item sm={6} xs={6}>
-        <Paper elevation={0} className={classes.title}>
-          Ocena przewodnika
-        </Paper>
+      <Grid item sm={6} xs={6} className={classes.centered}>
+        <Typography variant='h4'>Ocena przewodnika</Typography>
       </Grid>
-      <Grid item sm={6} xs={6}>
-        <Paper elevation={0} className={classes.title}>
-          Ocena wycieczki
-        </Paper>
+      <Grid item sm={6} xs={6} className={classes.centered}>
+        <Rating value={feedback ? feedback.scoreGuide : 0} readOnly />
       </Grid>
-      <Grid item sm={6} xs={6}>
-        <Paper elevation={0} className={classes.rating}>
-          <Rating value={feedback ? feedback.scoreGuide : 0} readOnly />
-        </Paper>
+      <Grid item sm={6} xs={6} className={classes.centered}>
+        <Typography variant='h4'>Ocena wycieczki</Typography>
       </Grid>
-      <Grid item sm={6} xs={6}>
-        <Paper elevation={0} className={classes.rating}>
-          <Rating value={feedback ? feedback.scoreOffer : 0} readOnly />
-        </Paper>
+      <Grid item sm={6} xs={6} className={classes.centered}>
+        <Rating value={feedback ? feedback.scoreOffer : 0} readOnly />
       </Grid>
       <Grid item sm={12} xs={12}>
         <Paper elevation={0} className={classes.description}>

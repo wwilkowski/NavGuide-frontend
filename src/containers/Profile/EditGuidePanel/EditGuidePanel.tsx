@@ -25,7 +25,8 @@ const useStyles = makeStyles({
     display: 'none'
   },
   text: {
-    textAlign: 'center'
+    padding: '0 1.5rem',
+    fontSize: '1.3em'
   }
 });
 

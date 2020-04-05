@@ -1,13 +1,39 @@
 import React from 'react';
-import TripListElement from '../../TripBrowser/TripListElement';
 import { IOffer, IProfileOffersProps } from '../../../containers/Offers/types';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Typography, makeStyles } from '@material-ui/core';
+import { Typography, makeStyles, Card, CardContent, CardActions, Avatar } from '@material-ui/core';
 
 const useStyles = makeStyles({
-  text: {
-    marginTop: '1rem'
+  root: {
+    minWidth: 275
+  },
+  bullet: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)'
+  },
+  title: {
+    fontSize: 14
+  },
+  pos: {
+    marginBottom: 12
+  },
+  link: {
+    fontSize: '0.8em'
+  },
+  actions: {
+    padding: '0.5rem 1rem'
+  },
+  small: {
+    width: 30,
+    height: 30,
+    marginRight: '0.5rem'
+  },
+  traveler: {
+    marginBottom: '1rem',
+    display: 'flex',
+    alignItems: 'center'
   }
 });
 
@@ -26,13 +52,27 @@ const ActiveOffers = ({ trips }: IProfileOffersProps) => {
     <ul>
       {trips.map((trip: IOffer, i: number) => (
         <li key={i} style={{ padding: '1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '1rem 0' }}>
-          <Typography variant='subtitle2'>
-            <b>{t('Planned date')}:</b> {getDate(trip.plannedDate)}
-          </Typography>
-          <TripListElement trip={trip.offer} hidePhoto={true} />
-          <Link to={`/agreement/create/${trip.traveler.id}/${trip.offer.id}/${trip.id}`} className={classes.text}>
-            Szczegóły oferty
-          </Link>
+          <Card className={classes.root}>
+            <CardContent>
+              <Typography variant='subtitle1' className={classes.traveler}>
+                <Avatar src={trip.traveler.avatar} className={classes.small} />
+                {trip.traveler.firstName} {trip.traveler.lastName}
+              </Typography>
+              <Typography variant='h3' className={classes.title}>
+                {trip.offer.name}
+              </Typography>
+              <Typography variant='subtitle2'>
+                {t('Planned date')}: {getDate(trip.plannedDate)}
+              </Typography>
+
+              {/* <TripListElement trip={trip.offer} hidePhoto={true} /> */}
+            </CardContent>
+            <CardActions className={classes.actions}>
+              <Link to={`/agreement/create/${trip.traveler.id}/${trip.offer.id}/${trip.id}`} className={classes.link}>
+                Szczegóły oferty
+              </Link>
+            </CardActions>
+          </Card>
         </li>
       ))}
     </ul>

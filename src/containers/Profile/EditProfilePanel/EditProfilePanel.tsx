@@ -30,7 +30,11 @@ const useStyles = makeStyles({
     display: 'none'
   },
   text: {
-    textAlign: 'center'
+    padding: '0 1.5rem',
+    fontSize: '1.3em'
+  },
+  emptyInfo: {
+    padding: '1rem 3rem'
   }
 });
 
@@ -106,21 +110,25 @@ const EditProfilePanel = () => {
           <Typography variant='h2' className={classes.text}>
             {t('In progress')}
           </Typography>
-          {approaches ? <ActiveOffers trips={approaches} agreements={agreements} /> : <p>brak</p>}
+          {approaches ? <ActiveOffers trips={approaches} agreements={agreements} /> : <p className={classes.emptyInfo}>brak</p>}
         </Grid>
         {/* Confirmed */}
         <Grid item xs={12} sm={4} className={sceneMode === Scene.confirmed ? styles.profileSection : styles.hidden}>
           <Typography variant='h2' className={classes.text}>
             {t('Accepted agreements')}
           </Typography>
-          <AcceptedOffers agreements={agreements} />
+          {agreements ? <AcceptedOffers agreements={agreements} /> : <p className={classes.emptyInfo}>brak</p>}
         </Grid>
         {/* History */}
         <Grid item xs={12} sm={4} className={sceneMode === Scene.history ? styles.profileSection : styles.hidden}>
           <Typography variant='h2' className={classes.text}>
             {t('History offers')}
           </Typography>
-          <HistoryOffers userRole='traveler' trips={historyOffersTraveler} feedbacks={feedbacks} />
+          {historyOffersTraveler ? (
+            <HistoryOffers userRole='traveler' trips={historyOffersTraveler} feedbacks={feedbacks} />
+          ) : (
+            <p className={classes.emptyInfo}>brak</p>
+          )}
         </Grid>
       </Grid>
 

@@ -63,7 +63,7 @@ export interface ISingleTripType {
 }
 
 export interface IEndedSingleTripType {
-  date: string;
+  date: Date;
   offer: ISingleTripType;
 }
 

@@ -82,58 +82,56 @@ const OfferSale = (props: Props) => {
       >
         <TripListElement trip={currentOffer} />
       </div>
-      <form className={classes.form}>
-        <Typography variant='subtitle2' className={classes.text}>
-          Chcesz wziąć udział w tej wycieczce? Napisz do przewodnika już teraz!
-        </Typography>
-        <Typography variant='h4' className={classes.text}>
-          Zaproponuj datę i godzinę wycieczki
-        </Typography>
-        <DatePicker
-          locale='pl-PL'
-          dateFormat='yyyy/MM/dd HH:mm '
-          timeFormat='HH:mm'
-          timeIntervals={30}
-          showTimeSelect
-          minDate={new Date(currentOffer.begin)}
-          maxDate={new Date(currentOffer.end)}
-          selected={date}
-          onChange={date => setDate(date)}
-        />
-        <Typography variant='h4' className={classes.text}>
-          Wyślij wiadomość do przewodnika
-        </Typography>
-        <TextField
-          style={{ marginTop: '1rem' }}
-          id='outlined-multiline-static'
-          label={t('Message to guide')}
-          multiline
-          rows='4'
-          value={message}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => setMessage(e.target.value)}
-          variant='outlined'
-          className={classes.textarea}
-        />
-        {errorMessage !== '' ? <div>{errorMessage}</div> : null}
-        <Button
-          variant='contained'
-          color='primary'
-          onClick={() => {
-            const tripBegin = new Date(currentOffer.begin);
-            const tripEnd = new Date(currentOffer.end);
+      <Typography variant='subtitle2' className={classes.text}>
+        Chcesz wziąć udział w tej wycieczce? Napisz do przewodnika już teraz!
+      </Typography>
+      <Typography variant='h4' className={classes.text}>
+        Zaproponuj datę i godzinę wycieczki
+      </Typography>
+      <DatePicker
+        locale='pl-PL'
+        dateFormat='yyyy/MM/dd HH:mm '
+        timeFormat='HH:mm'
+        timeIntervals={30}
+        showTimeSelect
+        minDate={new Date(currentOffer.begin)}
+        maxDate={new Date(currentOffer.end)}
+        selected={date}
+        onChange={date => setDate(date)}
+      />
+      <Typography variant='h4' className={classes.text}>
+        Wyślij wiadomość do przewodnika
+      </Typography>
+      <TextField
+        style={{ marginTop: '1rem' }}
+        id='outlined-multiline-static'
+        label={t('Message to guide')}
+        multiline
+        rows='4'
+        value={message}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => setMessage(e.target.value)}
+        variant='outlined'
+        className={classes.textarea}
+      />
+      {errorMessage !== '' ? <div>{errorMessage}</div> : null}
+      <Button
+        variant='contained'
+        color='primary'
+        onClick={() => {
+          const tripBegin = new Date(currentOffer.begin);
+          const tripEnd = new Date(currentOffer.end);
 
-            if (message === '') setErrorMessage('Message is required');
-            else if (message.length < 10) setErrorMessage('Min number of characters is 10');
-            else if (date !== null && date.getTime() >= tripBegin.getTime() && date.getTime() <= tripEnd.getTime()) {
-              setPopupVisible(true);
-            } else {
-              showNotification('warning', i18n.t('Bad date!'), i18n.t('Please set date between begin and end offer'));
-            }
-          }}
-        >
-          {t('Order offer')}
-        </Button>
-      </form>
+          if (message === '') setErrorMessage('Message is required');
+          else if (message.length < 10) setErrorMessage('Min number of characters is 10');
+          else if (date !== null && date.getTime() >= tripBegin.getTime() && date.getTime() <= tripEnd.getTime()) {
+            setPopupVisible(true);
+          } else {
+            showNotification('warning', i18n.t('Bad date!'), i18n.t('Please set date between begin and end offer'));
+          }
+        }}
+      >
+        {t('Order offer')}
+      </Button>
       <VerifyPopup
         onSubmit={() => {
           dispatcher(buyOfferRequest(currentOffer.id.toString(), date ? date : new Date(), message));
