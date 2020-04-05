@@ -1,18 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import { IAcceptedOffersProps, IAgreementOffer } from '../../../containers/Offers/types';
-import TripListElement from '../../TripBrowser/TripListElement';
 import { useSelector } from 'react-redux';
 import { StoreType } from '../../../store';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Typography, makeStyles } from '@material-ui/core';
+import { Typography, makeStyles, Card, CardContent, CardActions, Avatar } from '@material-ui/core';
 
 const useStyles = makeStyles({
-  text: {
-    marginTop: '1rem'
+  root: {
+    minWidth: 275
   },
-  list: {
-    marginBottom: '3rem'
+  bullet: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)'
+  },
+  title: {
+    fontSize: 14
+  },
+  pos: {
+    marginBottom: 12
+  },
+  link: {
+    fontSize: '0.8em'
+  },
+  actions: {
+    padding: '0.5rem 1rem'
+  },
+  small: {
+    width: 30,
+    height: 30,
+    marginRight: '0.5rem'
+  },
+  traveler: {
+    marginBottom: '1rem',
+    display: 'flex',
+    alignItems: 'center'
   }
 });
 
@@ -50,31 +73,46 @@ const AcceptedOffers = (props: IAcceptedOffersProps) => {
   };
 
   return (
-    <ul className={classes.list}>
+    <ul>
       {filteredAgreements.map((agr: IAgreementOffer) => (
         <li key={agr.id} style={{ padding: '1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '1rem 0' }}>
-          <Typography variant='subtitle2'>
-            <b>{t('Planned date')}:</b> {getDate(agr.plannedDate)}
-          </Typography>
-          <TripListElement trip={agr.offer} hidePhoto={true} />
-          {user.role === 'GUIDE' && (
-            <Link to={`/users/${agr.traveler.id}`} className={classes.text}>
-              <p>
-                {t('Check user profile with')} ID {agr.traveler.id}
-              </p>
-            </Link>
-          )}
-          {user.role === 'TRAVELER' && (
-            <Link to={`/guides/${agr.offer.owner.guideId}`} className={classes.text}>
-              {t('Check guide profile with')} ID {agr.offer.owner.guideId}
-            </Link>
-          )}
-
-          <Typography variant='subtitle2'>
-            {t('Price')}: {agr.price}zł ({t(agr.offer.priceType)})
-          </Typography>
-          <Typography variant='subtitle2'>{t('Description')}:</Typography>
-          <Typography variant='body1'>{agr.description}</Typography>
+          <Card className={classes.root}>
+            <CardContent>
+              {user.role === 'GUIDE' ? (
+                <Typography variant='subtitle1' className={classes.traveler}>
+                  <Avatar src={agr.traveler.avatar} className={classes.small} />
+                  {agr.traveler.firstName} {agr.traveler.lastName}
+                </Typography>
+              ) : (
+                <Typography variant='subtitle1' className={classes.traveler}>
+                  <Avatar src={agr.offer.owner.avatar} className={classes.small} />
+                  {agr.offer.owner.firstName} {agr.offer.owner.lastName}
+                </Typography>
+              )}
+              <Typography variant='h3' className={classes.title}>
+                {agr.offer.name}
+              </Typography>
+              <Typography variant='subtitle2'>
+                {t('Planned date')}: {getDate(agr.plannedDate)}
+              </Typography>
+              <Typography variant='subtitle2'>
+                {t('Price')}: {agr.price}zł ({t(agr.offer.priceType)})
+              </Typography>
+              <Typography variant='body1'>{agr.description}</Typography>
+            </CardContent>
+            <CardActions className={classes.actions}>
+              {user.role === 'GUIDE' && (
+                <Link to={`/users/${agr.traveler.id}`} className={classes.link}>
+                  {t('Check user profile with')} ID {agr.traveler.id}
+                </Link>
+              )}
+              {user.role === 'TRAVELER' && (
+                <Link to={`/guides/${agr.offer.owner.guideId}`} className={classes.link}>
+                  {t('Check guide profile with')} ID {agr.offer.owner.guideId}
+                </Link>
+              )}
+            </CardActions>
+          </Card>
         </li>
       ))}
     </ul>

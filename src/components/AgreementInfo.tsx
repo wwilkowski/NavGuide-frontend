@@ -1,7 +1,8 @@
 import React from 'react';
 import { IAgreementOffer } from '../containers/Offers/types';
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import i18n from '../locales/i18n';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   agreement?: IAgreementOffer;
@@ -9,12 +10,26 @@ interface Props {
   handleSettleAgreement: (id: number, status: string) => void;
 }
 
+const getDate = (date: string) => {
+  return date
+    .toString()
+    .replace('T', ' ')
+    .substr(0, date.toString().indexOf('.'));
+};
+
 const AgreementInfo = ({ agreement, handleSettleAgreement, role }: Props) => {
+  const { t } = useTranslation();
+
   return (
     <>
-      <p>Data: {agreement && agreement.plannedDate}</p>
-      <p>Cena: {agreement && agreement.price}</p>
-      <p>Opis: {agreement && agreement.description}</p>
+      <Typography variant='h3'>{t('Date')}</Typography>
+      <p>{agreement && getDate(agreement.plannedDate)}</p>
+      <Typography variant='h3'>{t('Price')}</Typography>
+      <p>{agreement && agreement.price} zł</p>
+
+      <Typography variant='h3'>{t('Description')}</Typography>
+      <p>{agreement && agreement.description}</p>
+
       {role === 'TRAVELER' && (
         <div>
           <Button variant='contained' color='primary' onClick={() => handleSettleAgreement(agreement ? agreement.id : -1, 'ACCEPT')}>

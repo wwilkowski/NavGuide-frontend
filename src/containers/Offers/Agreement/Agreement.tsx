@@ -11,6 +11,15 @@ import { Typography, Button, makeStyles, Grid } from '@material-ui/core';
 import TripListElement from '../../../components/TripBrowser/TripListElement';
 import AgreementInfo from '../../../components/AgreementInfo';
 import Chat from '../../../components/Chat';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import ChatIcon from '@material-ui/icons/Chat';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+
+enum Scene {
+  agreement,
+  chat
+}
 
 interface TParams {
   id: string;
@@ -29,13 +38,32 @@ interface Message {
 }
 
 const useStyles = makeStyles({
+  root: {
+    width: '100vw',
+    position: 'fixed',
+    bottom: '0',
+    left: '0'
+  },
+  hidden: {
+    display: 'none'
+  },
   text: {
     marginTop: '1rem'
+  },
+  agreement: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    textAlign: 'center',
+    padding: '0.5rem'
   }
 });
 
 const Agreement = (props: RouteComponentProps<TParams>) => {
   const classes = useStyles();
+
+  const [sceneMode, setSceneMode] = useState<Scene>(0);
+  const [value, setValue] = React.useState(0);
 
   const profile = useSelector((state: StoreType) => state.profile.user);
   const isLogged = useSelector((state: StoreType) => state.profile.isLoggedIn);
@@ -153,6 +181,19 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
     dispatcher(actions.createAgreementRequest(newAgreement));
   };
 
+  const setMode = (value: number) => {
+    switch (value) {
+      case 0:
+        setSceneMode(Scene.agreement);
+        break;
+      case 1:
+        setSceneMode(Scene.chat);
+        break;
+      default:
+        break;
+    }
+  };
+
   const handleCancelAgreementClick = () => {
     console.warn('cancel create agreement');
   };
@@ -183,6 +224,12 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
     });
     setAgreementCreated(dec);
   };
+
+  const onSend = (message: string, id: number) => {
+    dispatcher(actions.sendMessageRequest(message, id));
+  };
+
+  useEffect(() => {}, [purchaseMessages]);
 
   return (
     <div>
@@ -220,16 +267,17 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
       )}
       {isLogged && (
         <Grid container>
-          <Grid item xs={4}>
-            <h3>
-              <b>{t('Agreement create panel')}</b>
-            </h3>
-            {profile.id !== travelerId ? <p>Jestes guidem</p> : <p>Jestes turysta</p>}
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            className={sceneMode !== Scene.agreement && window.innerWidth < 900 ? classes.hidden : classes.agreement}
+          >
+            <Typography variant='h2'>{t('Current agreement')}</Typography>
             {currentOffer &&
               (profile.id !== travelerId ? (
                 isAgreementCreated ? (
                   <>
-                    <p>Utworzyles juz umowę</p>
                     <AgreementInfo handleSettleAgreement={handleSettleAgreement} agreement={agreement} role={profile.role} />
                   </>
                 ) : (
@@ -251,14 +299,32 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
                 <p>Oferta jest w trakcie tworzenia</p>
               ))}
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={12} sm={6} className={sceneMode !== Scene.chat && window.innerWidth < 900 ? classes.hidden : ''}>
             {messages &&
               (purchaseMessages ? (
-                <Chat messages={[...messages, ...purchaseMessages]} mode={profile.role} userId={profile.id} purchaseId={purchaseId} />
+                <Chat
+                  messages={[...messages, ...purchaseMessages]}
+                  mode={profile.role}
+                  userId={profile.id}
+                  purchaseId={purchaseId}
+                  onSend={onSend}
+                />
               ) : (
-                <Chat messages={messages} mode={profile.role} userId={profile.id} purchaseId={purchaseId} />
+                <Chat messages={messages} mode={profile.role} userId={profile.id} purchaseId={purchaseId} onSend={onSend} />
               ))}
           </Grid>
+          <BottomNavigation
+            value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+              setMode(newValue);
+            }}
+            className={`${classes.root} ${window.innerWidth > 900 && classes.hidden}`}
+            showLabels
+          >
+            <BottomNavigationAction label='Agreement' icon={<AssignmentIcon />} />
+            <BottomNavigationAction label='Chat' icon={<ChatIcon />} />
+          </BottomNavigation>
         </Grid>
       )}
     </div>
