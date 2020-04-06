@@ -25,14 +25,14 @@ const useStyles = makeStyles({
     '@media (min-width:900px)': {
       width: '50vw',
       height: '90vh',
-      position: 'relative'
-    }
+      position: 'relative',
+    },
   },
   marker: {
     borderRadius: '50%',
     border: '1px solid #000000',
-    boxShadow: '10px 10px 5px 0px rgba(0,0,0,0.75)'
-  }
+    boxShadow: '10px 10px 5px 0px rgba(0,0,0,0.75)',
+  },
 });
 
 const LeafletMap = ({ position, trips = [], chosenOfferId = null, setChosenOfferId, height }: Props) => {
@@ -46,7 +46,7 @@ const LeafletMap = ({ position, trips = [], chosenOfferId = null, setChosenOffer
       iconSize: [40, 40],
       iconAnchor: [20, 51],
       popupAnchor: [0, -51],
-      className: classes.marker
+      className: classes.marker,
     });
   };
 
@@ -59,12 +59,12 @@ const LeafletMap = ({ position, trips = [], chosenOfferId = null, setChosenOffer
       <Marker position={{ lat: latitude, lng: longitude }}>
         <Popup>You</Popup>
       </Marker>
-      {trips.map(trip => (
+      {trips.map((trip) => (
         <Marker
           key={trip.name}
           position={{ lat: trip.lat, lng: trip.lon }}
           onMouseOver={() => setChosenOfferId(trip.id)}
-          icon={createIcon(trip.photos[0])}
+          // icon={createIcon(trip.photos[0])}
         >
           <Popup>
             <img src={trip.photos[0]} alt='' />
