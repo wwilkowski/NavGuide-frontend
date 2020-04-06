@@ -11,12 +11,8 @@ import TripListElement from '../TripBrowser/TripListElement';
 import VerifyPopup from '../../shared/VerifyPopup';
 
 const CreateAgreementSchema = Yup.object().shape({
-  description: Yup.string()
-    .min(10, i18n.t('Min. number of characters is 10'))
-    .required(i18n.t('Description is required!')),
-  price: Yup.number()
-    .min(1, i18n.t('Min. price is 1'))
-    .required(i18n.t('Price is required'))
+  description: Yup.string().min(10, i18n.t('Min. number of characters is 10')).required(i18n.t('Description is required!')),
+  price: Yup.number().min(1, i18n.t('Min. price is 1')).required(i18n.t('Price is required')),
 });
 
 const InnerForm = (props: ICreateAgreementOtherProps & FormikProps<ICreateAgreementFormValues>) => {
@@ -46,7 +42,7 @@ const InnerForm = (props: ICreateAgreementOtherProps & FormikProps<ICreateAgreem
           const data = {
             price: values.price,
             plannedDate: values.plannedDate,
-            description: values.description
+            description: values.description,
           };
           sessionStorage.setItem('agreementData', JSON.stringify(data));
         }}
@@ -76,7 +72,7 @@ const InnerForm = (props: ICreateAgreementOtherProps & FormikProps<ICreateAgreem
             minDate={new Date(props.trip.begin)}
             maxDate={new Date(props.trip.end)}
             selected={new Date(values.plannedDate)}
-            onChange={date => props.setFieldValue('plannedDate', date)}
+            onChange={(date) => props.setFieldValue('plannedDate', date)}
           />
         </div>
         <div>
@@ -92,7 +88,7 @@ const InnerForm = (props: ICreateAgreementOtherProps & FormikProps<ICreateAgreem
           {errors.description && touched.description && <div>{t(errors.description)}</div>}
         </div>
         <div>
-          <Button variant='contained' color='primary' onClick={() => setPopupVisibility(true)}>
+          <Button style={{ marginBottom: '3rem' }} variant='contained' color='primary' onClick={() => setPopupVisibility(true)}>
             {t('Create Agreement')}
           </Button>
         </div>
@@ -113,7 +109,7 @@ const CreateAgreementForm = withFormik<ICreateAgreementOtherProps, ICreateAgreem
       description: '',
       userId: props.propUserId,
       plannedDate: props.purchasePlannedDate,
-      price: props.trip.price
+      price: props.trip.price,
     };
   },
   validationSchema: CreateAgreementSchema,
@@ -123,7 +119,7 @@ const CreateAgreementForm = withFormik<ICreateAgreementOtherProps, ICreateAgreem
     if (new Date(values.plannedDate).getTime() >= tripBegin.getTime() && new Date(values.plannedDate).getTime() <= tripEnd.getTime())
       props.createAgreementClick(values.description, values.plannedDate, values.price);
     else showNotification('warning', i18n.t('Bad date!'), i18n.t('Please set date between begin and end offer'));
-  }
+  },
 })(InnerForm);
 
 export default CreateAgreementForm;

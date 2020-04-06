@@ -10,56 +10,56 @@ import Grid from '@material-ui/core/Grid';
 import TravelerOfferRate from './TravelerOfferRate';
 import RateOfferPopup from './RateOfferPopup/RateOfferPopup';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    minWidth: 275
+    minWidth: 275,
   },
   bullet: {
     display: 'inline-block',
     margin: '0 2px',
-    transform: 'scale(0.8)'
+    transform: 'scale(0.8)',
   },
   title: {
-    fontSize: 14
+    fontSize: 14,
   },
   pos: {
-    marginBottom: 12
+    marginBottom: 12,
   },
   link: {
     fontSize: '0.8em',
     color: '#3273dc',
-    cursor: 'pointer'
+    cursor: 'pointer',
   },
   actions: {
-    padding: '0.5rem 1rem'
+    padding: '0.5rem 1rem',
   },
   small: {
     width: 30,
     height: 30,
-    marginRight: '0.5rem'
+    marginRight: '0.5rem',
   },
   traveler: {
     marginBottom: '1rem',
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   rateRoot: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   ratePaper: {
     padding: theme.spacing(1),
     textAlign: 'center',
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
   },
   subtitlePaper: {
     padding: theme.spacing(1),
     textAlign: 'center',
-    color: theme.palette.text.primary
+    color: theme.palette.text.primary,
   },
   rateInfo: {
     fontSize: '0.8em',
-    color: '#f789ae'
-  }
+    color: '#f789ae',
+  },
 }));
 
 const HistoryOffers = (props: IProfileHistoryOffersProps) => {
@@ -75,7 +75,7 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
       offerId: arg.offerId,
       scoreOffer: arg.scoreOffer,
       scoreGuide: arg.scoreGuide,
-      comment: arg.comment
+      comment: arg.comment,
     };
 
     dispatcher(actions.addFeedbackRequest(feedback));
@@ -88,10 +88,7 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
   };
 
   const getDate = (date: Date) => {
-    return date
-      .toString()
-      .replace('T', ' ')
-      .substr(0, date.toString().indexOf('.'));
+    return date.toString().replace('T', ' ').substr(0, date.toString().indexOf('.'));
   };
 
   return (
@@ -107,7 +104,7 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
                 <Typography variant='h3' className={classes.title}>
                   {trip.offer.name}
                 </Typography>
-                <Typography variant='subtitle2'>{getDate(trip.date)}</Typography>
+                <Typography variant='subtitle2'> </Typography>
                 <TravelerOfferRate feedback={feedbacks.find((feedback: IGotFeedback) => trip.offer.id === feedback.offer.id)} />
                 {userRole === 'traveler' && !isRated(trip.offer.id) && (
                   <>

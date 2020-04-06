@@ -19,7 +19,7 @@ import {
   FETCH_CLOSEST_TRIPS_FAILED,
   FETCH_POPULAR_TRIPS_SUCCESSED,
   FETCH_POPULAR_TRIPS_FAILED,
-  FETCH_POPULAR_TRIPS_REQUESTED
+  FETCH_POPULAR_TRIPS_REQUESTED,
 } from './constants';
 
 export interface ITag {
@@ -63,7 +63,8 @@ export interface ISingleTripType {
 }
 
 export interface IEndedSingleTripType {
-  date: Date;
+  dateCreate: Date;
+  dateMeeting: Date;
   offer: ISingleTripType;
 }
 
