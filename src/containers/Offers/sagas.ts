@@ -104,7 +104,7 @@ function* buyOffer(action: types.IBuyOfferAction) {
     });
     if (response.status >= 200 && response.status <= 300) {
       yield put(actions.buyOfferSuccessed());
-      showNotification('success', `${i18n.t('You have asked the guide to buy a trip')}`, '');
+      showNotification('success', `${i18n.t('You have asked the guide to buy a trip')}`, '...');
       yield call(forwardTo, '/');
     } else {
       if (response.status === 401) {
@@ -216,7 +216,7 @@ function* createAgreement(action: types.ICreateAgreementAction) {
     if (response.status >= 200 && response.status <= 300) {
       yield put(actions.getOwnAgreementsRequest());
       showNotification('success', i18n.t('Success'), i18n.t('You have created an agreement'));
-      yield call(forwardTo, '/profile/guide');
+      history.goBack();
     } else if (response.status === 401) {
       throw new Error('You are not logged in');
     } else {
