@@ -110,7 +110,7 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
                   {trip.offer.name}
                 </Typography>
                 <Typography variant='subtitle2'>{getDate(trip.dateMeeting)} </Typography>
-                {feedbacks && (
+                {userRole === 'traveler' && feedbacks && (
                   <TravelerOfferRate feedback={feedbacks.find((feedback: IGotFeedback) => trip.offer.id === feedback.offer.id)} />
                 )}
                 {userRole === 'traveler' && !isRated(trip.offer.id) && (
@@ -155,7 +155,7 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
                 <Link to={`/agreement/create/`} className={classes.link}>
                   Szczegóły oferty
                 </Link>
-                {userRole === 'traveler' && isRated(trip.offer.id) ? (
+                {isRated(trip.offer.id) ? (
                   <>
                     <Grid item sm={12} xs={12}>
                       <Paper elevation={0} className={classes.subtitlePaper}>
@@ -165,11 +165,11 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
                       </Paper>
                     </Grid>
                   </>
-                ) : (
+                ) : userRole === 'traveler' ? (
                   <Typography variant='body1' className={classes.rateInfo}>
                     Oczekuje na ocenę
                   </Typography>
-                )}
+                ) : null}
               </CardActions>
             </Card>
             {/* <TripListElement trip={trip.offer} hidePhoto={true} />

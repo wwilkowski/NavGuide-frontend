@@ -80,7 +80,7 @@ const InnerForm = (props: ICreateAgreementOtherProps & FormikProps<ICreateAgreem
           </Grid>
           <Grid container className={classes.item} justify={window.innerWidth > 900 ? 'center' : 'flex-start'}>
             <DatePicker
-              dateFormat='yyyy/MM/dd HH:mm'
+              dateFormat='yyyy/MM/dd HH:MM'
               timeIntervals={30}
               showTimeSelect
               showTimeInput
