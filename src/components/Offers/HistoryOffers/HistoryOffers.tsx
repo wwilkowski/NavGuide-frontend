@@ -109,7 +109,7 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
                 <Typography variant='h3' className={classes.title}>
                   {trip.offer.name}
                 </Typography>
-                <Typography variant='subtitle2'>{getDate(trip.date)}</Typography>
+                <Typography variant='subtitle2'> </Typography>
                 <TravelerOfferRate feedback={feedbacks.find((feedback: IGotFeedback) => trip.offer.id === feedback.offer.id)} />
                 {userRole === 'traveler' && !isRated(trip.offer.id) && (
                   <>
