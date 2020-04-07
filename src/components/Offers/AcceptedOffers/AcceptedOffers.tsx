@@ -8,35 +8,38 @@ import { Typography, makeStyles, Card, CardContent, CardActions, Avatar } from '
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 275
+    minWidth: 275,
   },
   bullet: {
     display: 'inline-block',
     margin: '0 2px',
-    transform: 'scale(0.8)'
+    transform: 'scale(0.8)',
   },
   title: {
-    fontSize: 14
+    fontSize: 14,
   },
   pos: {
-    marginBottom: 12
+    marginBottom: 12,
   },
   link: {
-    fontSize: '0.8em'
+    fontSize: '0.8em',
   },
   actions: {
-    padding: '0.5rem 1rem'
+    padding: '0.5rem 1rem',
   },
   small: {
     width: 30,
     height: 30,
-    marginRight: '0.5rem'
+    marginRight: '0.5rem',
   },
   traveler: {
     marginBottom: '1rem',
     display: 'flex',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
+  info: {
+    padding: '1rem 2.5rem',
+  },
 });
 
 const AcceptedOffers = (props: IAcceptedOffersProps) => {
@@ -66,13 +69,10 @@ const AcceptedOffers = (props: IAcceptedOffersProps) => {
   }, [agreements, location.pathname, user.id, user.role]);
 
   const getDate = (date: string) => {
-    return date
-      .toString()
-      .replace('T', ' ')
-      .substr(0, date.toString().indexOf('.'));
+    return date.toString().replace('T', ' ').substr(0, date.toString().indexOf('.'));
   };
 
-  return (
+  return filteredAgreements && filteredAgreements.length ? (
     <ul>
       {filteredAgreements.map((agr: IAgreementOffer) => (
         <li key={agr.id} style={{ padding: '1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '1rem 0' }}>
@@ -116,6 +116,10 @@ const AcceptedOffers = (props: IAcceptedOffersProps) => {
         </li>
       ))}
     </ul>
+  ) : (
+    <Typography variant='subtitle2' className={classes.info}>
+      {t('Accepted offers will appear here.')}
+    </Typography>
   );
 };
 

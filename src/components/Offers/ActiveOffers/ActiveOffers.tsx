@@ -6,35 +6,38 @@ import { Typography, makeStyles, Card, CardContent, CardActions, Avatar } from '
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 275
+    minWidth: 275,
   },
   bullet: {
     display: 'inline-block',
     margin: '0 2px',
-    transform: 'scale(0.8)'
+    transform: 'scale(0.8)',
   },
   title: {
-    fontSize: 14
+    fontSize: 14,
   },
   pos: {
-    marginBottom: 12
+    marginBottom: 12,
   },
   link: {
-    fontSize: '0.8em'
+    fontSize: '0.8em',
   },
   actions: {
-    padding: '0.5rem 1rem'
+    padding: '0.5rem 1rem',
   },
   small: {
     width: 30,
     height: 30,
-    marginRight: '0.5rem'
+    marginRight: '0.5rem',
   },
   traveler: {
     marginBottom: '1rem',
     display: 'flex',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
+  info: {
+    padding: '1rem 2.5rem',
+  },
 });
 
 const ActiveOffers = ({ trips }: IProfileOffersProps) => {
@@ -42,10 +45,7 @@ const ActiveOffers = ({ trips }: IProfileOffersProps) => {
   const classes = useStyles();
 
   const getDate = (date: Date) => {
-    return date
-      .toString()
-      .replace('T', ' ')
-      .substr(0, date.toString().indexOf('.'));
+    return date.toString().replace('T', ' ').substr(0, date.toString().indexOf('.'));
   };
 
   return trips && trips.length ? (
@@ -76,7 +76,11 @@ const ActiveOffers = ({ trips }: IProfileOffersProps) => {
         </li>
       ))}
     </ul>
-  ) : null;
+  ) : (
+    <Typography variant='subtitle2' className={classes.info}>
+      {t('Offers in progress will appear here. You will get access to the contract and talk to another person.')}
+    </Typography>
+  );
 };
 
 export default ActiveOffers;

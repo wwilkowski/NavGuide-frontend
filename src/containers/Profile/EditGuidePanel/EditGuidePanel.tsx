@@ -13,31 +13,33 @@ import HistoryIcon from '@material-ui/icons/History';
 import CheckIcon from '@material-ui/icons/Check';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import ActiveOffers from '../../../components/Offers/ActiveOffers/ActiveOffers';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles({
   root: {
     width: '100vw',
     position: 'fixed',
     bottom: '0',
-    left: '0'
+    left: '0',
   },
   hidden: {
-    display: 'none'
+    display: 'none',
   },
   text: {
     padding: '0 1.5rem',
-    fontSize: '1.3em'
-  }
+    fontSize: '1.3em',
+  },
 });
 
 enum Scene {
   notifications,
   inprogress,
   confirmed,
-  history
+  history,
 }
 
 const EditGuidePanel = () => {
+  const { t } = useTranslation();
   const classes = useStyles();
   const dispatcher = useDispatch();
 
@@ -83,29 +85,25 @@ const EditGuidePanel = () => {
     <Grid container>
       <Grid item xs={12} sm={3} className={!(sceneMode === Scene.notifications) && window.innerWidth < 900 ? classes.hidden : ''}>
         <Typography variant='h2' className={classes.text}>
-          Powiadomienia
+          {t('Notifications')}
         </Typography>
         <OrderedOffers trips={activeOffers} agreements={agreements} />
       </Grid>
       <Grid item xs={12} sm={3} className={!(sceneMode === Scene.inprogress) && window.innerWidth < 900 ? classes.hidden : ''}>
         <Typography variant='h2' className={classes.text}>
-          W trakcie
+          {t('In progress')}
         </Typography>
-        {activeOffers ? (
-          <ActiveOffers trips={activeOffers.filter(offer => offer.status === 'ACCEPTED')} agreements={agreements} />
-        ) : (
-          <p>brak</p>
-        )}
+        {activeOffers && <ActiveOffers trips={activeOffers.filter((offer) => offer.status === 'ACCEPTED')} agreements={agreements} />}
       </Grid>
       <Grid item xs={12} sm={3} className={!(sceneMode === Scene.confirmed) && window.innerWidth < 900 ? classes.hidden : ''}>
         <Typography variant='h2' className={classes.text}>
-          Zaakceptowane umowy
+          {t('Accepted offers')}
         </Typography>
         <AcceptedOffers agreements={agreements} />
       </Grid>
       <Grid item xs={12} sm={3} className={!(sceneMode === Scene.history) && window.innerWidth < 900 ? classes.hidden : ''}>
         <Typography variant='h2' className={classes.text}>
-          Historia wycieczek
+          {t('History')}
         </Typography>
         <HistoryOffers userRole='guide' trips={historyOffers} feedbacks={feedbacks} />
       </Grid>

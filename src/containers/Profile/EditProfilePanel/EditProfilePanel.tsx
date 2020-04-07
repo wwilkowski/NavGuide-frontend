@@ -24,25 +24,25 @@ const useStyles = makeStyles({
     width: '100vw',
     position: 'fixed',
     bottom: '0',
-    left: '0'
+    left: '0',
   },
   hidden: {
-    display: 'none'
+    display: 'none',
   },
   text: {
     padding: '0 1.5rem',
-    fontSize: '1.3em'
+    fontSize: '1.3em',
   },
   emptyInfo: {
-    padding: '1rem 3rem'
-  }
+    padding: '1rem 2.5rem',
+  },
 });
 
 enum Scene {
   profile,
   agreements,
   confirmed,
-  history
+  history,
 }
 
 const EditProfilePanel = () => {
@@ -110,7 +110,13 @@ const EditProfilePanel = () => {
           <Typography variant='h2' className={classes.text}>
             {t('In progress')}
           </Typography>
-          {approaches ? <ActiveOffers trips={approaches} agreements={agreements} /> : <p className={classes.emptyInfo}>brak</p>}
+          {approaches ? (
+            <ActiveOffers trips={approaches} agreements={agreements} />
+          ) : (
+            <Typography variant='subtitle2' className={classes.emptyInfo}>
+              {t('Offers in progress will appear here. You will get access to the contract and talk to another person.')}
+            </Typography>
+          )}
         </Grid>
         {/* Confirmed */}
         <Grid item xs={12} sm={4} className={sceneMode === Scene.confirmed ? styles.profileSection : styles.hidden}>
