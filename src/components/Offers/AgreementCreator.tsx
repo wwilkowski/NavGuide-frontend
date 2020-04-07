@@ -21,6 +21,11 @@ const useStyles = makeStyles((theme) => ({
   },
   item: {
     paddingBottom: theme.spacing(2),
+    width: '100%',
+    textAlign: 'center',
+  },
+  date: {
+    margin: '1rem',
   },
 }));
 
@@ -61,10 +66,10 @@ const InnerForm = (props: ICreateAgreementOtherProps & FormikProps<ICreateAgreem
       </div>
       <Form className={classes.form}>
         <Grid container xs={12} sm={12}>
-          <Grid container xs={12} sm={12} justify={window.innerWidth > 900 ? 'center' : 'flex-start'}>
+          <Grid container xs={12} sm={12} justify={'center'}>
             <Typography variant='subtitle1'>{t('Price')}</Typography>
           </Grid>
-          <Grid container xs={12} sm={12} justify={window.innerWidth > 900 ? 'center' : 'flex-start'}>
+          <Grid container xs={12} sm={12} justify={'center'}>
             <TextField
               className={classes.item}
               id='price'
@@ -75,19 +80,21 @@ const InnerForm = (props: ICreateAgreementOtherProps & FormikProps<ICreateAgreem
             />
             {errors.price && touched.price && <div>{t(errors.price)}</div>}
           </Grid>
-          <Grid container justify={window.innerWidth > 900 ? 'center' : 'flex-start'}>
+          <Grid container justify={'center'}>
             <Typography variant='subtitle1'>{t('Select date')}</Typography>
           </Grid>
-          <Grid container className={classes.item} justify={window.innerWidth > 900 ? 'center' : 'flex-start'}>
+          <Grid container className={classes.item} justify={'center'}>
             <DatePicker
               dateFormat='yyyy/MM/dd HH:mm'
               timeIntervals={30}
               showTimeInput
+              showTimeSelect
               locale='pl-PL'
               minDate={new Date(props.trip.begin)}
               maxDate={new Date(props.trip.end)}
               selected={new Date(values.plannedDate)}
               onChange={(date) => props.setFieldValue('plannedDate', date)}
+              className={classes.date}
             />
           </Grid>
           <Grid container xs={12} justify='center'>
