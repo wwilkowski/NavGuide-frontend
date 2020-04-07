@@ -99,11 +99,12 @@ function* buyOffer(action: types.IBuyOfferAction) {
       body: JSON.stringify({
         offerId: action.id,
         message: action.message,
-        plannedDate: action.date,
+        plannedDate: action.date.setHours(action.date.getHours() + 2),
       }),
     });
     if (response.status >= 200 && response.status <= 300) {
-      showNotification('success', `${i18n.t('You have asked the guide to buy a trip')}`, '');
+      yield put(actions.buyOfferSuccessed());
+      showNotification('success', `${i18n.t('You have asked the guide to buy a trip')}`, '...');
       yield call(forwardTo, '/');
       //yield put(actions.buyOfferSuccessed());
     } else {

@@ -274,9 +274,7 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
             {currentOffer &&
               (profile.id !== travelerId ? (
                 isAgreementCreated ? (
-                  <>
-                    <AgreementInfo handleSettleAgreement={handleSettleAgreement} agreement={agreement} role={profile.role} />
-                  </>
+                  <AgreementInfo handleSettleAgreement={handleSettleAgreement} agreement={agreement} role={profile.role} />
                 ) : (
                   <AgreementCreator
                     trip={currentOffer}
