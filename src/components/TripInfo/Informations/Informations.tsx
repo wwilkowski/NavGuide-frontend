@@ -118,13 +118,11 @@ const Informations = (props: IInformationsProps) => {
               </div>
               <div className={styles.info}>
                 <p className={styles.subtitle}>{t('From')}:</p>
-                <p className={styles.value}>
-                  {tripData.begin.toString().replace('T', ' ').substr(0, tripData.begin.toString().indexOf('.'))}
-                </p>
+                <p className={styles.value}>{tripData.begin.toString().substr(0, tripData.begin.toString().indexOf('T'))}</p>
               </div>
               <div className={styles.info}>
                 <p className={styles.subtitle}>{t('To')}:</p>
-                <p className={styles.value}>{tripData.end.toString().replace('T', ' ').substr(0, tripData.end.toString().indexOf('.'))}</p>
+                <p className={styles.value}>{tripData.end.toString().substr(0, tripData.end.toString().indexOf('T'))}</p>
               </div>
             </div>
             <div className={styles.section}>

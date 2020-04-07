@@ -8,7 +8,9 @@ import { showNotification } from '../../../helpers/notification';
 import { useTranslation } from 'react-i18next';
 import history from '../../../history';
 import VerifyPopup from '../../../shared/VerifyPopup';
-import { Button, TextField, Typography, makeStyles } from '@material-ui/core';
+import { Button, TextField, Typography, makeStyles, Theme, withStyles } from '@material-ui/core';
+import CheckIcon from '@material-ui/icons/Check';
+import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles({
   text: {
@@ -21,6 +23,9 @@ const useStyles = makeStyles({
     textAlign: 'center',
     padding: '0 1rem',
     margin: '0.5rem 0',
+  },
+  info: {
+    padding: '1rem 2.5rem',
   },
 });
 
@@ -67,6 +72,26 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
     if (message) dispatcher(actions.settleActiveOfferRequest(tripId, status, message));
     else showNotification('warning', t('Form error'), t('Message is required') + '!');
   };
+
+  const AcceptButton = withStyles((theme: Theme) => ({
+    root: {
+      color: '#ffffff',
+      backgroundColor: '#46ab2b',
+      '&:hover': {
+        backgroundColor: '#46ab2b',
+      },
+    },
+  }))(Button);
+
+  const CancelButton = withStyles((theme: Theme) => ({
+    root: {
+      color: theme.palette.getContrastText('#F80000'),
+      backgroundColor: '#F80000',
+      '&:hover': {
+        backgroundColor: '#F80000',
+      },
+    },
+  }))(Button);
 
   return filteredTrips && filteredTrips.length ? (
     <ul style={window.innerWidth < 900 ? { marginBottom: '4rem' } : {}} className={classes.list}>
@@ -117,7 +142,7 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
           />
           {errorMessage && <div>{errorMessage}</div>}
           <div className={classes.text}>
-            <Button
+            <AcceptButton
               variant='contained'
               color='primary'
               onClick={() => {
@@ -130,9 +155,9 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
                 }
               }}
             >
-              {t('Accept')}
-            </Button>
-            <Button
+              <CheckIcon />
+            </AcceptButton>
+            <CancelButton
               variant='contained'
               color='primary'
               onClick={() => {
@@ -145,8 +170,8 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
                 }
               }}
             >
-              {t('Reject')}
-            </Button>
+              <CloseIcon />
+            </CancelButton>
           </div>
           <VerifyPopup
             onSubmit={() => {
@@ -167,7 +192,11 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
         </li>
       ))}
     </ul>
-  ) : null;
+  ) : (
+    <Typography variant='subtitle2' className={classes.info}>
+      {t('Notifications about the interest in your offers will appear here.')}
+    </Typography>
+  );
 };
 
 export default OrderedOffers;

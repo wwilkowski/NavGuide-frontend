@@ -64,7 +64,7 @@ const LeafletMap = ({ position, trips = [], chosenOfferId = null, setChosenOffer
           key={trip.name}
           position={{ lat: trip.lat, lng: trip.lon }}
           onMouseOver={() => setChosenOfferId(trip.id)}
-          // icon={createIcon(trip.photos[0])}
+          icon={createIcon(trip.photos[0])}
         >
           <Popup>
             <img src={trip.photos[0]} alt='' />

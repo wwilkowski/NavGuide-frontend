@@ -110,7 +110,13 @@ const EditProfilePanel = () => {
           <Typography variant='h2' className={classes.text}>
             {t('In progress')}
           </Typography>
-          {approaches ? <ActiveOffers trips={approaches} agreements={agreements} /> : <p className={classes.emptyInfo}>brak</p>}
+          {approaches ? (
+            <ActiveOffers trips={approaches} agreements={agreements} />
+          ) : (
+            <Typography variant='subtitle2' className={classes.emptyInfo}>
+              {t('Offers in progress will appear here. You will get access to the contract and talk to another person.')}
+            </Typography>
+          )}
         </Grid>
         {/* Confirmed */}
         <Grid item xs={12} sm={4} className={sceneMode === Scene.confirmed ? styles.profileSection : styles.hidden}>

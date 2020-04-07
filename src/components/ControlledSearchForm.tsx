@@ -118,7 +118,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                 id={'location'}
                 type='text'
                 name='location'
-                label={t('Location')}
+                label={values.searchMode === 'geo' ? t('Location') : t('Offer name')}
                 value={props.formValue}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   props.handleChange(event);

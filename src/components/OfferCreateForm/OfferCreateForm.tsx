@@ -19,11 +19,24 @@ import { Typography } from '@material-ui/core';
 import * as Yup from 'yup';
 import i18n from '../../locales/i18n';
 
-/*const msg = i18n.t('All fields are required');
-const OfferCreateSchema = Yup.object().shape({
-  place: Yup.string().min(10, 'min').required(msg),
-  begin: Yup.date().required(msg),
-});*/
+const OfferSchema = Yup.object().shape({
+  place: Yup.string()
+    .matches(/([a-zA-Z',.-]+( [a-zA-Z',.-]+)*){1,100}/, `${i18n.t('Input is not valid')}!`)
+    .required(`${i18n.t('Location is required')}!`),
+  name: Yup.string()
+    .matches(/([a-zA-Z',.-]+( [a-zA-Z',.-]+)*){1,100}/, `${i18n.t('Input is not valid')}!`)
+    .required(`${i18n.t('Place name is required')}!`),
+  city: Yup.string()
+    .matches(/([a-zA-Z',.-]+( [a-zA-Z',.-]+)*){1,100}/, `${i18n.t('Input is not valid')}!`)
+    .required(`${i18n.t('City is required')}!`),
+  maxPeople: Yup.number()
+    .min(1)
+    .required(`${i18n.t('Max people number is required')}!`),
+  price: Yup.number().required(`${i18n.t('Price is required')}!`),
+  description: Yup.string()
+    .matches(/([a-zA-Z',.-]+( [a-zA-Z',.-]+)*){1,100}/, `${i18n.t('Input is not valid')}!`)
+    .required(`${i18n.t('Description is required')}!`),
+});
 
 const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>) => {
   const { touched, errors, setFieldValue, values } = props;
@@ -31,6 +44,7 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
   const dispatcher = useDispatch();
   const tags = useSelector((state: StoreType) => state.tripBrowser.tags);
   const suggestedCities = useSelector((state: StoreType) => state.tripBrowser.places);
+  const [photo, setPhoto] = useState(false);
 
   useEffect(() => {
     dispatcher(fetchTagsRequested());
@@ -72,7 +86,7 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
         <Field
           id='location'
           type='text'
-          name='location'
+          name='place'
           value={location}
           className={styles.offerForm__input}
           onClick={() => {
@@ -132,6 +146,7 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
             handlePhotoChange(e.target.files, 0);
             if (e.target.files) {
               setFieldValue('file1', e.target.files[0]);
+              setPhoto(true);
             }
           }}
           className={styles.offerForm__imageInput}
@@ -143,6 +158,7 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
             handlePhotoChange(e.target.files, 1);
             if (e.target.files) {
               setFieldValue('file2', e.target.files[0]);
+              setPhoto(true);
             }
           }}
           className={styles.offerForm__imageInput}
@@ -154,6 +170,7 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
             handlePhotoChange(e.target.files, 2);
             if (e.target.files) {
               setFieldValue('file3', e.target.files[0]);
+              setPhoto(true);
             }
           }}
           className={styles.offerForm__imageInput}
@@ -263,7 +280,7 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
           ))}
         </ul>
       </div>
-      <Button variant='contained' color='primary' type='submit' className={styles.offerForm__submitButton}>
+      <Button variant='contained' disabled={!photo} color='primary' type='submit' className={styles.offerForm__submitButton}>
         {t('Submit')}
       </Button>
     </Form>
@@ -298,6 +315,8 @@ const OfferCreateForm = withFormik<types.MyFormProps, types.FullFormValues>({
       description: '',
     };
   },
+  validationSchema: OfferSchema,
+
   handleSubmit: (values: types.FullFormValues, { props }) => {
     values.radius *= 1000;
     props.onSubmit(values);

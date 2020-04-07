@@ -35,6 +35,9 @@ const useStyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
   },
+  info: {
+    padding: '1rem 2.5rem',
+  },
 });
 
 const ActiveOffers = ({ trips }: IProfileOffersProps) => {
@@ -73,7 +76,11 @@ const ActiveOffers = ({ trips }: IProfileOffersProps) => {
         </li>
       ))}
     </ul>
-  ) : null;
+  ) : (
+    <Typography variant='subtitle2' className={classes.info}>
+      {t('Offers in progress will appear here. You will get access to the contract and talk to another person.')}
+    </Typography>
+  );
 };
 
 export default ActiveOffers;
