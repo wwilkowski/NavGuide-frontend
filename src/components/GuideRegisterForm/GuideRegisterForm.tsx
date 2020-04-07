@@ -9,14 +9,14 @@ import experienceStyles from '../../shared/Experience.module.scss';
 import i18n from '../../locales/i18n';
 import Button from '@material-ui/core/Button';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import { Grid } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import VerifyPopup from '../../shared/VerifyPopup';
 
 const GuideFormSchema = Yup.object().shape({
   description: Yup.string()
     .matches(/([a-zA-Z',.-]+( [a-zA-Z',.-]+)*){1,100}/, i18n.t('Input is not valid!'))
     .required('Description is required!'),
-  languages: Yup.array().min(1),
+  languages: Yup.array().min(1, i18n.t('Languages field must have at least 1 item')),
 });
 
 const MyForm = (props: FormikProps<types.FormValues>) => {
@@ -41,7 +41,9 @@ const MyForm = (props: FormikProps<types.FormValues>) => {
   const { touched, errors, values } = props;
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>{t('Become a guide')}</h2>
+      <Grid container justify='center'>
+        <h2 className={styles.title}>{t('Become a guide')}</h2>
+      </Grid>
       <form onSubmit={handleSubmit}>
         <div className={styles.langCase}>
           <label className={styles.label}>{t('Languages')}</label>
@@ -55,8 +57,14 @@ const MyForm = (props: FormikProps<types.FormValues>) => {
                   </li>
                 ))
               : null}
-            {errors.languages && touched.languages && <div>{t(errors.languages)}</div>}
           </ul>
+          {errors.languages && touched.languages && (
+            <Grid container xs={12} sm={12} justify='center'>
+              <Typography variant='body1' color='error'>
+                {t(errors.languages)}
+              </Typography>
+            </Grid>
+          )}
         </div>
         <div className={styles.experienceCase}>
           <label htmlFor='experience' className={styles.label}>
@@ -87,21 +95,27 @@ const MyForm = (props: FormikProps<types.FormValues>) => {
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => props.setFieldValue('description', e.target.value)}
             className={styles.textarea}
           />
-          {errors.description && touched.description && <div>{t(errors.description)}</div>}
+          {errors.description && touched.description && (
+            <Grid container xs={12} sm={12} justify='center'>
+              <Typography variant='body1' color='error'>
+                {t(errors.description)}
+              </Typography>
+            </Grid>
+          )}
         </div>
         <Grid container justify='center'>
-          <VerifyPopup
-            popupVisible={popupVisible}
-            onSubmit={() => {
-              setPopupVisible(false);
-              props.handleSubmit();
-            }}
-            changePopupVisible={() => setPopupVisible(!popupVisible)}
-          />
-          <Button onClick={() => setPopupVisible(true)} variant='contained' color='primary'>
+          <Button style={{ marginTop: '1rem' }} onClick={() => setPopupVisible(true)} variant='contained' color='primary'>
             {t('Submit')}
           </Button>
         </Grid>
+        <VerifyPopup
+          popupVisible={popupVisible}
+          onSubmit={() => {
+            setPopupVisible(false);
+            props.handleSubmit();
+          }}
+          changePopupVisible={() => setPopupVisible(!popupVisible)}
+        />
       </form>
     </div>
   );
