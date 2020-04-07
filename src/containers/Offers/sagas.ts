@@ -99,7 +99,7 @@ function* buyOffer(action: types.IBuyOfferAction) {
       body: JSON.stringify({
         offerId: action.id,
         message: action.message,
-        plannedDate: action.date,
+        plannedDate: action.date.setHours(action.date.getHours() + 2),
       }),
     });
     if (response.status >= 200 && response.status <= 300) {
