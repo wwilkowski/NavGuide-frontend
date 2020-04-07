@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ICreateAgreementOtherProps, ICreateAgreementFormValues } from './types';
 import { FormikProps, Form, withFormik } from 'formik';
-import { TextField, Button } from '@material-ui/core';
+import { TextField, Button, Grid, Typography, makeStyles } from '@material-ui/core';
 import DatePicker from 'react-datepicker';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
@@ -15,8 +15,18 @@ const CreateAgreementSchema = Yup.object().shape({
   price: Yup.number().min(1, i18n.t('Min. price is 1')).required(i18n.t('Price is required')),
 });
 
+const useStyles = makeStyles((theme) => ({
+  form: {
+    margin: theme.spacing(3),
+  },
+  item: {
+    paddingBottom: theme.spacing(2),
+  },
+}));
+
 const InnerForm = (props: ICreateAgreementOtherProps & FormikProps<ICreateAgreementFormValues>) => {
   const { t } = useTranslation();
+  const classes = useStyles();
 
   const { touched, errors, values } = props;
 
@@ -49,54 +59,68 @@ const InnerForm = (props: ICreateAgreementOtherProps & FormikProps<ICreateAgreem
       >
         <TripListElement trip={props.trip} />
       </div>
-      <Form>
-        <div>
-          <TextField
-            id='price'
-            type='text'
-            name='price'
-            label={t('Price') + ' (zł)'}
-            value={values.price}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => props.handleChange(event)}
+      <Form className={classes.form}>
+        <Grid container xs={12} sm={12}>
+          <Grid container xs={12} sm={12} justify={window.innerWidth > 900 ? 'center' : 'flex-start'}>
+            <Typography variant='subtitle1'>{t('Price')}</Typography>
+          </Grid>
+          <Grid container xs={12} sm={12} justify={window.innerWidth > 900 ? 'center' : 'flex-start'}>
+            <TextField
+              className={classes.item}
+              id='price'
+              type='text'
+              name='price'
+              value={values.price}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => props.handleChange(event)}
+            />
+            {errors.price && touched.price && <div>{t(errors.price)}</div>}
+          </Grid>
+          <Grid container justify={window.innerWidth > 900 ? 'center' : 'flex-start'}>
+            <Typography variant='subtitle1'>{t('Select date')}</Typography>
+          </Grid>
+          <Grid container className={classes.item} justify={window.innerWidth > 900 ? 'center' : 'flex-start'}>
+            <DatePicker
+              dateFormat='yyyy/MM/dd HH:mm'
+              timeIntervals={30}
+              showTimeSelect
+              showTimeInput
+              locale='pl-PL'
+              minDate={new Date(props.trip.begin)}
+              maxDate={new Date(props.trip.end)}
+              selected={new Date(values.plannedDate)}
+              onChange={(date) => props.setFieldValue('plannedDate', date)}
+            />
+          </Grid>
+          <Grid container xs={12} justify='center'>
+            <TextField
+              id='description'
+              label={t('Message to tourist')}
+              multiline
+              rows='4'
+              value={values.description}
+              onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => props.handleChange(event)}
+              variant='outlined'
+            />
+          </Grid>
+          <Grid container xs={12} sm={12} justify='center' className={classes.item}>
+            {errors.description && touched.description && (
+              <Typography variant='body1' color='error'>
+                {t(errors.description)}
+              </Typography>
+            )}
+          </Grid>
+
+          <Grid container justify='center'>
+            <Button style={{ marginBottom: '3rem' }} variant='contained' color='primary' onClick={() => setPopupVisibility(true)}>
+              {t('Create Agreement')}
+            </Button>
+          </Grid>
+          <VerifyPopup
+            onSubmit={() => props.handleSubmit()}
+            popupVisible={popupVisibility}
+            changePopupVisible={() => setPopupVisibility(!popupVisibility)}
           />
-          {errors.price && touched.price && <div>{t(errors.price)}</div>}
-        </div>
-        <label htmlFor='plannedDate'>{i18n.t('Select date')}</label>
-        <div>
-          <DatePicker
-            dateFormat='yyyy/MM/dd HH:mm'
-            timeIntervals={30}
-            showTimeSelect
-            showTimeInput
-            locale='pl-PL'
-            minDate={new Date(props.trip.begin)}
-            maxDate={new Date(props.trip.end)}
-            selected={new Date(values.plannedDate)}
-            onChange={(date) => props.setFieldValue('plannedDate', date)}
-          />
-        </div>
-        <div>
-          <TextField
-            id='description'
-            label={t('Message to tourist')}
-            multiline
-            rows='4'
-            value={values.description}
-            onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => props.handleChange(event)}
-            variant='outlined'
-          />
-          {errors.description && touched.description && <div>{t(errors.description)}</div>}
-        </div>
-        <div>
-          <Button style={{ marginBottom: '3rem' }} variant='contained' color='primary' onClick={() => setPopupVisibility(true)}>
-            {t('Create Agreement')}
-          </Button>
-        </div>
-        <VerifyPopup
-          onSubmit={() => props.handleSubmit()}
-          popupVisible={popupVisibility}
-          changePopupVisible={() => setPopupVisibility(!popupVisibility)}
-        />
+        </Grid>
       </Form>
     </>
   );

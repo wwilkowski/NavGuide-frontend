@@ -9,12 +9,13 @@ import {
   fetchGuideProfileDataRequest,
   fetchGuideActiveOffersRequest,
   fetchGuideHistoryRequest,
-  fetchGuideProfileRequested
+  fetchGuideProfileRequested,
 } from './actions';
 import history from '../../history';
 import { RouteComponentProps, Redirect } from 'react-router-dom';
 import { showNotification } from '../../helpers/notification';
 import HistoryOffers from '../../components/Offers/HistoryOffers/HistoryOffers';
+import i18n from '../../locales/i18n';
 
 interface TParams {
   guideId: string;
@@ -23,7 +24,7 @@ interface TParams {
 enum Scene {
   profile,
   activeOffers,
-  ratedOffers
+  ratedOffers,
 }
 
 const GuideProfile = (props: RouteComponentProps<TParams>) => {
@@ -42,7 +43,7 @@ const GuideProfile = (props: RouteComponentProps<TParams>) => {
   const feedbacks = useSelector((state: StoreType) => state.currentOfferReducer.feedbacks);
 
   useEffect(() => {
-    if (!isLogged) showNotification('info', 'Information', 'You dont have permission to this content');
+    if (!isLogged) showNotification('info', i18n.t('Information'), i18n.t('You dont have permission to this content'));
   }, [isLogged]);
 
   useEffect(() => {

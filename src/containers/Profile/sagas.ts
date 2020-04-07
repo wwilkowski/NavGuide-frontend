@@ -16,12 +16,12 @@ function* logInGoogle(action: types.ILogInGoogleRequest) {
     const response = yield call(fetch, logInGoogleEndpoint, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         code: action.code,
-        request: window.location.origin
-      })
+        request: window.location.origin,
+      }),
     });
     if (response.status >= 200 && response.status <= 300) {
       const {
@@ -37,7 +37,7 @@ function* logInGoogle(action: types.ILogInGoogleRequest) {
         role,
         token,
         gender,
-        age
+        age,
       } = yield response.json();
       const user = {
         id,
@@ -51,21 +51,21 @@ function* logInGoogle(action: types.ILogInGoogleRequest) {
         interests,
         role,
         gender,
-        age
+        age,
       };
       yield put(actions.logInGoogleSuccessed(user));
       yield initTokenCookie(token);
-      showNotification('success', i18n.t('Logged in successfully!'), '');
+      showNotification('success', i18n.t('Logged in successfully'), '');
       yield call(forwardTo, '/profile');
     } else {
       if (response.status === 401) {
-        throw new Error('User does not exist!');
+        throw new Error('User does not exist');
       } else {
         throw new Error('Something goes wrong');
       }
     }
   } catch (e) {
-    showNotification('danger', i18n.t(`${e.message}`), i18n.t('Try again later!'));
+    showNotification('danger', i18n.t(`${e.message}`), i18n.t('Try again later'));
     yield put(actions.logInGoogleFailed());
   }
 }
@@ -75,7 +75,7 @@ function* logOutGoogle() {
     yield put(actions.logOutGoogleSuccessed());
     yield call(forwardTo, '/');
     yield setToken('');
-    showNotification('success', i18n.t('Logged out successfully'), i18n.t('You will be taken to the main page!'));
+    showNotification('success', i18n.t('Logged out successfully'), i18n.t('You will be taken to the main page'));
   } catch {
     showNotification('danger', i18n.t('Something goes wrong'), i18n.t('Try again later!'));
     yield put(actions.logOutGoogleFailed());
@@ -88,7 +88,7 @@ function* editProfile(action: types.IEditProfileAction) {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${getToken()}`
+        Authorization: `Bearer ${getToken()}`,
       },
 
       body: JSON.stringify({
@@ -100,8 +100,8 @@ function* editProfile(action: types.IEditProfileAction) {
         lastName: action.editUser.lastName,
         telephone: action.editUser.telephone,
         gender: action.editUser.gender,
-        age: action.editUser.age
-      })
+        age: action.editUser.age,
+      }),
     });
 
     if (response.status >= 200 && response.status <= 300) {
@@ -119,10 +119,10 @@ function* editProfile(action: types.IEditProfileAction) {
         gender: gender,
         experience,
         interests,
-        age
+        age,
       };
       yield put(actions.editProfileSuccessed(user));
-      showNotification('success', i18n.t('Profile was edit!'), i18n.t('Your profile is up to data'));
+      showNotification('success', i18n.t('Profile was edit'), i18n.t('Your profile is up to data'));
       yield call(forwardTo, '/profile');
     } else {
       if (response.status === 401) {
@@ -132,7 +132,7 @@ function* editProfile(action: types.IEditProfileAction) {
       }
     }
   } catch (error) {
-    showNotification('danger', i18n.t('Something goes wrong'), i18n.t('Try again later!'));
+    showNotification('danger', i18n.t('Something goes wrong'), i18n.t('Try again later'));
     yield put(actions.editProfileFailed());
   }
 }
@@ -143,8 +143,8 @@ function* getProfile() {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${getToken()}`
-      }
+        Authorization: `Bearer ${getToken()}`,
+      },
     });
     if (response.status >= 200 && response.status <= 300) {
       const {
@@ -159,7 +159,7 @@ function* getProfile() {
         avatar,
         role,
         gender,
-        age
+        age,
       } = yield response.json();
       const user = {
         id,
@@ -173,7 +173,7 @@ function* getProfile() {
         gender,
         experience,
         interests,
-        age
+        age,
       };
       yield put(actions.getProfileSuccessed(user));
     } else {
@@ -195,9 +195,9 @@ function* sendAvatar(action: types.ISendAvatarAction) {
     const response = yield call(fetch, avatarEndpoint, {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${getToken()}`
+        Authorization: `Bearer ${getToken()}`,
       },
-      body: formData
+      body: formData,
     });
     if (response.status >= 200 && response.status <= 300) {
       yield put(actions.sendAvatarSuccessed());
@@ -226,8 +226,8 @@ function* getProfileHistory(action: types.IGetProfileHistoryOffersRequest) {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${getToken()}`
-        }
+          Authorization: `Bearer ${getToken()}`,
+        },
       });
     } else {
       response = yield call(fetch, endpointProfileById);
@@ -251,8 +251,8 @@ function* getOwnFeedbacks() {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${getToken()}`
-      }
+        Authorization: `Bearer ${getToken()}`,
+      },
     });
     const feedbacks = yield response.json();
 

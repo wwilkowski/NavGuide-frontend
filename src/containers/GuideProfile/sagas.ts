@@ -2,7 +2,7 @@ import {
   FETCH_GUIDE_PROFILE_REQUESTED,
   FETCH_GUIDE_PROFILE_DATA_REQUESTED,
   FETCH_GUIDE_ACTIVE_OFFERS_REQUESTED,
-  FETCH_GUIDE_HISTORY_REQUESTED
+  FETCH_GUIDE_HISTORY_REQUESTED,
 } from './constants';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import * as types from './types';
@@ -18,8 +18,8 @@ function* fetchGuideProfileFromAPI(action: types.IFetchGuideProfileRequest) {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${getToken()}`
-      }
+        Authorization: `Bearer ${getToken()}`,
+      },
     });
     const guideProfile = yield response.json();
     if (response.status >= 200 && response.status <= 300) {
@@ -29,7 +29,7 @@ function* fetchGuideProfileFromAPI(action: types.IFetchGuideProfileRequest) {
     }
   } catch (error) {
     yield put(actions.fetchGuideProfileFailed('Error while Guide Profile request'));
-    showNotification('danger', i18n.t('Something goes wrong'), i18n.t('Try again later!'));
+    showNotification('danger', i18n.t('Something goes wrong'), i18n.t('Try again later'));
   }
 }
 
@@ -41,8 +41,8 @@ function* fetchGuideProfileDataFromAPI(action: types.IFetchGuideProfileRequest) 
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${getToken()}`
-      }
+        Authorization: `Bearer ${getToken()}`,
+      },
     });
     const user = yield response.json();
     if (response.status >= 200 && response.status <= 300) {
@@ -52,7 +52,7 @@ function* fetchGuideProfileDataFromAPI(action: types.IFetchGuideProfileRequest) 
     }
   } catch (error) {
     yield put(actions.fetchGuideProfileDataFailed('Error while User Profile request'));
-    showNotification('danger', i18n.t('Something goes wrong'), i18n.t('Try again later!'));
+    showNotification('danger', i18n.t('Something goes wrong'), i18n.t('Try again later'));
   }
 }
 
@@ -64,8 +64,8 @@ function* fetchGuideActiveOffersFromAPI(action: types.IFetchGuideActiveOffersReq
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${getToken()}`
-      }
+        Authorization: `Bearer ${getToken()}`,
+      },
     });
     const activeOffers = yield response.json();
 
@@ -76,7 +76,7 @@ function* fetchGuideActiveOffersFromAPI(action: types.IFetchGuideActiveOffersReq
     }
   } catch (error) {
     yield put(actions.fetchGuideActiveOffersFailed('Error while Guide Active Offers request'));
-    showNotification('danger', i18n.t('Something goes wrong'), i18n.t('Try again later!'));
+    showNotification('danger', i18n.t('Something goes wrong'), i18n.t('Try again later'));
   }
 }
 
@@ -88,8 +88,8 @@ function* fetchGuideHistoryFromAPI(action: types.IFetchGuideHistoryRequest) {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${getToken()}`
-      }
+        Authorization: `Bearer ${getToken()}`,
+      },
     });
     const verifiedOffers = yield response.json();
 
@@ -100,7 +100,7 @@ function* fetchGuideHistoryFromAPI(action: types.IFetchGuideHistoryRequest) {
     }
   } catch (error) {
     yield put(actions.fetchGuideHistoryFailed('Error while Guide History Offers request'));
-    showNotification('danger', i18n.t('Something goes wrong'), i18n.t('Try again later!'));
+    showNotification('danger', i18n.t('Something goes wrong'), i18n.t('Try again later'));
   }
 }
 

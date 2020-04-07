@@ -49,7 +49,7 @@ const ActiveOffers = ({ trips }: IProfileOffersProps) => {
   };
 
   return trips && trips.length ? (
-    <ul>
+    <ul style={window.innerWidth < 900 ? { marginBottom: '4rem' } : {}}>
       {trips.map((trip: IOffer, i: number) => (
         <li key={i} style={{ padding: '1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '1rem 0' }}>
           <Card className={classes.root}>

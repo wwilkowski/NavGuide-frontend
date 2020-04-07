@@ -19,12 +19,12 @@ function* signUpGoogleUser(action: types.ISignUpGoogleRequest) {
     const response = yield call(fetch, signUpGoogleEndpoint, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         code: `${action.code}`,
-        request: window.location.origin
-      })
+        request: window.location.origin,
+      }),
     });
     const status = response.status;
     const json = yield response.json();
@@ -41,15 +41,15 @@ function* signUpGoogleUser(action: types.ISignUpGoogleRequest) {
         gender: json.gender,
         age: json.age,
         experience: 1,
-        interests: []
+        interests: [],
       };
       yield put(
         actions.signUpGoogleSuccessed({
           templateUser: templateUser,
-          registerToken: json.authorizationToken
+          registerToken: json.authorizationToken,
         })
       );
-      showNotification('success', i18n.t('Verification successed!'), i18n.t('Complete your data to finish registration process.'));
+      showNotification('success', i18n.t('Verification successed'), i18n.t('Complete your data to finish registration process'));
       yield call(forwardTo, '/register');
     } else {
       switch (json.status) {
@@ -71,11 +71,11 @@ function* confirmGoogleUser(action: types.IConfirmSignUpRequest) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${action.token}`
+        Authorization: `Bearer ${action.token}`,
       },
       body: JSON.stringify({
-        ...action.templateUser
-      })
+        ...action.templateUser,
+      }),
     });
     const {
       id,
@@ -90,7 +90,7 @@ function* confirmGoogleUser(action: types.IConfirmSignUpRequest) {
       role,
       token,
       gender,
-      age
+      age,
     } = yield response.json();
     const user = {
       id,
@@ -104,15 +104,15 @@ function* confirmGoogleUser(action: types.IConfirmSignUpRequest) {
       interests,
       role,
       gender,
-      age
+      age,
     };
     if (response.status >= 200 && response.status <= 300) {
       yield put(actions.confirmSignUpSuccessed(token));
       yield initTokenCookie(token);
       yield put(logInGoogleSuccessed(user));
-      showNotification('success', i18n.t('Validation successed!'), i18n.t('You are logged in!'));
+      showNotification('success', i18n.t('Validation successed'), i18n.t('You are logged in'));
       if (action.toBeGuide) {
-        showNotification('info', i18n.t('You want to be guide'), i18n.t('Complete your data to declare to be a guide!'));
+        showNotification('info', i18n.t('You want to be guide'), i18n.t('Complete your data to declare to be a guide'));
         yield call(forwardTo, '/register/guide');
       } else {
         yield call(forwardTo, '/profile');
@@ -142,17 +142,17 @@ function* registerGuide(action: types.ISendRegisterGuideRequest) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${getToken()}`
+        Authorization: `Bearer ${getToken()}`,
       },
       body: JSON.stringify({
         languages: action.guideValues.languages,
         experience: action.guideValues.experience,
-        description: action.guideValues.description
-      })
+        description: action.guideValues.description,
+      }),
     });
 
     if (response.status >= 200 && response.status <= 300) {
-      showNotification('success', i18n.t('Success!'), i18n.t('Guide request sent!'));
+      showNotification('success', i18n.t('Success'), i18n.t('Guide request sent'));
 
       yield call(forwardTo, '/profile');
     } else {
@@ -169,8 +169,8 @@ function* getGuideInfo() {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${getToken()}`
-      }
+        Authorization: `Bearer ${getToken()}`,
+      },
     });
     if (response.status >= 200 && response.status <= 300) {
       const json = yield response.json();
@@ -180,7 +180,7 @@ function* getGuideInfo() {
       throw new Error(i18n.t('Unexpected error while checking guide requests'));
     }
   } catch (error) {
-    showNotification('danger', i18n.t('Failed to get guide requests!'), i18n.t(error.message));
+    showNotification('danger', i18n.t('Failed to get guide requests'), i18n.t(error.message));
   }
 }
 

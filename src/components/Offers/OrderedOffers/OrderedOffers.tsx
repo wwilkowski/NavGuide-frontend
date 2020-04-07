@@ -94,7 +94,7 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
   }))(Button);
 
   return filteredTrips && filteredTrips.length ? (
-    <ul className={classes.list}>
+    <ul style={window.innerWidth < 900 ? { marginBottom: '4rem' } : {}} className={classes.list}>
       {agreementsTrips.map((trip: IOffer, i: number) => (
         <li key={i}>
           <p>{trip.plannedDate}</p>
@@ -122,7 +122,7 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
             {trip.message}
           </Typography>
           <Link to={`/users/${trip.traveler.id}`} className={classes.text}>
-            {t('Check user profile with')} ID {trip.traveler.id}
+            {t('Check user')} {trip.traveler.firstName} {trip.traveler.lastName} (ID: {trip.traveler.id})
           </Link>
           <TextField
             id='outlined-multiline-static'
@@ -140,16 +140,18 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
             style={{ width: '100%' }}
             className={classes.text}
           />
-          {errorMessage !== '' && <div>{errorMessage}</div>}
+          {errorMessage && <div>{errorMessage}</div>}
           <div className={classes.text}>
             <AcceptButton
               variant='contained'
               color='primary'
               onClick={() => {
-                if (errorMessage === '') {
+                if (currentMessage === '') setErrorMessage('Message is required!');
+                else if (currentMessage.length < 10) setErrorMessage('Min number of character is 10');
+                else if (errorMessage === '') {
                   setPopupVisible(true);
-                  setStatus('ACCEPT');
                   setOfferId(trip.id);
+                  setStatus('ACCEPT');
                 }
               }}
             >
@@ -159,7 +161,7 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
               variant='contained'
               color='primary'
               onClick={() => {
-                if (currentMessage === '') setErrorMessage('Message is required');
+                if (currentMessage === '') setErrorMessage('Message is required!');
                 else if (currentMessage.length < 10) setErrorMessage('Min number of character is 10');
                 else if (errorMessage === '') {
                   setPopupVisible(true);
