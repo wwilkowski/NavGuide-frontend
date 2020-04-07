@@ -22,7 +22,7 @@ const TripBrowser: React.FC = () => {
   const [positionValue, setPositionValue] = useState<IPosition>({
     latitude: 53.01023065,
     longitude: 18.594376006630313,
-    radius: 1.0
+    radius: 1.0,
   });
 
   useEffect(() => {
@@ -45,8 +45,8 @@ const TripBrowser: React.FC = () => {
         neighbourhood: '',
         postcode: '',
         state: '',
-        suburb: ''
-      }
+        suburb: '',
+      },
     };
 
     onSearchFormSubmit(location, positionValue.radius, 'normal', endDate ? endDate : defaultEnd, beginDate ? beginDate : defaultBegin);
@@ -73,8 +73,8 @@ const TripBrowser: React.FC = () => {
         neighbourhood: '',
         postcode: '',
         state: '',
-        suburb: ''
-      }
+        suburb: '',
+      },
     };
     onSearchFormSubmit(location, positionValue.radius, 'geo', endDate ? endDate : defaultEnd, beginDate ? beginDate : defaultBegin);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -86,8 +86,8 @@ const TripBrowser: React.FC = () => {
 
   useEffect(() => {
     if (activeTags && activeTags.length) {
-      let tmp = tripsData.filter(trip => {
-        const equalTags = trip.tags.filter(tag => activeTags.includes(tag.name));
+      let tmp = tripsData.filter((trip) => {
+        const equalTags = trip.tags.filter((tag) => activeTags.includes(tag.name));
         if (equalTags.length > 0) return true;
         return false;
       });
@@ -114,10 +114,6 @@ const TripBrowser: React.FC = () => {
           tmpDate.setDate(tmpDate.getDate() + 1);
         }
         return false;
-        /*if (tripBegin.getTime() >= beginDate.getTime() && tripEnd.getTime() <= endDate.getTime()) {
-          return true;
-        }
-        return false;*/
       });
 
       setFilteredTrips(tmp);
@@ -154,7 +150,7 @@ const TripBrowser: React.FC = () => {
         setPositionValue({
           latitude: location.coords[1],
           longitude: location.coords[0],
-          radius
+          radius,
         });
         dispatcher(actions.fetchGeoTripsRequested(location.coords[1], location.coords[0], radius * 1000, isLogged));
       }
@@ -167,7 +163,7 @@ const TripBrowser: React.FC = () => {
         setPositionValue({
           latitude: location.coords[1],
           longitude: location.coords[0],
-          radius
+          radius,
         });
         dispatcher(actions.fetchGeoTripsRequested(location.coords[1], location.coords[0], radius * 1000, isLogged));
       } else {

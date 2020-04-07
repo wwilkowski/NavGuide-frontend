@@ -12,16 +12,16 @@ import { Button, TextField, Typography, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
   text: {
-    marginTop: '1rem'
+    marginTop: '1rem',
   },
   list: {
-    marginBottom: '3rem'
+    marginBottom: '3rem',
   },
   description: {
     textAlign: 'center',
     padding: '0 1rem',
-    margin: '0.5rem 0'
-  }
+    margin: '0.5rem 0',
+  },
 });
 
 const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
@@ -60,10 +60,7 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
   }, [currentMessage]);
 
   const getDate = (date: Date) => {
-    return date
-      .toString()
-      .replace('T', ' ')
-      .substr(0, date.toString().indexOf('.'));
+    return date.toString().replace('T', ' ').substr(0, date.toString().indexOf('.'));
   };
 
   const settleOffer = (tripId: number, status: string, message: string) => {
@@ -72,7 +69,7 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
   };
 
   return filteredTrips && filteredTrips.length ? (
-    <ul className={classes.list}>
+    <ul style={window.innerWidth < 900 ? { marginBottom: '4rem' } : {}} className={classes.list}>
       {agreementsTrips.map((trip: IOffer, i: number) => (
         <li key={i}>
           <p>{trip.plannedDate}</p>
@@ -100,7 +97,7 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
             {trip.message}
           </Typography>
           <Link to={`/users/${trip.traveler.id}`} className={classes.text}>
-            {t('Check user profile with')} ID {trip.traveler.id}
+            {t('Check user')} {trip.traveler.firstName} {trip.traveler.lastName} (ID: {trip.traveler.id})
           </Link>
           <TextField
             id='outlined-multiline-static'
@@ -118,16 +115,18 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
             style={{ width: '100%' }}
             className={classes.text}
           />
-          {errorMessage !== '' && <div>{errorMessage}</div>}
+          {errorMessage && <div>{errorMessage}</div>}
           <div className={classes.text}>
             <Button
               variant='contained'
               color='primary'
               onClick={() => {
-                if (errorMessage === '') {
+                if (currentMessage === '') setErrorMessage('Message is required!');
+                else if (currentMessage.length < 10) setErrorMessage('Min number of character is 10');
+                else if (errorMessage === '') {
                   setPopupVisible(true);
-                  setStatus('ACCEPT');
                   setOfferId(trip.id);
+                  setStatus('ACCEPT');
                 }
               }}
             >
@@ -137,7 +136,7 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
               variant='contained'
               color='primary'
               onClick={() => {
-                if (currentMessage === '') setErrorMessage('Message is required');
+                if (currentMessage === '') setErrorMessage('Message is required!');
                 else if (currentMessage.length < 10) setErrorMessage('Min number of character is 10');
                 else if (errorMessage === '') {
                   setPopupVisible(true);
@@ -158,7 +157,7 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
                 history.push(`/agreement/create/${trip.traveler.id}/${trip.offer.id}/${trip.id}`, {
                   pathFrom: '/profile/guide',
                   offerId: trip.offer.id,
-                  travelerId: trip.traveler.id
+                  travelerId: trip.traveler.id,
                 });
               }
             }}

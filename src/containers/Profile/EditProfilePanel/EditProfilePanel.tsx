@@ -24,25 +24,25 @@ const useStyles = makeStyles({
     width: '100vw',
     position: 'fixed',
     bottom: '0',
-    left: '0'
+    left: '0',
   },
   hidden: {
-    display: 'none'
+    display: 'none',
   },
   text: {
     padding: '0 1.5rem',
-    fontSize: '1.3em'
+    fontSize: '1.3em',
   },
   emptyInfo: {
-    padding: '1rem 3rem'
-  }
+    padding: '1rem 3rem',
+  },
 });
 
 enum Scene {
   profile,
   agreements,
   confirmed,
-  history
+  history,
 }
 
 const EditProfilePanel = () => {
@@ -142,10 +142,10 @@ const EditProfilePanel = () => {
         className={`${classes.root} ${window.innerWidth > 900 && classes.hidden}`}
         showLabels
       >
-        <BottomNavigationAction label='Profile' icon={<FaceIcon />} />
-        <BottomNavigationAction label='Agreements' icon={<AssignmentIcon />} />
-        <BottomNavigationAction label='Confirmed' icon={<CheckIcon />} />
-        <BottomNavigationAction label='History' icon={<HistoryIcon />} />
+        <BottomNavigationAction label={t('Profile')} icon={<FaceIcon />} />
+        <BottomNavigationAction label={t('Agreements')} icon={<AssignmentIcon />} />
+        <BottomNavigationAction label={t('Confirmed')} icon={<CheckIcon />} />
+        <BottomNavigationAction label={t('History')} icon={<HistoryIcon />} />
       </BottomNavigation>
     </Grid>
   );

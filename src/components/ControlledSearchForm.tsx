@@ -25,7 +25,7 @@ import {
   RadioGroup,
   FormControlLabel,
   Box,
-  Grid
+  Grid,
 } from '@material-ui/core';
 
 const SearchFormSchema = Yup.object().shape({});
@@ -35,23 +35,23 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       '& > *': {
         width: '100%',
-        margin: '0'
-      }
+        margin: '0',
+      },
     },
     locationInput: {
       position: 'relative',
       '& .MuiFormControl-root': {
-        width: '100%'
-      }
+        width: '100%',
+      },
     },
     suggestedList: {
       position: 'absolute',
       left: 0,
-      top: 0
+      top: 0,
     },
     datePicker: {
-      padding: '0.1rem 0.2rem'
-    }
+      padding: '0.1rem 0.2rem',
+    },
   })
 );
 
@@ -84,7 +84,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
 
   useEffect(() => {
     if (Object.keys(errors).length !== 0 && isSubmitting) {
-      Object.values(errors).forEach(error => {
+      Object.values(errors).forEach((error) => {
         showNotification('warning', t('Form warning'), t(`${error}`));
       });
     }
@@ -135,7 +135,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                     props.setPosition({
                       latitude: location.coords[1],
                       longitude: location.coords[0],
-                      radius: props.positionValue.radius
+                      radius: props.positionValue.radius,
                     });
                     props.onSubmit(location, props.positionValue.radius, 'suggested', values.end, values.begin);
                   }}
@@ -167,7 +167,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                 const position = {
                   latitude: props.positionValue.latitude,
                   longitude: props.positionValue.longitude,
-                  radius: Number(value) || 0.0
+                  radius: Number(value) || 0.0,
                 };
                 props.setPosition(position);
               }}
@@ -196,7 +196,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                   dateFormat='yyyy/MM/dd'
                   minDate={new Date()}
                   selected={values.begin}
-                  onChange={date => setFieldValue('begin', date)}
+                  onChange={(date) => setFieldValue('begin', date)}
                   className={classes.datePicker}
                 />
               </Box>
@@ -209,7 +209,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                   dateFormat='yyyy/MM/dd'
                   minDate={values.begin}
                   selected={values.end}
-                  onChange={date => setFieldValue('end', date)}
+                  onChange={(date) => setFieldValue('end', date)}
                   className={classes.datePicker}
                 />
               </Box>
@@ -235,7 +235,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                 var options = {
                   enableHighAccuracy: true,
                   timeout: 5000,
-                  maximumAge: 0
+                  maximumAge: 0,
                 };
                 navigator.geolocation.getCurrentPosition(
                   ({ coords: { latitude, longitude } }: Position) => {
@@ -245,16 +245,12 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                     props.setPosition({
                       ...props.positionValue,
                       latitude,
-                      longitude
+                      longitude,
                     });
                   },
-                  error => {
+                  (error) => {
                     if (error.code === 1) {
-                      showNotification(
-                        'warning',
-                        t('You denied access to your geolocation'),
-                        t('Allow access following instructions [instruction will be here]')
-                      );
+                      showNotification('warning', t('You denied access to your geolocation'), t('You have not changed coords'));
                     } else {
                       showNotification('danger', t('Something goes wrong'), t(`${error.message}`));
                     }
@@ -290,7 +286,7 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
       searchMode: 'geo',
       activeTags: [],
       begin: defaultBegin,
-      end: defaultEnd
+      end: defaultEnd,
     };
   },
 
@@ -317,8 +313,8 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
             neighbourhood: '',
             postcode: '',
             state: '',
-            suburb: ''
-          }
+            suburb: '',
+          },
         },
         values.radius,
         values.searchMode,
@@ -326,7 +322,7 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
         values.begin
       );
     }
-  }
+  },
 })(InnerForm);
 
 export default ControlledSearchForm;

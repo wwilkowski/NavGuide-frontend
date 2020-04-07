@@ -18,7 +18,7 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 
 enum Scene {
   agreement,
-  chat
+  chat,
 }
 
 interface TParams {
@@ -42,21 +42,21 @@ const useStyles = makeStyles({
     width: '100vw',
     position: 'fixed',
     bottom: '0',
-    left: '0'
+    left: '0',
   },
   hidden: {
-    display: 'none'
+    display: 'none',
   },
   text: {
-    marginTop: '1rem'
+    marginTop: '1rem',
   },
   agreement: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     textAlign: 'center',
-    padding: '0.5rem'
-  }
+    padding: '0.5rem',
+  },
 });
 
 const Agreement = (props: RouteComponentProps<TParams>) => {
@@ -144,10 +144,10 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
 
     if (agreements) {
       setCurrentAgreement(findAgreementById(parseInt(props.location.pathname.substr(11))));
-      const actualAgreement = agreements.find(agr => agr.purchase.id === purchaseId);
+      const actualAgreement = agreements.find((agr) => agr.purchase.id === purchaseId);
       setAgreement(actualAgreement);
-      const actualPurchase = purchases && purchases.find(purchase => purchase.id === purchaseId);
-      const actualApproache = approaches && approaches.find(approache => approache.id === purchaseId);
+      const actualPurchase = purchases && purchases.find((purchase) => purchase.id === purchaseId);
+      const actualApproache = approaches && approaches.find((approache) => approache.id === purchaseId);
       const actual = actualPurchase || actualApproache || undefined;
       setActivePurchase(actual);
       if (actual) {
@@ -156,14 +156,14 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
             author: actual.traveler as ShortUser,
             date: new Date(),
             description: actual.message,
-            id: -1
+            id: -1,
           },
           {
             author: { ...actual.offer.owner, id: actual.offer.owner.userId } as ShortUser,
             date: new Date(),
             description: actual.feedbackMessage,
-            id: -1
-          }
+            id: -1,
+          },
         ]);
       }
     }
@@ -175,7 +175,7 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
       description: description,
       userId: travelerId,
       plannedDate: plannedDate.toString(),
-      price: price
+      price: price,
     };
 
     dispatcher(actions.createAgreementRequest(newAgreement));
@@ -203,10 +203,7 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
   };
 
   const getDate = (date: string) => {
-    return date
-      .toString()
-      .replace('T', ' ')
-      .substr(0, date.toString().indexOf('.'));
+    return date.toString().replace('T', ' ').substr(0, date.toString().indexOf('.'));
   };
 
   const ifAgreementCreated = () => {
@@ -215,7 +212,7 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
       return;
     }
     let dec = false;
-    agreements.forEach(agreement => {
+    agreements.forEach((agreement) => {
       if (agreement.purchase.id === purchaseId) {
         setCurrentAgreement(agreement);
         dec = true;
@@ -292,11 +289,11 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
                 )
               ) : isAgreementCreated ? (
                 <>
-                  <p>Umowa utworzona</p>
+                  <p>{t('Agreement created')}</p>
                   <AgreementInfo handleSettleAgreement={handleSettleAgreement} agreement={agreement} role={profile.role} />
                 </>
               ) : (
-                <p>Oferta jest w trakcie tworzenia</p>
+                <p>{t('Agreement is creating')}...</p>
               ))}
           </Grid>
           <Grid item xs={12} sm={6} className={sceneMode !== Scene.chat && window.innerWidth < 900 ? classes.hidden : ''}>
@@ -322,8 +319,8 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
             className={`${classes.root} ${window.innerWidth > 900 && classes.hidden}`}
             showLabels
           >
-            <BottomNavigationAction label='Agreement' icon={<AssignmentIcon />} />
-            <BottomNavigationAction label='Chat' icon={<ChatIcon />} />
+            <BottomNavigationAction label={t('Agreement')} icon={<AssignmentIcon />} />
+            <BottomNavigationAction label={t('Chat')} icon={<ChatIcon />} />
           </BottomNavigation>
         </Grid>
       )}

@@ -2,8 +2,10 @@ import React from 'react';
 import LogoImage from '../../assets/logo.png';
 import styles from './styles.module.scss';
 import { Typography } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 
 const AppLogo = () => {
+  const { t } = useTranslation();
   return (
     <a href='/' className={styles.link}>
       <img src={LogoImage} alt='app logo' className={styles.logo} />
@@ -12,7 +14,7 @@ const AppLogo = () => {
           NavGuide
         </Typography>
         <Typography component='p' variant='subtitle1'>
-          Find your local guides
+          {t('Find your local guides')}
         </Typography>
       </div>
     </a>

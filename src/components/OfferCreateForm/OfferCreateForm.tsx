@@ -16,6 +16,14 @@ import ImagePlaceholder from '../../assets/imagePlaceholder.jpg';
 import Slider from '@material-ui/core/Slider';
 import Button from '@material-ui/core/Button';
 import { Typography } from '@material-ui/core';
+import * as Yup from 'yup';
+import i18n from '../../locales/i18n';
+
+/*const msg = i18n.t('All fields are required');
+const OfferCreateSchema = Yup.object().shape({
+  place: Yup.string().min(10, 'min').required(msg),
+  begin: Yup.date().required(msg),
+});*/
 
 const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>) => {
   const { touched, errors, setFieldValue, values } = props;
@@ -86,7 +94,7 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
                 props.setPosition({
                   latitude: location.coords[1],
                   longitude: location.coords[0],
-                  radius: props.position.radius
+                  radius: props.position.radius,
                 });
                 setSuggestedListVisible(false);
               }}
@@ -120,7 +128,7 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
         <input
           type='file'
           id='file1'
-          onChange={e => {
+          onChange={(e) => {
             handlePhotoChange(e.target.files, 0);
             if (e.target.files) {
               setFieldValue('file1', e.target.files[0]);
@@ -131,7 +139,7 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
         <input
           type='file'
           id='file2'
-          onChange={e => {
+          onChange={(e) => {
             handlePhotoChange(e.target.files, 1);
             if (e.target.files) {
               setFieldValue('file2', e.target.files[0]);
@@ -142,7 +150,7 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
         <input
           type='file'
           id='file3'
-          onChange={e => {
+          onChange={(e) => {
             handlePhotoChange(e.target.files, 2);
             if (e.target.files) {
               setFieldValue('file3', e.target.files[0]);
@@ -156,7 +164,7 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
         <Typography component='label' variant='subtitle2' htmlFor='begin' className={styles.offerForm__label}>
           {t('Begin')}
         </Typography>
-        <DatePicker dateFormat='yyyy/MM/dd' selected={values.begin} onChange={date => setFieldValue('begin', date)} />
+        <DatePicker dateFormat='yyyy/MM/dd' selected={values.begin} onChange={(date) => setFieldValue('begin', date)} />
         {errors.begin && touched.begin && <div>{t(`Incorrect date`)}</div>}
       </div>
       <div className={`${styles.offerForm__date} ${styles.offerForm__case}`}>
@@ -167,7 +175,7 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
           dateFormat='yyyy/MM/dd'
           selected={values.end}
           maxDate={addDays(values.begin, 31)}
-          onChange={date => setFieldValue('end', date)}
+          onChange={(date) => setFieldValue('end', date)}
           minDate={values.begin}
         />
         {errors.end && touched.end && <div>{t(`Incorrect date`)}</div>}
@@ -224,7 +232,7 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
             const position = {
               latitude: props.position.latitude,
               longitude: props.position.longitude,
-              radius: values.radius || 0.0
+              radius: values.radius || 0.0,
             };
             props.setPosition(position);
           }}
@@ -273,13 +281,13 @@ const OfferCreateForm = withFormik<types.MyFormProps, types.FullFormValues>({
       lat: latitude || 0.0,
       lon: longitude || 0.0,
       file1: new File(['foo'], 'foo.txt', {
-        type: 'text/plain'
+        type: 'text/plain',
       }),
       file2: new File(['foo'], 'foo.txt', {
-        type: 'text/plain'
+        type: 'text/plain',
       }),
       file3: new File(['foo'], 'foo.txt', {
-        type: 'text/plain'
+        type: 'text/plain',
       }),
       maxPeople: 0,
       name: '',
@@ -287,15 +295,14 @@ const OfferCreateForm = withFormik<types.MyFormProps, types.FullFormValues>({
       priceType: 'PER_PERSON',
       radius: radius || 0.0,
       tags: [],
-      description: ''
+      description: '',
     };
   },
-
   handleSubmit: (values: types.FullFormValues, { props }) => {
     values.radius *= 1000;
     props.onSubmit(values);
     values.radius /= 1000;
-  }
+  },
 })(InnerForm);
 
 export default OfferCreateForm;

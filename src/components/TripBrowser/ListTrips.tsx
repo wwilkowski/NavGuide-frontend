@@ -4,7 +4,8 @@ import { ISingleTripType } from '../../containers/TripBrowser/types';
 import { useTranslation } from 'react-i18next';
 import TripListElement from './TripListElement';
 import styles from './ListTrips.module.scss';
-import { Container } from '@material-ui/core';
+import { Container, Grid, Typography } from '@material-ui/core';
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 
 const ListTrips = ({ trips, closestTrips, mode, chosenOfferId, setChosenOfferId }: types.IListTripsProps) => {
   const { t } = useTranslation();
@@ -14,16 +15,31 @@ const ListTrips = ({ trips, closestTrips, mode, chosenOfferId, setChosenOfferId 
   return (
     <Container>
       {mode === types.ListMode.closest ? (
-        <div>
-          {t('No matching trips')}. {t('Trips in your area')}:
-          <ul className={styles.listTrips}>
-            {closestTripsData.map((trip: ISingleTripType) => (
-              <div key={trip.id}>
-                <TripListElement trip={trip} />
-              </div>
-            ))}
-          </ul>
-        </div>
+        <Grid container sm={12} xs={12}>
+          <Grid item xs={10} sm={8}>
+            <Grid container justify='center' xs={12} sm={12}>
+              <Typography variant='h6'>{t('No matching trips')}.</Typography>
+            </Grid>
+            <Grid container justify='center' xs={12} sm={12}>
+              <Typography variant='subtitle2'>{t('Try to change the parameters and find again')}.</Typography>
+            </Grid>
+          </Grid>
+          <Grid container alignItems='center' justify={window.innerWidth > 900 ? 'flex-start' : 'center'} xs={2} sm={4}>
+            <ErrorOutlineIcon style={{ opacity: '0.8' }} fontSize='large' />
+          </Grid>
+          <Grid container justify='center' xs={12} sm={8}>
+            <Typography variant='h6'>{t('Below are suggested trips in your area')}.</Typography>
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <ul className={styles.listTrips}>
+              {closestTripsData.map((trip: ISingleTripType) => (
+                <div key={trip.id}>
+                  <TripListElement trip={trip} />
+                </div>
+              ))}
+            </ul>
+          </Grid>
+        </Grid>
       ) : mode === types.ListMode.popular ? (
         <p>
           {t('No matching trips')}. {t('The most popular trips')}:

@@ -12,22 +12,25 @@ import ControlledSearchForm from '../ControlledSearchForm';
 import LeafletMap from '../LeafletMap/LeafletMap';
 import SearchIcon from '@material-ui/icons/Search';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles({
   menu: {
     position: 'fixed',
     bottom: '0',
     left: '0',
-    width: '100%'
+    width: '100%',
   },
   scrolledGrid: {
     overflowY: 'scroll',
-    height: '85vh'
-  }
+    height: '85vh',
+  },
 });
 
 const SearchForm = (props: ISearchFormProps) => {
   const classes = useStyles();
+
+  const { t } = useTranslation();
 
   const { setPosition, positionValue, formValue, trips, getTrips } = props;
 
@@ -96,8 +99,8 @@ const SearchForm = (props: ISearchFormProps) => {
           showLabels
           className={classes.menu}
         >
-          <BottomNavigationAction label='Search Form' icon={<SearchIcon />} />
-          <BottomNavigationAction label='Show map' icon={<LocationOnIcon />} />
+          <BottomNavigationAction label={t('Search form')} icon={<SearchIcon />} />
+          <BottomNavigationAction label={t('Show map')} icon={<LocationOnIcon />} />
         </BottomNavigation>
       )}
     </Grid>

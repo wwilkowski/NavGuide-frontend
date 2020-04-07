@@ -30,23 +30,23 @@ function* settleGuideRequest(action: types.ISettleGuideRequest) {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json',
-        Authorization: `Bearer ${getToken()}`
+        Authorization: `Bearer ${getToken()}`,
       },
       body: JSON.stringify({
         message: action.data.message,
-        guideRequestStatus: action.data.status
-      })
+        guideRequestStatus: action.data.status,
+      }),
     });
 
     if (response.status >= 200 && response.status <= 300) {
       yield put(actions.getGuideRequestsRequest());
-      showNotification('success', i18n.t('Guide request settled!'), i18n.t('Guide requests are up to data'));
+      showNotification('success', i18n.t('Success'), i18n.t('Guide request settled'));
     } else {
       throw new Error();
     }
   } catch (error) {
     yield put(actions.settleGuideRequestFailed('Error while settle guide request'));
-    showNotification('danger', i18n.t('Something goes wrong'), i18n.t('Try again later!'));
+    showNotification('danger', i18n.t('Something goes wrong'), i18n.t('Try again later'));
   }
 }
 

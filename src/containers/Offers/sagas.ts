@@ -45,9 +45,9 @@ function* createOffer(action: types.ICreateOfferAction) {
     const response = yield call(fetch, offerEndpoint, {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${getToken()}`
+        Authorization: `Bearer ${getToken()}`,
       },
-      body: formData
+      body: formData,
     });
     if (response.status >= 200 && response.status <= 300) {
       yield put(actions.createOfferSuccessed());
@@ -70,8 +70,8 @@ function* getOfferById(action: types.IGetOfferByIdAction) {
     const response = yield call(fetch, currentOfferEndpoint(action.id), {
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${getToken()}`
-      }
+        Authorization: `Bearer ${getToken()}`,
+      },
     });
     if (response.status >= 200 && response.status <= 300) {
       const json = yield response.json();
@@ -94,13 +94,13 @@ function* buyOffer(action: types.IBuyOfferAction) {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
-        Authorization: `Bearer ${getToken()}`
+        Authorization: `Bearer ${getToken()}`,
       },
       body: JSON.stringify({
         offerId: action.id,
         message: action.message,
-        plannedDate: action.date
-      })
+        plannedDate: action.date,
+      }),
     });
     if (response.status >= 200 && response.status <= 300) {
       yield put(actions.buyOfferSuccessed());
@@ -123,8 +123,8 @@ function* getActiveOffers() {
     const response = yield call(fetch, getActiveOffersEndpoint, {
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${getToken()}`
-      }
+        Authorization: `Bearer ${getToken()}`,
+      },
     });
     if (response.status >= 200 && response.status <= 300) {
       const json = yield response.json();
@@ -146,8 +146,8 @@ function* getApproaches() {
     const response = yield call(fetch, getYourApproaches, {
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${getToken()}`
-      }
+        Authorization: `Bearer ${getToken()}`,
+      },
     });
     if (response.status >= 200 && response.status <= 300) {
       const json = yield response.json();
@@ -172,19 +172,19 @@ function* settleActiveOffer(action: types.ISettleOfferAction) {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json',
-        Authorization: `Bearer ${getToken()}`
+        Authorization: `Bearer ${getToken()}`,
       },
       body: JSON.stringify({
         status: action.status,
-        message: action.message
-      })
+        message: action.message,
+      }),
     });
 
     if (response.status >= 200 && response.status <= 300) {
       yield put(actions.getActiveOffersRequest());
 
       if (action.status === 'ACCEPT') showNotification('success', i18n.t('You have accepted offer'), i18n.t('Now create an agreement'));
-      else showNotification('success', i18n.t('You have not accepted offer'), i18n.t('...'));
+      else showNotification('success', i18n.t('You have not accepted offer'), '');
     } else if (response.status === 401) {
       throw new Error('You are not logged in');
     } else {
@@ -203,14 +203,14 @@ function* createAgreement(action: types.ICreateAgreementAction) {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
-        Authorization: `Bearer ${getToken()}`
+        Authorization: `Bearer ${getToken()}`,
       },
       body: JSON.stringify({
         purchaseRequestId: action.newAgreement.purchaseId,
         description: action.newAgreement.description,
         plannedDate: action.newAgreement.plannedDate,
-        price: action.newAgreement.price
-      })
+        price: action.newAgreement.price,
+      }),
     });
 
     if (response.status >= 200 && response.status <= 300) {
@@ -233,14 +233,14 @@ function* getOwnAgreements() {
     const response = yield call(fetch, endpoint, {
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${getToken()}`
-      }
+        Authorization: `Bearer ${getToken()}`,
+      },
     });
     if (response.status >= 200 && response.status <= 300) {
       const json = yield response.json();
       yield put(actions.getOwnAgreementsSuccessed(json));
     } else if (response.status === 401) {
-      throw new Error('You are not logged in!');
+      throw new Error('You are not logged in');
     } else {
       throw new Error('Something goes wrong');
     }
@@ -256,11 +256,11 @@ function* settleAgreement(action: types.ISettleAgreementAction) {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json',
-        Authorization: `Bearer ${getToken()}`
+        Authorization: `Bearer ${getToken()}`,
       },
       body: JSON.stringify({
-        status: action.status
-      })
+        status: action.status,
+      }),
     });
 
     if (response.status >= 200 && response.status <= 300) {
@@ -287,23 +287,23 @@ function* reportOffer(action: types.IReportOfferAction) {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
-        Authorization: `Bearer ${getToken()}`
+        Authorization: `Bearer ${getToken()}`,
       },
       body: JSON.stringify({
         offerId: action.offerId,
-        description: action.description
-      })
+        description: action.description,
+      }),
     });
 
     if (response.status >= 200 && response.status <= 300) {
       showNotification('success', i18n.t('You have reported an offer'), i18n.t('Thank you for help'));
     } else if (response.status === 401) {
-      throw new Error('You are not logged in!');
+      throw new Error('You are not logged in');
     } else {
       throw new Error('Something goes wrong');
     }
   } catch (error) {
-    showNotification('danger', i18n.t('You can not report this offer now'), i18n.t('Please, try again later'));
+    showNotification('danger', i18n.t('You can not report this offer now'), i18n.t('Try again later'));
   }
 }
 
@@ -315,21 +315,21 @@ function* addFeedback(action: types.IAddFeedbackAction) {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
-        Authorization: `Bearer ${getToken()}`
+        Authorization: `Bearer ${getToken()}`,
       },
       body: JSON.stringify({
         offerId: action.feedback.offerId,
         scoreOffer: action.feedback.scoreOffer,
         scoreGuide: action.feedback.scoreGuide,
-        comment: action.feedback.comment
-      })
+        comment: action.feedback.comment,
+      }),
     });
 
     if (response.status >= 200 && response.status <= 300) {
       showNotification('success', i18n.t('Thank you'), i18n.t('You have rated a trip'));
       yield put(getOwnFeedbacksRequest());
     } else if (response.status === 401) {
-      throw new Error('You are not looged in!');
+      throw new Error('You are not looged in');
     } else {
       throw new Error('Something goes wrong');
     }
@@ -344,11 +344,11 @@ function* sendMessage(action: types.ISendMessageAction) {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
-        Authorization: `Bearer ${getToken()}`
+        Authorization: `Bearer ${getToken()}`,
       },
       body: JSON.stringify({
-        description: action.description
-      })
+        description: action.description,
+      }),
     });
 
     yield put(actions.getMessagesRequest(action.purchaseId));
@@ -367,14 +367,14 @@ function* getMessages({ purchaseId }: types.IGetMessagesAction) {
     const response = yield call(fetch, endpoint, {
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${getToken()}`
-      }
+        Authorization: `Bearer ${getToken()}`,
+      },
     });
     if (response.status >= 200 && response.status <= 300) {
       const json = yield response.json();
       yield put(actions.getMessagesSuccessed(json));
     } else if (response.status === 401) {
-      throw new Error('You are not logged in!');
+      throw new Error('You are not logged in');
     }
   } catch (error) {
     console.error(error);
@@ -387,8 +387,8 @@ function* getOfferFeedbacks(action: types.IGetOfferFeedbacksAction) {
     const response = yield call(fetch, endpoint, {
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${getToken()}`
-      }
+        Authorization: `Bearer ${getToken()}`,
+      },
     });
     const feedbacks = yield response.json();
     if (response.status >= 200 && response.status <= 300) {

@@ -23,28 +23,28 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       '& .MuiTextField-root': {
         margin: theme.spacing(1),
-        width: 200
-      }
+        width: 200,
+      },
     },
     textField: {
-      width: '100%'
+      width: '100%',
     },
     '@media (min-width: 800px)': {
       root: {
         '& .MuiTextField-root': {
           margin: 0,
           marginRight: '1rem',
-          width: '200px'
+          width: '200px',
         },
         '& .MuiFormControl-root': {
           marginRight: '1rem',
-          width: '450px'
-        }
+          width: '450px',
+        },
       },
       textField: {
-        width: '100%'
-      }
-    }
+        width: '100%',
+      },
+    },
   })
 );
 
@@ -60,7 +60,7 @@ const SignupSchema = Yup.object().shape({
     .required(`${i18n.t('Telephone number is required')}!`),
   age: Yup.string()
     .matches(/^[1-9]{1}\s?[0-9]{1}$/, `${i18n.t('Input is not valid')}!`)
-    .required(`${i18n.t('Age is required')}!`)
+    .required(`${i18n.t('Age is required')}!`),
 });
 
 const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
@@ -74,7 +74,7 @@ const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
 
   useEffect(() => {
     if (Object.keys(errors).length !== 0 && isSubmitting) {
-      Object.values(errors).forEach(error => {
+      Object.values(errors).forEach((error) => {
         showNotification('warning', t('Form warning'), t(`${error}`));
       });
     }
@@ -105,7 +105,7 @@ const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
           name='firstName'
           value={values.firstName}
           label={t('First name')}
-          onChange={e => {
+          onChange={(e) => {
             props.setFieldValue('firstName', e.target.value);
           }}
           helperText={t(errors.firstName || '')}
@@ -119,7 +119,7 @@ const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
           name='lastName'
           label={t('Last name')}
           value={values.lastName}
-          onChange={e => {
+          onChange={(e) => {
             props.setFieldValue('lastName', e.target.value);
           }}
           helperText={t(errors.lastName || '')}
@@ -140,7 +140,7 @@ const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
             }}
             style={{ width: '100%' }}
           >
-            {countryCodes.map(country => (
+            {countryCodes.map((country) => (
               <option key={country.code} value={country.code}>
                 {t(country.name)}
               </option>
@@ -156,10 +156,10 @@ const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
             name='telephone'
             label={t('Phone')}
             value={values.telephone}
-            onChange={e => props.setFieldValue('telephone', e.target.value)}
+            onChange={(e) => props.setFieldValue('telephone', e.target.value)}
             helperText={t(errors.telephone || '')}
             InputProps={{
-              startAdornment: <InputAdornment position='start'>+</InputAdornment>
+              startAdornment: <InputAdornment position='start'>+</InputAdornment>,
             }}
             className={styles.textField}
             style={{ margin: '1rem 0', width: '100%' }}
@@ -276,12 +276,12 @@ const MyForm = withFormik<MyFormProps, FullFormValues>({
       country: country.toUpperCase() || 'PL',
       email: email || '',
       telephone: telephone || '',
-      gender: gender || 'FEMALE',
+      gender: gender,
       age: age || 10,
       experience: experience || 1,
-      interests: interests.length ? interests.map(i => i.id) : [],
+      interests: interests.length ? interests.map((i) => i.id) : [],
       avatar: '',
-      role: ''
+      role: '',
     };
   },
   validationSchema: SignupSchema,
@@ -293,7 +293,7 @@ const MyForm = withFormik<MyFormProps, FullFormValues>({
     }
     user.telephone = user.telephone.replace(/\s/g, '');
     props.onSubmit(user);
-  }
+  },
 })(InnerForm);
 
 export default MyForm;
