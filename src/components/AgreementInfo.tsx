@@ -11,10 +11,7 @@ interface Props {
 }
 
 const getDate = (date: string) => {
-  return date
-    .toString()
-    .replace('T', ' ')
-    .substr(0, date.toString().indexOf('.'));
+  return date.toString().replace('T', ' ').substr(0, date.toString().indexOf('.'));
 };
 
 const AgreementInfo = ({ agreement, handleSettleAgreement, role }: Props) => {
@@ -30,7 +27,7 @@ const AgreementInfo = ({ agreement, handleSettleAgreement, role }: Props) => {
       <Typography variant='h3'>{t('Description')}</Typography>
       <p>{agreement && agreement.description}</p>
 
-      {role === 'TRAVELER' && (
+      {role === 'TRAVELER' && agreement && agreement.status !== 'ACCEPTED' && (
         <div>
           <Button variant='contained' color='primary' onClick={() => handleSettleAgreement(agreement ? agreement.id : -1, 'ACCEPT')}>
             {i18n.t('Accept')}
