@@ -174,7 +174,7 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
       purchaseId: purchaseId,
       description: description,
       userId: travelerId,
-      plannedDate: plannedDate.toString(),
+      plannedDate: new Date(plannedDate).toUTCString(),
       price: price,
     };
 
@@ -274,10 +274,8 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
             {currentOffer &&
               (profile.id !== travelerId ? (
                 isAgreementCreated ? (
-                  <>
-                    <AgreementInfo handleSettleAgreement={handleSettleAgreement} agreement={agreement} role={profile.role} />
-                  </>
-                ) : (
+                  <AgreementInfo handleSettleAgreement={handleSettleAgreement} agreement={agreement} role={profile.role} />
+                ) : agreement && agreement.status === 'PENDING' ? (
                   <AgreementCreator
                     trip={currentOffer}
                     purchasePlannedDate={activePurchase ? activePurchase.plannedDate : new Date()}
@@ -286,6 +284,8 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
                     createAgreementClick={handleCreateAgreementClick}
                     createAgreementCancel={handleCancelAgreementClick}
                   />
+                ) : (
+                  <Typography variant='subtitle2'>{t('Agreement has ended')}</Typography>
                 )
               ) : isAgreementCreated ? (
                 <>
