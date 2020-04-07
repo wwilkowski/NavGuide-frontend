@@ -16,22 +16,22 @@ const labels: { [index: string]: string } = {
   2: i18n.t('Bad'),
   3: i18n.t('Good'),
   4: i18n.t('Very good'),
-  5: i18n.t('Excellent')
+  5: i18n.t('Excellent'),
 };
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   form: {
-    padding: window.innerWidth < 900 ? theme.spacing(2) : theme.spacing(3, 4)
+    padding: window.innerWidth < 900 ? theme.spacing(2) : theme.spacing(3, 4),
   },
   span: {
-    color: theme.palette.text.primary
+    color: theme.palette.text.primary,
   },
   textField: {
-    width: '100%'
+    width: '100%',
   },
   button: {
-    marginTop: theme.spacing(2)
-  }
+    marginTop: theme.spacing(2),
+  },
 }));
 
 const RateOfferSchema = Yup.object().shape({
@@ -39,7 +39,7 @@ const RateOfferSchema = Yup.object().shape({
   scoreGuide: Yup.number().min(1, `${i18n.t('Score guide is required')}!`),
   comment: Yup.string()
     .min(10, `${i18n.t('Min number of characters is 10')}!`)
-    .required(`${i18n.t('Description is required')}!`)
+    .required(`${i18n.t('Description is required')}!`),
 });
 
 const InnerForm = (props: FormikProps<IRateOfferFormValues>) => {
@@ -152,12 +152,12 @@ const InnerForm = (props: FormikProps<IRateOfferFormValues>) => {
 };
 
 const RateOfferForm = withFormik<IRateOfferFormProps, IRateOfferFormValues>({
-  mapPropsToValues: props => {
+  mapPropsToValues: (props) => {
     return {
       offerId: props.offerId || -1,
       scoreOffer: 0,
       scoreGuide: 0,
-      comment: ''
+      comment: '',
     };
   },
   validationSchema: RateOfferSchema,
@@ -167,10 +167,10 @@ const RateOfferForm = withFormik<IRateOfferFormProps, IRateOfferFormValues>({
         offerId: values.offerId,
         scoreOffer: values.scoreOffer,
         scoreGuide: values.scoreGuide,
-        comment: values.comment
+        comment: values.comment,
       });
-    else showNotification('danger', 'Error', 'Try again later');
-  }
+    else showNotification('danger', i18n.t('Error'), i18n.t('Try again later'));
+  },
 })(InnerForm);
 
 export default RateOfferForm;

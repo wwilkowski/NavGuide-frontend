@@ -74,7 +74,7 @@ const Informations = (props: IInformationsProps) => {
           >
             <div className={styles.nav__case}>
               <img className={styles.nav__icon} src={''} alt='' />
-              <p className={styles.nav__p}>Offer</p>
+              <p className={styles.nav__p}>{t('Offer')}</p>
             </div>
           </li>
           <li
@@ -85,13 +85,13 @@ const Informations = (props: IInformationsProps) => {
           >
             <div className={styles.nav__case}>
               <img className={styles.nav__icon} src={''} alt='' />
-              <p className={styles.nav__p}>Guide</p>
+              <p className={styles.nav__p}>{t('Guide')}</p>
             </div>
           </li>
           <li className={styles.nav__menuItem} onClick={() => {}}>
             <div className={styles.nav__case}>
               <Link to={`/offers/${tripData.id}/buy`} className={styles.link}>
-                {t('Order now!')}
+                {t('Order now')}!
               </Link>
             </div>
           </li>

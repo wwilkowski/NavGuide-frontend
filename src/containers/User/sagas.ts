@@ -14,8 +14,8 @@ function* fetchUserProfileFromAPI(action: types.IGetUserProfileRequest) {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${getToken()}`
-      }
+        Authorization: `Bearer ${getToken()}`,
+      },
     });
     const user = yield response.json();
     if (response.status >= 200 && response.status <= 300) {
@@ -25,7 +25,7 @@ function* fetchUserProfileFromAPI(action: types.IGetUserProfileRequest) {
     }
   } catch (error) {
     yield put(actions.getUserProfileFailed('Error while User Profile request'));
-    showNotification('danger', i18n.t('Something goes wrong'), i18n.t('Try again later!'));
+    showNotification('danger', i18n.t('Something goes wrong'), i18n.t('Try again later'));
   }
 }
 

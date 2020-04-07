@@ -10,25 +10,25 @@ import { useTranslation } from 'react-i18next';
 import { reportOfferRequest } from '../../../containers/Offers/actions';
 import { useDispatch } from 'react-redux';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   modal: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   paper: {
     width: window.innerWidth > 900 ? '20%' : '100%',
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3)
+    padding: theme.spacing(2, 4, 3),
   },
   textField: {
     padding: theme.spacing(2),
-    width: '100%'
+    width: '100%',
   },
   button: {
-    margin: theme.spacing(2, 0, 0)
-  }
+    margin: theme.spacing(2, 0, 0),
+  },
 }));
 
 const ReportPopup = (props: IReportPopupProps) => {
@@ -67,7 +67,7 @@ const ReportPopup = (props: IReportPopupProps) => {
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{
-        timeout: 500
+        timeout: 500,
       }}
     >
       <Fade in={popupVisibility}>
@@ -93,7 +93,7 @@ const ReportPopup = (props: IReportPopupProps) => {
             {errorMessage ? (
               <Grid container justify='center' alignItems='flex-start' xs={12} sm={12}>
                 <Typography variant='subtitle2' color='error'>
-                  Min number of charaters is 10!
+                  {t('Min number of characters is')} 10!
                 </Typography>
               </Grid>
             ) : null}

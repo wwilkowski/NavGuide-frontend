@@ -5,7 +5,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@material-ui/core';
 
-const VerifyPopup = props => {
+const VerifyPopup = (props) => {
   const { t } = useTranslation();
   return (
     <Dialog
@@ -27,7 +27,6 @@ const VerifyPopup = props => {
         </Button>
         <Button
           onClick={() => {
-            props.onSubmit();
             props.changePopupVisible();
           }}
           color='primary'

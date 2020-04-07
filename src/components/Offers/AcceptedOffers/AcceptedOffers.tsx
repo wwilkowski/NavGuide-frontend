@@ -37,9 +37,12 @@ const useStyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
   },
+<<<<<<< src/components/Offers/AcceptedOffers/AcceptedOffers.tsx
+=======
   info: {
     padding: '1rem 2.5rem',
   },
+>>>>>>> src/components/Offers/AcceptedOffers/AcceptedOffers.tsx
 });
 
 const AcceptedOffers = (props: IAcceptedOffersProps) => {
@@ -72,8 +75,10 @@ const AcceptedOffers = (props: IAcceptedOffersProps) => {
     return date.toString().replace('T', ' ').substr(0, date.toString().indexOf('.'));
   };
 
+<<<<<<< src/components/Offers/AcceptedOffers/AcceptedOffers.tsx
+
   return filteredAgreements && filteredAgreements.length ? (
-    <ul>
+    <ul style={window.innerWidth < 900 ? { marginBottom: '4rem' } : {}>
       {filteredAgreements.map((agr: IAgreementOffer) => (
         <li key={agr.id} style={{ padding: '1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '1rem 0' }}>
           <Card className={classes.root}>

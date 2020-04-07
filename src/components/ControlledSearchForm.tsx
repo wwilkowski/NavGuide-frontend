@@ -250,11 +250,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                   },
                   (error) => {
                     if (error.code === 1) {
-                      showNotification(
-                        'warning',
-                        t('You denied access to your geolocation'),
-                        t('Allow access following instructions [instruction will be here]')
-                      );
+                      showNotification('warning', t('You denied access to your geolocation'), t('You have not changed coords'));
                     } else {
                       showNotification('danger', t('Something goes wrong'), t(`${error.message}`));
                     }

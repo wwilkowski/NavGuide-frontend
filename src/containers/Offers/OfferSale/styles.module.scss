@@ -9,9 +9,11 @@
 
 .container {
   @media (min-width: 800px) {
+    margin-bottom: 1rem;
     padding: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-around;
   }
 }

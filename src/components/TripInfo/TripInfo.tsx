@@ -39,14 +39,14 @@ const TripInfo = (props: ITripInfoProps) => {
       userId: 0,
       languages: [],
       lastName: '',
-      guideId: -1
+      guideId: -1,
     },
     photos: [],
     price: 0,
     priceType: '',
     radius: 0,
     sold: 0,
-    tags: []
+    tags: [],
   });
 
   useEffect(() => {
@@ -61,7 +61,7 @@ const TripInfo = (props: ITripInfoProps) => {
   const position: IPosition = {
     latitude: 53.01023065,
     longitude: 18.594376006630313,
-    radius: 0.0
+    radius: 0.0,
   };
 
   return isLogged ? (
@@ -73,7 +73,7 @@ const TripInfo = (props: ITripInfoProps) => {
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           />
           <Marker position={{ lat: position.latitude, lng: position.longitude }} opacity={0.5}>
-            <Popup>You</Popup>
+            <Popup>{t('You')}</Popup>
           </Marker>
         </Map>
       </div>
@@ -84,7 +84,7 @@ const TripInfo = (props: ITripInfoProps) => {
           <h2 className={styles.title}>{t('Description')}</h2>
           <Description text={props.tripInformations.description} />
           <Link to={`/offers/${tripData.id}/buy`} className={styles.link}>
-            {t('Order now!')}
+            {t('Order now')}!
           </Link>
         </div>
         <Informations
@@ -105,7 +105,7 @@ const TripInfo = (props: ITripInfoProps) => {
   ) : (
     <div>
       <div ref={node}>
-        <p>Zaloguj się lub zarejestruj, aby zobaczyć więcej</p>
+        <p>{t('Login or register to see more')}</p>
       </div>
     </div>
   );

@@ -34,7 +34,7 @@ const useStyles = makeStyles({
     fontSize: '1.3em',
   },
   emptyInfo: {
-    padding: '1rem 2.5rem',
+    padding: '1rem 3rem',
   },
 });
 
@@ -148,10 +148,10 @@ const EditProfilePanel = () => {
         className={`${classes.root} ${window.innerWidth > 900 && classes.hidden}`}
         showLabels
       >
-        <BottomNavigationAction label='Profile' icon={<FaceIcon />} />
-        <BottomNavigationAction label='Agreements' icon={<AssignmentIcon />} />
-        <BottomNavigationAction label='Confirmed' icon={<CheckIcon />} />
-        <BottomNavigationAction label='History' icon={<HistoryIcon />} />
+        <BottomNavigationAction label={t('Profile')} icon={<FaceIcon />} />
+        <BottomNavigationAction label={t('Agreements')} icon={<AssignmentIcon />} />
+        <BottomNavigationAction label={t('Confirmed')} icon={<CheckIcon />} />
+        <BottomNavigationAction label={t('History')} icon={<HistoryIcon />} />
       </BottomNavigation>
     </Grid>
   );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { withFormik, FormikProps } from 'formik';
 import * as types from './types';
 import Checkbox from '../../shared/Checkbox';
@@ -9,30 +9,34 @@ import experienceStyles from '../../shared/Experience.module.scss';
 import i18n from '../../locales/i18n';
 import Button from '@material-ui/core/Button';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import { Grid } from '@material-ui/core';
+import VerifyPopup from '../../shared/VerifyPopup';
 
 const GuideFormSchema = Yup.object().shape({
   description: Yup.string()
     .matches(/([a-zA-Z',.-]+( [a-zA-Z',.-]+)*){1,100}/, i18n.t('Input is not valid!'))
     .required('Description is required!'),
-  languages: Yup.array().min(1)
+  languages: Yup.array().min(1),
 });
 
 const MyForm = (props: FormikProps<types.FormValues>) => {
+  const [popupVisible, setPopupVisible] = useState<boolean>(false);
+
   const { t } = useTranslation();
   const { handleSubmit } = props;
   const allLanguages = [
     {
       name: 'Polish',
-      code: 'PL'
+      code: 'PL',
     },
     {
       name: 'English',
-      code: 'EN'
+      code: 'EN',
     },
     {
       name: 'German',
-      code: 'DE'
-    }
+      code: 'DE',
+    },
   ];
   const { touched, errors, values } = props;
   return (
@@ -43,7 +47,7 @@ const MyForm = (props: FormikProps<types.FormValues>) => {
           <label className={styles.label}>{t('Languages')}</label>
           <ul className={styles.langList}>
             {allLanguages
-              ? allLanguages.map(lang => (
+              ? allLanguages.map((lang) => (
                   <li key={lang.code}>
                     <label key={lang.code} htmlFor={lang.code}>
                       <Checkbox id='languages' name='languages' value={lang.name} valueKey={lang.code} />
@@ -85,10 +89,19 @@ const MyForm = (props: FormikProps<types.FormValues>) => {
           />
           {errors.description && touched.description && <div>{t(errors.description)}</div>}
         </div>
-
-        <Button variant='contained' color='primary' type='submit'>
-          {t('Submit')}
-        </Button>
+        <Grid container justify='center'>
+          <VerifyPopup
+            popupVisible={popupVisible}
+            onSubmit={() => {
+              setPopupVisible(false);
+              props.handleSubmit();
+            }}
+            changePopupVisible={() => setPopupVisible(!popupVisible)}
+          />
+          <Button onClick={() => setPopupVisible(true)} variant='contained' color='primary'>
+            {t('Submit')}
+          </Button>
+        </Grid>
       </form>
     </div>
   );
@@ -98,13 +111,13 @@ const MyEnhancedForm = withFormik<types.MyFormProps, types.FormValues>({
   mapPropsToValues: () => ({
     languages: [],
     experience: 1,
-    description: ''
+    description: '',
   }),
   validationSchema: GuideFormSchema,
   handleSubmit: (values, { setSubmitting, props }) => {
     setSubmitting(false);
     props.onSubmit(values);
-  }
+  },
 })(MyForm);
 
 export default MyEnhancedForm;
