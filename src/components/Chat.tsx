@@ -5,40 +5,40 @@ import SendIcon from '@material-ui/icons/Send';
 const useStyles = makeStyles({
   container: {
     maxHeight: '50vh',
-    padding: '0 1rem'
+    padding: '0 1rem',
   },
   list: {
     padding: '0 1rem',
     overflowY: 'scroll',
-    maxHeight: '60vh'
+    maxHeight: '60vh',
   },
   item: {
-    margin: '1rem 0'
+    margin: '1rem 0',
   },
   messageContainer: {
     display: 'flex',
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
   },
   selfMessageContainer: {
-    flexDirection: 'row-reverse'
+    flexDirection: 'row-reverse',
   },
   message: {
     padding: '1rem',
     backgroundColor: '#e1e3ff',
     borderRadius: '30px',
-    margin: '0 1rem'
+    margin: '0 1rem',
   },
   selfMessage: {
     color: '#ffffff',
-    backgroundColor: '#7781ff'
+    backgroundColor: '#7781ff',
   },
   input: {
     padding: '1rem',
-    width: '100%'
+    width: '100%',
   },
   actions: {
-    display: 'flex'
-  }
+    display: 'flex',
+  },
 });
 
 interface ShortUser {
@@ -71,6 +71,7 @@ const Chat = ({ messages, userId, purchaseId, onSend }: Props) => {
 
   const send = () => {
     onSend(message, purchaseId);
+    setMessage('');
   };
 
   const ref = useRef<HTMLUListElement | null>(null);
@@ -88,7 +89,7 @@ const Chat = ({ messages, userId, purchaseId, onSend }: Props) => {
       <Typography variant='h2'>Chat</Typography>
       <ul className={classes.list} ref={ref}>
         {messages &&
-          messages.map(message => (
+          messages.map((message) => (
             <li key={message.id} className={classes.item}>
               <div className={`${classes.messageContainer} ${message.author.id === userId && classes.selfMessageContainer}`}>
                 <Avatar src={message.author.avatar} />

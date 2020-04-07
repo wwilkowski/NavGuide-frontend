@@ -9,60 +9,65 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TravelerOfferRate from './TravelerOfferRate';
 import RateOfferPopup from './RateOfferPopup/RateOfferPopup';
+import { useTranslation } from 'react-i18next';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    minWidth: 275
+    minWidth: 275,
   },
   bullet: {
     display: 'inline-block',
     margin: '0 2px',
-    transform: 'scale(0.8)'
+    transform: 'scale(0.8)',
   },
   title: {
-    fontSize: 14
+    fontSize: 14,
   },
   pos: {
-    marginBottom: 12
+    marginBottom: 12,
   },
   link: {
     fontSize: '0.8em',
     color: '#3273dc',
-    cursor: 'pointer'
+    cursor: 'pointer',
   },
   actions: {
-    padding: '0.5rem 1rem'
+    padding: '0.5rem 1rem',
   },
   small: {
     width: 30,
     height: 30,
-    marginRight: '0.5rem'
+    marginRight: '0.5rem',
   },
   traveler: {
     marginBottom: '1rem',
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   rateRoot: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   ratePaper: {
     padding: theme.spacing(1),
     textAlign: 'center',
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
   },
   subtitlePaper: {
     padding: theme.spacing(1),
     textAlign: 'center',
-    color: theme.palette.text.primary
+    color: theme.palette.text.primary,
   },
   rateInfo: {
     fontSize: '0.8em',
-    color: '#f789ae'
-  }
+    color: '#f789ae',
+  },
+  info: {
+    padding: '1rem 2.5rem',
+  },
 }));
 
 const HistoryOffers = (props: IProfileHistoryOffersProps) => {
+  const { t } = useTranslation();
   const { trips, feedbacks, userRole } = props;
   const dispatcher = useDispatch();
   const classes = useStyles();
@@ -75,7 +80,7 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
       offerId: arg.offerId,
       scoreOffer: arg.scoreOffer,
       scoreGuide: arg.scoreGuide,
-      comment: arg.comment
+      comment: arg.comment,
     };
 
     dispatcher(actions.addFeedbackRequest(feedback));
@@ -88,13 +93,10 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
   };
 
   const getDate = (date: Date) => {
-    return date
-      .toString()
-      .replace('T', ' ')
-      .substr(0, date.toString().indexOf('.'));
+    return date.toString().replace('T', ' ').substr(0, date.toString().indexOf('.'));
   };
 
-  return (
+  return trips && trips.length ? (
     <ul>
       {trips &&
         trips.map((trip: IEndedSingleTripType) => (
@@ -176,6 +178,10 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
           </li>
         ))}
     </ul>
+  ) : (
+    <Typography variant='subtitle2' className={classes.info}>
+      {t('Offers that have taken place will appear here. You will have access to grades.')}
+    </Typography>
   );
 };
 
