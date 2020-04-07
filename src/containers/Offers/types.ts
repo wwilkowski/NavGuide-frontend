@@ -17,7 +17,7 @@ import {
   GET_OFFER_FEEDBACKS_FAILED,
   SEND_MESSAGE_REQUESTED,
   GET_MESSAGES_REQUESTED,
-  GET_MESSAGES_SUCCESSED
+  GET_MESSAGES_SUCCESSED,
 } from './constants';
 
 import * as typesTripBrowser from '../../containers/TripBrowser/types';

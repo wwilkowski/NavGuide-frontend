@@ -11,6 +11,7 @@
 .langCase {
   margin: 1rem 0;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
 }
@@ -36,5 +37,5 @@
 }
 
 .textarea {
-  margin-bottom: 1rem;
+  margin-bottom: 0rem;
 }

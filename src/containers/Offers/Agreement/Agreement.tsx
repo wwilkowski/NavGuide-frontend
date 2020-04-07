@@ -174,7 +174,7 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
       purchaseId: purchaseId,
       description: description,
       userId: travelerId,
-      plannedDate: plannedDate.toString(),
+      plannedDate: new Date(plannedDate).toUTCString(),
       price: price,
     };
 

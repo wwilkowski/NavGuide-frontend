@@ -182,8 +182,8 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                   {t('Search mode')}
                 </Typography>
                 <RadioGroup aria-label='searchMode' name='searchMode' value={values.searchMode} onChange={radiusChange} row>
-                  <FormControlLabel value='geo' control={<Radio color='primary' />} label='Place name' />
-                  <FormControlLabel value='name' control={<Radio color='primary' />} label='Offer name' />
+                  <FormControlLabel value='geo' control={<Radio color='primary' />} label={t('Location')} />
+                  <FormControlLabel value='name' control={<Radio color='primary' />} label={t('Offer name')} />
                 </RadioGroup>
               </FormControl>
             </Grid>
