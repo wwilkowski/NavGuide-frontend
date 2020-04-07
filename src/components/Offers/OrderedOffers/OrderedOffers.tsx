@@ -8,20 +8,25 @@ import { showNotification } from '../../../helpers/notification';
 import { useTranslation } from 'react-i18next';
 import history from '../../../history';
 import VerifyPopup from '../../../shared/VerifyPopup';
-import { Button, TextField, Typography, makeStyles } from '@material-ui/core';
+import { Button, TextField, Typography, makeStyles, Theme, withStyles } from '@material-ui/core';
+import CheckIcon from '@material-ui/icons/Check';
+import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles({
   text: {
-    marginTop: '1rem'
+    marginTop: '1rem',
   },
   list: {
-    marginBottom: '3rem'
+    marginBottom: '3rem',
   },
   description: {
     textAlign: 'center',
     padding: '0 1rem',
-    margin: '0.5rem 0'
-  }
+    margin: '0.5rem 0',
+  },
+  info: {
+    padding: '1rem 2.5rem',
+  },
 });
 
 const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
@@ -60,16 +65,33 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
   }, [currentMessage]);
 
   const getDate = (date: Date) => {
-    return date
-      .toString()
-      .replace('T', ' ')
-      .substr(0, date.toString().indexOf('.'));
+    return date.toString().replace('T', ' ').substr(0, date.toString().indexOf('.'));
   };
 
   const settleOffer = (tripId: number, status: string, message: string) => {
     if (message) dispatcher(actions.settleActiveOfferRequest(tripId, status, message));
     else showNotification('warning', t('Form error'), t('Message is required') + '!');
   };
+
+  const AcceptButton = withStyles((theme: Theme) => ({
+    root: {
+      color: '#ffffff',
+      backgroundColor: '#46ab2b',
+      '&:hover': {
+        backgroundColor: '#46ab2b',
+      },
+    },
+  }))(Button);
+
+  const CancelButton = withStyles((theme: Theme) => ({
+    root: {
+      color: theme.palette.getContrastText('#F80000'),
+      backgroundColor: '#F80000',
+      '&:hover': {
+        backgroundColor: '#F80000',
+      },
+    },
+  }))(Button);
 
   return filteredTrips && filteredTrips.length ? (
     <ul className={classes.list}>
@@ -120,7 +142,7 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
           />
           {errorMessage !== '' && <div>{errorMessage}</div>}
           <div className={classes.text}>
-            <Button
+            <AcceptButton
               variant='contained'
               color='primary'
               onClick={() => {
@@ -131,9 +153,9 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
                 }
               }}
             >
-              {t('Accept')}
-            </Button>
-            <Button
+              <CheckIcon />
+            </AcceptButton>
+            <CancelButton
               variant='contained'
               color='primary'
               onClick={() => {
@@ -146,8 +168,8 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
                 }
               }}
             >
-              {t('Reject')}
-            </Button>
+              <CloseIcon />
+            </CancelButton>
           </div>
           <VerifyPopup
             onSubmit={() => {
@@ -158,7 +180,7 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
                 history.push(`/agreement/create/${trip.traveler.id}/${trip.offer.id}/${trip.id}`, {
                   pathFrom: '/profile/guide',
                   offerId: trip.offer.id,
-                  travelerId: trip.traveler.id
+                  travelerId: trip.traveler.id,
                 });
               }
             }}
@@ -168,7 +190,11 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
         </li>
       ))}
     </ul>
-  ) : null;
+  ) : (
+    <Typography variant='subtitle2' className={classes.info}>
+      {t('Notifications about the interest in your offers will appear here.')}
+    </Typography>
+  );
 };
 
 export default OrderedOffers;

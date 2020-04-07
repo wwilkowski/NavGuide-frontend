@@ -18,12 +18,12 @@ const useStyles = makeStyles({
     position: 'fixed',
     bottom: '0',
     left: '0',
-    width: '100%'
+    width: '100%',
   },
   scrolledGrid: {
     overflowY: 'scroll',
-    height: '85vh'
-  }
+    height: '85vh',
+  },
 });
 
 const SearchForm = (props: ISearchFormProps) => {

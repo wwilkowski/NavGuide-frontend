@@ -407,6 +407,12 @@
     "Total number of rates": "Łączna liczba ocen",
     "Trip rates": "Oceny wycieczki",
     "Current agreement": "Aktualna umowa",
-    "Are you sure?": "Jesteś pewny/a?"
+    "Are you sure?": "Jesteś pewny/a?",
+    "Offers that have taken place will appear here. You will have access to grades.": "Tutaj pojawią się oferty, które już sie odbyły. Uzyskasz dostęp do ocen oferty.",
+    "Accepted offers will appear here.": "Tutaj pojawią się zaakceptowane oferty.",
+    "Offers in progress will appear here. You will get access to the contract and talk to another person.": "Oferty w toku pojawią się tutaj. Otrzymasz dostęp do umowy i porozmawiasz z drugą osobą.",
+    "Notifications about the interest in your offers will appear here.": "Tutaj pojawią się powiadomienia na temat zainteresowania Twoimi ofertami.",
+    "Notifications": "Powiadomienia",
+    "History": "Historia"
   }
 }

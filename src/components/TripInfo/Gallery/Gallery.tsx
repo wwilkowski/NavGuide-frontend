@@ -18,7 +18,7 @@ const Gallery = ({ photos }: IGalleryProps) => {
       >
         <img src={LeftArrowIcon} alt='' />
       </button>
-      <img src={photos[activeIndex]} alt='' />
+      <img src={photos[activeIndex]} alt='' className={styles.img} />
       <button onClick={() => setActiveIndex((activeIndex + 1) % photos.length)} className={`${styles.button} ${styles.rightArrow}`}>
         <img src={RightArrowIcon} alt='' />
       </button>

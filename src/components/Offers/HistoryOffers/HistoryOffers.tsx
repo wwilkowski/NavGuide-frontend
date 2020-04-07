@@ -9,6 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TravelerOfferRate from './TravelerOfferRate';
 import RateOfferPopup from './RateOfferPopup/RateOfferPopup';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,9 +61,13 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '0.8em',
     color: '#f789ae',
   },
+  info: {
+    padding: '1rem 2.5rem',
+  },
 }));
 
 const HistoryOffers = (props: IProfileHistoryOffersProps) => {
+  const { t } = useTranslation();
   const { trips, feedbacks, userRole } = props;
   const dispatcher = useDispatch();
   const classes = useStyles();
@@ -91,7 +96,7 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
     return date.toString().replace('T', ' ').substr(0, date.toString().indexOf('.'));
   };
 
-  return (
+  return trips && trips.length ? (
     <ul>
       {trips &&
         trips.map((trip: IEndedSingleTripType) => (
@@ -173,6 +178,10 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
           </li>
         ))}
     </ul>
+  ) : (
+    <Typography variant='subtitle2' className={classes.info}>
+      {t('Offers that have taken place will appear here. You will have access to grades.')}
+    </Typography>
   );
 };
 
