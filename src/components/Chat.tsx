@@ -4,8 +4,9 @@ import SendIcon from '@material-ui/icons/Send';
 
 const useStyles = makeStyles({
   container: {
-    maxHeight: '50vh',
+    height: '75vh',
     padding: '0 1rem',
+    position: 'relative',
   },
   list: {
     padding: '0 1rem',
@@ -38,6 +39,12 @@ const useStyles = makeStyles({
   },
   actions: {
     display: 'flex',
+    width: '100%',
+    padding: '1rem',
+    position: 'absolute',
+    bottom: 0,
+    left: '50%',
+    transform: 'translateX(-50%)',
   },
 });
 
