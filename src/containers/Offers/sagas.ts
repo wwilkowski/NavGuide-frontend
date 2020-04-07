@@ -106,6 +106,7 @@ function* buyOffer(action: types.IBuyOfferAction) {
       yield put(actions.buyOfferSuccessed());
       showNotification('success', `${i18n.t('You have asked the guide to buy a trip')}`, '...');
       yield call(forwardTo, '/');
+      //yield put(actions.buyOfferSuccessed());
     } else {
       if (response.status === 401) {
         throw new Error('You are not logged in');

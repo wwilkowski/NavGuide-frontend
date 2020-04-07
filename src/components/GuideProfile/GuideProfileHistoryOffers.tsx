@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import styles from './GuideProfileHistoryOffers.module.scss';
 import { useTranslation } from 'react-i18next';
 import { IEndedSingleTripType } from '../../containers/TripBrowser/types';
 import { IGuideProfileHistoryOffersProps } from '../../containers/GuideProfile/types';
@@ -47,8 +46,7 @@ const GuideProfileHistoryOffers = (props: IGuideProfileHistoryOffersProps) => {
   }, [historyOffers]);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.container__title}>{t('History Offers')}</div>
+    <div>
       {filteredTrips.length > 0 &&
         filteredTrips.map((trip: IEndedSingleTripType) => {
           return <TripListElement trip={trip.offer} />;

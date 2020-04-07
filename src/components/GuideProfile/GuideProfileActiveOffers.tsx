@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import styles from './GuideProfileActiveOffers.module.scss';
 import { useTranslation } from 'react-i18next';
 import { ISingleTripType } from '../../containers/TripBrowser/types';
 import { IGuideProfileActiveOffersProps } from '../../containers/GuideProfile/types';
@@ -36,15 +35,15 @@ const GuideProfileActiveOffers = (props: IGuideProfileActiveOffersProps) => {
         guideId: -1,
         languages: [''],
         lastName: '',
-        userId: -1
+        userId: -1,
       },
       photos: [''],
       price: -1,
       priceType: '',
       radius: -1,
       sold: -1,
-      tags: [{ id: -1, name: '' }]
-    }
+      tags: [{ id: -1, name: '' }],
+    },
   ]);
 
   const [activePhotos, setActivePhotos] = useState<ITripActivePhoto[]>([{ tripId: -1, activePhotoId: -1, numberOfPhotos: -1 }]);
@@ -79,11 +78,7 @@ const GuideProfileActiveOffers = (props: IGuideProfileActiveOffersProps) => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.container__title}>{t('Active Offers')}</div>
-      <div className={styles.container__input}>
-        <input value={value} onChange={handleChange} />
-      </div>
+    <div>
       {filteredTrips.map((trip: ISingleTripType) => {
         return <TripListElement trip={trip} />;
       })}

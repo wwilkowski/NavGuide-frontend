@@ -12,23 +12,20 @@ import {
   FETCH_GUIDE_ACTIVE_OFFERS_FAILED,
   FETCH_GUIDE_HISTORY_REQUESTED,
   FETCH_GUIDE_HISTORY_FAILED,
-  FETCH_GUIDE_HISTORY_SUCCESSED
+  FETCH_GUIDE_HISTORY_SUCCESSED,
 } from './constants';
 
 export interface IGuideProfileDataProps {
   profileData: IUserProfile;
   profile: IGuideProfile;
-  goBack: () => void;
 }
 
 export interface IGuideProfileActiveOffersProps {
   activeOffers: ISingleTripType[];
-  goBack: () => void;
 }
 
 export interface IGuideProfileHistoryOffersProps {
   historyOffers: IEndedSingleTripType[];
-  goBack: () => void;
 }
 
 export interface IGuideProfile {

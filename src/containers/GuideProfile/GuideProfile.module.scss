@@ -1,43 +1,35 @@
 .container {
-  width: 100%;
-  height: 100%;
   display: flex;
+  flex-wrap: wrap;
   padding: 1rem;
+  margin-bottom: 2rem;
+  overflow-x: auto;
+}
 
+.userContainer {
+  width: 100%;
+  display: flex;
   @media (min-width: 800px) {
-    padding-right: 0;
-    padding-bottom: 0;
+    max-width: 250px;
   }
+}
 
-  &__title {
-    @media (max-width: 800px) {
-      display: none;
-    }
+.profileSection {
+  width: 100%;
+  overflow-y: auto;
+}
+.hidden {
+  display: none;
+  @media (min-width: 800px) {
+    overflow-y: auto;
+    width: 33%;
+    display: block;
   }
+}
 
-  &__section {
-    width: 100%;
-    height: 80%;
-
-    @media (min-width: 800px) {
-      width: 33%;
-      height: 48rem;
-      overflow-y: auto;
-      padding-right: 1.5rem;
-      border-right: solid 2px #00000054;
-    }
-  }
-
-  &__sectionHidden {
-    display: none;
-
-    @media (min-width: 800px) {
-      display: block;
-      height: 48rem;
-      overflow-y: auto;
-      width: 32%;
-      border-right: solid 2px #00000054;
-      padding: 0.5rem 2rem;
-    }
-  }
+.profileInfo {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
 }

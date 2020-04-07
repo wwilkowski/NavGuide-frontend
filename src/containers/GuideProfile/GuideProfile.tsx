@@ -1,25 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import styles from './GuideProfile.module.scss';
-import GuideProfileMenu from '../../components/GuideProfileMenu/GuideProfileMenu';
 import GuideProfileData from '../../components/GuideProfile/GuideProfileData';
 import { StoreType } from '../../store';
 import { useSelector, useDispatch } from 'react-redux';
 import GuideProfileActiveOffers from '../../components/GuideProfile/GuideProfileActiveOffers';
+import GuideProfileHistoryOffers from '../../components/GuideProfile/GuideProfileHistoryOffers';
 import {
   fetchGuideProfileDataRequest,
   fetchGuideActiveOffersRequest,
   fetchGuideHistoryRequest,
   fetchGuideProfileRequested,
 } from './actions';
-import history from '../../history';
 import { RouteComponentProps, Redirect } from 'react-router-dom';
 import { showNotification } from '../../helpers/notification';
-import HistoryOffers from '../../components/Offers/HistoryOffers/HistoryOffers';
 import i18n from '../../locales/i18n';
+import { Grid, BottomNavigation, BottomNavigationAction, makeStyles, Typography } from '@material-ui/core';
+import HistoryIcon from '@material-ui/icons/History';
+import CheckIcon from '@material-ui/icons/Check';
+import FaceIcon from '@material-ui/icons/Face';
+import { useTranslation } from 'react-i18next';
 
 interface TParams {
   guideId: string;
 }
+
+const useStyles = makeStyles({
+  root: {
+    width: '100vw',
+    position: 'fixed',
+    bottom: '0',
+    left: '0',
+  },
+  hidden: {
+    display: 'none',
+  },
+  text: {
+    padding: '0 1.5rem',
+    fontSize: '1.3em',
+  },
+  emptyInfo: {
+    padding: '1rem 3rem',
+  },
+});
 
 enum Scene {
   profile,
@@ -29,6 +51,8 @@ enum Scene {
 
 const GuideProfile = (props: RouteComponentProps<TParams>) => {
   const guideId = parseInt(props.match.params.guideId, 10);
+  const classes = useStyles();
+  const { t } = useTranslation();
 
   const isLogged = useSelector((state: StoreType) => state.profile.isLoggedIn);
 
@@ -58,32 +82,48 @@ const GuideProfile = (props: RouteComponentProps<TParams>) => {
     }
   }, [guideProfile, dispatcher, guideId, isLogged]);
 
-  const backToMainPage = () => {
-    sessionStorage.setItem('backFromGuideProfile', 'true');
-    history.goBack();
-  };
-
   return (
-    <>
+    <Grid container>
       {isLogged && (
-        <div className={styles.container}>
-          <div className={sceneMode === Scene.profile ? styles.container__section : styles.container__sectionHidden}>
-            <GuideProfileData profileData={guideProfileData} profile={guideProfile} goBack={backToMainPage} />
-          </div>
-          <div className={sceneMode === Scene.activeOffers ? styles.container__section : styles.container__sectionHidden}>
-            <GuideProfileActiveOffers activeOffers={activeOffers} goBack={backToMainPage} />
-          </div>
-          <div
-            className={sceneMode === Scene.ratedOffers ? styles.container__section : styles.container__sectionHidden}
-            style={{ borderRight: 'none', paddingRight: '0' }}
+        <>
+          {/* Profile */}
+          <Grid item xs={12} sm={4} className={sceneMode === Scene.profile ? styles.profileSection : styles.hidden}>
+            <Typography variant='h2' className={classes.text}>
+              {t('Informations')}
+            </Typography>
+            <GuideProfileData profileData={guideProfileData} profile={guideProfile} />
+          </Grid>
+          {/* Active offers */}
+          <Grid item xs={12} sm={4} className={sceneMode === Scene.activeOffers ? styles.profileSection : styles.hidden}>
+            <Typography variant='h2' className={classes.text}>
+              {t('Active offers')}
+            </Typography>
+            <GuideProfileActiveOffers activeOffers={activeOffers} />
+          </Grid>
+          {/* History offers */}
+          <Grid item xs={12} sm={4} className={sceneMode === Scene.ratedOffers ? styles.profileSection : styles.hidden}>
+            <Typography variant='h2' className={classes.text}>
+              {t('History offers')}
+            </Typography>
+            <GuideProfileHistoryOffers historyOffers={historyOffers} />
+          </Grid>
+          {/* Navigation */}
+          <BottomNavigation
+            value={sceneMode}
+            onChange={(event, newValue) => {
+              setSceneMode(newValue);
+            }}
+            className={`${classes.root} ${window.innerWidth > 900 && classes.hidden}`}
+            showLabels
           >
-            <HistoryOffers userRole='guide' trips={historyOffers} feedbacks={feedbacks} />
-          </div>
-          <GuideProfileMenu setScene={setSceneMode} />
-        </div>
+            <BottomNavigationAction label={t('Profile')} icon={<FaceIcon />} />
+            <BottomNavigationAction label={t('Active offers')} icon={<CheckIcon />} />
+            <BottomNavigationAction label={t('History')} icon={<HistoryIcon />} />
+          </BottomNavigation>
+        </>
       )}
       {!isLogged && <Redirect to='/' />}
-    </>
+    </Grid>
   );
 };
 
