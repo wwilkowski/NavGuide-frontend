@@ -95,7 +95,7 @@ const TripInfo = (props: ITripInfoProps) => {
           guideProfileData={props.guideProfileData}
         />
       </div>
-      <Grid container justify='center' sm={12}>
+      <Grid container justify='center'>
         <Button color='secondary' onClick={() => setPopupVisibility(true)}>
           {t('Report offer')}
         </Button>

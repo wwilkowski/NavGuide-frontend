@@ -94,7 +94,12 @@ const EditGuidePanel = () => {
           {t('In progress')}
         </Typography>
         {activeOffers ? (
-          <ActiveOffers trips={activeOffers.filter((offer) => offer.status === 'ACCEPTED')} agreements={agreements} />
+          <ActiveOffers
+            trips={activeOffers.filter(
+              (offer) => offer.status === 'ACCEPTED' && (!agreements || agreements.find((agr) => agr.offer.id === offer.id) !== undefined)
+            )}
+            agreements={agreements}
+          />
         ) : (
           <p>brak</p>
         )}
