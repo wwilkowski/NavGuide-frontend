@@ -101,6 +101,9 @@ const AcceptedOffers = (props: IAcceptedOffersProps) => {
               <Typography variant='body1'>{agr.description}</Typography>
             </CardContent>
             <CardActions className={classes.actions}>
+              <Link to={`/agreement/create/${agr.traveler.id}/${agr.offer.id}/${agr.purchase.id}`} className={classes.link}>
+                {t('Offer details')}
+              </Link>
               {user.role === 'GUIDE' && (
                 <Link to={`/users/${agr.traveler.id}`} className={classes.link}>
                   {t('Check user profile with')} ID {agr.traveler.id}
