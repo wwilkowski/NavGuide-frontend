@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     justifyContent: 'space-around',
+    marginTop: '0.5rem',
   },
   title: {
     padding: theme.spacing(1),
@@ -38,7 +39,7 @@ const TravelerOfferRate = (props: ITravelerOfferRateProps) => {
   const { feedback } = props;
 
   return (
-    <Grid container xs={12} sm={12} style={window.innerWidth < 900 ? { marginBottom: '4rem' } : {}}>
+    <Grid container xs={12} sm={12} className={classes.root}>
       <Grid item sm={6} xs={6} className={classes.centered}>
         <Typography variant='h4'>{t('Score guide')}</Typography>
       </Grid>

@@ -36,6 +36,9 @@ const useStyles = makeStyles({
   emptyInfo: {
     padding: '1rem 3rem',
   },
+  info: {
+    padding: '1rem 2.5rem',
+  },
 });
 
 enum Scene {
@@ -123,7 +126,13 @@ const EditProfilePanel = () => {
           <Typography variant='h2' className={classes.text}>
             {t('Accepted agreements')}
           </Typography>
-          {agreements ? <AcceptedOffers agreements={agreements} /> : <p className={classes.emptyInfo}>brak</p>}
+          {agreements ? (
+            <AcceptedOffers agreements={agreements} />
+          ) : (
+            <Typography variant='subtitle2' className={classes.info}>
+              {t('Accepted offers will appear here.')}
+            </Typography>
+          )}
         </Grid>
         {/* History */}
         <Grid item xs={12} sm={4} className={sceneMode === Scene.history ? styles.profileSection : styles.hidden}>
@@ -133,7 +142,9 @@ const EditProfilePanel = () => {
           {historyOffersTraveler ? (
             <HistoryOffers userRole='traveler' trips={historyOffersTraveler} feedbacks={feedbacks} />
           ) : (
-            <p className={classes.emptyInfo}>brak</p>
+            <Typography variant='subtitle2' className={classes.info}>
+              {t('Offers that have taken place will appear here. You will have access to grades.')}
+            </Typography>
           )}
         </Grid>
       </Grid>

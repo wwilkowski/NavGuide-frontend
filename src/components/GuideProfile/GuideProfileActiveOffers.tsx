@@ -1,88 +1,57 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ISingleTripType } from '../../containers/TripBrowser/types';
 import { IGuideProfileActiveOffersProps } from '../../containers/GuideProfile/types';
 import TripListElement from '../TripBrowser/TripListElement';
+import { Container, makeStyles, Grid, Typography } from '@material-ui/core';
+import StarBorderTwoToneIcon from '@material-ui/icons/StarBorderTwoTone';
 
-interface ITripActivePhoto {
-  tripId: number;
-  activePhotoId: number;
-  numberOfPhotos: number;
-}
+const useStyles = makeStyles((theme) => ({
+  root: {
+    padding: '0rem 2rem',
+  },
+  info: {
+    marginTop: '-1rem',
+  },
+  rate: {
+    marginBottom: '-1rem',
+    marginTop: '1rem',
+  },
+}));
 
 const GuideProfileActiveOffers = (props: IGuideProfileActiveOffersProps) => {
   const { t } = useTranslation();
-
+  const classes = useStyles();
   const { activeOffers } = props;
 
-  const [value, setValue] = useState<string>('');
-  const [filteredTrips, setFilteredTrips] = useState<ISingleTripType[]>([
-    {
-      inSearch: -1,
-      averageMark: -1,
-      begin: new Date(),
-      city: '',
-      description: '',
-      end: new Date(),
-      id: -1,
-      lat: -1,
-      lon: -1,
-      maxPeople: -1,
-      name: '',
-      owner: {
-        experience: -1,
-        firstName: '',
-        guideId: -1,
-        languages: [''],
-        lastName: '',
-        userId: -1,
-      },
-      photos: [''],
-      price: -1,
-      priceType: '',
-      radius: -1,
-      sold: -1,
-      tags: [{ id: -1, name: '' }],
-    },
-  ]);
-
-  const [activePhotos, setActivePhotos] = useState<ITripActivePhoto[]>([{ tripId: -1, activePhotoId: -1, numberOfPhotos: -1 }]);
-
-  useEffect(() => {
-    setActivePhotos(activePhotos.splice(0));
-
-    const tmp = activePhotos;
-    activeOffers.forEach((offer: ISingleTripType) => {
-      tmp.push({ tripId: offer.id, activePhotoId: 0, numberOfPhotos: offer.photos.length });
-    });
-    setActivePhotos(tmp);
-  }, [activeOffers, activePhotos]);
-
-  useEffect(() => {
-    if (activeOffers) {
-      setFilteredTrips(
-        activeOffers.filter((trip: ISingleTripType) => {
-          if (trip.name.substr(0, value.length) === value) return true;
-          return false;
-        })
-      );
-    }
-  }, [value, activeOffers, activePhotos]);
-
-  useEffect(() => {
-    setFilteredTrips(activeOffers);
-  }, [activeOffers]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-  };
-
   return (
-    <div>
-      {filteredTrips.map((trip: ISingleTripType) => {
-        return <TripListElement trip={trip} />;
+    <Container className={classes.root}>
+      {activeOffers.map((trip: ISingleTripType) => {
+        return (
+          <>
+            <Grid item container justify='flex-end' xs={12} sm={12} className={classes.rate}>
+              <Typography style={{ textAlign: 'right', marginTop: 'auto' }} variant='body1'>
+                {trip.averageMark >= 0 ? <div>{Math.round((trip.averageMark * 10) / 10)}/5</div> : <div>{t('N.D.')}</div>}
+              </Typography>
+              <StarBorderTwoToneIcon />
+            </Grid>
+            <TripListElement trip={trip} />
+            <Grid container style={window.innerWidth < 900 ? { marginBottom: '3rem' } : {}}>
+              <Grid item xs={6} sm={6} className={classes.info}>
+                <Typography variant='body1'>
+                  {t('Sold')}: {trip.sold}
+                </Typography>
+              </Grid>
+              <Grid item xs={6} sm={6} className={classes.info}>
+                <Typography style={{ textAlign: 'right' }} variant='body1'>
+                  {t('Visits')}: {trip.inSearch}
+                </Typography>
+              </Grid>
+            </Grid>
+          </>
+        );
       })}
-    </div>
+    </Container>
   );
 };
 

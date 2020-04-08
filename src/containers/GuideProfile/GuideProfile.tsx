@@ -64,7 +64,6 @@ const GuideProfile = (props: RouteComponentProps<TParams>) => {
   const guideProfileData = useSelector((state: StoreType) => state.guideProfile.guideProfileData);
   const activeOffers = useSelector((state: StoreType) => state.guideProfile.activeOffers);
   const historyOffers = useSelector((state: StoreType) => state.guideProfile.historyOffers);
-  const feedbacks = useSelector((state: StoreType) => state.currentOfferReducer.feedbacks);
 
   useEffect(() => {
     if (!isLogged) showNotification('info', i18n.t('Information'), i18n.t('You dont have permission to this content'));

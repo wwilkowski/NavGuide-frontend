@@ -124,7 +124,7 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
                         setPopupVisible(!popupVisible);
                       }}
                     >
-                      Podziel się z nami opinią.
+                      {t('Please, share with us your rate')}
                     </Typography>
 
                     {/* <Grid item xs={2} sm={5}>
@@ -151,23 +151,26 @@ const HistoryOffers = (props: IProfileHistoryOffersProps) => {
               <CardActions className={classes.actions}>
                 {/* <Link to={`/agreement/create/${trip.traveler.id}/${trip.offer.id}/${trip.id}`} className={classes.link}>
                   Szczegóły oferty
-                </Link> */}
+                </Link> 
                 <Link to={`/agreement/create/`} className={classes.link}>
                   Szczegóły oferty
+                  </Link>*/}
+                <Link className={classes.link} to={`/offers/${trip.offer.id}`}>
+                  {t('See offer')}
                 </Link>
                 {isRated(trip.offer.id) ? (
                   <>
                     <Grid item sm={12} xs={12}>
                       <Paper elevation={0} className={classes.subtitlePaper}>
                         <Typography variant='body1' className={classes.rateInfo}>
-                          Oferta oceniona. Dziękujemy!
+                          {t('Offer rated')}! {t('Thank you')}
                         </Typography>
                       </Paper>
                     </Grid>
                   </>
                 ) : userRole === 'traveler' ? (
                   <Typography variant='body1' className={classes.rateInfo}>
-                    Oczekuje na ocenę
+                    {t('Waiting for mark')}
                   </Typography>
                 ) : null}
               </CardActions>
