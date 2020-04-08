@@ -23,6 +23,13 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(2),
     width: '100%',
     textAlign: 'center',
+    // eslint-disable-line no-useless-computed-key
+    '@media (min-width:780px)': {
+      width: '300px',
+    },
+    '& input': {
+      textAlign: 'center',
+    },
   },
   date: {
     margin: '1rem',
@@ -65,11 +72,11 @@ const InnerForm = (props: ICreateAgreementOtherProps & FormikProps<ICreateAgreem
         <TripListElement trip={props.trip} />
       </div>
       <Form className={classes.form}>
-        <Grid container xs={12} sm={12}>
-          <Grid container xs={12} sm={12} justify={'center'}>
+        <Grid container justify={'center'}>
+          <Grid container justify={'center'}>
             <Typography variant='subtitle1'>{t('Price')}</Typography>
           </Grid>
-          <Grid container xs={12} sm={12} justify={'center'}>
+          <Grid container justify={'center'}>
             <TextField
               className={classes.item}
               id='price'
@@ -86,18 +93,18 @@ const InnerForm = (props: ICreateAgreementOtherProps & FormikProps<ICreateAgreem
           <Grid container className={classes.item} justify={'center'}>
             <DatePicker
               dateFormat='yyyy/MM/dd HH:mm'
+              timeFormat='HH:mm'
               timeIntervals={30}
-              showTimeInput
               showTimeSelect
               locale='pl-PL'
               minDate={new Date(props.trip.begin)}
               maxDate={new Date(props.trip.end)}
-              selected={new Date(values.plannedDate)}
+              selected={values.plannedDate}
               onChange={(date) => props.setFieldValue('plannedDate', date)}
               className={classes.date}
             />
           </Grid>
-          <Grid container xs={12} justify='center'>
+          <Grid container justify='center'>
             <TextField
               id='description'
               label={t('Message to tourist')}
@@ -108,7 +115,7 @@ const InnerForm = (props: ICreateAgreementOtherProps & FormikProps<ICreateAgreem
               variant='outlined'
             />
           </Grid>
-          <Grid container xs={12} sm={12} justify='center' className={classes.item}>
+          <Grid container justify='center' className={classes.item}>
             {errors.description && touched.description && (
               <Typography variant='body1' color='error'>
                 {t(errors.description)}
@@ -134,11 +141,13 @@ const InnerForm = (props: ICreateAgreementOtherProps & FormikProps<ICreateAgreem
 
 const CreateAgreementForm = withFormik<ICreateAgreementOtherProps, ICreateAgreementFormValues>({
   mapPropsToValues: (props: ICreateAgreementOtherProps) => {
+    const newDate = new Date(props.purchasePlannedDate);
+    newDate.setHours(newDate.getHours() - 2);
     return {
       offerId: props.propOfferId,
       description: '',
       userId: props.propUserId,
-      plannedDate: props.purchasePlannedDate,
+      plannedDate: newDate,
       price: props.trip.price,
     };
   },

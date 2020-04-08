@@ -69,7 +69,7 @@ const ActiveOffers = ({ trips }: IProfileOffersProps) => {
             </CardContent>
             <CardActions className={classes.actions}>
               <Link to={`/agreement/create/${trip.traveler.id}/${trip.offer.id}/${trip.id}`} className={classes.link}>
-                Szczegóły oferty
+                {t('Offer details')}
               </Link>
             </CardActions>
           </Card>
