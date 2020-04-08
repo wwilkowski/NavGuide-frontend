@@ -4,6 +4,7 @@ import { Grid, Paper, makeStyles, Typography } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
   heading: {
@@ -41,6 +42,7 @@ const calcAvg = (scoreOffer: number, scoreGuide: number) => {
 
 const GuideOfferRate = (props: IGuideOfferRateProps) => {
   const { feedback } = props;
+  const { t } = useTranslation();
 
   const classes = useStyles();
 
@@ -49,7 +51,6 @@ const GuideOfferRate = (props: IGuideOfferRateProps) => {
       {feedback && window.innerWidth > 900 && (
         <Paper>
           <Grid container justify='center' className={classes.content}>
-            <Grid item sm={12}></Grid>
             <Grid item sm={6}>
               <Typography component='p' className={classes.heading}>
                 Opis
@@ -60,19 +61,19 @@ const GuideOfferRate = (props: IGuideOfferRateProps) => {
             </Grid>
             <Grid item sm={4}>
               <Grid container justify='center' className={classes.heading}>
-                Przewodnik:
+                {t('Guide')}:
               </Grid>
               <Grid container justify='center'>
                 <Rating name='read-only' value={feedback.scoreGuide} readOnly />
               </Grid>
               <Grid container justify='center' className={classes.heading}>
-                Wycieczka:
+                {t('Trip')}:
               </Grid>
               <Grid container justify='center'>
                 <Rating className={classes.rating} name='read-only' value={feedback.scoreOffer} readOnly />
               </Grid>
             </Grid>
-            <Grid container justify='flex-start'>
+            <Grid container item sm={2} justify='flex-start'>
               {calcAvg(feedback.scoreOffer, feedback.scoreGuide) > 3 ? (
                 <ThumbUpAltIcon fontSize='large' className={classes.iconUp} />
               ) : (
