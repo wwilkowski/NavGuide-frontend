@@ -111,20 +111,7 @@ const EditProfilePanel = () => {
             {t('In progress')}
           </Typography>
           {approaches ? (
-            //   <ActiveOffers
-            //   trips={activeOffers.filter(
-            //     (offer) => offer.status === 'ACCEPTED' && (!agreements || agreements.find((agr) => agr.offer.id === offer.id) !== undefined)
-            //   )}
-            //   agreements={agreements}
-            // />
-            agreements ? (
-              <ActiveOffers
-                trips={approaches.filter((approach) => agreements.find((agr) => agr.offer.id !== approach.offer.id))}
-                agreements={agreements}
-              />
-            ) : (
-              <ActiveOffers trips={approaches} agreements={agreements} />
-            )
+            <ActiveOffers trips={approaches} agreements={agreements} />
           ) : (
             <Typography variant='subtitle2' className={classes.emptyInfo}>
               {t('Offers in progress will appear here. You will get access to the contract and talk to another person.')}
