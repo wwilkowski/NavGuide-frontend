@@ -29,20 +29,22 @@ const GuideProfileActiveOffers = (props: IGuideProfileActiveOffersProps) => {
       {activeOffers.map((trip: ISingleTripType) => {
         return (
           <>
-            {/*<Grid item container justify='flex-end' xs={12} sm={12} className={classes.rate}>
+            <Grid item container justify='flex-end' xs={12} sm={12} className={classes.rate}>
               <Typography style={{ textAlign: 'right', marginTop: 'auto' }} variant='body1'>
-                {trip.averageMark === "NaN" ? <div>B.D.</div> : <div>{Math.round((trip.averageMark * 10) / 10)}/5</div>}
+                {trip.averageMark >= 0 ? <div>{Math.round((trip.averageMark * 10) / 10)}/5</div> : <div>{t('N.D.')}</div>}
               </Typography>
               <StarBorderTwoToneIcon />
-            </Grid>*/}
+            </Grid>
             <TripListElement trip={trip} />
-            <Grid container>
+            <Grid container style={window.innerWidth < 900 ? { marginBottom: '3rem' } : {}}>
               <Grid item xs={6} sm={6} className={classes.info}>
-                <Typography variant='body1'>Ilość sprzedanych: {trip.sold}</Typography>
+                <Typography variant='body1'>
+                  {t('Sold')}: {trip.sold}
+                </Typography>
               </Grid>
               <Grid item xs={6} sm={6} className={classes.info}>
                 <Typography style={{ textAlign: 'right' }} variant='body1'>
-                  Ilość wyświetleń: {trip.inSearch}
+                  {t('Visits')}: {trip.inSearch}
                 </Typography>
               </Grid>
             </Grid>

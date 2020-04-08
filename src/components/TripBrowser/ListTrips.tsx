@@ -15,19 +15,19 @@ const ListTrips = ({ trips, closestTrips, mode, chosenOfferId, setChosenOfferId 
   return (
     <Container>
       {mode === types.ListMode.closest ? (
-        <Grid container sm={12} xs={12}>
+        <Grid container>
           <Grid item xs={10} sm={8}>
-            <Grid container justify='center' xs={12} sm={12}>
+            <Grid container justify='center'>
               <Typography variant='h6'>{t('No matching trips')}.</Typography>
             </Grid>
-            <Grid container justify='center' xs={12} sm={12}>
+            <Grid container justify='center'>
               <Typography variant='subtitle2'>{t('Try to change the parameters and find again')}.</Typography>
             </Grid>
           </Grid>
-          <Grid container alignItems='center' justify={window.innerWidth > 900 ? 'flex-start' : 'center'} xs={2} sm={4}>
+          <Grid container item alignItems='center' justify={window.innerWidth > 900 ? 'flex-start' : 'center'} xs={2} sm={4}>
             <ErrorOutlineIcon style={{ opacity: '0.8' }} fontSize='large' />
           </Grid>
-          <Grid container justify='center' xs={12} sm={8}>
+          <Grid container item justify='center' xs={12} sm={8}>
             <Typography variant='h6'>{t('Below are suggested trips in your area')}.</Typography>
           </Grid>
           <Grid item xs={12} sm={12}>

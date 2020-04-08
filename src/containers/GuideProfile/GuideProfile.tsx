@@ -56,7 +56,7 @@ const GuideProfile = (props: RouteComponentProps<TParams>) => {
 
   const isLogged = useSelector((state: StoreType) => state.profile.isLoggedIn);
 
-  const [sceneMode, setSceneMode] = useState<Scene>(Scene.activeOffers);
+  const [sceneMode, setSceneMode] = useState<Scene>(Scene.profile);
 
   const dispatcher = useDispatch();
 

@@ -5,32 +5,47 @@ import { ITag } from '../../../containers/TripBrowser/types';
 import { Link } from 'react-router-dom';
 import styles from './styles.module.scss';
 import RatesOfferPopup from '../../Offers/HistoryOffers/RatesOfferPopup/RatesOfferPopup';
-import { Button } from '@material-ui/core';
+import { Button, makeStyles, Typography } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { getOfferFeedbacksRequest } from '../../../containers/Offers/actions';
+import poland from '../../../assets/icons/poland.png';
+import unitedKingdom from '../../../assets/icons/unitedKingdom.png';
+import germany from '../../../assets/icons/germany.png';
+import Rating from '@material-ui/lab/Rating';
+
+const getFlag = (code: string) => {
+  switch (code) {
+    case 'PL':
+      return poland;
+    case 'EN':
+      return unitedKingdom;
+    case 'DE':
+      return germany;
+  }
+};
+
+const useStyles = makeStyles((theme) => ({
+  flag: {
+    padding: '0 0.2rem',
+  },
+  text: {
+    marginTop: 'auto',
+  },
+  rateButton: {
+    color: theme.palette.warning.dark,
+  },
+}));
 
 const Informations = (props: IInformationsProps) => {
   const { t } = useTranslation();
-
+  const classes = useStyles();
   const dispatcher = useDispatch();
 
   const { tripData, guideProfileData, guideProfile } = props;
 
   const [offerRatesVisible, setOfferRatesVisible] = useState<boolean>(false);
-  const [experience, setExperience] = useState<string>('');
   // eslint-disable-next-line
   const [telephone, setTelephone] = useState<string>('');
-
-  useEffect(() => {
-    let tmp = '';
-    for (let i = 0; i < guideProfile.experience; i++) {
-      tmp += '★';
-    }
-    for (let i = guideProfile.experience; i < 5; i++) {
-      tmp += '☆';
-    }
-    setExperience(tmp);
-  }, [guideProfileData, guideProfile.experience]);
 
   useEffect(() => {
     let result = '';
@@ -40,6 +55,7 @@ const Informations = (props: IInformationsProps) => {
     setTelephone(result);
   }, [guideProfileData.telephone]);
 
+  // eslint-disable-next-line
   const getLanguage = (code: string) => {
     switch (code) {
       case 'PL':
@@ -142,14 +158,12 @@ const Informations = (props: IInformationsProps) => {
                   changePopupVisible={() => setOfferRatesVisible(false)}
                 />
                 <Button
-                  style={window.innerWidth < 900 ? { marginBottom: '5rem' } : {}}
+                  style={window.innerWidth < 900 ? { marginBottom: '2rem' } : { marginTop: '1rem' }}
                   onClick={() => {
                     dispatcher(getOfferFeedbacksRequest(tripData.id));
                     setOfferRatesVisible(true);
                   }}
-                  type='submit'
-                  variant='contained'
-                  color='primary'
+                  className={classes.rateButton}
                   disabled={false}
                 >
                   {t('Zobacz oceny')}
@@ -180,6 +194,7 @@ const Informations = (props: IInformationsProps) => {
                 <img src={props.guideProfileData.avatar} alt='' className={styles.avatar} />
               </Link>
             </div>
+            <Link to={`/guides/${tripData.owner.guideId}`}>{t('See guide profile')}</Link>
             <p className={styles.guideName}>
               {tripData.owner.firstName} {tripData.owner.lastName}
             </p>
@@ -188,12 +203,12 @@ const Informations = (props: IInformationsProps) => {
             </p>
             <div className={styles.section}>
               <div className={styles.info}>
-                <p className={styles.subtitle}>{t('Experience')}:</p>
-                <p>{experience}</p>
-              </div>
-              <div className={styles.info}>
                 <p className={styles.subtitle}>{t('Average mark')}:</p>
-                <p>{guideProfile.averageMark > 0 ? guideProfile.averageMark : 0}</p>
+                {props.guideProfile.averageMark > 0 ? (
+                  <Rating precision={0.5} readOnly value={Math.round((props.guideProfile.averageMark * 10) / 10)}></Rating>
+                ) : (
+                  <Typography>{t('N.D.')}</Typography>
+                )}
               </div>
             </div>
             <div className={styles.section}></div>
@@ -205,7 +220,11 @@ const Informations = (props: IInformationsProps) => {
               </div>
               <div className={styles.info}>
                 <p className={styles.subtitle}>{t('Languages')}:</p>
-                <p>{guideProfile.languages.map((lng: string) => `${getLanguage(lng)} `)}</p>
+                <p>
+                  {guideProfile.languages.map((lng: string) => (
+                    <img className={classes.flag} src={getFlag(lng)} alt={lng} />
+                  ))}
+                </p>
               </div>
             </div>
           </div>

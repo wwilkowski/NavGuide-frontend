@@ -34,8 +34,12 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     color: theme.palette.text.primary,
   },
+  textBold: {
+    fontWeight: 'bold',
+  },
 }));
 
+// eslint-disable-next-line
 const getLanguage = (code: string) => {
   switch (code) {
     case 'PL':
@@ -76,20 +80,8 @@ const GuideProfileData = (props: IGuideProfileDataProps) => {
 
   const { t } = useTranslation();
 
-  const [experience, setExperience] = useState<string>('');
   // eslint-disable-next-line
   const [telephone, setTelephone] = useState<string>('');
-
-  useEffect(() => {
-    let tmp = '';
-    for (let i = 0; i < profile.experience; i++) {
-      tmp += '★';
-    }
-    for (let i = profile.experience; i < 5; i++) {
-      tmp += '☆';
-    }
-    setExperience(tmp);
-  }, [profileData, profile.experience]);
 
   useEffect(() => {
     let result = '';
@@ -106,7 +98,7 @@ const GuideProfileData = (props: IGuideProfileDataProps) => {
       </Grid>
       <Grid container className={classes.row}>
         <Grid item xs={12} sm={12}>
-          <Typography variant='body1' className={classes.textCenter}>
+          <Typography style={{ fontWeight: 'bold' }} variant='body1' className={classes.textCenter}>
             {profile.firstName} {profile.lastName}
           </Typography>
         </Grid>
@@ -117,16 +109,16 @@ const GuideProfileData = (props: IGuideProfileDataProps) => {
         </Grid>
       </Grid>
       <Grid container className={classes.row}>
-        <Grid container item justify='flex-end' xs={6} sm={6}>
+        <Grid container item justify='center' xs={12} sm={12}>
           {getCountry(profileData.country)}
-        </Grid>
-        <Grid container item justify='flex-start' xs={6} sm={6}>
           <img src={profileData.country === 'PL' ? poland : ''} alt='' className={classes.flag} />
         </Grid>
       </Grid>
       <Grid container className={classes.row}>
         <Grid item className={classes.text} xs={6} sm={6}>
-          <Typography variant='body1'>{t('Average mark')}:</Typography>
+          <Typography variant='body1' className={classes.textBold}>
+            {t('Average mark')}:
+          </Typography>
         </Grid>
         <Grid container item justify='flex-end' xs={6} sm={6}>
           {profile.averageMark > 0 ? (
@@ -137,16 +129,16 @@ const GuideProfileData = (props: IGuideProfileDataProps) => {
               </Typography>
             </>
           ) : (
-            <Typography color='error' variant='body1'>
-              B. D.
-            </Typography>
+            <Typography variant='body1'>{t('N.D.')}</Typography>
           )}
         </Grid>
       </Grid>
 
       <Grid container className={classes.row}>
         <Grid item className={classes.text} xs={6} sm={6}>
-          <Typography variant='body1'>{t('Languages')}:</Typography>
+          <Typography variant='body1' className={classes.textBold}>
+            {t('Languages')}:
+          </Typography>
         </Grid>
         <Grid container item justify='flex-end' xs={6} sm={6}>
           {profile.languages.map((lng: string) => (

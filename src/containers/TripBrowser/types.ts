@@ -21,6 +21,7 @@ import {
   FETCH_POPULAR_TRIPS_FAILED,
   FETCH_POPULAR_TRIPS_REQUESTED,
 } from './constants';
+import { ITraveler } from '../Offers/types';
 
 export interface ITag {
   id: number;
@@ -66,6 +67,7 @@ export interface IEndedSingleTripType {
   dateCreate: Date;
   dateMeeting: Date;
   offer: ISingleTripType;
+  traveler: ITraveler;
 }
 
 export interface IMultiTripsType {
