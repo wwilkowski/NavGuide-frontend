@@ -55,7 +55,7 @@ function* logInGoogle(action: types.ILogInGoogleRequest) {
       };
       yield put(actions.logInGoogleSuccessed(user));
       yield initTokenCookie(token);
-      showNotification('success', i18n.t('Logged in successfully'), '');
+      showNotification('success', i18n.t('Logged in successfully'), '...');
       yield call(forwardTo, '/profile');
     } else {
       if (response.status === 401) {

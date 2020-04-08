@@ -51,7 +51,7 @@ function* createOffer(action: types.ICreateOfferAction) {
     });
     if (response.status >= 200 && response.status <= 300) {
       yield put(actions.createOfferSuccessed());
-      showNotification('success', `${i18n.t('The offer has been added')}`, '');
+      showNotification('success', `${i18n.t('The offer has been added')}`, '...');
       yield call(forwardTo, '/');
     } else {
       if (response.status === 401) {
