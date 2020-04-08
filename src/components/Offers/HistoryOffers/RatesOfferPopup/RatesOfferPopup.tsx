@@ -7,11 +7,11 @@ import { IGotFeedback } from '../../../../containers/Offers/types';
 import GuideOfferRate from '../GuideOfferRate';
 import { useTranslation } from 'react-i18next';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   popupModal: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   popupPaper: {
     backgroundColor: theme.palette.background.paper,
@@ -19,11 +19,11 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(1),
     width: window.innerWidth < 900 ? '95%' : '37%',
     height: '47%',
-    overflowY: 'auto'
+    overflowY: 'auto',
   },
   popupFooter: {
-    padding: theme.spacing(2)
-  }
+    padding: theme.spacing(2),
+  },
 }));
 
 const RatesOfferPopup = (props: IOfferRatesProps) => {
@@ -41,13 +41,13 @@ const RatesOfferPopup = (props: IOfferRatesProps) => {
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{
-        timeout: 500
+        timeout: 500,
       }}
     >
       <Fade in={popupVisible}>
         <Paper className={classes.popupPaper}>
-          <Grid container sm={12} spacing={1}>
-            <Grid container justify='center' sm={12}>
+          <Grid container spacing={1}>
+            <Grid container justify='center'>
               <Typography component='p' variant='h3'>
                 {t('Trip rates')}
               </Typography>
@@ -60,7 +60,7 @@ const RatesOfferPopup = (props: IOfferRatesProps) => {
             <Grid item sm={12}>
               {feedbacks && feedbacks.map((feedback: IGotFeedback) => <GuideOfferRate feedback={feedback} />)}
             </Grid>
-            <Grid container justify='flex-end' sm={12}>
+            <Grid container justify='flex-end'>
               <p className={classes.popupFooter}>
                 {t('Total number of rates')}: {feedbacks && feedbacks.length}
               </p>

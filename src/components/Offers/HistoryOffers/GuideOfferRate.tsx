@@ -5,34 +5,34 @@ import Rating from '@material-ui/lab/Rating';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   heading: {
     fontSize: '1em',
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
   },
   rating: {
     textAlign: 'right',
-    margin: 'auto'
+    margin: 'auto',
   },
   content: {
     margin: theme.spacing(1),
     padding: theme.spacing(1.5),
-    overflowY: 'auto'
+    overflowY: 'auto',
   },
   iconUp: {
     textAlign: 'center',
     margin: 'auto',
-    color: 'green'
+    color: 'green',
   },
   iconDown: {
     margin: 'auto',
     textAlign: 'center',
-    color: 'red'
+    color: 'red',
   },
   comment: {
     padding: theme.spacing(1),
-    fontSize: '0.9em'
-  }
+    fontSize: '0.9em',
+  },
 }));
 
 const calcAvg = (scoreOffer: number, scoreGuide: number) => {
@@ -48,7 +48,7 @@ const GuideOfferRate = (props: IGuideOfferRateProps) => {
     <>
       {feedback && window.innerWidth > 900 && (
         <Paper>
-          <Grid container justify='center' sm={12} className={classes.content}>
+          <Grid container justify='center' className={classes.content}>
             <Grid item sm={12}></Grid>
             <Grid item sm={6}>
               <Typography component='p' className={classes.heading}>
@@ -59,20 +59,20 @@ const GuideOfferRate = (props: IGuideOfferRateProps) => {
               </Typography>
             </Grid>
             <Grid item sm={4}>
-              <Grid container justify='center' sm={12} className={classes.heading}>
+              <Grid container justify='center' className={classes.heading}>
                 Przewodnik:
               </Grid>
-              <Grid container justify='center' sm={12}>
+              <Grid container justify='center'>
                 <Rating name='read-only' value={feedback.scoreGuide} readOnly />
               </Grid>
-              <Grid container justify='center' sm={12} className={classes.heading}>
+              <Grid container justify='center' className={classes.heading}>
                 Wycieczka:
               </Grid>
-              <Grid container justify='center' sm={12}>
+              <Grid container justify='center'>
                 <Rating className={classes.rating} name='read-only' value={feedback.scoreOffer} readOnly />
               </Grid>
             </Grid>
-            <Grid container justify='flex-start' sm={2}>
+            <Grid container justify='flex-start'>
               {calcAvg(feedback.scoreOffer, feedback.scoreGuide) > 3 ? (
                 <ThumbUpAltIcon fontSize='large' className={classes.iconUp} />
               ) : (

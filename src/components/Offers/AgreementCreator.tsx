@@ -72,11 +72,11 @@ const InnerForm = (props: ICreateAgreementOtherProps & FormikProps<ICreateAgreem
         <TripListElement trip={props.trip} />
       </div>
       <Form className={classes.form}>
-        <Grid container xs={12} sm={12} justify={'center'}>
-          <Grid container xs={12} sm={12} justify={'center'}>
+        <Grid container justify={'center'}>
+          <Grid container justify={'center'}>
             <Typography variant='subtitle1'>{t('Price')}</Typography>
           </Grid>
-          <Grid container xs={12} sm={12} justify={'center'}>
+          <Grid container justify={'center'}>
             <TextField
               className={classes.item}
               id='price'
@@ -104,7 +104,7 @@ const InnerForm = (props: ICreateAgreementOtherProps & FormikProps<ICreateAgreem
               className={classes.date}
             />
           </Grid>
-          <Grid container xs={12} justify='center'>
+          <Grid container justify='center'>
             <TextField
               id='description'
               label={t('Message to tourist')}
@@ -115,7 +115,7 @@ const InnerForm = (props: ICreateAgreementOtherProps & FormikProps<ICreateAgreem
               variant='outlined'
             />
           </Grid>
-          <Grid container xs={12} sm={12} justify='center' className={classes.item}>
+          <Grid container justify='center' className={classes.item}>
             {errors.description && touched.description && (
               <Typography variant='body1' color='error'>
                 {t(errors.description)}
