@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Grid } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+
+import { Grid, BottomNavigation, BottomNavigationAction } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import { LocationOn, Search } from '@material-ui/icons';
 
 import { StoreType } from '../../store';
-import ListTrips from './ListTrips';
-import { ISearchFormProps, ListMode } from './types';
-import { useSelector } from 'react-redux';
 import ControlledSearchForm from '../ControlledSearchForm';
 import LeafletMap from '../LeafletMap/LeafletMap';
-import SearchIcon from '@material-ui/icons/Search';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-import { useTranslation } from 'react-i18next';
+import ListTrips from './ListTrips';
+import { ISearchFormProps, ListMode } from './types';
 
 const useStyles = makeStyles({
   menu: {
@@ -28,14 +26,14 @@ const useStyles = makeStyles({
 });
 
 const SearchForm = (props: ISearchFormProps) => {
-  const classes = useStyles();
-
   const { t } = useTranslation();
 
-  const { setPosition, positionValue, formValue, trips, getTrips } = props;
+  const classes = useStyles();
 
   const isLogged = useSelector((state: StoreType) => state.profile.isLoggedIn);
   const closestTripsData = useSelector((state: StoreType) => state.tripBrowser.closestTrips);
+
+  const { setPosition, positionValue, formValue, trips, getTrips } = props;
 
   const [chosenOfferId, setChosenOfferId] = useState<number | null>(null);
   const [formView, setFormView] = useState(true);
@@ -99,8 +97,8 @@ const SearchForm = (props: ISearchFormProps) => {
           showLabels
           className={classes.menu}
         >
-          <BottomNavigationAction label={t('Search form')} icon={<SearchIcon />} />
-          <BottomNavigationAction label={t('Show map')} icon={<LocationOnIcon />} />
+          <BottomNavigationAction label={t('Search form')} icon={<Search />} />
+          <BottomNavigationAction label={t('Show map')} icon={<LocationOn />} />
         </BottomNavigation>
       )}
     </Grid>
