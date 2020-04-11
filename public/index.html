@@ -18,25 +18,27 @@
   <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap" rel="stylesheet"> -->
   <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-  <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async></script>
+  <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js"></script>
   <script>
     var OneSignal = window.OneSignal || [];
     OneSignal.push(function () {
       OneSignal.init({
-        appId: "234391c1-8efc-4ed6-bb10-77530d76d57c",
+        appId: "d82eef0c-d861-4cd6-8047-31d97817b186",
         notifyButton: {
           enable: true,
         },
-        allowLocalhostAsSecureOrigin: true,
+        allowLocalhostAsSecureOrigin: true
       });
 
-      OneSignal.getUserId(function (userId) {
-        console.log("OneSignal User ID:", userId);
+      OneSignal.showSlidedownPrompt();
 
+      OneSignal.getUserId(function (userId) {
+        localStorage.setItem('one_signal_id', userId);
       });
     });
   </script>
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+
   <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
