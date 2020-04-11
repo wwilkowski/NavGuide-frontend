@@ -10,6 +10,7 @@ import * as types from './types';
 const logInGoogleEndpoint = 'https://235.ip-51-91-9.eu/auth/google/login';
 const profileEndpoint = 'https://235.ip-51-91-9.eu/profile';
 const avatarEndpoint = 'https://235.ip-51-91-9.eu/profile/avatar';
+const oneSignalEndpoint = 'https://235.ip-51-91-9.eu/profile/push';
 
 function* logInGoogle(action: types.ILogInGoogleRequest) {
   try {
@@ -55,6 +56,7 @@ function* logInGoogle(action: types.ILogInGoogleRequest) {
       };
       yield put(actions.logInGoogleSuccessed(user));
       yield initTokenCookie(token);
+      yield sendOneSignalId(localStorage.getItem('one_signal_id') || '');
       showNotification('success', i18n.t('Logged in successfully'), '...');
       yield call(forwardTo, '/profile');
     } else {
@@ -67,6 +69,23 @@ function* logInGoogle(action: types.ILogInGoogleRequest) {
   } catch (e) {
     showNotification('danger', i18n.t(`${e.message}`), i18n.t('Try again later'));
     yield put(actions.logInGoogleFailed());
+  }
+}
+
+function* sendOneSignalId(oneSignalId: string) {
+  try {
+    yield call(fetch, oneSignalEndpoint, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getToken()}`,
+      },
+      body: JSON.stringify({
+        oneSignalId,
+      }),
+    });
+  } catch (e) {
+    console.error(e);
   }
 }
 
