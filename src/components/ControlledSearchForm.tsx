@@ -1,13 +1,14 @@
-import Button from '@material-ui/core/Button';
-import Radio from '@material-ui/core/Radio';
-import Slider from '@material-ui/core/Slider';
-import TextField from '@material-ui/core/TextField';
-import { Form, FormikProps, withFormik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+
+import { Container, createStyles, FormControl, FormControlLabel, Grid, makeStyles, RadioGroup, Theme, Typography } from '@material-ui/core';
+import { Button, Radio, Slider, TextField } from '@material-ui/core';
+
 import * as Yup from 'yup';
+import { Form, FormikProps, withFormik } from 'formik';
+
 import { ISuggestedPlace } from '../containers/TripBrowser/types';
 import { showNotification } from '../helpers/notification';
 import i18n from '../locales/i18n';
@@ -15,18 +16,6 @@ import { StoreType } from '../store';
 import TagList from './TagList';
 import ListSuggestedTrips from './TripBrowser/ListSuggestedTrips';
 import { ISearchFormProps, ISearchFormValues } from './TripBrowser/types';
-import {
-  makeStyles,
-  Theme,
-  createStyles,
-  Typography,
-  Container,
-  FormControl,
-  RadioGroup,
-  FormControlLabel,
-  Box,
-  Grid,
-} from '@material-ui/core';
 
 const SearchFormSchema = Yup.object().shape({});
 
@@ -101,11 +90,28 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
   }, [props.formValue, values.location]);
 
   function valuetext(value: number) {
-    return `${value}km`;
+    return `${value}`;
   }
 
   const radiusChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFieldValue('searchMode', event.target.value);
+  };
+
+  const onLocationInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    props.handleChange(event);
+    props.onChange(event.target.value);
+  };
+
+  const onClickSuggestionsList = (location: ISuggestedPlace) => {
+    props.onCityClick();
+    setFieldValue('lat', location.coords[1]);
+    setFieldValue('lon', location.coords[0]);
+    props.setPosition({
+      latitude: location.coords[1],
+      longitude: location.coords[0],
+      radius: props.positionValue.radius,
+    });
+    props.onSubmit(location, props.positionValue.radius, 'suggested', values.end, values.begin);
   };
 
   return (
@@ -120,25 +126,12 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                 name='location'
                 label={values.searchMode === 'geo' ? t('Location') : t('Offer name')}
                 value={props.formValue}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  props.handleChange(event);
-                  props.onChange(event.target.value);
-                }}
+                onChange={onLocationInputChange}
               />
               {errors.location && touched.location && <div>{t(errors.location)}</div>}
               {values.searchMode === 'geo' && suggestedListVisible && suggestedCities.length > 0 && (
                 <ListSuggestedTrips
-                  onCityClick={(location: ISuggestedPlace) => {
-                    props.onCityClick();
-                    setFieldValue('lat', location.coords[1]);
-                    setFieldValue('lon', location.coords[0]);
-                    props.setPosition({
-                      latitude: location.coords[1],
-                      longitude: location.coords[0],
-                      radius: props.positionValue.radius,
-                    });
-                    props.onSubmit(location, props.positionValue.radius, 'suggested', values.end, values.begin);
-                  }}
+                  onCityClick={onClickSuggestionsList}
                   onCityHover={props.onCityHover}
                   suggestedTrips={suggestedCities}
                   activeTags={values.activeTags}
@@ -188,31 +181,39 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
               </FormControl>
             </Grid>
             <Grid item xs={12}>
-              <Box>
-                <Typography component='label' variant='subtitle2' htmlFor='begin'>
-                  {t('From')}:
-                </Typography>
-                <DatePicker
-                  dateFormat='yyyy/MM/dd'
-                  minDate={new Date()}
-                  selected={values.begin}
-                  onChange={(date) => setFieldValue('begin', date)}
-                  className={classes.datePicker}
-                />
-              </Box>
+              <Grid container>
+                <Grid item xs={2}>
+                  <Typography component='label' variant='subtitle2' htmlFor='begin'>
+                    {t('From')}:
+                  </Typography>
+                </Grid>
+                <Grid item xs={10}>
+                  <DatePicker
+                    dateFormat='yyyy/MM/dd'
+                    minDate={new Date()}
+                    selected={values.begin}
+                    onChange={(date) => setFieldValue('begin', date)}
+                    className={classes.datePicker}
+                  />
+                </Grid>
+              </Grid>
               {errors.begin && touched.begin && <div>{t(`Incorrect date`)}</div>}
-              <Box>
-                <Typography component='label' variant='subtitle2' htmlFor='end'>
-                  {t('To')}:
-                </Typography>
-                <DatePicker
-                  dateFormat='yyyy/MM/dd'
-                  minDate={values.begin}
-                  selected={values.end}
-                  onChange={(date) => setFieldValue('end', date)}
-                  className={classes.datePicker}
-                />
-              </Box>
+              <Grid container>
+                <Grid item xs={2}>
+                  <Typography component='label' variant='subtitle2' htmlFor='end'>
+                    {t('To')}:
+                  </Typography>
+                </Grid>
+                <Grid item xs={10}>
+                  <DatePicker
+                    dateFormat='yyyy/MM/dd'
+                    minDate={values.begin}
+                    selected={values.end}
+                    onChange={(date) => setFieldValue('end', date)}
+                    className={classes.datePicker}
+                  />
+                </Grid>
+              </Grid>
               {errors.end && touched.end && <div>{t(`Incorrect date`)}</div>}
             </Grid>
           </Grid>
