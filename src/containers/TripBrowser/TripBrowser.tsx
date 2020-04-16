@@ -143,6 +143,7 @@ const TripBrowser: React.FC = () => {
   };
 
   const onSearchFormSubmit = (location: ISuggestedPlace, radius: number, mode: string, end: Date, begin: Date) => {
+    console.log(location);
     setEndDate(end);
     setBeginDate(begin);
     if (mode === 'geo' && suggestedCities.length > 0 && location.displayName !== prevFormValue) {
@@ -161,6 +162,7 @@ const TripBrowser: React.FC = () => {
       }
       setPrevFormValue(location.displayName);
     } else if (mode === 'name') {
+      console.log(location.displayName);
       dispatcher(actions.fetchNameTripsRequested(location.displayName));
     } else {
       setFormValue(location.displayName);

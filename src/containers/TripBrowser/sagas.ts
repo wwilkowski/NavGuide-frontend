@@ -5,7 +5,7 @@ import {
   FETCH_GEO_TRIPS_REQUESTED,
   FETCH_SUGGESTED_CITIES_REQUESTED,
   FETCH_CLOSEST_TRIPS_REQUESTED,
-  FETCH_POPULAR_TRIPS_REQUESTED
+  FETCH_POPULAR_TRIPS_REQUESTED,
 } from './constants';
 import { call, put, takeLatest, debounce } from 'redux-saga/effects';
 import * as actions from './actions';
@@ -45,7 +45,9 @@ function* fetchNameTripsFromAPI(action: types.IFetchNameTripsRequest) {
     let tmp = action.name.split(' ');
     tmp = tmp.map((el: string) => `${el}%20`);
 
-    const response = yield call(fetch, nameTripsEdnpoint + tmp.join());
+    const name = encodeURI(action.name);
+
+    const response = yield call(fetch, nameTripsEdnpoint + name);
     const status = response.status;
     const json = yield response.json();
     const templateTrips: types.IMultiTripsType = { trips: [] };
@@ -159,8 +161,8 @@ function* fetchSuggestedCitiesFromNominatimAPI(action: types.IFetchSuggestedCiti
         neighbourhood: el.address.neighbourhood,
         postcode: el.address.postcode,
         state: el.address.state,
-        suburb: el.address.suburb
-      }
+        suburb: el.address.suburb,
+      },
     }));
 
     const seen = new Set();

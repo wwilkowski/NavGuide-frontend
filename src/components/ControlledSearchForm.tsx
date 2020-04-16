@@ -88,7 +88,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
   useEffect(() => {
     setLocation(props.formValue);
     values.location = props.formValue;
-  }, [props.formValue, values.location]);
+  }, [props.formValue]);
 
   function valuetext(value: number) {
     return `${value}`;
@@ -126,7 +126,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                 type='text'
                 name='location'
                 label={values.searchMode === 'geo' ? t('Location') : t('Offer name')}
-                value={props.formValue}
+                value={location}
                 onChange={onLocationInputChange}
                 placeholder='Search for the location you are interested in...'
               />
@@ -244,6 +244,8 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                   ({ coords: { latitude, longitude } }: Position) => {
                     setFieldValue('lat', latitude);
                     setFieldValue('lon', longitude);
+                    setFieldValue('location', '');
+                    setLocation('');
                     showNotification('success', t('Geolocation changed'), t('You changed coords based on your location'));
                     props.setPosition({
                       ...props.positionValue,
