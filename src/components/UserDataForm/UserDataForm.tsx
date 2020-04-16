@@ -276,7 +276,7 @@ const MyForm = withFormik<MyFormProps, FullFormValues>({
       country: country.toUpperCase() || 'PL',
       email: email || '',
       telephone: telephone || '',
-      gender: gender,
+      gender: 'MALE',
       age: age || 10,
       experience: experience || 1,
       interests: interests.length ? interests.map((i) => i.id) : [],
