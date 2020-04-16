@@ -93,7 +93,6 @@ const TripBrowser: React.FC = () => {
         if (equalTags.length > 0) return true;
         return false;
       });
-      console.log('tmp: ', tmp);
       if (beginDate && isLogged && endDate) {
         tmp = tmp.filter((trip: ISingleTripType) => {
           const tripBegin = new Date(trip.begin);

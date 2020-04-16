@@ -128,6 +128,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                 label={values.searchMode === 'geo' ? t('Location') : t('Offer name')}
                 value={props.formValue}
                 onChange={onLocationInputChange}
+                placeholder='Search for the location you are interested in...'
               />
               {errors.location && touched.location && <div>{t(errors.location)}</div>}
               {values.searchMode === 'geo' && suggestedListVisible && suggestedCities.length > 0 && (
