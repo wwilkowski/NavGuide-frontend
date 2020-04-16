@@ -80,9 +80,10 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
   }, [errors, isSubmitting, t]);
 
   useEffect(() => {
-    props.updateActiveTags(values.activeTags);
+    const interestsIds = values.interests && values.interests.length ? values.interests.map((interest) => +interest) : [];
+    props.updateActiveTags(interestsIds);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [values.activeTags]);
+  }, [values.interests]);
 
   useEffect(() => {
     setLocation(props.formValue);
@@ -134,7 +135,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                   onCityClick={onClickSuggestionsList}
                   onCityHover={props.onCityHover}
                   suggestedTrips={suggestedCities}
-                  activeTags={values.activeTags}
+                  activeTags={values.interests}
                   changeVisible={() => setSuggestedListVisible(true)}
                 />
               )}
@@ -285,7 +286,7 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
       lon: positionValue.longitude,
       radius: positionValue.radius || 1,
       searchMode: 'geo',
-      activeTags: [],
+      interests: [],
       begin: defaultBegin,
       end: defaultEnd,
     };

@@ -3,7 +3,7 @@ import { ISingleTripType, IPosition, ISuggestedPlace } from '../../containers/Tr
 export enum ListMode {
   normal,
   closest,
-  popular
+  popular,
 }
 
 export interface ISearchFormValues {
@@ -12,7 +12,7 @@ export interface ISearchFormValues {
   lon: number;
   radius: number;
   searchMode: string;
-  activeTags: string[];
+  interests: string[];
   begin: Date;
   end: Date;
 }
@@ -21,7 +21,7 @@ export interface ISearchFormProps {
   onChange: (location: string) => void;
   onSubmit: (location: ISuggestedPlace, radius: number, mode: string, end: Date, begin: Date) => void;
   getTrips: (mode: ListMode) => void;
-  updateActiveTags: (tagNames: string[]) => void;
+  updateActiveTags: (tagNames: number[]) => void;
   setPosition: (position: IPosition) => void;
   formValue: string;
   positionValue: IPosition;
