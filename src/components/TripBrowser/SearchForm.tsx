@@ -30,7 +30,6 @@ const SearchForm = (props: ISearchFormProps) => {
 
   const classes = useStyles();
 
-  const isLogged = useSelector((state: StoreType) => state.profile.isLoggedIn);
   const closestTripsData = useSelector((state: StoreType) => state.tripBrowser.closestTrips);
 
   const { setPosition, positionValue, formValue, trips, getTrips } = props;
@@ -41,9 +40,9 @@ const SearchForm = (props: ISearchFormProps) => {
   const [value, setValue] = useState(0);
 
   useEffect(() => {
-    if (!trips.length && isLogged) setMode(ListMode.closest);
+    if (!trips.length) setMode(ListMode.closest);
     else setMode(ListMode.normal);
-  }, [isLogged, trips]);
+  }, [trips]);
 
   useEffect(() => {
     getTrips(mode);
