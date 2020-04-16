@@ -80,9 +80,10 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
   }, [errors, isSubmitting, t]);
 
   useEffect(() => {
-    props.updateActiveTags(values.activeTags);
+    const interestsIds = values.interests && values.interests.length ? values.interests.map((interest) => +interest) : [];
+    props.updateActiveTags(interestsIds);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [values.activeTags]);
+  }, [values.interests]);
 
   useEffect(() => {
     setLocation(props.formValue);
@@ -127,6 +128,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                 label={values.searchMode === 'geo' ? t('Location') : t('Offer name')}
                 value={props.formValue}
                 onChange={onLocationInputChange}
+                placeholder='Search for the location you are interested in...'
               />
               {errors.location && touched.location && <div>{t(errors.location)}</div>}
               {values.searchMode === 'geo' && suggestedListVisible && suggestedCities.length > 0 && (
@@ -134,7 +136,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                   onCityClick={onClickSuggestionsList}
                   onCityHover={props.onCityHover}
                   suggestedTrips={suggestedCities}
-                  activeTags={values.activeTags}
+                  activeTags={values.interests}
                   changeVisible={() => setSuggestedListVisible(true)}
                 />
               )}
@@ -152,7 +154,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
               step={0.1}
               marks
               min={0.0}
-              max={5.0}
+              max={50.0}
               valueLabelDisplay='auto'
               onChange={(event: React.ChangeEvent<{}>, value: number | number[]) => {
                 setFieldValue('radius', value);
@@ -285,7 +287,7 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
       lon: positionValue.longitude,
       radius: positionValue.radius || 1,
       searchMode: 'geo',
-      activeTags: [],
+      interests: [],
       begin: defaultBegin,
       end: defaultEnd,
     };
