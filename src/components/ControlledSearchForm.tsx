@@ -153,7 +153,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
               step={0.1}
               marks
               min={0.0}
-              max={5.0}
+              max={50.0}
               valueLabelDisplay='auto'
               onChange={(event: React.ChangeEvent<{}>, value: number | number[]) => {
                 setFieldValue('radius', value);
