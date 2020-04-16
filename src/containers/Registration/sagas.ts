@@ -16,7 +16,6 @@ const guideInfoEndpoint = 'https://235.ip-51-91-9.eu/profile/guideRequests';
 
 function* signUpGoogleUser(action: types.ISignUpGoogleRequest) {
   try {
-    console.log(window.location.origin.replace('navguide.', ''));
     const response = yield call(fetch, signUpGoogleEndpoint, {
       method: 'POST',
       headers: {
@@ -24,7 +23,7 @@ function* signUpGoogleUser(action: types.ISignUpGoogleRequest) {
       },
       body: JSON.stringify({
         code: `${action.code}`,
-        request: window.location.origin.replace('navguide.', ''),
+        request: window.location.origin,
       }),
     });
     const status = response.status;
