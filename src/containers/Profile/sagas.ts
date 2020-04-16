@@ -21,7 +21,7 @@ function* logInGoogle(action: types.ILogInGoogleRequest) {
       },
       body: JSON.stringify({
         code: action.code,
-        request: window.location.origin.replace('navguide.', ''),
+        request: window.location.origin,
       }),
     });
     if (response.status >= 200 && response.status <= 300) {
