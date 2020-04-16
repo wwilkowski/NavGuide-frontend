@@ -16,7 +16,7 @@ const TripBrowser: React.FC = () => {
   const [beginDate, setBeginDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
   const [filteredTrips, setFilteredTrips] = useState<ISingleTripType[]>([]);
-  const [activeTags, setActiveTags] = useState<string[]>([]);
+  const [activeTags, setActiveTags] = useState<number[]>([]);
   const [formValue, setFormValue] = useState<string>('UMK Wydział Matematyki i Informatyki');
   const [prevFormValue, setPrevFormValue] = useState<string>('');
   const [positionValue, setPositionValue] = useState<IPosition>({
@@ -87,7 +87,9 @@ const TripBrowser: React.FC = () => {
   useEffect(() => {
     if (activeTags && activeTags.length) {
       let tmp = tripsData.filter((trip) => {
-        const equalTags = trip.tags.filter((tag) => activeTags.includes(tag.name));
+        const equalTags = trip.tags.filter((tag) => {
+          return activeTags.includes(tag.id);
+        });
         if (equalTags.length > 0) return true;
         return false;
       });
@@ -95,7 +97,10 @@ const TripBrowser: React.FC = () => {
         tmp = tmp.filter((trip: ISingleTripType) => {
           const tripBegin = new Date(trip.begin);
           const tripEnd = new Date(trip.end);
-          if (tripBegin.getTime() >= beginDate.getTime() && tripEnd.getTime() <= endDate.getTime()) {
+          if (
+            (beginDate.getTime() >= tripBegin.getTime() && beginDate.getTime() <= tripEnd.getTime()) ||
+            (endDate.getTime() >= tripBegin.getTime() && endDate.getTime() <= tripEnd.getTime())
+          ) {
             return true;
           }
           return false;

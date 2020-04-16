@@ -46,7 +46,7 @@ const SearchForm = (props: ISearchFormProps) => {
   }, [isLogged, trips]);
 
   useEffect(() => {
-    if (mode !== ListMode.normal) getTrips(mode);
+    getTrips(mode);
   }, [getTrips, mode]);
 
   return (
