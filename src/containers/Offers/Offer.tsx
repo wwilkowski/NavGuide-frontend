@@ -30,11 +30,7 @@ const Offer = (props: Props) => {
 
   return (
     <div>
-      {currentOffer && isLogged ? (
-        <TripInfo tripInformations={currentOffer} guideProfile={guideProfile} guideProfileData={guideProfileData} />
-      ) : (
-        <p>Zaloguj się, aby zobaczyć zawartość</p>
-      )}
+      <TripInfo tripInformations={currentOffer} guideProfile={guideProfile} guideProfileData={guideProfileData} />
     </div>
   );
 };

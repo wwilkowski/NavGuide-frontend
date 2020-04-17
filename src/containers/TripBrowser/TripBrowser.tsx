@@ -166,17 +166,12 @@ const TripBrowser: React.FC = () => {
       dispatcher(actions.fetchNameTripsRequested(location.displayName));
     } else {
       setFormValue(location.displayName);
-      if (location.displayName.length) {
-        setPositionValue({
-          latitude: location.coords[1],
-          longitude: location.coords[0],
-          radius,
-        });
-        dispatcher(actions.fetchGeoTripsRequested(location.coords[1], location.coords[0], radius * 1000, isLogged));
-      } else {
-        dispatcher(actions.fetchRandomTripsRequested(isLogged));
-      }
-      setPrevFormValue(location.displayName);
+      setPositionValue({
+        latitude: location.coords[1],
+        longitude: location.coords[0],
+        radius,
+      });
+      dispatcher(actions.fetchGeoTripsRequested(location.coords[1], location.coords[0], radius * 1000, isLogged));
     }
   };
 
