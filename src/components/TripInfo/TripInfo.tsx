@@ -105,7 +105,7 @@ const TripInfo = (props: ITripInfoProps) => {
   ) : (
     <div>
       <div ref={node}>
-        <p>{t('Login or register to see more')}</p>
+        <p>{t('Logiaan or register to see more')}</p>
       </div>
     </div>
   );
