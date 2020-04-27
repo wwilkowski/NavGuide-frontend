@@ -88,6 +88,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
   useEffect(() => {
     setLocation(props.formValue);
     values.location = props.formValue;
+    // eslint-disable-next-line
   }, [props.formValue]);
 
   function valuetext(value: number) {
@@ -128,7 +129,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                 label={values.searchMode === 'geo' ? t('Location') : t('Offer name')}
                 value={location}
                 onChange={onLocationInputChange}
-                placeholder='Search for the location you are interested in...'
+                placeholder={t('Search for the location you are interested in...')}
               />
               {errors.location && touched.location && <div>{t(errors.location)}</div>}
               {values.searchMode === 'geo' && suggestedListVisible && suggestedCities.length > 0 && (
