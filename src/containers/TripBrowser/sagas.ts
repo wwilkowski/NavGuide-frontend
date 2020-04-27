@@ -42,9 +42,6 @@ function* fetchRandomTripsFromAPI() {
 
 function* fetchNameTripsFromAPI(action: types.IFetchNameTripsRequest) {
   try {
-    let tmp = action.name.split(' ');
-    tmp = tmp.map((el: string) => `${el}%20`);
-
     const name = encodeURI(action.name);
 
     const response = yield call(fetch, nameTripsEdnpoint + name);
