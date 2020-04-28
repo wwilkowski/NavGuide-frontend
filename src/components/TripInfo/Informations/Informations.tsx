@@ -6,12 +6,17 @@ import { Link } from 'react-router-dom';
 import styles from './styles.module.scss';
 import RatesOfferPopup from '../../Offers/HistoryOffers/RatesOfferPopup/RatesOfferPopup';
 import { Button, makeStyles, Typography } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getOfferFeedbacksRequest } from '../../../containers/Offers/actions';
 import poland from '../../../assets/icons/poland.png';
 import unitedKingdom from '../../../assets/icons/unitedKingdom.png';
 import germany from '../../../assets/icons/germany.png';
 import Rating from '@material-ui/lab/Rating';
+import { StoreType } from '../../../store';
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+import { getInterestsRequest, signUpGoogleRequest } from '../../../containers/Registration/actions';
+import { logInGoogleRequest } from '../../../containers/Profile/actions';
+import GoogleButton from '../../../components/GoogleButton/GoogleButton';
 
 const getFlag = (code: string) => {
   switch (code) {
@@ -40,6 +45,8 @@ const Informations = (props: IInformationsProps) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const dispatcher = useDispatch();
+
+  const isLogged = useSelector((state: StoreType) => state.profile.isLoggedIn);
 
   const { tripData, guideProfileData, guideProfile } = props;
 
@@ -78,11 +85,20 @@ const Informations = (props: IInformationsProps) => {
     }
   };
 
+  const signUpWithUserCode = (code: string) => {
+    dispatcher(signUpGoogleRequest(code));
+    dispatcher(getInterestsRequest());
+  };
+  const signInWithUserCode = (code: string) => {
+    dispatcher(logInGoogleRequest(code));
+  };
+
   return (
     <>
       <nav className={styles.nav}>
         <ul className={styles.nav__menuList}>
           <li
+            style={isLogged ? { width: '30%' } : { width: '100%' }}
             className={styles.nav__menuItem}
             onClick={() => {
               props.changeInformationsMode('trip');
@@ -94,6 +110,7 @@ const Informations = (props: IInformationsProps) => {
             </div>
           </li>
           <li
+            style={isLogged ? { display: 'inherit' } : { display: 'none' }}
             className={styles.nav__menuItem}
             onClick={() => {
               props.changeInformationsMode('guide');
@@ -104,7 +121,7 @@ const Informations = (props: IInformationsProps) => {
               <p className={styles.nav__p}>{t('Guide')}</p>
             </div>
           </li>
-          <li className={styles.nav__menuItem} onClick={() => {}}>
+          <li style={isLogged ? { display: 'inherit' } : { display: 'none' }} className={styles.nav__menuItem} onClick={() => {}}>
             <div className={styles.nav__case}>
               <Link to={`/offers/${tripData.id}/buy`} className={styles.link}>
                 {t('Order now')}!
@@ -116,6 +133,14 @@ const Informations = (props: IInformationsProps) => {
       <div className={styles.infoContainer}>
         {(props.mode === 'trip' || window.innerWidth > 600) && (
           <div className={styles.tripView}>
+            {/* zaslepka gdy niezalogowany */}
+            {!isLogged && window.innerWidth < 600 && (
+              <div className={styles.plug}>
+                <h3 className={styles.plug__title}> {t('Attention')}</h3>
+                <p className={styles.plug__text}>{t('Login or register to see more informations')}</p>
+                <ErrorOutlineIcon className={styles.plug__icon} />
+              </div>
+            )}
             <div className={styles.section}>
               <h2 className={styles.title}>{t('Informations')}</h2>
               <div className={styles.info}>
@@ -128,48 +153,58 @@ const Informations = (props: IInformationsProps) => {
                   {tripData.price} ({t(tripData.priceType)})
                 </p>
               </div>
-              <div className={styles.info}>
-                <p className={styles.subtitle}>{t('Max people')}</p>
-                <p className={styles.value}> {tripData.maxPeople}</p>
-              </div>
-              <div className={styles.info}>
-                <p className={styles.subtitle}>{t('From')}:</p>
-                <p className={styles.value}>{tripData.begin.toString().substr(0, tripData.begin.toString().indexOf('T'))}</p>
-              </div>
-              <div className={styles.info}>
-                <p className={styles.subtitle}>{t('To')}:</p>
-                <p className={styles.value}>{tripData.end.toString().substr(0, tripData.end.toString().indexOf('T'))}</p>
-              </div>
+              {isLogged && (
+                <>
+                  <div className={styles.info}>
+                    <p className={styles.subtitle}>{t('Max people')}</p>
+                    <p className={styles.value}> {tripData.maxPeople}</p>
+                  </div>
+                  <div className={styles.info}>
+                    <p className={styles.subtitle}>{t('From')}:</p>
+                    <p className={styles.value}>{tripData.begin.toString().substr(0, tripData.begin.toString().indexOf('T'))}</p>
+                  </div>
+                  <div className={styles.info}>
+                    <p className={styles.subtitle}>{t('To')}:</p>
+                    <p className={styles.value}>{tripData.end.toString().substr(0, tripData.end.toString().indexOf('T'))}</p>
+                  </div>
+                </>
+              )}
             </div>
-            <div className={styles.section}>
-              <h2 className={styles.title}>{t('Statistics')}</h2>
-              <div className={styles.info}>
-                <p className={styles.subtitle}>{t('Sold')}:</p>
-                <p className={styles.value}>{tripData.sold}</p>
+            {isLogged && (
+              <div className={styles.section}>
+                <h2 className={styles.title}>{t('Statistics')}</h2>
+                <div className={styles.info}>
+                  <p className={styles.subtitle}>{t('Sold')}:</p>
+                  <p className={styles.value}>{tripData.sold}</p>
+                </div>
+                <div className={styles.info}>
+                  <p className={styles.subtitle}>{t('Average mark')}:</p>
+                  {props.tripData.averageMark > 0 ? (
+                    <Rating precision={0.5} readOnly value={Math.round((props.guideProfile.averageMark * 10) / 10)}></Rating>
+                  ) : (
+                    <Typography>{t('N.D.')}</Typography>
+                  )}
+                </div>
+                <div>
+                  <RatesOfferPopup
+                    offerId={tripData.id}
+                    popupVisible={offerRatesVisible}
+                    changePopupVisible={() => setOfferRatesVisible(false)}
+                  />
+                  <Button
+                    style={window.innerWidth < 900 ? { marginBottom: '2rem', zIndex: -1 } : { marginTop: '1rem', zIndex: -1 }}
+                    onClick={() => {
+                      dispatcher(getOfferFeedbacksRequest(tripData.id));
+                      setOfferRatesVisible(true);
+                    }}
+                    className={classes.rateButton}
+                    disabled={false}
+                  >
+                    {t('See rates')}
+                  </Button>
+                </div>
               </div>
-              <div className={styles.info}>
-                <p className={styles.subtitle}>{t('Average mark')}:</p>
-                <p className={styles.value}>{tripData.averageMark > 0 ? tripData.averageMark : 0}</p>
-              </div>
-              <div>
-                <RatesOfferPopup
-                  offerId={tripData.id}
-                  popupVisible={offerRatesVisible}
-                  changePopupVisible={() => setOfferRatesVisible(false)}
-                />
-                <Button
-                  style={window.innerWidth < 900 ? { marginBottom: '2rem' } : { marginTop: '1rem' }}
-                  onClick={() => {
-                    dispatcher(getOfferFeedbacksRequest(tripData.id));
-                    setOfferRatesVisible(true);
-                  }}
-                  className={classes.rateButton}
-                  disabled={false}
-                >
-                  {t('Zobacz oceny')}
-                </Button>
-              </div>
-            </div>
+            )}
             <div className={styles.section}>
               <h2 className={styles.title}>{t('Tags')}</h2>
               <ul className={styles.tagList}>
@@ -180,14 +215,15 @@ const Informations = (props: IInformationsProps) => {
                 ))}
               </ul>
             </div>
-            <div className={styles.section}>
-              <h2 className={styles.title}>{t('Number of visits')}</h2>
-              <p className={styles.centered}>{tripData.inSearch}</p>
-            </div>
+            {isLogged && (
+              <div className={styles.section}>
+                <h2 className={styles.title}>{t('Number of visits')}</h2>
+                <p className={styles.centered}>{tripData.inSearch}</p>
+              </div>
+            )}
           </div>
         )}
-
-        {(props.mode === 'guide' || window.innerWidth > 600) && (
+        {(props.mode === 'guide' || window.innerWidth > 600) && isLogged && (
           <div className={styles.guideView}>
             <div>
               <Link to={`/guides/${tripData.owner.guideId}`}>
@@ -225,6 +261,23 @@ const Informations = (props: IInformationsProps) => {
                     <img className={classes.flag} src={getFlag(lng)} alt={lng} />
                   ))}
                 </p>
+              </div>
+            </div>
+          </div>
+        )}
+        {!isLogged && window.innerWidth > 600 && (
+          <div className={styles.guideView}>
+            <div className={styles.plugDesktop}>
+              <h3 className={styles.plugDesktop__title}> {t('Attention')}</h3>
+              <p className={styles.plugDesktop__text}>{t('Login or register to see more informations')}.</p>
+              <ErrorOutlineIcon className={styles.plugDesktop__icon} />
+            </div>
+            <div className={styles.plugDesktop__buttons}>
+              <div className={styles.button}>
+                <GoogleButton text='Sign in with Google' onSuccess={signInWithUserCode} onFailure={signInWithUserCode} />
+              </div>
+              <div className={styles.button}>
+                <GoogleButton text='Sign up with Google' onSuccess={signUpWithUserCode} onFailure={signUpWithUserCode} />
               </div>
             </div>
           </div>

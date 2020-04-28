@@ -1,7 +1,8 @@
 .avatar {
+  margin-top: 2rem;
   border-radius: 50%;
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   box-shadow: 10px 10px 51px 0px rgba(0, 0, 0, 0.35);
   @media (min-width: 800px) {
     border-radius: 0;
@@ -18,25 +19,83 @@
 }
 
 .informations {
-  margin: 3rem 0;
   width: 100%;
   padding: 0 0.5rem;
   max-width: 400px;
-}
-
-.title {
-  font-weight: 600;
-}
-
-.info {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-wrap: wrap;
+  &__row1 {
+    text-align: center;
+    flex: 0 0 100%;
+    height: auto;
+    font-size: 1.3rem;
+    margin-top: 0.2rem;
+  }
+  &__row2 {
+    flex: 0 0 100%;
+    text-align: center;
+  }
+  &__row3 {
+    display: flex;
+    justify-content: center;
+    flex: 0 0 100%;
+    text-align: center;
+    margin-top: 0.5rem;
+    img {
+      width: 25px;
+      height: 25px;
+      padding: 0.1rem;
+    }
+  }
+  &__row4 {
+    flex: 0 0 100%;
+    text-align: center;
+    margin-top: 0.5rem;
+    font-size: 1.1rem;
+
+    .title {
+      flex: 0 0 100%;
+      text-align: center;
+    }
+    .stars {
+      justify-content: center;
+      flex: 0 0 100%;
+    }
+  }
+  &__row5 {
+    flex: 0 0 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+    font-size: 1.1rem;
+    .line {
+      display: flex;
+      flex: 0 0 100%;
+      margin-top: 0.5rem;
+      img {
+        width: 28px;
+        height: 28px;
+        padding: 0.2rem;
+      }
+      p {
+        padding: 0.2rem;
+        font-size: 1rem;
+        margin-left: 0.5rem;
+      }
+    }
+  }
 }
+
 .tagList {
   display: flex;
   justify-content: flex-start;
+  flex-wrap: wrap;
   margin: 1rem 0;
+  margin-top: 1rem;
+  label {
+    font-size: 1.1rem;
+    flex: 0 0 100%;
+  }
 }
 
 .tag {

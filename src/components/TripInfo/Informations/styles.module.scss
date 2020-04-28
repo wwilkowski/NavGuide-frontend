@@ -12,6 +12,7 @@
     background: #37b498;
     width: 100%;
     display: flex;
+    z-index: 10;
     justify-content: space-between;
   }
   &__menuItem {
@@ -44,7 +45,7 @@
 
 .title {
   font-weight: 600;
-  margin-bottom: 1rem;
+  margin: 1rem 0 1rem;
 }
 
 .info {
@@ -118,4 +119,72 @@
 
 .link {
   color: inherit;
+}
+
+.plug {
+  background-color: #ececec73;
+  border-radius: 7px;
+  box-shadow: 0px 0px 6px 0 #a28787;
+  padding: 0.5rem 1rem;
+  width: 100%;
+  min-height: 80px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  &__title {
+    flex: 0 0 100%;
+    text-align: center;
+    color: #f50057;
+  }
+  &__text {
+    flex: 0 0 90%;
+    text-align: center;
+  }
+  &__icon {
+    flex: 0 0 10%;
+    font-size: 3rem;
+    opacity: 0.8;
+    color: black;
+  }
+}
+
+.plugDesktop {
+  background-color: #ececec73;
+  border-radius: 7px;
+  box-shadow: 0px 0px 6px 0 #a28787;
+  padding: 0.5rem 1rem;
+  width: 80%;
+  min-height: 40%;
+  margin: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  &__title {
+    flex: 0 0 90%;
+    text-align: center;
+    color: #f50057;
+  }
+  &__text {
+    flex: 0 0 90%;
+    text-align: center;
+  }
+  &__icon {
+    flex: 0 0 10%;
+    font-size: 3rem;
+    opacity: 0.8;
+    color: black;
+  }
+  &__buttons {
+    margin-top: 0.5rem;
+    flex: 100% 1;
+    display: flex;
+    flex-wrap: wrap;
+    .button {
+      display: flex;
+      justify-content: center;
+      margin-top: 0.5rem;
+      flex: 0 0 100%;
+    }
+  }
 }
