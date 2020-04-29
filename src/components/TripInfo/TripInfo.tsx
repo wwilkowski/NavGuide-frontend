@@ -64,7 +64,7 @@ const TripInfo = (props: ITripInfoProps) => {
     radius: 0.0,
   };
 
-  return isLogged ? (
+  return (
     <div className={styles.case}>
       <div>
         <Map center={{ lat: position.latitude, lng: position.longitude }} zoom={12} className={styles.map}>
@@ -83,9 +83,11 @@ const TripInfo = (props: ITripInfoProps) => {
           <Gallery photos={props.tripInformations.photos} />
           <h2 className={styles.title}>{t('Description')}</h2>
           <Description text={props.tripInformations.description} />
-          <Link to={`/offers/${tripData.id}/buy`} className={styles.link}>
-            {t('Order now')}!
-          </Link>
+          {isLogged && (
+            <Link to={`/offers/${tripData.id}/buy`} className={styles.link}>
+              {t('Order now')}!
+            </Link>
+          )}
         </div>
         <Informations
           mode={informationsMode}
@@ -101,12 +103,6 @@ const TripInfo = (props: ITripInfoProps) => {
         </Button>
       </Grid>
       <ReportPopup offerId={tripData.id} popupVisibility={popupVisibility} changeVisibility={() => setPopupVisibility(!popupVisibility)} />
-    </div>
-  ) : (
-    <div>
-      <div ref={node}>
-        <p>{t('Logiaan or register to see more')}</p>
-      </div>
     </div>
   );
 };

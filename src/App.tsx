@@ -8,7 +8,7 @@ import Profile from './containers/Profile/Profile';
 import TripBrowser from './containers/TripBrowser/TripBrowser';
 import Offers from './containers/Offers/Offers';
 import OfferSale from './containers/Offers/OfferSale/OfferSale';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getProfileRequest } from './containers/Profile/actions';
 import AdminPanel from './containers/AdminPanel/AdminPanel';
 import 'bulma/css/bulma.css';
@@ -20,13 +20,16 @@ import Agreement from './containers/Offers/Agreement/Agreement';
 import EditProfile from './containers/Profile/EditProfile/EditProfile';
 import User from './containers/User/User';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
+import { StoreType } from './store';
 
 const App: React.FC = () => {
   const dispatcher = useDispatch();
 
+  const isLogged = useSelector((state: StoreType) => state.profile.isLoggedIn);
+
   useEffect(() => {
-    dispatcher(getProfileRequest());
-  }, [dispatcher]);
+    if (isLogged) dispatcher(getProfileRequest());
+  }, [dispatcher, isLogged]);
 
   const theme = createMuiTheme({
     typography: {
@@ -34,31 +37,31 @@ const App: React.FC = () => {
       h2: {
         fontSize: 24,
         fontWeight: 600,
-        margin: '1rem'
+        margin: '1rem',
       },
       h3: {
         fontSize: 16,
         fontWeight: 600,
-        margin: '0.5rem 0'
+        margin: '0.5rem 0',
       },
       h4: {
         fontSize: 14,
-        fontWeight: 600
+        fontWeight: 600,
       },
       subtitle1: {
-        fontSize: 12
+        fontSize: 12,
       },
       subtitle2: {
         color: 'rgba(0, 0, 0, 0.54)',
-        fontSize: '0.8rem'
+        fontSize: '0.8rem',
       },
       body1: {
-        fontSize: '0.9em'
+        fontSize: '0.9em',
       },
       button: {
-        fontSize: '0.9em'
-      }
-    }
+        fontSize: '0.9em',
+      },
+    },
   });
   return (
     <ThemeProvider theme={theme}>
