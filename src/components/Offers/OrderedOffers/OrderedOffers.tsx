@@ -146,7 +146,7 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
               variant='contained'
               color='primary'
               onClick={() => {
-                if (currentMessage === '') setErrorMessage('Message is required!');
+                if (currentMessage === '') setErrorMessage(t('Message is required'));
                 else if (currentMessage.length < 10) setErrorMessage('Min number of character is 10');
                 else if (errorMessage === '') {
                   setPopupVisible(true);
@@ -161,7 +161,7 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
               variant='contained'
               color='primary'
               onClick={() => {
-                if (currentMessage === '') setErrorMessage('Message is required!');
+                if (currentMessage === '') setErrorMessage(t('Message is required'));
                 else if (currentMessage.length < 10) setErrorMessage('Min number of character is 10');
                 else if (errorMessage === '') {
                   setPopupVisible(true);
