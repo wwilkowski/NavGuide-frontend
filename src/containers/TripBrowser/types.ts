@@ -88,19 +88,6 @@ export interface IMultiTripsAndTagsType {
 export interface ISuggestedPlace {
   displayName: string;
   coords: number[];
-  class: string;
-  type: string;
-  address: {
-    type: string;
-    cityDistrict: string;
-    country: string;
-    countryCode: string;
-    footway: string;
-    neighbourhood: string;
-    postcode: string;
-    state: string;
-    suburb: string;
-  };
 }
 
 export interface IFetchRandomTripsSuccesedAction {
