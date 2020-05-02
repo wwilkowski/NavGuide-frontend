@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import DatePicker from 'react-datepicker';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 import { Container, createStyles, FormControl, FormControlLabel, Grid, makeStyles, RadioGroup, Theme, Typography } from '@material-ui/core';
 import { Button, Radio, Slider, TextField } from '@material-ui/core';
 
-import * as Yup from 'yup';
 import { Form, FormikProps, withFormik } from 'formik';
 
 import { ISuggestedPlace } from '../containers/TripBrowser/types';
@@ -17,7 +16,6 @@ import TagList from './TagList';
 import ListSuggestedTrips from './TripBrowser/ListSuggestedTrips';
 import { ISearchFormProps, ISearchFormValues } from './TripBrowser/types';
 
-const SearchFormSchema = Yup.object().shape({});
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -45,32 +43,19 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => {
-  const { values, setFieldValue, touched, errors, isSubmitting } = props;
-
   const { t } = useTranslation();
-
   const classes = useStyles();
 
-  const isLogged = useSelector((state: StoreType) => state.profile.isLoggedIn);
   const suggestedCities = useSelector((state: StoreType) => state.tripBrowser.places);
   const tags = useSelector((state: StoreType) => state.tripBrowser.tags);
 
   const [location, setLocation] = useState<string>('');
-  const [suggestedListVisible, setSuggestedListVisible] = useState<boolean>(true);
+  const [suggestedListVisible, setSuggestedListVisible] = useState<boolean>(false);
+  const [dataLoading, setDataLoading] = useState<boolean>(false);
 
-  useEffect(() => {
-    setSuggestedListVisible(true);
-  }, [location]);
+  const { values, setFieldValue, touched, errors, isSubmitting, isLogged } = props;
 
-  useEffect(() => {
-    suggestedCities.splice(0, suggestedCities.length);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (values.searchMode === 'geo') setSuggestedListVisible(false);
-  }, [values.searchMode]);
-
+  // TODO: wyświetlanie errorów z formularza
   useEffect(() => {
     if (Object.keys(errors).length !== 0 && isSubmitting) {
       Object.values(errors).forEach((error) => {
@@ -79,42 +64,67 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
     }
   }, [errors, isSubmitting, t]);
 
+  // TODO: wpisanie indeksów aktualnie wybranych tagów
   useEffect(() => {
     const interestsIds = values.interests && values.interests.length ? values.interests.map((interest) => +interest) : [];
     props.updateActiveTags(interestsIds);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [values.interests]);
 
+  // TODO: zmiana wartości inputa z lokalizacją, jeśli zmieni się formValue
   useEffect(() => {
     setLocation(props.formValue);
-    values.location = props.formValue;
-    // eslint-disable-next-line
+    setFieldValue('location', props.formValue);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.formValue]);
 
+  useEffect(() => {
+    if (props.formValue.length) {
+      setSuggestedListVisible(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location])
+
+  useEffect(() => {
+    props.setDate(values.begin, values.end);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [values.begin, values.end]);
+
+  // TODO: wyświetlanie labela dla radiusa
   function valuetext(value: number) {
     return `${value}`;
   }
 
-  const radiusChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  // TODO: zmiana trybu wyszukiwania
+  const modeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFieldValue('searchMode', event.target.value);
   };
 
-  const onLocationInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  // TODO: gdy ktoś wpisuje lokalizację w input
+  const onLocationInputChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    setDataLoading(true);
     props.handleChange(event);
     props.onChange(event.target.value);
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.onChange]);
 
-  const onClickSuggestionsList = (location: ISuggestedPlace) => {
-    props.onCityClick();
+  useEffect(() => {
+    setDataLoading(false);
+  }, [suggestedCities])
+
+  // TODO: gdy ktoś wybierze sugerowaną lokalizację
+  const onClickSuggestionsList = useCallback((location: ISuggestedPlace) => {
     setFieldValue('lat', location.coords[1]);
     setFieldValue('lon', location.coords[0]);
+    props.onCityClick();
     props.setPosition({
       latitude: location.coords[1],
       longitude: location.coords[0],
       radius: props.positionValue.radius,
     });
-    props.onSubmit(location, props.positionValue.radius, 'suggested', values.end, values.begin);
-  };
+    props.onSubmit(location, props.positionValue.radius, 'suggested');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.onSubmit]);
 
   return (
     <Container>
@@ -132,13 +142,13 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                 placeholder={t('Search for the location you are interested in...')}
               />
               {errors.location && touched.location && <div>{t(errors.location)}</div>}
-              {values.searchMode === 'geo' && suggestedListVisible && suggestedCities.length > 0 && (
+              {values.searchMode === 'geo' && suggestedListVisible && (
                 <ListSuggestedTrips
                   onCityClick={onClickSuggestionsList}
-                  onCityHover={props.onCityHover}
                   suggestedTrips={suggestedCities}
                   activeTags={values.interests}
                   changeVisible={() => setSuggestedListVisible(true)}
+                  dataLoading={dataLoading}
                 />
               )}
             </div>
@@ -159,7 +169,6 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
               valueLabelDisplay='auto'
               onChange={(event: React.ChangeEvent<{}>, value: number | number[]) => {
                 setFieldValue('radius', value);
-                props.handleChange(event);
                 const position = {
                   latitude: props.positionValue.latitude,
                   longitude: props.positionValue.longitude,
@@ -177,7 +186,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                 <Typography component='legend' variant='subtitle2'>
                   {t('Search mode')}
                 </Typography>
-                <RadioGroup aria-label='searchMode' name='searchMode' value={values.searchMode} onChange={radiusChange} row>
+                <RadioGroup aria-label='searchMode' name='searchMode' value={values.searchMode} onChange={modeChange} row>
                   <FormControlLabel value='geo' control={<Radio color='primary' />} label={t('Location')} />
                   <FormControlLabel value='name' control={<Radio color='primary' />} label={t('Offer name')} />
                 </RadioGroup>
@@ -253,6 +262,14 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                       latitude,
                       longitude,
                     });
+                    props.onSubmit(
+                        {
+                          displayName: '',
+                          coords: [longitude, latitude]
+                        },
+                        values.radius,
+                        values.searchMode
+                    );
                   },
                   (error) => {
                     if (error.code === 1) {
@@ -276,13 +293,11 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
 
 const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
   mapPropsToValues: (props: ISearchFormProps) => {
-    const formValue = props.formValue;
-    const positionValue = props.positionValue;
-
-    const defaultBegin = new Date();
-    defaultBegin.setDate(defaultBegin.getDate());
-    const defaultEnd = new Date();
-    defaultEnd.setDate(defaultEnd.getDate() + 30);
+    const {formValue, positionValue} = props;
+    const initialBegin = new Date();
+    initialBegin.setDate(initialBegin.getDate());
+    const initialEnd = new Date();
+    initialEnd.setDate(initialEnd.getDate() + 30);
 
     return {
       location: formValue || '',
@@ -291,13 +306,12 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
       radius: positionValue.radius || 1,
       searchMode: 'geo',
       interests: [],
-      begin: defaultBegin,
-      end: defaultEnd,
+      begin: initialBegin,
+      end: initialEnd
     };
   },
 
-  validationSchema: SearchFormSchema,
-
+  // TODO: co po wysłaniu formularza
   handleSubmit: (values: ISearchFormValues, { props }) => {
     if (values.searchMode === 'geo' && (values.lat === 0 || values.lon === 0 || values.radius === 0)) {
       showNotification('warning', i18n.t('Warning'), i18n.t('Please set the cords first'));
@@ -307,28 +321,14 @@ const ControlledSearchForm = withFormik<ISearchFormProps, ISearchFormValues>({
       props.onSubmit(
         {
           displayName: values.location,
-          coords: [values.lon, values.lat],
-          class: '',
-          type: '',
-          address: {
-            type: '',
-            cityDistrict: '',
-            country: '',
-            countryCode: '',
-            footway: '',
-            neighbourhood: '',
-            postcode: '',
-            state: '',
-            suburb: '',
-          },
+          coords: [values.lon, values.lat]
         },
         values.radius,
-        values.searchMode,
-        values.end,
-        values.begin
+        values.searchMode
       );
     }
-  },
+  }
+
 })(InnerForm);
 
 export default ControlledSearchForm;
