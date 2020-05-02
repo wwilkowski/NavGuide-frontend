@@ -4,7 +4,7 @@ import { ISuggestedPlace } from '../../containers/TripBrowser/types';
 import styles from './ListSuggestedTrips.module.scss';
 import { useDispatch } from 'react-redux';
 
-const ListSuggestedTrips = ({ onCityClick, onCityHover, suggestedTrips, changeVisible }: IListSuggestedTripsProps) => {
+const ListSuggestedTrips = ({ onCityClick, suggestedTrips, changeVisible }: IListSuggestedTripsProps) => {
   const node: any = useRef();
 
   const dispatcher = useDispatch();
@@ -29,11 +29,12 @@ const ListSuggestedTrips = ({ onCityClick, onCityHover, suggestedTrips, changeVi
 
   return (
     <ul className={styles.suggestedTripsList} ref={node}>
-      {suggestedTrips.map((trip: ISuggestedPlace, index: number) => (
-        <li key={index} onClick={() => onCityClick(trip)} onMouseEnter={() => onCityHover(trip)}>
-          <p>{trip.displayName}</p>
-        </li>
-      ))}
+      <li><p>Loading</p></li>
+      {/*{suggestedTrips.map((trip: ISuggestedPlace, index: number) => (*/}
+      {/*  <li key={index} onClick={() => onCityClick(trip)}>*/}
+      {/*    <p>{trip.displayName}</p>*/}
+      {/*  </li>*/}
+      {/*))}*/}
     </ul>
   );
 };

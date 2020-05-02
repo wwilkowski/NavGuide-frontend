@@ -19,15 +19,15 @@ export interface ISearchFormValues {
 
 export interface ISearchFormProps {
   onChange: (location: string) => void;
-  onSubmit: (location: ISuggestedPlace, radius: number, mode: string, end: Date, begin: Date) => void;
-  getTrips: (mode: ListMode) => void;
+  onSubmit: (location: ISuggestedPlace, radius: number, mode: string) => void;
+  setDate: (begin: Date, end: Date) => void;
   updateActiveTags: (tagNames: number[]) => void;
   setPosition: (position: IPosition) => void;
   formValue: string;
   positionValue: IPosition;
   trips: ISingleTripType[];
-  onCityHover: (location: ISuggestedPlace) => void;
   onCityClick: () => void;
+  isLogged: boolean;
 }
 
 export interface IListTripsProps {
@@ -40,7 +40,6 @@ export interface IListTripsProps {
 
 export interface IListSuggestedTripsProps {
   onCityClick: (location: ISuggestedPlace) => void;
-  onCityHover: (location: ISuggestedPlace) => void;
   suggestedTrips: ISuggestedPlace[];
   activeTags: string[];
   changeVisible: () => void;
