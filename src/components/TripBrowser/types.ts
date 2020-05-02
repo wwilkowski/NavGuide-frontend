@@ -43,4 +43,5 @@ export interface IListSuggestedTripsProps {
   suggestedTrips: ISuggestedPlace[];
   activeTags: string[];
   changeVisible: () => void;
+  dataLoading?: boolean;
 }

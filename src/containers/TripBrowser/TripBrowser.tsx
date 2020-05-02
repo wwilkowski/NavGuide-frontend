@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo, useCallback, useState} from 'react';
-import {IPosition, ISingleTripType, ISuggestedPlace} from './types';
+import {IPosition, ISingleTripType} from './types';
 import {useDispatch, useSelector} from 'react-redux';
 import * as actions from './actions';
 import {StoreType} from '../../store';
@@ -74,6 +74,7 @@ const TripBrowser: React.FC = () => {
     };
     fetchTags();
     onSearchFormSubmit(locationData, positionValue.radius, 'normal');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // TODO: wyszukiwanie po zmianie radiusa
@@ -116,6 +117,7 @@ const TripBrowser: React.FC = () => {
       })
       return equalTags.length;
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTags]);
 
   const setDate = (begin: Date, end: Date) => {
@@ -126,6 +128,7 @@ const TripBrowser: React.FC = () => {
   useEffect(() => {
     const filteredTrips = tripsData.filter(trip => validateTripDate(trip.begin, trip.end))
     setFilteredTrips(filteredTrips);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [beginDate, endDate, tripsData])
 
   // TODO: filtrowanie wycieczek przy zmianie danych w formularzu
@@ -134,6 +137,7 @@ const TripBrowser: React.FC = () => {
       const filteredTrips = filterTripsByTags().filter(trip => validateTripDate(trip.begin, trip.end))
       setFilteredTrips(filteredTrips);
     } else setFilteredTrips(tripsData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTags, tripsData]);
 
   // TODO: gdy user kliknie na polecaną lokalizację

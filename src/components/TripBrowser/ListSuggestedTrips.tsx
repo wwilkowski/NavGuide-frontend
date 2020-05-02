@@ -3,8 +3,10 @@ import { IListSuggestedTripsProps } from './types';
 import { ISuggestedPlace } from '../../containers/TripBrowser/types';
 import styles from './ListSuggestedTrips.module.scss';
 import { useDispatch } from 'react-redux';
+import Loader from 'react-loader-spinner'
 
-const ListSuggestedTrips = ({ onCityClick, suggestedTrips, changeVisible }: IListSuggestedTripsProps) => {
+
+const ListSuggestedTrips = ({ onCityClick, suggestedTrips, changeVisible, dataLoading }: IListSuggestedTripsProps) => {
   const node: any = useRef();
 
   const dispatcher = useDispatch();
@@ -29,12 +31,26 @@ const ListSuggestedTrips = ({ onCityClick, suggestedTrips, changeVisible }: ILis
 
   return (
     <ul className={styles.suggestedTripsList} ref={node}>
-      <li><p>Loading</p></li>
-      {/*{suggestedTrips.map((trip: ISuggestedPlace, index: number) => (*/}
-      {/*  <li key={index} onClick={() => onCityClick(trip)}>*/}
-      {/*    <p>{trip.displayName}</p>*/}
-      {/*  </li>*/}
-      {/*))}*/}
+      {dataLoading ? (
+        <li style={{display: 'flex', alignItems: 'center'}}>
+          <span style={{marginRight: '0.8rem'}}>Loading </span>
+          <Loader
+              type="TailSpin"
+              color="#000000"
+              height={20}
+              width={20}
+          />
+        </li>
+        )
+          :
+        (
+          suggestedTrips.length > 0 && suggestedTrips.map((trip: ISuggestedPlace, index: number) => (
+              <li key={index} onClick={() => onCityClick(trip)}>
+                <p>{trip.displayName}</p>
+              </li>
+          ))
+        )
+      }
     </ul>
   );
 };

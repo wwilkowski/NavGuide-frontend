@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import DatePicker from 'react-datepicker';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -51,19 +51,9 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
 
   const [location, setLocation] = useState<string>('');
   const [suggestedListVisible, setSuggestedListVisible] = useState<boolean>(false);
+  const [dataLoading, setDataLoading] = useState<boolean>(false);
 
   const { values, setFieldValue, touched, errors, isSubmitting, isLogged } = props;
-
-  // // TODO: NO IDEA
-  // useEffect(() => {
-  //   suggestedCities.splice(0, suggestedCities.length);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
-  // // TODO: ukryj sugerowane miejsca jeśli ustawiono mode na geo
-  // useEffect(() => {
-  //   if (values.searchMode === 'geo') setSuggestedListVisible(false);
-  // }, [values.searchMode]);
 
   // TODO: wyświetlanie errorów z formularza
   useEffect(() => {
@@ -85,16 +75,19 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
   useEffect(() => {
     setLocation(props.formValue);
     setFieldValue('location', props.formValue);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.formValue]);
 
   useEffect(() => {
     if (props.formValue.length) {
       setSuggestedListVisible(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location])
 
   useEffect(() => {
     props.setDate(values.begin, values.end);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [values.begin, values.end]);
 
   // TODO: wyświetlanie labela dla radiusa
@@ -109,9 +102,15 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
 
   // TODO: gdy ktoś wpisuje lokalizację w input
   const onLocationInputChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    setDataLoading(true);
     props.handleChange(event);
     props.onChange(event.target.value);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.onChange]);
+
+  useEffect(() => {
+    setDataLoading(false);
+  }, [suggestedCities])
 
   // TODO: gdy ktoś wybierze sugerowaną lokalizację
   const onClickSuggestionsList = useCallback((location: ISuggestedPlace) => {
@@ -124,6 +123,7 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
       radius: props.positionValue.radius,
     });
     props.onSubmit(location, props.positionValue.radius, 'suggested');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.onSubmit]);
 
   return (
@@ -142,12 +142,13 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
                 placeholder={t('Search for the location you are interested in...')}
               />
               {errors.location && touched.location && <div>{t(errors.location)}</div>}
-              {values.searchMode === 'geo' && suggestedListVisible && suggestedCities.length > 0 && (
+              {values.searchMode === 'geo' && suggestedListVisible && (
                 <ListSuggestedTrips
                   onCityClick={onClickSuggestionsList}
                   suggestedTrips={suggestedCities}
                   activeTags={values.interests}
                   changeVisible={() => setSuggestedListVisible(true)}
+                  dataLoading={dataLoading}
                 />
               )}
             </div>
