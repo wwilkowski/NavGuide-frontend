@@ -54,9 +54,9 @@ function* signUpGoogleUser(action: types.ISignUpGoogleRequest) {
     } else {
       switch (json.status) {
         case 409:
-          throw new Error('User already exists! Try to log in.');
+          throw new Error(i18n.t('User already exists! Try to log in.'));
         default:
-          throw new Error('Unexpected problem.');
+          throw new Error(i18n.t('Unexpected problem.'));
       }
     }
   } catch (error) {
