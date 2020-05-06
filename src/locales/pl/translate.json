@@ -488,6 +488,18 @@
     "Create Agreement": "Utwórz ofertę",
     "Offer details": "Szczegóły oferty",
     "Search for the location you are interested in...": "Wyszukaj interesującą Cię lokalizację...",
+    "Phone format example +48 XXX XXX XXX": "Przykładowy format numeru +48 XXX XXX XXX",
+    "Unexpected problem.": "Niespodziewany problem.",
+    "Location is required": "Lokalizacja jest wymagana",
+    "Place name is required": "Nazwa jest wymagana",
+    "City is required": "Miasto jest wymagane",
+    "Max people number is required": "Maksymalna liczba osób jest wymagana",
+    "Price is required": "Cena jest wymagana",
+    "Description is required": "Opis jest wymagany",
+    "Incorrect number": "Niepoprawna wartość",
+    "Send": "Wyślij",
+    "Chat": "Czat",
+    "Write your message": "Napisz wiadomość"
     "Min. number of characters is 10": "Minimalna liczba znaków to 10"
   }
 }

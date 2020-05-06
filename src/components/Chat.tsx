@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Avatar, Typography, Button, makeStyles } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
+import {useTranslation} from "react-i18next";
 
 const useStyles = makeStyles({
   container: {
@@ -69,6 +70,7 @@ interface Props {
 }
 
 const Chat = ({ messages, userId, purchaseId, onSend }: Props) => {
+  const {t} = useTranslation();
   const [message, setMessage] = useState('');
   const classes = useStyles();
 
@@ -95,7 +97,7 @@ const Chat = ({ messages, userId, purchaseId, onSend }: Props) => {
 
   return (
     <div className={classes.container}>
-      <Typography variant='h2'>Chat</Typography>
+      <Typography variant='h2'>{t('Chat')}</Typography>
       <ul className={classes.list} ref={ref}>
         {messages &&
           messages.map((message) => (
@@ -110,9 +112,9 @@ const Chat = ({ messages, userId, purchaseId, onSend }: Props) => {
           ))}
       </ul>
       <div className={classes.actions}>
-        <input type='text' value={message} placeholder='Write your message' onChange={onInput} className={classes.input} />
+        <input type='text' value={message} placeholder={t('Write your message')} onChange={onInput} className={classes.input} />
         <Button variant='contained' color='primary' endIcon={<SendIcon />} onClick={send}>
-          Send
+          {t('Send')}
         </Button>
       </div>
     </div>
