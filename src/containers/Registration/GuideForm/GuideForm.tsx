@@ -39,7 +39,7 @@ const GuideForm = () => {
 
   const lastRequestid = requests.length - 1;
 
-  if (userRole === 'GUIDE') return <p className={styles.case}>{t(`You are already a guide!`)}</p>;
+  if (userRole === 'GUIDE') return <p className={styles.case}>{t(`You are already a guide`)}</p>;
   else {
     return (
       <div>

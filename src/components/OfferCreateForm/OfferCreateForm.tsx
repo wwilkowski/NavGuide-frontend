@@ -207,14 +207,14 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
         <Typography component='label' variant='subtitle2' htmlFor='maxPeople' className={styles.offerForm__label}>
           {t('Max people')}
         </Typography>
-        <Field id='maxPeople' type='number' name='maxPeople' className={styles.offerForm__input} />
+        <Field id='maxPeople' type='number' name='maxPeople' min={0} className={styles.offerForm__input} />
         {errors.maxPeople && touched.maxPeople && <div>{t(`Incorrect number`)}</div>}
       </div>
       <div className={styles.offerForm__case}>
         <Typography component='label' variant='subtitle2' htmlFor='price' className={styles.offerForm__label}>
           {t('Price')} (zł)
         </Typography>
-        <Field id='price' type='number' name='price' className={styles.offerForm__input} />
+        <Field id='price' type='number' name='price' min={0} className={styles.offerForm__input} />
         {errors.price && touched.price && <div>{t(`Incorrect number`)}</div>}
       </div>
       <div className={styles.offerForm__case}>
@@ -268,7 +268,7 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
             setFieldValue('description', event.target.value);
           }}
         ></textarea>
-        {errors.radius && touched.radius && <div>{t(`Incorrect number`)}</div>}
+        {errors.description && touched.description && <div>{t(`Description is required`)}</div>}
       </div>
       <div className={styles.offerForm__case}>
         <ul className={styles.offerForm__tagList}>
