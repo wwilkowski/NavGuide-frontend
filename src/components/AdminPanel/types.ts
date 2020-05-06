@@ -8,6 +8,7 @@ export interface IGuideRequestProps {
 
 export interface IListGuideRequestProps {
   guideRequests: types.IGuideRequest[];
+  onSubmitForm: (data: ISettleGuideRequestFormValues) => void;
 }
 
 export interface ISettleGuideRequestFormValues {
@@ -18,5 +19,5 @@ export interface ISettleGuideRequestFormValues {
 
 export interface ISettleGuideRequestFormProps {
   onSubmit: (data: ISettleGuideRequestFormValues) => void;
-  availableIDs: number[];
+  requestId: number;
 }

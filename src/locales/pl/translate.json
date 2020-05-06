@@ -1,5 +1,6 @@
 {
   "translation": {
+    "Admin Panel": "Panel administratora",
     "PER_PERSON": "za osobę",
     "PER_GROUP": "za grupę",
 
@@ -499,5 +500,6 @@
     "Send": "Wyślij",
     "Chat": "Czat",
     "Write your message": "Napisz wiadomość"
+    "Min. number of characters is 10": "Minimalna liczba znaków to 10"
   }
 }

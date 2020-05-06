@@ -79,8 +79,10 @@ const Chat = ({ messages, userId, purchaseId, onSend }: Props) => {
   };
 
   const send = () => {
-    onSend(message, purchaseId);
-    setMessage('');
+    if (message.length) {
+      onSend(message, purchaseId);
+      setMessage('');
+    }
   };
 
   const ref = useRef<HTMLUListElement | null>(null);

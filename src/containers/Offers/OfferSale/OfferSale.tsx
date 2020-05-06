@@ -130,7 +130,7 @@ const OfferSale = (props: Props) => {
             const tripBegin = new Date(currentOffer.begin);
             const tripEnd = new Date(currentOffer.end);
 
-            if (message === '') setErrorMessage('Message is required');
+            if (message === '') setErrorMessage(t('Message is required'));
             else if (message.length < 10) setErrorMessage('Min number of characters is 10');
             else if (date !== null && date.getTime() >= tripBegin.getTime() && date.getTime() <= tripEnd.getTime()) {
               setPopupVisible(true);

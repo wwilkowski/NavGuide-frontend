@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { StoreType } from '../../store';
 import GuideRequest from './GuideRequest';
 import { IUserProfile } from '../../containers/User/types';
+import SettleGuideRequestForm from './SettleGuideRequestForm';
 
 const ListGuideRequests = (props: IListGuideRequestProps) => {
   const { guideRequests } = props;
@@ -23,10 +24,9 @@ const ListGuideRequests = (props: IListGuideRequestProps) => {
           }
         });
         return (
-          <div className={styles.requestList}>
-            <div key={req.id}>
-              <GuideRequest guideRequest={req} userProfile={userProfile} />
-            </div>
+          <div className={styles.request} key={req.id}>
+            <GuideRequest guideRequest={req} userProfile={userProfile} />
+            <SettleGuideRequestForm onSubmit={props.onSubmitForm} requestId={req.id} />
           </div>
         );
       })}
