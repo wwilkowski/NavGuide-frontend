@@ -80,7 +80,7 @@ const Header: React.FC = () => {
         ) : (
           <div className={styles.userMenu}>
             <div className={styles.userCase}>
-              <Link to='/' className={styles.user}>
+              <Link to='/profile' className={styles.user}>
                 <Avatar src={profile.user.avatar} alt='user avatar' />
                 <Typography className={styles.userName}>
                   {profile.user.firstName} {profile.user.lastName}

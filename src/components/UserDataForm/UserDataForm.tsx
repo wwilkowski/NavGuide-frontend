@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import countryCodes from '../../helpers/countryCodes.json';
-import { showNotification } from '../../helpers/notification';
 import i18n from '../../locales/i18n';
 import { MyFormProps, FullFormValues } from './types';
 import styles from './UserDataForm.module.scss';
@@ -61,6 +60,7 @@ const SignupSchema = Yup.object().shape({
   age: Yup.string()
     .matches(/^[1-9]{1}\s?[0-9]{1}$/, `${i18n.t('Input is not valid')}!`)
     .required(`${i18n.t('Age is required')}!`),
+  interests: Yup.string().required('Min. 1 interest is required!'),
 });
 
 const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
@@ -69,16 +69,8 @@ const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
   const [ageArray, setAgeArray] = useState<number[]>([]);
   const [interests, setInterests] = useState([]);
 
-  const { errors, isSubmitting, values } = props;
+  const { errors, values } = props;
   const { experience } = values;
-
-  useEffect(() => {
-    if (Object.keys(errors).length !== 0 && isSubmitting) {
-      Object.values(errors).forEach((error) => {
-        showNotification('warning', t('Form warning'), t(`${error}`));
-      });
-    }
-  }, [errors, isSubmitting, t]);
 
   useEffect(() => {
     const tmp = [];
@@ -260,6 +252,7 @@ const InnerForm = (props: FormikProps<FullFormValues> & IRegisterFormProps) => {
       </div>
       <p className={styles.title}>{t('Interests')}</p>
       <TagList tags={interests} />
+      {errors.interests && <div className={styles.error}>{t(errors.interests)} </div>}
       <Button variant='contained' color='primary' className={styles.submitButton} type='submit' disabled={!!Object.keys(errors).length}>
         {props.register ? t('Register') : t('Update')}
       </Button>
