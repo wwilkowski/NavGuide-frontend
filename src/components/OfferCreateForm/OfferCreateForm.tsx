@@ -36,6 +36,7 @@ const OfferSchema = Yup.object().shape({
   description: Yup.string()
     .matches(/([a-zA-Z',.-]+( [a-zA-Z',.-]+)*){1,100}/, `${i18n.t('Input is not valid')}!`)
     .required(`${i18n.t('Description is required')}!`),
+  tags: Yup.string().required(`${i18n.t("Tags are required")}!`),
 });
 
 const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>) => {
@@ -271,6 +272,9 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
         {errors.description && touched.description && <div>{t(`Description is required`)}</div>}
       </div>
       <div className={styles.offerForm__case}>
+        <Typography component='label' variant='subtitle2' className={styles.offerForm__label} htmlFor='tags'>
+          {t('Tagi')}
+        </Typography>
         <ul className={styles.offerForm__tagList}>
           {tags.map((tag: ITag) => (
             <li key={tag.id} className={styles.offerForm__tag}>
@@ -278,6 +282,7 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
             </li>
           ))}
         </ul>
+        {errors.tags && <div style={{ marginBottom: '1rem' }}>{errors.tags}</div>}
       </div>
       <Button variant='contained' disabled={!photo} color='primary' type='submit' className={styles.offerForm__submitButton}>
         {t('Submit')}

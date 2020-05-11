@@ -275,6 +275,7 @@
     "Form warning": "Błąd formularza",
     "Form error": "Błąd formularza",
     "Error": "Błąd",
+    "Min. 1 interest is required!": "Min. ilość zainteresowań: 1",
     "Bad date": "Zła data",
     "You have reported an offer": "Zgłosiłeś wycieczkę",
     "Thank you for help": "Dziękujemy za pomoc",
@@ -296,6 +297,9 @@
     "competent": "fachowiec",
     "adept": "adept",
     "expert": "ekspert",
+    "Verification failed!": "Błąd weryfikacji",
+    "Validation error!": "Błąd walidacji",
+    "Unexpected error while confirming Google registration": "Niespodziewany błąd podczas zatwierdzania rejestracji Google",
     "Try to change the parameters and find again": "Spróbuj zmienić parametry i wyszukaj ponownie",
     "Below are suggested trips in your area": "Poniżej są sugerowane wycieczki z Twojej okolicy",
     "ambassador": "ambasador",
@@ -375,7 +379,8 @@
     "End": "Koniec",
     "Max people": "Maksymalna liczba osób",
     "Price type": "Typ ceny",
-    "Please enter values first": "Wypełnij wszystkie pola",
+    "Please enter message first!": "Wypełnij pole z wiadomością",
+    "Tags are required": "Tagi są wymagane",
     "Message": "Wiadomość",
     "trip": "wycieczka",
     "guide": "przewodnik",
@@ -500,6 +505,7 @@
     "Send": "Wyślij",
     "Chat": "Czat",
     "Write your message": "Napisz wiadomość",
-    "Min. number of characters is 10": "Minimalna liczba znaków to 10"
+    "Min. number of characters is 10": "Minimalna liczba znaków to 10",
+    "Complete your data to finish registration process": "Wypełnij dane, aby dokończyć proces rejestracji"
   }
 }

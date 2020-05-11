@@ -50,7 +50,7 @@ const MyForm = withFormik<ISettleGuideRequestFormProps, ISettleGuideRequestFormV
       onSubmit(values);
       values.message = '';
       history.push('/admin');
-    } else showNotification('warning', i18n.t('Warning'), i18n.t('Please enter values first!'));
+    } else showNotification('warning', i18n.t('Warning'), i18n.t('Please enter message first!'));
   },
 })(InnerForm);
 
