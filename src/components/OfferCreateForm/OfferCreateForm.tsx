@@ -36,7 +36,7 @@ const OfferSchema = Yup.object().shape({
   description: Yup.string()
     .matches(/([a-zA-Z',.-]+( [a-zA-Z',.-]+)*){1,100}/, `${i18n.t('Input is not valid')}!`)
     .required(`${i18n.t('Description is required')}!`),
-  tags: Yup.string().required(`${i18n.t("Tags are required")}!`),
+  tags: Yup.string().required(`${i18n.t('Tags are required')}!`),
 });
 
 const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>) => {

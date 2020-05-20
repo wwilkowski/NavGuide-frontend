@@ -60,7 +60,7 @@ const OfferSale = (props: Props) => {
   }, []);
 
   useEffect(() => {
-    dispatcher(getOfferByIdRequest(props.match.params.id));
+    dispatcher(getOfferByIdRequest(props.match.params.id, true));
   }, [dispatcher, props.match.params.id]);
 
   useEffect(() => {
