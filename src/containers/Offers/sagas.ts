@@ -67,12 +67,17 @@ function* createOffer(action: types.ICreateOfferAction) {
 
 function* getOfferById(action: types.IGetOfferByIdAction) {
   try {
-    const response = yield call(fetch, currentOfferEndpoint(action.id), {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-      },
-    });
+    let response;
+    if (action.isLogged) {
+      response = yield call(fetch, currentOfferEndpoint(action.id), {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      });
+    } else {
+      response = yield call(fetch, currentOfferEndpoint(action.id), { method: 'GET' });
+    }
     if (response.status >= 200 && response.status <= 300) {
       const json = yield response.json();
       yield put(actions.getOfferByIdSuccessed(json));

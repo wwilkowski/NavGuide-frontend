@@ -119,7 +119,7 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
   }, [agreements]);
 
   useEffect(() => {
-    if (offerId !== -1) dispatcher(actions.getOfferByIdRequest(offerId.toString()));
+    if (offerId !== -1) dispatcher(actions.getOfferByIdRequest(offerId.toString(), true));
   }, [offerId, dispatcher]);
 
   useEffect(() => {

@@ -173,6 +173,7 @@ export interface ICreateOfferAction {
 export interface IGetOfferByIdAction {
   type: string;
   id: number;
+  isLogged: boolean;
 }
 
 export interface IBuyOfferAction {
