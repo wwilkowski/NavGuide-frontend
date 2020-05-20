@@ -3,72 +3,73 @@ import * as types from './types';
 
 export const createOfferRequest = (formData: types.IOfferFormValues) => ({
   type: constants.CREATE_OFFER_REQUESTED,
-  formData
+  formData,
 });
 
 export const createOfferSuccessed = () => ({
-  type: constants.CREATE_OFFER_SUCCESSED
+  type: constants.CREATE_OFFER_SUCCESSED,
 });
 
 export const createOfferFailed = () => ({
-  type: constants.CREATE_OFFER_FAILED
+  type: constants.CREATE_OFFER_FAILED,
 });
 
-export const getOfferByIdRequest = (id: string) => ({
+export const getOfferByIdRequest = (id: string, isLogged: boolean) => ({
   type: constants.GET_OFFER_BY_ID_REQUESTED,
-  id
+  id,
+  isLogged,
 });
 
 export const getOfferByIdSuccessed = (offer: types.ISingleTripType) => ({
   type: constants.GET_OFFER_BY_ID_SUCCESSED,
-  offer
+  offer,
 });
 
 export const getOfferByIdFailed = () => ({
-  type: constants.GET_OFFER_BY_ID_FAILED
+  type: constants.GET_OFFER_BY_ID_FAILED,
 });
 
 export const buyOfferRequest = (id: string, date: Date, message: string) => ({
   type: constants.BUY_OFFER_REQUESTED,
   id,
   message,
-  date
+  date,
 });
 
 export const buyOfferSuccessed = () => ({
-  type: constants.BUY_OFFER_SUCCESSED
+  type: constants.BUY_OFFER_SUCCESSED,
 });
 
 export const buyOfferFailed = () => ({
-  type: constants.BUY_OFFER_FAILED
+  type: constants.BUY_OFFER_FAILED,
 });
 
 export const getActiveOffersRequest = () => ({
-  type: constants.GET_ACTIVE_OFFERS_REQUESTED
+  type: constants.GET_ACTIVE_OFFERS_REQUESTED,
 });
 
 export const getActiveOffersSuccessed = (trips: types.ISingleTripType[]) => ({
   type: constants.GET_ACTIVE_OFFERS_SUCCESSED,
-  trips
+  trips,
 });
 
 export const getActiveOffersFailed = () => ({
-  type: constants.GET_ACTIVE_OFFERS_FAILED
+  type: constants.GET_ACTIVE_OFFERS_FAILED,
 });
 
 // approaches
 
 export const getApproachesRequest = () => ({
-  type: constants.GET_APPROACHES_REQUESTED
+  type: constants.GET_APPROACHES_REQUESTED,
 });
 
 export const getApproachesSuccessed = (trips: types.ISingleTripType[]) => ({
   type: constants.GET_APPROACHES_SUCCESSED,
-  trips
+  trips,
 });
 
 export const getApproachesFailed = () => ({
-  type: constants.GET_APPROACHES_FAILED
+  type: constants.GET_APPROACHES_FAILED,
 });
 
 // settle active offer
@@ -77,39 +78,39 @@ export const settleActiveOfferRequest = (id: number, status: string, message: st
   type: constants.SETTLE_ACTIVE_OFFER_REQUESTED,
   id,
   status,
-  message
+  message,
 });
 
 export const settleActiveOfferFailed = (message: string) => ({
   type: typeof constants.SETTLE_ACTIVE_OFFER_FAILED,
-  message
+  message,
 });
 
 // agreements
 
 export const createAgreementRequest = (newAgreement: types.IAgreement) => ({
   type: constants.CREATE_AGREEMENT_REQUESTED,
-  newAgreement
+  newAgreement,
 });
 
 export const getOwnAgreementsRequest = () => ({
-  type: constants.GET_OWN_AGREEMENTS_REQUESTED
+  type: constants.GET_OWN_AGREEMENTS_REQUESTED,
 });
 
 export const getOwnAgreementsSuccessed = (agreements: types.IActiveOffer[]) => ({
   type: constants.GET_OWN_AGREEMENTS_SUCCESSED,
-  agreements
+  agreements,
 });
 
 export const getOwnAgreementsFailed = (message: string) => ({
   type: constants.GET_OWN_AGREEMENTS_FAILED,
-  message
+  message,
 });
 
 export const settleAgreementRequest = (id: number, status: string) => ({
   type: constants.SETTLE_AGREEMENT_REQUESTED,
   id,
-  status
+  status,
 });
 
 // report offer
@@ -117,45 +118,45 @@ export const settleAgreementRequest = (id: number, status: string) => ({
 export const reportOfferRequest = (offerId: number, description: string) => ({
   type: constants.REPORT_OFFER_REQUESTED,
   offerId,
-  description
+  description,
 });
 
 // add feedback
 
 export const addFeedbackRequest = (feedback: types.IFeedback) => ({
   type: constants.ADD_FEEDBACK_REQUESTED,
-  feedback
+  feedback,
 });
 
 export const sendMessageRequest = (description: string, purchaseId: number) => ({
   type: constants.SEND_MESSAGE_REQUESTED,
   description,
-  purchaseId
+  purchaseId,
 });
 
 export const getMessagesRequest = (purchaseId: number) => ({
   type: constants.GET_MESSAGES_REQUESTED,
-  purchaseId
+  purchaseId,
 });
 
 export const getMessagesSuccessed = (messages: types.Message) => ({
   type: constants.GET_MESSAGES_SUCCESSED,
-  messages
+  messages,
 });
 
 // get offer feedback by ID
 
 export const getOfferFeedbacksRequest = (id: number) => ({
   type: constants.GET_OFFER_FEEDBACKS_REQUESTED,
-  id
+  id,
 });
 
 export const getOfferFeedbacksSussecced = (feedbacks: types.IGotFeedback[]) => ({
   type: constants.GET_OFFER_FEEDBACKS_SUCCESSED,
-  feedbacks
+  feedbacks,
 });
 
 export const getOfferFeedbacksFailed = (message: string) => ({
   type: constants.GET_OFFER_FEEDBACKS_FAILED,
-  message
+  message,
 });

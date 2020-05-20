@@ -18,8 +18,8 @@ const Offer = (props: Props) => {
   const guideProfile = useSelector((state: StoreType) => state.guideProfile.guideProfile);
 
   useEffect(() => {
-    dispatcher(getOfferByIdRequest(props.match.params.id));
-  }, [dispatcher, props.match.params.id]);
+    dispatcher(getOfferByIdRequest(props.match.params.id, isLogged));
+  }, [dispatcher, props.match.params.id, isLogged]);
 
   useEffect(() => {
     if (currentOffer && isLogged) {
