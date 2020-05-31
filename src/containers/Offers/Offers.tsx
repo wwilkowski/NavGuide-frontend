@@ -21,7 +21,7 @@ const Offers = () => {
   const [position, setPosition] = useState<IPosition>({
     latitude: 53.01023065,
     longitude: 18.594376006630313,
-    radius: 3.0
+    radius: 3.0,
   });
 
   const [place, setPlace] = useState<string>('UMK Wydział Matematyki i Informatyki');
@@ -36,6 +36,8 @@ const Offers = () => {
   };
 
   const onSubmit = (formData: types.IOfferFormValues) => {
+    // TODO: wyzerowanie sugerowanych miast po zaladowaniu strony
+    dispatcher(fetchSuggestedCitiesRequested('', 0));
     dispatcher(actions.createOfferRequest(formData));
   };
 

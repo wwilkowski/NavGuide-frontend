@@ -37,6 +37,7 @@ const OfferSchema = Yup.object().shape({
     .matches(/([a-zA-Z',.-]+( [a-zA-Z',.-]+)*){1,100}/, `${i18n.t('Input is not valid')}!`)
     .required(`${i18n.t('Description is required')}!`),
   tags: Yup.string().required(`${i18n.t('Tags are required')}!`),
+  end: Yup.date().when('begin', (begin: any, schema: any) => schema.min(begin)),
 });
 
 const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>) => {
@@ -190,12 +191,12 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
         </Typography>
         <DatePicker
           dateFormat='yyyy/MM/dd'
-          selected={values.end}
+          selected={addDays(values.begin, 1)}
           maxDate={addDays(values.begin, 31)}
           onChange={(date) => setFieldValue('end', date)}
           minDate={values.begin}
         />
-        {errors.end && touched.end && <div>{t(`Incorrect date`)}</div>}
+        {errors.end && touched.end && <div style={{ width: '100%' }}>{t(`Incorrect date`)}</div>}
       </div>
       <div className={styles.offerForm__case}>
         <Typography component='label' variant='subtitle2' htmlFor='city' className={styles.offerForm__label}>
@@ -282,7 +283,7 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
             </li>
           ))}
         </ul>
-        {errors.tags && <div style={{ marginBottom: '1rem' }}>{errors.tags}</div>}
+        {errors.tags && <div style={{ marginBottom: '1rem', textAlign: 'center', color: 'red' }}>{errors.tags}</div>}
       </div>
       <Button variant='contained' disabled={!photo} color='primary' type='submit' className={styles.offerForm__submitButton}>
         {t('Submit')}
@@ -298,7 +299,7 @@ const OfferCreateForm = withFormik<types.MyFormProps, types.FullFormValues>({
       place: props.place || '',
       begin: new Date(),
       city: '',
-      end: new Date(),
+      end: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
       lat: latitude || 0.0,
       lon: longitude || 0.0,
       file1: new File(['foo'], 'foo.txt', {

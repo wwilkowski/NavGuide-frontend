@@ -9,7 +9,7 @@ import { Button, makeStyles, Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOfferFeedbacksRequest } from '../../../containers/Offers/actions';
 import poland from '../../../assets/icons/poland.png';
-import unitedKingdom from '../../../assets/icons/unitedKingdom.png';
+import greatBritain from '../../../assets/icons/greatBritain.png';
 import germany from '../../../assets/icons/germany.png';
 import Rating from '@material-ui/lab/Rating';
 import { StoreType } from '../../../store';
@@ -23,7 +23,7 @@ const getFlag = (code: string) => {
     case 'PL':
       return poland;
     case 'EN':
-      return unitedKingdom;
+      return greatBritain;
     case 'DE':
       return germany;
   }
@@ -150,7 +150,7 @@ const Informations = (props: IInformationsProps) => {
               <div className={styles.info}>
                 <p className={styles.subtitle}>{t('Price')}</p>
                 <p className={styles.value}>
-                  {tripData.price} ({t(tripData.priceType)})
+                  {tripData.price}zł ({t(tripData.priceType)})
                 </p>
               </div>
               {isLogged && (

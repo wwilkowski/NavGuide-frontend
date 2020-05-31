@@ -4,6 +4,8 @@ import { IUserData } from '../../shared/types';
 import styles from './styles.module.scss';
 import Rating from '@material-ui/lab/Rating';
 import poland from '../../assets/icons/poland.png';
+import germany from '../../assets/icons/germany.png';
+import greatBritain from '../../assets/icons/greatBritain.png';
 import phone from '../../assets/icons/phone.png';
 import mail from '../../assets/icons/mail.png';
 
@@ -30,6 +32,8 @@ const UserProfile = ({ user }: Props) => {
         <div className={styles.informations__row3}>
           {t(user.country)}
           {user.country === 'PL' && <img src={poland} alt='pl' />}
+          {user.country === 'DE' && <img src={germany} alt='de' />}
+          {user.country === 'GB' && <img src={greatBritain} alt='gb' />}
         </div>
         <div className={styles.informations__row4}>
           <p className={styles.title}>{t('Experience in travelling')}:</p>

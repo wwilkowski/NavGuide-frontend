@@ -59,8 +59,8 @@ const TripInfo = (props: ITripInfoProps) => {
   };
 
   const position: IPosition = {
-    latitude: 53.01023065,
-    longitude: 18.594376006630313,
+    latitude: tripData.lat,
+    longitude: tripData.lon,
     radius: 0.0,
   };
 

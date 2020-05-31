@@ -74,7 +74,7 @@ const InnerForm = (props: ICreateAgreementOtherProps & FormikProps<ICreateAgreem
       <Form className={classes.form}>
         <Grid container justify={'center'}>
           <Grid container justify={'center'}>
-            <Typography variant='subtitle1'>{t('Price')}</Typography>
+            <Typography variant='subtitle1'>{t('Price')} (zł)</Typography>
           </Grid>
           <Grid container justify={'center'}>
             <TextField

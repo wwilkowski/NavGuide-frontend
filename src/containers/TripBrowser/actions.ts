@@ -19,7 +19,7 @@ import {
   FETCH_CLOSEST_TRIPS_FAILED,
   FETCH_POPULAR_TRIPS_REQUESTED,
   FETCH_POPULAR_TRIPS_SUCCESSED,
-  FETCH_POPULAR_TRIPS_FAILED
+  FETCH_POPULAR_TRIPS_FAILED,
 } from './constants';
 import { IMultiTripsType, ITag, ISuggestedPlace } from './types';
 import { ISingleTripType } from '../Offers/types';
@@ -27,33 +27,33 @@ import { ISingleTripType } from '../Offers/types';
 //RANDOM TRIPS
 export const fetchRandomTripsRequested = (isLogged: boolean) => ({
   type: FETCH_RANDOM_TRIPS_REQUESTED,
-  isLogged
+  isLogged,
 });
 
 export const fetchRandomTripsSuccesed = (trips: IMultiTripsType) => ({
   type: FETCH_RANDOM_TRIPS_SUCCESED,
-  trips
+  trips,
 });
 
 export const fetchRandomTripsFailed = (message: string) => ({
   type: FETCH_RANDOM_TRIPS_FAILED,
-  message
+  message,
 });
 
 //NAME TRIPS
 export const fetchNameTripsRequested = (name: string) => ({
   type: FETCH_NAME_TRIPS_REQUESTED,
-  name
+  name,
 });
 
 export const fetchNameTripsSuccesed = (trips: IMultiTripsType) => ({
   type: FETCH_NAME_TRIPS_SUCCESED,
-  trips
+  trips,
 });
 
 export const fetchNameTripsFailed = (message: string) => ({
   type: FETCH_NAME_TRIPS_FAILED,
-  message
+  message,
 });
 
 //GEO TRIPS
@@ -62,17 +62,17 @@ export const fetchGeoTripsRequested = (lat: number, lon: number, radius: number,
   lat,
   lon,
   radius,
-  isLogged
+  isLogged,
 });
 
 export const fetchGeoTripsSuccesed = (trips: IMultiTripsType) => ({
   type: FETCH_GEO_TRIPS_SUCCESED,
-  trips
+  trips,
 });
 
 export const fetchGeoTripsFailed = (message: string) => ({
   type: FETCH_GEO_TRIPS_FAILED,
-  message
+  message,
 });
 
 //CLOSEST TRIPS
@@ -80,62 +80,62 @@ export const fetchClosestTripsRequested = (count: number, latitude: number, long
   type: FETCH_CLOSEST_TRIPS_REQUESTED,
   count,
   latitude,
-  longitude
+  longitude,
 });
 
 export const fetchClosestTripsSuccessed = (trips: IMultiTripsType) => ({
   type: FETCH_CLOSEST_TRIPS_SUCCESSED,
-  trips
+  trips,
 });
 
 export const fetchClosestTripsFailed = (message: string) => ({
   type: FETCH_CLOSEST_TRIPS_FAILED,
-  message
+  message,
 });
 
 //POPULAR TRIPS
 export const fetchPopularTripsRequested = () => ({
-  type: FETCH_POPULAR_TRIPS_REQUESTED
+  type: FETCH_POPULAR_TRIPS_REQUESTED,
 });
 
 export const fetchPopularTripsSuccessed = (trips: ISingleTripType[]) => ({
   type: FETCH_POPULAR_TRIPS_SUCCESSED,
-  trips
+  trips,
 });
 
 export const fetchPopularTripsFailed = (message: string) => ({
   type: FETCH_POPULAR_TRIPS_FAILED,
-  message
+  message,
 });
 
 //TAGS
 export const fetchTagsRequested = () => ({
-  type: FETCH_TAGS_REQUESTED
+  type: FETCH_TAGS_REQUESTED,
 });
 
 export const fetchTagsSuccesed = (tags: ITag[]) => ({
   type: FETCH_TAGS_SUCCESED,
-  tags
+  tags,
 });
 
 export const fetchTagsFailed = (message: string) => ({
   type: FETCH_TAGS_FAILED,
-  message
+  message,
 });
 
 //SUGGESTED CITIES
 export const fetchSuggestedCitiesRequested = (location: string, number: number) => ({
   type: FETCH_SUGGESTED_CITIES_REQUESTED,
   location,
-  number
+  number,
 });
 
 export const fetchSuggestedCitiesSuccesed = (places: ISuggestedPlace) => ({
   type: FETCH_SUGGESTED_CITIES_SUCCESED,
-  suggestedPlaces: places
+  suggestedPlaces: places,
 });
 
 export const fetchSuggestedCitiesFailed = (message: string) => ({
   type: FETCH_SUGGESTED_CITIES_FAILED,
-  message
+  message,
 });

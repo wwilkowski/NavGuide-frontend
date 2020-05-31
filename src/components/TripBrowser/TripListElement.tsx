@@ -14,7 +14,7 @@ interface Props {
 
 const priceTypes = {
   PER_PERSON: 'per person',
-  PER_GROUP: 'per group'
+  PER_GROUP: 'per group',
 };
 
 const getLanguage = (code: string) => {
@@ -46,9 +46,7 @@ const TripListElement = ({ trip, hidePhoto }: Props) => {
           )}
 
           <div className={styles.offer__desc}>
-            <Typography variant='h3'>
-              {trip.name} ({trip.id})
-            </Typography>
+            <Typography variant='h3'>{trip.name}</Typography>
             <Typography variant='subtitle2'>
               {t('City')}: {trip.city}
             </Typography>

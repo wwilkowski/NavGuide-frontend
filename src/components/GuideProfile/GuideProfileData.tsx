@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Grid, makeStyles, Typography } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
 import poland from '../../assets/icons/poland.png';
-import unitedKingdom from '../../assets/icons/unitedKingdom.png';
+import greatBritain from '../../assets/icons/greatBritain.png';
 import germany from '../../assets/icons/germany.png';
 import Rating from '@material-ui/lab/Rating';
 import i18n from '../../locales/i18n';
@@ -67,7 +67,7 @@ const getFlag = (code: string) => {
     case 'PL':
       return poland;
     case 'EN':
-      return unitedKingdom;
+      return greatBritain;
     case 'DE':
       return germany;
   }
