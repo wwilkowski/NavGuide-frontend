@@ -56,6 +56,8 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
     return `${value}km`;
   }
 
+  useEffect(() => {}, [values]);
+
   const addDays = (date: Date, days: number): Date => {
     let temp = new Date(date);
     temp.setDate(date.getDate() + days);
@@ -191,10 +193,10 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
         </Typography>
         <DatePicker
           dateFormat='yyyy/MM/dd'
-          selected={addDays(values.begin, 1)}
+          selected={values.end}
           maxDate={addDays(values.begin, 31)}
           onChange={(date) => setFieldValue('end', date)}
-          minDate={values.begin}
+          minDate={values.end}
         />
         {errors.end && touched.end && <div style={{ width: '100%' }}>{t(`Incorrect date`)}</div>}
       </div>
@@ -224,9 +226,13 @@ const InnerForm = (props: types.MyFormProps & FormikProps<types.FullFormValues>)
           {t('Price type')}
         </Typography>
         <div>
-          <select id='priceType' name='priceType'>
+          <select
+            id='priceType'
+            name='priceType'
+            onChange={(e: React.FormEvent<HTMLSelectElement>) => setFieldValue('priceType', e.currentTarget.value)}
+          >
             <option value='PER_PERSON'>{t('per person')}</option>
-            <option value='PER_Person'>{t('per group')}</option>
+            <option value='PER_GROUP'>{t('per group')}</option>
           </select>
         </div>
       </div>
