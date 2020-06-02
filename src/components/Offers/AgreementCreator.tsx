@@ -44,6 +44,8 @@ const InnerForm = (props: ICreateAgreementOtherProps & FormikProps<ICreateAgreem
 
   const [popupVisibility, setPopupVisibility] = useState<boolean>(false);
 
+  useEffect(() => {}, [values.plannedDate])
+
   useEffect(() => {
     //const tmp = sessionStorage.getItem('agreementData');
     const tmp = sessionStorage.getItem('agreementData');
@@ -141,6 +143,7 @@ const InnerForm = (props: ICreateAgreementOtherProps & FormikProps<ICreateAgreem
 
 const CreateAgreementForm = withFormik<ICreateAgreementOtherProps, ICreateAgreementFormValues>({
   mapPropsToValues: (props: ICreateAgreementOtherProps) => {
+    console.log("PLANNED DATEE ", props.purchasePlannedDate);
     const newDate = new Date(props.purchasePlannedDate);
     newDate.setHours(newDate.getHours() - 2);
     return {

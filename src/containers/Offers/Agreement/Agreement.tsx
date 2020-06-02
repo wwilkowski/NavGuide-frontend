@@ -122,6 +122,8 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
     if (offerId !== -1) dispatcher(actions.getOfferByIdRequest(offerId.toString(), true));
   }, [offerId, dispatcher]);
 
+  useEffect(() => {}, [activePurchase]);
+
   useEffect(() => {
     if (pathFrom === '/profile/guide') {
       setTravelerId(props.location.state.travelerId);
@@ -276,14 +278,15 @@ const Agreement = (props: RouteComponentProps<TParams>) => {
                 isAgreementCreated ? (
                   <AgreementInfo handleSettleAgreement={handleSettleAgreement} agreement={agreement} role={profile.role} />
                 ) : (
-                  <AgreementCreator
-                    trip={currentOffer}
-                    purchasePlannedDate={activePurchase ? activePurchase.plannedDate : new Date()}
-                    propOfferId={offerId}
-                    propUserId={travelerId}
-                    createAgreementClick={handleCreateAgreementClick}
-                    createAgreementCancel={handleCancelAgreementClick}
-                  />
+                    activePurchase &&
+                      <AgreementCreator
+                        trip={currentOffer}
+                        purchasePlannedDate={activePurchase.plannedDate}
+                        propOfferId={offerId}
+                        propUserId={travelerId}
+                        createAgreementClick={handleCreateAgreementClick}
+                        createAgreementCancel={handleCancelAgreementClick}
+                      />
                 )
               ) : isAgreementCreated ? (
                 <>
