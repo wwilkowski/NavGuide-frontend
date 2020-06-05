@@ -144,11 +144,11 @@ const Informations = (props: IInformationsProps) => {
             <div className={styles.section}>
               <h2 className={styles.title}>{t('Informations')}</h2>
               <div className={styles.info}>
-                <p className={styles.subtitle}>{t('City')}</p>
+                <p className={styles.subtitle}>{t('City')}:</p>
                 <span className={styles.value}>{tripData.city}</span>
               </div>
               <div className={styles.info}>
-                <p className={styles.subtitle}>{t('Price')}</p>
+                <p className={styles.subtitle}>{t('Price')}:</p>
                 <p className={styles.value}>
                   {tripData.price}zł ({t(tripData.priceType)})
                 </p>
@@ -156,7 +156,7 @@ const Informations = (props: IInformationsProps) => {
               {isLogged && (
                 <>
                   <div className={styles.info}>
-                    <p className={styles.subtitle}>{t('Max people')}</p>
+                    <p className={styles.subtitle}>{t('Max people')}:</p>
                     <p className={styles.value}> {tripData.maxPeople}</p>
                   </div>
                   <div className={styles.info}>
@@ -192,7 +192,7 @@ const Informations = (props: IInformationsProps) => {
                     changePopupVisible={() => setOfferRatesVisible(false)}
                   />
                   <Button
-                    style={window.innerWidth < 900 ? { marginBottom: '2rem', zIndex: -1 } : { marginTop: '1rem', zIndex: -1 }}
+                    style={window.innerWidth < 900 ? { marginBottom: '2rem' } : { marginTop: '1rem' }}
                     onClick={() => {
                       dispatcher(getOfferFeedbacksRequest(tripData.id));
                       setOfferRatesVisible(true);

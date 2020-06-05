@@ -5,9 +5,11 @@ import { ISettleGuideRequestFormValues, ISettleGuideRequestFormProps } from './t
 import { showNotification } from '../../helpers/notification';
 import styles from './SettleGuideRequestForm.module.scss';
 import history from '../../history';
+import { useTranslation } from 'react-i18next';
 
 const InnerForm = (props: FormikProps<ISettleGuideRequestFormValues> & ISettleGuideRequestFormProps) => {
-  const options = ['REJECT', 'ACCEPT'];
+  const { t } = useTranslation();
+  const options = [t('REJECT'), t('ACCEPT')];
 
   return (
     <div className={styles.formContainer}>
@@ -46,6 +48,9 @@ const MyForm = withFormik<ISettleGuideRequestFormProps, ISettleGuideRequestFormV
 
   handleSubmit: (values: ISettleGuideRequestFormValues, { props }) => {
     const { onSubmit } = props;
+
+    if (values.status === 'AKCEPTUJ') values.status = 'ACCEPT';
+    if (values.status === 'ODRZUĆ') values.status = 'REJECT';
     if (values.message && values.status) {
       onSubmit(values);
       values.message = '';

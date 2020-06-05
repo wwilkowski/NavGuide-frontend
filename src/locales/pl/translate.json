@@ -502,10 +502,13 @@
     "Price is required": "Cena jest wymagana",
     "Description is required": "Opis jest wymagany",
     "Incorrect number": "Niepoprawna wartość",
-    "Send": "Wyślij",
-    "Chat": "Czat",
     "Write your message": "Napisz wiadomość",
     "Min. number of characters is 10": "Minimalna liczba znaków to 10",
-    "Complete your data to finish registration process": "Wypełnij dane, aby dokończyć proces rejestracji"
+    "Complete your data to finish registration process": "Wypełnij dane, aby dokończyć proces rejestracji",
+    "See offer": "Zobacz ofertę",
+    "ACCEPT": "AKCEPTUJ",
+    "REJECT": "ODRZUĆ",
+    "Admin panel": "Panel administratora",
+    "Active offers": "Aktywne oferty"
   }
 }
