@@ -163,9 +163,8 @@ const InnerForm = (props: ISearchFormProps & FormikProps<ISearchFormValues>) => 
               aria-labelledby='discrete-slider-small-steps'
               value={props.positionValue.radius}
               step={0.1}
-              marks
               min={0.0}
-              max={50.0}
+              max={20.0}
               valueLabelDisplay='auto'
               onChange={(event: React.ChangeEvent<{}>, value: number | number[]) => {
                 setFieldValue('radius', value);
