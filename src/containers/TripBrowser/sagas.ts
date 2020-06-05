@@ -180,7 +180,8 @@ function* mainSaga() {
   yield takeLatest(FETCH_NAME_TRIPS_REQUESTED, fetchNameTripsFromAPI);
   yield debounce(500, FETCH_GEO_TRIPS_REQUESTED, fetchGeoTripsFromAPI);
   yield takeLatest(FETCH_TAGS_REQUESTED, fetchTagsFromAPI);
-  yield takeLatest(FETCH_SUGGESTED_CITIES_REQUESTED, fetchSuggestedCitiesFromNominatimAPI);
+  yield debounce(2000, FETCH_SUGGESTED_CITIES_REQUESTED, fetchSuggestedCitiesFromNominatimAPI);
+  // yield takeLatest(FETCH_SUGGESTED_CITIES_REQUESTED, fetchSuggestedCitiesFromNominatimAPI);
   yield takeLatest(FETCH_CLOSEST_TRIPS_REQUESTED, fetchClosestTripsFromAPI);
   yield takeLatest(FETCH_POPULAR_TRIPS_REQUESTED, fetchPopularTripsFromAPI);
 }
