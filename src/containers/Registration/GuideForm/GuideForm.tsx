@@ -45,7 +45,7 @@ const GuideForm = () => {
       <div>
         {!blockForm && lastRequestid >= 0 && (
           <div className={styles.case}>
-            <p>Wiadomość z ostatniej próby:</p>
+            <p>{t('Message from last try')}:</p>
             <p>{t(requests[lastRequestid].status.toLowerCase())}</p>
             <p>{requests[lastRequestid].message}</p>
           </div>

@@ -74,13 +74,13 @@ const MyForm = (props: FormikProps<types.FormValues>) => {
             <input type='radio' id='5' name='rating' value='5' onChange={() => props.setFieldValue('experience', 5)} />
             <label htmlFor='5' title={t('I was once a guide')}></label>
             <input type='radio' id='4' name='rating' value='4' onChange={() => props.setFieldValue('experience', 4)} />
-            <label htmlFor='4' title='I give tours regularly'></label>
+            <label htmlFor='4' title={t('I give tours regularly')}></label>
             <input type='radio' id='3' name='rating' value='3' onChange={() => props.setFieldValue('experience', 3)} />
-            <label htmlFor='3' title='I organize trips on average once a month'></label>
+            <label htmlFor='3' title={t('I organize trips on average once a month')}></label>
             <input type='radio' id='2' name='rating' value='2' onChange={() => props.setFieldValue('experience', 2)} />
-            <label htmlFor='2' title='Sometimes, I show something for friends'></label>
+            <label htmlFor='2' title={t('Sometimes, I show something for friends')}></label>
             <input type='radio' id='1' name='rating' value='1' onChange={() => props.setFieldValue('experience', 1)} />
-            <label htmlFor='1' title='I am a newcomer in guiding'></label>
+            <label htmlFor='1' title={t('I am a newcomer in guiding')}></label>
           </fieldset>
         </div>
         <div className={styles.descCase}>
