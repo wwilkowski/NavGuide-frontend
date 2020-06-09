@@ -106,12 +106,12 @@ const AcceptedOffers = (props: IAcceptedOffersProps) => {
               </Link>
               {user.role === 'GUIDE' && (
                 <Link to={`/users/${agr.traveler.id}`} className={classes.link}>
-                  {t('Check user profile with')} ID {agr.traveler.id}
+                  {t('Check user profile')}
                 </Link>
               )}
               {user.role === 'TRAVELER' && (
                 <Link to={`/guides/${agr.offer.owner.guideId}`} className={classes.link}>
-                  {t('Check guide profile with')} ID {agr.offer.owner.guideId}
+                  {t('Check guide profile')}
                 </Link>
               )}
             </CardActions>

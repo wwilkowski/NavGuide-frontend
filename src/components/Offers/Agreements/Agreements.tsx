@@ -8,11 +8,11 @@ import { Button, makeStyles, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles({
   text: {
-    marginTop: '1rem'
+    marginTop: '1rem',
   },
   list: {
-    marginBottom: '3rem'
-  }
+    marginBottom: '3rem',
+  },
 });
 
 const Agreements = (props: IAgreementsProps) => {
@@ -28,10 +28,7 @@ const Agreements = (props: IAgreementsProps) => {
   }, [agreements]);
 
   const getDate = (date: string) => {
-    return date
-      .toString()
-      .replace('T', ' ')
-      .substr(0, date.toString().indexOf('.'));
+    return date.toString().replace('T', ' ').substr(0, date.toString().indexOf('.'));
   };
 
   return (
@@ -42,7 +39,7 @@ const Agreements = (props: IAgreementsProps) => {
           <li key={agr.id} style={{ padding: '1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '1rem 0' }}>
             <TripListElement trip={agr.offer} />
             <Link to={`/guides/${agr.offer.owner.guideId}`} className={classes.text}>
-              {t('Check guide profile with ID')} {agr.offer.owner.guideId}
+              {t('Check guide profile')} {agr.offer.owner.guideId}
             </Link>
             <Typography variant='subtitle2' className={classes.text}>
               {t('Planned date')}: {getDate(agr.plannedDate)}
@@ -52,7 +49,7 @@ const Agreements = (props: IAgreementsProps) => {
               color='primary'
               onClick={() =>
                 history.push(`/agreement/${agr.id}`, {
-                  pathFrom: '/profile'
+                  pathFrom: '/profile',
                 })
               }
               className={classes.text}
