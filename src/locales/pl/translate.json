@@ -511,6 +511,12 @@
     "ACCEPT": "AKCEPTUJ",
     "REJECT": "ODRZUĆ",
     "Admin panel": "Panel administratora",
-    "Active offers": "Aktywne oferty"
+    "Active offers": "Aktywne oferty",
+
+    "Very bad": "Bardzo źle",
+    "Bad": "Źle",
+    "Good": "Dobrze",
+    "Very good": "Bardzo dobrze",
+    "Excellent": "Świetnie"
   }
 }
