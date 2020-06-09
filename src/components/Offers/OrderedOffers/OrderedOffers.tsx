@@ -122,7 +122,7 @@ const OrderedOffers = ({ trips, agreements }: IProfileOffersProps) => {
             {trip.message}
           </Typography>
           <Link to={`/users/${trip.traveler.id}`} className={classes.text}>
-            {t('Check user')} {trip.traveler.firstName} {trip.traveler.lastName} (ID: {trip.traveler.id})
+            {t('Check user')} {trip.traveler.firstName} {trip.traveler.lastName}
           </Link>
           <TextField
             id='outlined-multiline-static'
