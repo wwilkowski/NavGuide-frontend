@@ -1,3 +1,7 @@
+# Aplikacja NavGuide to część projektu realizowanego w ramach przedmiotu Programowanie Zespołowe na Wydziale Matematyki i Informatyki na UMK w Toruniu w 2020 roku.
+
+Prezentacja projektu dostępna w serwisie [Youtube](https://www.youtube.com/watch?v=I40p4JNxt4U)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
